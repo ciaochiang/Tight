@@ -1,0 +1,588 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E56A55C92AB2BC7100A35BF3 /* MoticApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55C82AB2BC7100A35BF3 /* MoticApp.swift */; };
+		E56A55CB2AB2BC7100A35BF3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55CA2AB2BC7100A35BF3 /* ContentView.swift */; };
+		E56A55CD2AB2BC7300A35BF3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E56A55CC2AB2BC7300A35BF3 /* Assets.xcassets */; };
+		E56A55D02AB2BC7300A35BF3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E56A55CF2AB2BC7300A35BF3 /* Preview Assets.xcassets */; };
+		E56A55DA2AB2BC7300A35BF3 /* MoticTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55D92AB2BC7300A35BF3 /* MoticTests.swift */; };
+		E56A55E42AB2BC7300A35BF3 /* MoticUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55E32AB2BC7300A35BF3 /* MoticUITests.swift */; };
+		E56A55E62AB2BC7300A35BF3 /* MoticUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55E52AB2BC7300A35BF3 /* MoticUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E56A55D62AB2BC7300A35BF3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E56A55BD2AB2BC7100A35BF3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E56A55C42AB2BC7100A35BF3;
+			remoteInfo = Motic;
+		};
+		E56A55E02AB2BC7300A35BF3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E56A55BD2AB2BC7100A35BF3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E56A55C42AB2BC7100A35BF3;
+			remoteInfo = Motic;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		E56A55C52AB2BC7100A35BF3 /* Motic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Motic.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E56A55C82AB2BC7100A35BF3 /* MoticApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticApp.swift; sourceTree = "<group>"; };
+		E56A55CA2AB2BC7100A35BF3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E56A55CC2AB2BC7300A35BF3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E56A55CF2AB2BC7300A35BF3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E56A55D52AB2BC7300A35BF3 /* MoticTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoticTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E56A55D92AB2BC7300A35BF3 /* MoticTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticTests.swift; sourceTree = "<group>"; };
+		E56A55DF2AB2BC7300A35BF3 /* MoticUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoticUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E56A55E32AB2BC7300A35BF3 /* MoticUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticUITests.swift; sourceTree = "<group>"; };
+		E56A55E52AB2BC7300A35BF3 /* MoticUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E56A55C22AB2BC7100A35BF3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E56A55D22AB2BC7300A35BF3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E56A55DC2AB2BC7300A35BF3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E56A55BC2AB2BC7100A35BF3 = {
+			isa = PBXGroup;
+			children = (
+				E56A55C72AB2BC7100A35BF3 /* Motic */,
+				E56A55D82AB2BC7300A35BF3 /* MoticTests */,
+				E56A55E22AB2BC7300A35BF3 /* MoticUITests */,
+				E56A55C62AB2BC7100A35BF3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E56A55C62AB2BC7100A35BF3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E56A55C52AB2BC7100A35BF3 /* Motic.app */,
+				E56A55D52AB2BC7300A35BF3 /* MoticTests.xctest */,
+				E56A55DF2AB2BC7300A35BF3 /* MoticUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E56A55C72AB2BC7100A35BF3 /* Motic */ = {
+			isa = PBXGroup;
+			children = (
+				E56A55C82AB2BC7100A35BF3 /* MoticApp.swift */,
+				E56A55CA2AB2BC7100A35BF3 /* ContentView.swift */,
+				E56A55CC2AB2BC7300A35BF3 /* Assets.xcassets */,
+				E56A55CE2AB2BC7300A35BF3 /* Preview Content */,
+			);
+			path = Motic;
+			sourceTree = "<group>";
+		};
+		E56A55CE2AB2BC7300A35BF3 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				E56A55CF2AB2BC7300A35BF3 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		E56A55D82AB2BC7300A35BF3 /* MoticTests */ = {
+			isa = PBXGroup;
+			children = (
+				E56A55D92AB2BC7300A35BF3 /* MoticTests.swift */,
+			);
+			path = MoticTests;
+			sourceTree = "<group>";
+		};
+		E56A55E22AB2BC7300A35BF3 /* MoticUITests */ = {
+			isa = PBXGroup;
+			children = (
+				E56A55E32AB2BC7300A35BF3 /* MoticUITests.swift */,
+				E56A55E52AB2BC7300A35BF3 /* MoticUITestsLaunchTests.swift */,
+			);
+			path = MoticUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E56A55C42AB2BC7100A35BF3 /* Motic */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E56A55E92AB2BC7300A35BF3 /* Build configuration list for PBXNativeTarget "Motic" */;
+			buildPhases = (
+				E56A55C12AB2BC7100A35BF3 /* Sources */,
+				E56A55C22AB2BC7100A35BF3 /* Frameworks */,
+				E56A55C32AB2BC7100A35BF3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Motic;
+			productName = Motic;
+			productReference = E56A55C52AB2BC7100A35BF3 /* Motic.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E56A55D42AB2BC7300A35BF3 /* MoticTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E56A55EC2AB2BC7300A35BF3 /* Build configuration list for PBXNativeTarget "MoticTests" */;
+			buildPhases = (
+				E56A55D12AB2BC7300A35BF3 /* Sources */,
+				E56A55D22AB2BC7300A35BF3 /* Frameworks */,
+				E56A55D32AB2BC7300A35BF3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E56A55D72AB2BC7300A35BF3 /* PBXTargetDependency */,
+			);
+			name = MoticTests;
+			productName = MoticTests;
+			productReference = E56A55D52AB2BC7300A35BF3 /* MoticTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		E56A55DE2AB2BC7300A35BF3 /* MoticUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E56A55EF2AB2BC7300A35BF3 /* Build configuration list for PBXNativeTarget "MoticUITests" */;
+			buildPhases = (
+				E56A55DB2AB2BC7300A35BF3 /* Sources */,
+				E56A55DC2AB2BC7300A35BF3 /* Frameworks */,
+				E56A55DD2AB2BC7300A35BF3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E56A55E12AB2BC7300A35BF3 /* PBXTargetDependency */,
+			);
+			name = MoticUITests;
+			productName = MoticUITests;
+			productReference = E56A55DF2AB2BC7300A35BF3 /* MoticUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E56A55BD2AB2BC7100A35BF3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					E56A55C42AB2BC7100A35BF3 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+					E56A55D42AB2BC7300A35BF3 = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = E56A55C42AB2BC7100A35BF3;
+					};
+					E56A55DE2AB2BC7300A35BF3 = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = E56A55C42AB2BC7100A35BF3;
+					};
+				};
+			};
+			buildConfigurationList = E56A55C02AB2BC7100A35BF3 /* Build configuration list for PBXProject "Motic" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E56A55BC2AB2BC7100A35BF3;
+			productRefGroup = E56A55C62AB2BC7100A35BF3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E56A55C42AB2BC7100A35BF3 /* Motic */,
+				E56A55D42AB2BC7300A35BF3 /* MoticTests */,
+				E56A55DE2AB2BC7300A35BF3 /* MoticUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E56A55C32AB2BC7100A35BF3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E56A55D02AB2BC7300A35BF3 /* Preview Assets.xcassets in Resources */,
+				E56A55CD2AB2BC7300A35BF3 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E56A55D32AB2BC7300A35BF3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E56A55DD2AB2BC7300A35BF3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E56A55C12AB2BC7100A35BF3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E56A55CB2AB2BC7100A35BF3 /* ContentView.swift in Sources */,
+				E56A55C92AB2BC7100A35BF3 /* MoticApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E56A55D12AB2BC7300A35BF3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E56A55DA2AB2BC7300A35BF3 /* MoticTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E56A55DB2AB2BC7300A35BF3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E56A55E42AB2BC7300A35BF3 /* MoticUITests.swift in Sources */,
+				E56A55E62AB2BC7300A35BF3 /* MoticUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E56A55D72AB2BC7300A35BF3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E56A55C42AB2BC7100A35BF3 /* Motic */;
+			targetProxy = E56A55D62AB2BC7300A35BF3 /* PBXContainerItemProxy */;
+		};
+		E56A55E12AB2BC7300A35BF3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E56A55C42AB2BC7100A35BF3 /* Motic */;
+			targetProxy = E56A55E02AB2BC7300A35BF3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		E56A55E72AB2BC7300A35BF3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		E56A55E82AB2BC7300A35BF3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E56A55EA2AB2BC7300A35BF3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Motic/Preview Content\"";
+				DEVELOPMENT_TEAM = RQ845TWDMJ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.motic.Motic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E56A55EB2AB2BC7300A35BF3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Motic/Preview Content\"";
+				DEVELOPMENT_TEAM = RQ845TWDMJ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.motic.Motic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E56A55ED2AB2BC7300A35BF3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RQ845TWDMJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.motic.MoticTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Motic.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Motic";
+			};
+			name = Debug;
+		};
+		E56A55EE2AB2BC7300A35BF3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RQ845TWDMJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.motic.MoticTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Motic.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Motic";
+			};
+			name = Release;
+		};
+		E56A55F02AB2BC7300A35BF3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RQ845TWDMJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.motic.MoticUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Motic;
+			};
+			name = Debug;
+		};
+		E56A55F12AB2BC7300A35BF3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RQ845TWDMJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.motic.MoticUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Motic;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E56A55C02AB2BC7100A35BF3 /* Build configuration list for PBXProject "Motic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E56A55E72AB2BC7300A35BF3 /* Debug */,
+				E56A55E82AB2BC7300A35BF3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E56A55E92AB2BC7300A35BF3 /* Build configuration list for PBXNativeTarget "Motic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E56A55EA2AB2BC7300A35BF3 /* Debug */,
+				E56A55EB2AB2BC7300A35BF3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E56A55EC2AB2BC7300A35BF3 /* Build configuration list for PBXNativeTarget "MoticTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E56A55ED2AB2BC7300A35BF3 /* Debug */,
+				E56A55EE2AB2BC7300A35BF3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E56A55EF2AB2BC7300A35BF3 /* Build configuration list for PBXNativeTarget "MoticUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E56A55F02AB2BC7300A35BF3 /* Debug */,
+				E56A55F12AB2BC7300A35BF3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E56A55BD2AB2BC7100A35BF3 /* Project object */;
+}
