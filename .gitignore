@@ -1,0 +1,96 @@
+# Xcode
+.DS_Store
+*/.DS_Store
+*.swp
+xcuserdata/
+DerivedData/
+/*.xcodeproj/
+/*.xcworkspace/
+/.idea/
+/*.playground/
+/*.xcplayground/
+/*.moved-aside/
+
+# Build artifacts
+/build/
+*.o
+*.swiftdoc
+*.modulemap
+*.swiftdoc
+*.pcm
+*.mode1v3
+*.mode2v3
+*.moved-aside
+*.pbxuser
+*.perspective
+*.perspectivev3
+xcuserdata/
+/*.xccheckout/
+/*.xcscmblueprint/
+/*.xcscms/
+/*.build/
+
+# App distribution
+/*.ipa
+/*.dSYM.zip
+/Pods/
+/*.xcarchive/
+/*.xctestrun
+*.xcuserstate
+project.xcworkspace/
+*.xcworkspace/
+exportOptions.plist
+*.lock
+Podfile.lock
+
+# Carthage
+/Carthage/Build/
+
+# CocoaPods
+/Pods/
+Pods/
+
+# Fastlane
+/fastlane/report.xml
+/fastlane/screenshots/
+
+# Playgrounds
+/*.playground/
+
+# IDE settings
+*.idea/
+*.xcuserdatad/
+*.xcworkspace/
+xcuserdata/
+.DS_Store
+.idea/
+
+# AppCode
+.idea/
+
+# Swift Package Manager
+/.build/
+DerivedData/
+.build/
+
+# Test build output
+/Build/
+/TestResults/
+
+# macOS
+.DS_Store
+
+# Xcode
+*.xcuserdatad/
+
+# CocoaPods
+Pods/
+Podfile.lock
+
+# Carthage
+Carthage/Checkouts
+Carthage/Build
+
+# Swift Package Manager
+/.build/
+

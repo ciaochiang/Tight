@@ -7,6 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00879EB2FCEFC8722287CE6F /* Pods_Motic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 462D8F90FE461454A0069CB4 /* Pods_Motic.framework */; };
+		6EBCBA0C470FCB04F6194F02 /* Pods_MoticWatch_Watch_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6371AD9F3CAED494EB17191 /* Pods_MoticWatch_Watch_App.framework */; };
+		98A33491CEF626F148D30EF5 /* Pods_MoticWatch_Watch_AppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD70DC15448EAA064F41ED4 /* Pods_MoticWatch_Watch_AppTests.framework */; };
+		9C31994797DD0D4DC0D37F3C /* Pods_MoticTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE50CE7136F60940081E942A /* Pods_MoticTests.framework */; };
+		9E5D2536633519D3B9CACD45 /* Pods_Motic_MoticUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAD2E2A817DEB60DBCD990DE /* Pods_Motic_MoticUITests.framework */; };
+		A8FA174008AFB830C81BB23E /* Pods_MoticWatch_Watch_App_MoticWatch_Watch_AppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F94F05AD57F2E461B5D138DA /* Pods_MoticWatch_Watch_App_MoticWatch_Watch_AppUITests.framework */; };
+		E50163C92AB2E90500C87D67 /* MoticWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163C82AB2E90500C87D67 /* MoticWatchApp.swift */; };
+		E50163CB2AB2E90500C87D67 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163CA2AB2E90500C87D67 /* ContentView.swift */; };
+		E50163CD2AB2E90600C87D67 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E50163CC2AB2E90600C87D67 /* Assets.xcassets */; };
+		E50163D02AB2E90600C87D67 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E50163CF2AB2E90600C87D67 /* Preview Assets.xcassets */; };
+		E50163DA2AB2E90700C87D67 /* MoticWatch_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163D92AB2E90700C87D67 /* MoticWatch_Watch_AppTests.swift */; };
+		E50163E42AB2E90700C87D67 /* MoticWatch_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163E32AB2E90700C87D67 /* MoticWatch_Watch_AppUITests.swift */; };
+		E50163E62AB2E90700C87D67 /* MoticWatch_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163E52AB2E90700C87D67 /* MoticWatch_Watch_AppUITestsLaunchTests.swift */; };
+		E50163E92AB2E90700C87D67 /* MoticWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = E50163C62AB2E90500C87D67 /* MoticWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E50163F62AB333F100C87D67 /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163F52AB333F100C87D67 /* MessageViewModel.swift */; };
+		E50163F82AB346BD00C87D67 /* WatchConnectivityProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163F72AB346BD00C87D67 /* WatchConnectivityProvider.swift */; };
+		E50163FA2AB460F500C87D67 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163F92AB460F500C87D67 /* ContentViewModel.swift */; };
+		E50163FC2AB4638100C87D67 /* WorkoutSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163FB2AB4638100C87D67 /* WorkoutSessionManager.swift */; };
 		E56A55C92AB2BC7100A35BF3 /* MoticApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55C82AB2BC7100A35BF3 /* MoticApp.swift */; };
 		E56A55CB2AB2BC7100A35BF3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55CA2AB2BC7100A35BF3 /* ContentView.swift */; };
 		E56A55CD2AB2BC7300A35BF3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E56A55CC2AB2BC7300A35BF3 /* Assets.xcassets */; };
@@ -14,9 +32,35 @@
 		E56A55DA2AB2BC7300A35BF3 /* MoticTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55D92AB2BC7300A35BF3 /* MoticTests.swift */; };
 		E56A55E42AB2BC7300A35BF3 /* MoticUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55E32AB2BC7300A35BF3 /* MoticUITests.swift */; };
 		E56A55E62AB2BC7300A35BF3 /* MoticUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55E52AB2BC7300A35BF3 /* MoticUITestsLaunchTests.swift */; };
+		E59EB8482AB58BF20057F630 /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8472AB58BF20057F630 /* Onboarding.swift */; };
+		E59EB84A2AB5934E0057F630 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8492AB5934E0057F630 /* OnboardingViewModel.swift */; };
+		E59EB84D2AB5E29F0057F630 /* HealthStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB84C2AB5E29F0057F630 /* HealthStoreManager.swift */; };
+		E59EB8512AB5ED020057F630 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8502AB5ED020057F630 /* LocationManager.swift */; };
+		E59EB8532AB5EE650057F630 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8522AB5EE650057F630 /* NotificationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		E50163D62AB2E90700C87D67 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E56A55BD2AB2BC7100A35BF3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E50163C52AB2E90500C87D67;
+			remoteInfo = "MoticWatch Watch App";
+		};
+		E50163E02AB2E90700C87D67 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E56A55BD2AB2BC7100A35BF3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E50163C52AB2E90500C87D67;
+			remoteInfo = "MoticWatch Watch App";
+		};
+		E50163E72AB2E90700C87D67 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E56A55BD2AB2BC7100A35BF3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E50163C52AB2E90500C87D67;
+			remoteInfo = "MoticWatch Watch App";
+		};
 		E56A55D62AB2BC7300A35BF3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E56A55BD2AB2BC7100A35BF3 /* Project object */;
@@ -33,7 +77,53 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		E50163EA2AB2E90700C87D67 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				E50163E92AB2E90700C87D67 /* MoticWatch Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		017F5D2D9CA6D9B342F333CD /* Pods-MoticWatch Watch App-MoticWatch Watch AppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoticWatch Watch App-MoticWatch Watch AppUITests.release.xcconfig"; path = "Target Support Files/Pods-MoticWatch Watch App-MoticWatch Watch AppUITests/Pods-MoticWatch Watch App-MoticWatch Watch AppUITests.release.xcconfig"; sourceTree = "<group>"; };
+		241ED3737AA88BC9C03DA580 /* Pods-MoticTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoticTests.debug.xcconfig"; path = "Target Support Files/Pods-MoticTests/Pods-MoticTests.debug.xcconfig"; sourceTree = "<group>"; };
+		462D8F90FE461454A0069CB4 /* Pods_Motic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Motic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B1C2135F724D341C305EFF2 /* Pods-Motic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Motic.debug.xcconfig"; path = "Target Support Files/Pods-Motic/Pods-Motic.debug.xcconfig"; sourceTree = "<group>"; };
+		7B7665F983A9191A98A2EE6E /* Pods-MoticWatch Watch App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoticWatch Watch App.debug.xcconfig"; path = "Target Support Files/Pods-MoticWatch Watch App/Pods-MoticWatch Watch App.debug.xcconfig"; sourceTree = "<group>"; };
+		7BD70DC15448EAA064F41ED4 /* Pods_MoticWatch_Watch_AppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoticWatch_Watch_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E1BD794C123EBFB8785DEBF /* Pods-MoticTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoticTests.release.xcconfig"; path = "Target Support Files/Pods-MoticTests/Pods-MoticTests.release.xcconfig"; sourceTree = "<group>"; };
+		806D3332032C6138087E8C12 /* Pods-Motic-MoticUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Motic-MoticUITests.debug.xcconfig"; path = "Target Support Files/Pods-Motic-MoticUITests/Pods-Motic-MoticUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		8D6B92276775234EFBCCBEA9 /* Pods-MoticWatch Watch AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoticWatch Watch AppTests.debug.xcconfig"; path = "Target Support Files/Pods-MoticWatch Watch AppTests/Pods-MoticWatch Watch AppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		8F791F845174CD5E722BC269 /* Pods-Motic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Motic.release.xcconfig"; path = "Target Support Files/Pods-Motic/Pods-Motic.release.xcconfig"; sourceTree = "<group>"; };
+		9BF4868B97DF07C04D1B524A /* Pods-Motic-MoticUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Motic-MoticUITests.release.xcconfig"; path = "Target Support Files/Pods-Motic-MoticUITests/Pods-Motic-MoticUITests.release.xcconfig"; sourceTree = "<group>"; };
+		BE5F8C7623AD647C1AB25D4F /* Pods-MoticWatch Watch App-MoticWatch Watch AppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoticWatch Watch App-MoticWatch Watch AppUITests.debug.xcconfig"; path = "Target Support Files/Pods-MoticWatch Watch App-MoticWatch Watch AppUITests/Pods-MoticWatch Watch App-MoticWatch Watch AppUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		C6371AD9F3CAED494EB17191 /* Pods_MoticWatch_Watch_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoticWatch_Watch_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CAD2E2A817DEB60DBCD990DE /* Pods_Motic_MoticUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Motic_MoticUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE50CE7136F60940081E942A /* Pods_MoticTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoticTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D64B8B74135D31157E0A9907 /* Pods-MoticWatch Watch App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoticWatch Watch App.release.xcconfig"; path = "Target Support Files/Pods-MoticWatch Watch App/Pods-MoticWatch Watch App.release.xcconfig"; sourceTree = "<group>"; };
+		D845ADB26CDF4292FABB2101 /* Pods-MoticWatch Watch AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoticWatch Watch AppTests.release.xcconfig"; path = "Target Support Files/Pods-MoticWatch Watch AppTests/Pods-MoticWatch Watch AppTests.release.xcconfig"; sourceTree = "<group>"; };
+		E50163C62AB2E90500C87D67 /* MoticWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MoticWatch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E50163C82AB2E90500C87D67 /* MoticWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticWatchApp.swift; sourceTree = "<group>"; };
+		E50163CA2AB2E90500C87D67 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E50163CC2AB2E90600C87D67 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E50163CF2AB2E90600C87D67 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E50163D52AB2E90600C87D67 /* MoticWatch Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MoticWatch Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E50163D92AB2E90700C87D67 /* MoticWatch_Watch_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticWatch_Watch_AppTests.swift; sourceTree = "<group>"; };
+		E50163DF2AB2E90700C87D67 /* MoticWatch Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MoticWatch Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E50163E32AB2E90700C87D67 /* MoticWatch_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticWatch_Watch_AppUITests.swift; sourceTree = "<group>"; };
+		E50163E52AB2E90700C87D67 /* MoticWatch_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticWatch_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E50163F42AB30A4600C87D67 /* MoticWatch Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "MoticWatch Watch App.entitlements"; sourceTree = "<group>"; };
+		E50163F52AB333F100C87D67 /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
+		E50163F72AB346BD00C87D67 /* WatchConnectivityProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityProvider.swift; sourceTree = "<group>"; };
+		E50163F92AB460F500C87D67 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
+		E50163FB2AB4638100C87D67 /* WorkoutSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSessionManager.swift; sourceTree = "<group>"; };
 		E56A55C52AB2BC7100A35BF3 /* Motic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Motic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E56A55C82AB2BC7100A35BF3 /* MoticApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticApp.swift; sourceTree = "<group>"; };
 		E56A55CA2AB2BC7100A35BF3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -44,13 +134,46 @@
 		E56A55DF2AB2BC7300A35BF3 /* MoticUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoticUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E56A55E32AB2BC7300A35BF3 /* MoticUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticUITests.swift; sourceTree = "<group>"; };
 		E56A55E52AB2BC7300A35BF3 /* MoticUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E56A55F22AB2C03000A35BF3 /* Motic.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Motic.entitlements; sourceTree = "<group>"; };
+		E59EB8472AB58BF20057F630 /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
+		E59EB8492AB5934E0057F630 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		E59EB84C2AB5E29F0057F630 /* HealthStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStoreManager.swift; sourceTree = "<group>"; };
+		E59EB8502AB5ED020057F630 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		E59EB8522AB5EE650057F630 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		E59EB8542AB5F2F70057F630 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		F94F05AD57F2E461B5D138DA /* Pods_MoticWatch_Watch_App_MoticWatch_Watch_AppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoticWatch_Watch_App_MoticWatch_Watch_AppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E50163C32AB2E90500C87D67 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6EBCBA0C470FCB04F6194F02 /* Pods_MoticWatch_Watch_App.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E50163D22AB2E90600C87D67 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98A33491CEF626F148D30EF5 /* Pods_MoticWatch_Watch_AppTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E50163DC2AB2E90700C87D67 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A8FA174008AFB830C81BB23E /* Pods_MoticWatch_Watch_App_MoticWatch_Watch_AppUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E56A55C22AB2BC7100A35BF3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00879EB2FCEFC8722287CE6F /* Pods_Motic.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,6 +181,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C31994797DD0D4DC0D37F3C /* Pods_MoticTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,19 +189,78 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E5D2536633519D3B9CACD45 /* Pods_Motic_MoticUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7EF43A96E8FB62E97D3BFDE6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				462D8F90FE461454A0069CB4 /* Pods_Motic.framework */,
+				CAD2E2A817DEB60DBCD990DE /* Pods_Motic_MoticUITests.framework */,
+				CE50CE7136F60940081E942A /* Pods_MoticTests.framework */,
+				C6371AD9F3CAED494EB17191 /* Pods_MoticWatch_Watch_App.framework */,
+				F94F05AD57F2E461B5D138DA /* Pods_MoticWatch_Watch_App_MoticWatch_Watch_AppUITests.framework */,
+				7BD70DC15448EAA064F41ED4 /* Pods_MoticWatch_Watch_AppTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E50163C72AB2E90500C87D67 /* MoticWatch Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				E50163F42AB30A4600C87D67 /* MoticWatch Watch App.entitlements */,
+				E50163C82AB2E90500C87D67 /* MoticWatchApp.swift */,
+				E50163CA2AB2E90500C87D67 /* ContentView.swift */,
+				E50163CC2AB2E90600C87D67 /* Assets.xcassets */,
+				E50163CE2AB2E90600C87D67 /* Preview Content */,
+				E50163F72AB346BD00C87D67 /* WatchConnectivityProvider.swift */,
+				E50163F92AB460F500C87D67 /* ContentViewModel.swift */,
+				E50163FB2AB4638100C87D67 /* WorkoutSessionManager.swift */,
+			);
+			path = "MoticWatch Watch App";
+			sourceTree = "<group>";
+		};
+		E50163CE2AB2E90600C87D67 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				E50163CF2AB2E90600C87D67 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		E50163D82AB2E90700C87D67 /* MoticWatch Watch AppTests */ = {
+			isa = PBXGroup;
+			children = (
+				E50163D92AB2E90700C87D67 /* MoticWatch_Watch_AppTests.swift */,
+			);
+			path = "MoticWatch Watch AppTests";
+			sourceTree = "<group>";
+		};
+		E50163E22AB2E90700C87D67 /* MoticWatch Watch AppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				E50163E32AB2E90700C87D67 /* MoticWatch_Watch_AppUITests.swift */,
+				E50163E52AB2E90700C87D67 /* MoticWatch_Watch_AppUITestsLaunchTests.swift */,
+			);
+			path = "MoticWatch Watch AppUITests";
+			sourceTree = "<group>";
+		};
 		E56A55BC2AB2BC7100A35BF3 = {
 			isa = PBXGroup;
 			children = (
 				E56A55C72AB2BC7100A35BF3 /* Motic */,
 				E56A55D82AB2BC7300A35BF3 /* MoticTests */,
 				E56A55E22AB2BC7300A35BF3 /* MoticUITests */,
+				E50163C72AB2E90500C87D67 /* MoticWatch Watch App */,
+				E50163D82AB2E90700C87D67 /* MoticWatch Watch AppTests */,
+				E50163E22AB2E90700C87D67 /* MoticWatch Watch AppUITests */,
 				E56A55C62AB2BC7100A35BF3 /* Products */,
+				EB11988EA2B5C753E8AD56E0 /* Pods */,
+				7EF43A96E8FB62E97D3BFDE6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -87,6 +270,9 @@
 				E56A55C52AB2BC7100A35BF3 /* Motic.app */,
 				E56A55D52AB2BC7300A35BF3 /* MoticTests.xctest */,
 				E56A55DF2AB2BC7300A35BF3 /* MoticUITests.xctest */,
+				E50163C62AB2E90500C87D67 /* MoticWatch Watch App.app */,
+				E50163D52AB2E90600C87D67 /* MoticWatch Watch AppTests.xctest */,
+				E50163DF2AB2E90700C87D67 /* MoticWatch Watch AppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -94,10 +280,15 @@
 		E56A55C72AB2BC7100A35BF3 /* Motic */ = {
 			isa = PBXGroup;
 			children = (
+				E59EB8542AB5F2F70057F630 /* Info.plist */,
+				E59EB84B2AB5E2770057F630 /* Managers */,
+				E56A55F22AB2C03000A35BF3 /* Motic.entitlements */,
 				E56A55C82AB2BC7100A35BF3 /* MoticApp.swift */,
 				E56A55CA2AB2BC7100A35BF3 /* ContentView.swift */,
 				E56A55CC2AB2BC7300A35BF3 /* Assets.xcassets */,
+				E59EB8462AB58BDD0057F630 /* Onboarding */,
 				E56A55CE2AB2BC7300A35BF3 /* Preview Content */,
+				E50163F52AB333F100C87D67 /* MessageViewModel.swift */,
 			);
 			path = Motic;
 			sourceTree = "<group>";
@@ -127,20 +318,117 @@
 			path = MoticUITests;
 			sourceTree = "<group>";
 		};
+		E59EB8462AB58BDD0057F630 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				E59EB8472AB58BF20057F630 /* Onboarding.swift */,
+				E59EB8492AB5934E0057F630 /* OnboardingViewModel.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		E59EB84B2AB5E2770057F630 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				E59EB84C2AB5E29F0057F630 /* HealthStoreManager.swift */,
+				E59EB8502AB5ED020057F630 /* LocationManager.swift */,
+				E59EB8522AB5EE650057F630 /* NotificationManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		EB11988EA2B5C753E8AD56E0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4B1C2135F724D341C305EFF2 /* Pods-Motic.debug.xcconfig */,
+				8F791F845174CD5E722BC269 /* Pods-Motic.release.xcconfig */,
+				806D3332032C6138087E8C12 /* Pods-Motic-MoticUITests.debug.xcconfig */,
+				9BF4868B97DF07C04D1B524A /* Pods-Motic-MoticUITests.release.xcconfig */,
+				241ED3737AA88BC9C03DA580 /* Pods-MoticTests.debug.xcconfig */,
+				7E1BD794C123EBFB8785DEBF /* Pods-MoticTests.release.xcconfig */,
+				7B7665F983A9191A98A2EE6E /* Pods-MoticWatch Watch App.debug.xcconfig */,
+				D64B8B74135D31157E0A9907 /* Pods-MoticWatch Watch App.release.xcconfig */,
+				BE5F8C7623AD647C1AB25D4F /* Pods-MoticWatch Watch App-MoticWatch Watch AppUITests.debug.xcconfig */,
+				017F5D2D9CA6D9B342F333CD /* Pods-MoticWatch Watch App-MoticWatch Watch AppUITests.release.xcconfig */,
+				8D6B92276775234EFBCCBEA9 /* Pods-MoticWatch Watch AppTests.debug.xcconfig */,
+				D845ADB26CDF4292FABB2101 /* Pods-MoticWatch Watch AppTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E56A55C42AB2BC7100A35BF3 /* Motic */ = {
+		E50163C52AB2E90500C87D67 /* MoticWatch Watch App */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E56A55E92AB2BC7300A35BF3 /* Build configuration list for PBXNativeTarget "Motic" */;
+			buildConfigurationList = E50163F12AB2E90700C87D67 /* Build configuration list for PBXNativeTarget "MoticWatch Watch App" */;
 			buildPhases = (
-				E56A55C12AB2BC7100A35BF3 /* Sources */,
-				E56A55C22AB2BC7100A35BF3 /* Frameworks */,
-				E56A55C32AB2BC7100A35BF3 /* Resources */,
+				D48A7739D6769E95C0C07BB3 /* [CP] Check Pods Manifest.lock */,
+				E50163C22AB2E90500C87D67 /* Sources */,
+				E50163C32AB2E90500C87D67 /* Frameworks */,
+				E50163C42AB2E90500C87D67 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+			);
+			name = "MoticWatch Watch App";
+			productName = "MoticWatch Watch App";
+			productReference = E50163C62AB2E90500C87D67 /* MoticWatch Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E50163D42AB2E90600C87D67 /* MoticWatch Watch AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E50163F22AB2E90700C87D67 /* Build configuration list for PBXNativeTarget "MoticWatch Watch AppTests" */;
+			buildPhases = (
+				370F41D817E065527A3BE033 /* [CP] Check Pods Manifest.lock */,
+				E50163D12AB2E90600C87D67 /* Sources */,
+				E50163D22AB2E90600C87D67 /* Frameworks */,
+				E50163D32AB2E90600C87D67 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E50163D72AB2E90700C87D67 /* PBXTargetDependency */,
+			);
+			name = "MoticWatch Watch AppTests";
+			productName = "MoticWatch Watch AppTests";
+			productReference = E50163D52AB2E90600C87D67 /* MoticWatch Watch AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		E50163DE2AB2E90700C87D67 /* MoticWatch Watch AppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E50163F32AB2E90700C87D67 /* Build configuration list for PBXNativeTarget "MoticWatch Watch AppUITests" */;
+			buildPhases = (
+				6E3FED2E362E238ED48AA759 /* [CP] Check Pods Manifest.lock */,
+				E50163DB2AB2E90700C87D67 /* Sources */,
+				E50163DC2AB2E90700C87D67 /* Frameworks */,
+				E50163DD2AB2E90700C87D67 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E50163E12AB2E90700C87D67 /* PBXTargetDependency */,
+			);
+			name = "MoticWatch Watch AppUITests";
+			productName = "MoticWatch Watch AppUITests";
+			productReference = E50163DF2AB2E90700C87D67 /* MoticWatch Watch AppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		E56A55C42AB2BC7100A35BF3 /* Motic */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E56A55E92AB2BC7300A35BF3 /* Build configuration list for PBXNativeTarget "Motic" */;
+			buildPhases = (
+				932A9F177382997715C4BE83 /* [CP] Check Pods Manifest.lock */,
+				E56A55C12AB2BC7100A35BF3 /* Sources */,
+				E56A55C22AB2BC7100A35BF3 /* Frameworks */,
+				E56A55C32AB2BC7100A35BF3 /* Resources */,
+				E50163EA2AB2E90700C87D67 /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E50163E82AB2E90700C87D67 /* PBXTargetDependency */,
 			);
 			name = Motic;
 			productName = Motic;
@@ -151,6 +439,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E56A55EC2AB2BC7300A35BF3 /* Build configuration list for PBXNativeTarget "MoticTests" */;
 			buildPhases = (
+				6F2DDFA4B5939F23C09E41AB /* [CP] Check Pods Manifest.lock */,
 				E56A55D12AB2BC7300A35BF3 /* Sources */,
 				E56A55D22AB2BC7300A35BF3 /* Frameworks */,
 				E56A55D32AB2BC7300A35BF3 /* Resources */,
@@ -169,6 +458,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E56A55EF2AB2BC7300A35BF3 /* Build configuration list for PBXNativeTarget "MoticUITests" */;
 			buildPhases = (
+				D4376615047A5CA735A64483 /* [CP] Check Pods Manifest.lock */,
 				E56A55DB2AB2BC7300A35BF3 /* Sources */,
 				E56A55DC2AB2BC7300A35BF3 /* Frameworks */,
 				E56A55DD2AB2BC7300A35BF3 /* Resources */,
@@ -193,6 +483,17 @@
 				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					E50163C52AB2E90500C87D67 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+					E50163D42AB2E90600C87D67 = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = E50163C52AB2E90500C87D67;
+					};
+					E50163DE2AB2E90700C87D67 = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = E50163C52AB2E90500C87D67;
+					};
 					E56A55C42AB2BC7100A35BF3 = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
@@ -222,11 +523,37 @@
 				E56A55C42AB2BC7100A35BF3 /* Motic */,
 				E56A55D42AB2BC7300A35BF3 /* MoticTests */,
 				E56A55DE2AB2BC7300A35BF3 /* MoticUITests */,
+				E50163C52AB2E90500C87D67 /* MoticWatch Watch App */,
+				E50163D42AB2E90600C87D67 /* MoticWatch Watch AppTests */,
+				E50163DE2AB2E90700C87D67 /* MoticWatch Watch AppUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		E50163C42AB2E90500C87D67 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E50163D02AB2E90600C87D67 /* Preview Assets.xcassets in Resources */,
+				E50163CD2AB2E90600C87D67 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E50163D32AB2E90600C87D67 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E50163DD2AB2E90700C87D67 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E56A55C32AB2BC7100A35BF3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -252,12 +579,182 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		370F41D817E065527A3BE033 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MoticWatch Watch AppTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6E3FED2E362E238ED48AA759 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MoticWatch Watch App-MoticWatch Watch AppUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6F2DDFA4B5939F23C09E41AB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MoticTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		932A9F177382997715C4BE83 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Motic-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D4376615047A5CA735A64483 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Motic-MoticUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D48A7739D6769E95C0C07BB3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MoticWatch Watch App-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		E50163C22AB2E90500C87D67 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E50163FC2AB4638100C87D67 /* WorkoutSessionManager.swift in Sources */,
+				E50163FA2AB460F500C87D67 /* ContentViewModel.swift in Sources */,
+				E50163CB2AB2E90500C87D67 /* ContentView.swift in Sources */,
+				E50163C92AB2E90500C87D67 /* MoticWatchApp.swift in Sources */,
+				E50163F82AB346BD00C87D67 /* WatchConnectivityProvider.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E50163D12AB2E90600C87D67 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E50163DA2AB2E90700C87D67 /* MoticWatch_Watch_AppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E50163DB2AB2E90700C87D67 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E50163E42AB2E90700C87D67 /* MoticWatch_Watch_AppUITests.swift in Sources */,
+				E50163E62AB2E90700C87D67 /* MoticWatch_Watch_AppUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E56A55C12AB2BC7100A35BF3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E59EB84A2AB5934E0057F630 /* OnboardingViewModel.swift in Sources */,
+				E59EB84D2AB5E29F0057F630 /* HealthStoreManager.swift in Sources */,
 				E56A55CB2AB2BC7100A35BF3 /* ContentView.swift in Sources */,
+				E59EB8512AB5ED020057F630 /* LocationManager.swift in Sources */,
+				E50163F62AB333F100C87D67 /* MessageViewModel.swift in Sources */,
+				E59EB8482AB58BF20057F630 /* Onboarding.swift in Sources */,
+				E59EB8532AB5EE650057F630 /* NotificationManager.swift in Sources */,
 				E56A55C92AB2BC7100A35BF3 /* MoticApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -282,6 +779,21 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		E50163D72AB2E90700C87D67 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E50163C52AB2E90500C87D67 /* MoticWatch Watch App */;
+			targetProxy = E50163D62AB2E90700C87D67 /* PBXContainerItemProxy */;
+		};
+		E50163E12AB2E90700C87D67 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E50163C52AB2E90500C87D67 /* MoticWatch Watch App */;
+			targetProxy = E50163E02AB2E90700C87D67 /* PBXContainerItemProxy */;
+		};
+		E50163E82AB2E90700C87D67 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E50163C52AB2E90500C87D67 /* MoticWatch Watch App */;
+			targetProxy = E50163E72AB2E90700C87D67 /* PBXContainerItemProxy */;
+		};
 		E56A55D72AB2BC7300A35BF3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E56A55C42AB2BC7100A35BF3 /* Motic */;
@@ -295,6 +807,160 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		E50163EB2AB2E90700C87D67 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7B7665F983A9191A98A2EE6E /* Pods-MoticWatch Watch App.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "MoticWatch Watch App/MoticWatch Watch App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MoticWatch Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = RQ845TWDMJ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = MoticWatch;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to your heart rate data to provide real-time health monitoring and improve your fitness experience.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We need access to your heart rate data to provide real-time health monitoring and improve your fitness experience.";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.motic.Motic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.motic.Motic.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 9.4;
+			};
+			name = Debug;
+		};
+		E50163EC2AB2E90700C87D67 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D64B8B74135D31157E0A9907 /* Pods-MoticWatch Watch App.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "MoticWatch Watch App/MoticWatch Watch App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MoticWatch Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = RQ845TWDMJ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = MoticWatch;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to your heart rate data to provide real-time health monitoring and improve your fitness experience.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We need access to your heart rate data to provide real-time health monitoring and improve your fitness experience.";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.motic.Motic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.motic.Motic.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 9.4;
+			};
+			name = Release;
+		};
+		E50163ED2AB2E90700C87D67 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8D6B92276775234EFBCCBEA9 /* Pods-MoticWatch Watch AppTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RQ845TWDMJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.motic.MoticWatch-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MoticWatch Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MoticWatch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 9.4;
+			};
+			name = Debug;
+		};
+		E50163EE2AB2E90700C87D67 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D845ADB26CDF4292FABB2101 /* Pods-MoticWatch Watch AppTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RQ845TWDMJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.motic.MoticWatch-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MoticWatch Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MoticWatch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 9.4;
+			};
+			name = Release;
+		};
+		E50163EF2AB2E90700C87D67 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BE5F8C7623AD647C1AB25D4F /* Pods-MoticWatch Watch App-MoticWatch Watch AppUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RQ845TWDMJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.motic.MoticWatch-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "MoticWatch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 9.4;
+			};
+			name = Debug;
+		};
+		E50163F02AB2E90700C87D67 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 017F5D2D9CA6D9B342F333CD /* Pods-MoticWatch Watch App-MoticWatch Watch AppUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RQ845TWDMJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.motic.MoticWatch-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "MoticWatch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 9.4;
+			};
+			name = Release;
+		};
 		E56A55E72AB2BC7300A35BF3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -411,17 +1077,24 @@
 		};
 		E56A55EA2AB2BC7300A35BF3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B1C2135F724D341C305EFF2 /* Pods-Motic.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Motic/Motic.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Motic/Preview Content\"";
 				DEVELOPMENT_TEAM = RQ845TWDMJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Motic/Info.plist;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to your health data to provide heart rate information.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We need access to your health data to provide heart rate information.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location!";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -440,17 +1113,24 @@
 		};
 		E56A55EB2AB2BC7300A35BF3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8F791F845174CD5E722BC269 /* Pods-Motic.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Motic/Motic.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Motic/Preview Content\"";
 				DEVELOPMENT_TEAM = RQ845TWDMJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Motic/Info.plist;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to your health data to provide heart rate information.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We need access to your health data to provide heart rate information.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location!";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -469,6 +1149,7 @@
 		};
 		E56A55ED2AB2BC7300A35BF3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 241ED3737AA88BC9C03DA580 /* Pods-MoticTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -489,6 +1170,7 @@
 		};
 		E56A55EE2AB2BC7300A35BF3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7E1BD794C123EBFB8785DEBF /* Pods-MoticTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -509,6 +1191,7 @@
 		};
 		E56A55F02AB2BC7300A35BF3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 806D3332032C6138087E8C12 /* Pods-Motic-MoticUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -527,6 +1210,7 @@
 		};
 		E56A55F12AB2BC7300A35BF3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9BF4868B97DF07C04D1B524A /* Pods-Motic-MoticUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -546,6 +1230,33 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		E50163F12AB2E90700C87D67 /* Build configuration list for PBXNativeTarget "MoticWatch Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E50163EB2AB2E90700C87D67 /* Debug */,
+				E50163EC2AB2E90700C87D67 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E50163F22AB2E90700C87D67 /* Build configuration list for PBXNativeTarget "MoticWatch Watch AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E50163ED2AB2E90700C87D67 /* Debug */,
+				E50163EE2AB2E90700C87D67 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E50163F32AB2E90700C87D67 /* Build configuration list for PBXNativeTarget "MoticWatch Watch AppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E50163EF2AB2E90700C87D67 /* Debug */,
+				E50163F02AB2E90700C87D67 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E56A55C02AB2BC7100A35BF3 /* Build configuration list for PBXProject "Motic" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
