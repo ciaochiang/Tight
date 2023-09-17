@@ -11,7 +11,8 @@ import SwiftUI
 struct MoticApp: App {
     var body: some Scene {
         WindowGroup {
-            Onboarding()
+//            Onboarding()
+          MainView()
         }
     }
 }

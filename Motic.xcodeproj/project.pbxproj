@@ -26,7 +26,7 @@
 		E50163FA2AB460F500C87D67 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163F92AB460F500C87D67 /* ContentViewModel.swift */; };
 		E50163FC2AB4638100C87D67 /* WorkoutSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163FB2AB4638100C87D67 /* WorkoutSessionManager.swift */; };
 		E56A55C92AB2BC7100A35BF3 /* MoticApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55C82AB2BC7100A35BF3 /* MoticApp.swift */; };
-		E56A55CB2AB2BC7100A35BF3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55CA2AB2BC7100A35BF3 /* ContentView.swift */; };
+		E56A55CB2AB2BC7100A35BF3 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55CA2AB2BC7100A35BF3 /* MainView.swift */; };
 		E56A55CD2AB2BC7300A35BF3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E56A55CC2AB2BC7300A35BF3 /* Assets.xcassets */; };
 		E56A55D02AB2BC7300A35BF3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E56A55CF2AB2BC7300A35BF3 /* Preview Assets.xcassets */; };
 		E56A55DA2AB2BC7300A35BF3 /* MoticTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55D92AB2BC7300A35BF3 /* MoticTests.swift */; };
@@ -37,6 +37,7 @@
 		E59EB84D2AB5E29F0057F630 /* HealthStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB84C2AB5E29F0057F630 /* HealthStoreManager.swift */; };
 		E59EB8512AB5ED020057F630 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8502AB5ED020057F630 /* LocationManager.swift */; };
 		E59EB8532AB5EE650057F630 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8522AB5EE650057F630 /* NotificationManager.swift */; };
+		E59EB8572AB5F76A0057F630 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8562AB5F76A0057F630 /* MainViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,7 +127,7 @@
 		E50163FB2AB4638100C87D67 /* WorkoutSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSessionManager.swift; sourceTree = "<group>"; };
 		E56A55C52AB2BC7100A35BF3 /* Motic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Motic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E56A55C82AB2BC7100A35BF3 /* MoticApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticApp.swift; sourceTree = "<group>"; };
-		E56A55CA2AB2BC7100A35BF3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E56A55CA2AB2BC7100A35BF3 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		E56A55CC2AB2BC7300A35BF3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E56A55CF2AB2BC7300A35BF3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E56A55D52AB2BC7300A35BF3 /* MoticTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoticTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,6 +142,7 @@
 		E59EB8502AB5ED020057F630 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		E59EB8522AB5EE650057F630 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		E59EB8542AB5F2F70057F630 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		E59EB8562AB5F76A0057F630 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		F94F05AD57F2E461B5D138DA /* Pods_MoticWatch_Watch_App_MoticWatch_Watch_AppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoticWatch_Watch_App_MoticWatch_Watch_AppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -280,11 +282,11 @@
 		E56A55C72AB2BC7100A35BF3 /* Motic */ = {
 			isa = PBXGroup;
 			children = (
+				E59EB8552AB5F7500057F630 /* MainView */,
 				E59EB8542AB5F2F70057F630 /* Info.plist */,
 				E59EB84B2AB5E2770057F630 /* Managers */,
 				E56A55F22AB2C03000A35BF3 /* Motic.entitlements */,
 				E56A55C82AB2BC7100A35BF3 /* MoticApp.swift */,
-				E56A55CA2AB2BC7100A35BF3 /* ContentView.swift */,
 				E56A55CC2AB2BC7300A35BF3 /* Assets.xcassets */,
 				E59EB8462AB58BDD0057F630 /* Onboarding */,
 				E56A55CE2AB2BC7300A35BF3 /* Preview Content */,
@@ -335,6 +337,15 @@
 				E59EB8522AB5EE650057F630 /* NotificationManager.swift */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		E59EB8552AB5F7500057F630 /* MainView */ = {
+			isa = PBXGroup;
+			children = (
+				E56A55CA2AB2BC7100A35BF3 /* MainView.swift */,
+				E59EB8562AB5F76A0057F630 /* MainViewModel.swift */,
+			);
+			path = MainView;
 			sourceTree = "<group>";
 		};
 		EB11988EA2B5C753E8AD56E0 /* Pods */ = {
@@ -750,12 +761,13 @@
 			files = (
 				E59EB84A2AB5934E0057F630 /* OnboardingViewModel.swift in Sources */,
 				E59EB84D2AB5E29F0057F630 /* HealthStoreManager.swift in Sources */,
-				E56A55CB2AB2BC7100A35BF3 /* ContentView.swift in Sources */,
+				E56A55CB2AB2BC7100A35BF3 /* MainView.swift in Sources */,
 				E59EB8512AB5ED020057F630 /* LocationManager.swift in Sources */,
 				E50163F62AB333F100C87D67 /* MessageViewModel.swift in Sources */,
 				E59EB8482AB58BF20057F630 /* Onboarding.swift in Sources */,
 				E59EB8532AB5EE650057F630 /* NotificationManager.swift in Sources */,
 				E56A55C92AB2BC7100A35BF3 /* MoticApp.swift in Sources */,
+				E59EB8572AB5F76A0057F630 /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

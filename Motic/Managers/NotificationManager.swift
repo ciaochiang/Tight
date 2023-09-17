@@ -12,11 +12,11 @@ class NotificationManager: ObservableObject {
   @Published var isGranted: Bool = false
   
   func requestNotificationAuthorization(completion: @escaping (Bool) -> ()) {
-    #if DEBUG
-    completion(true)
-    return
-    #else
-    
+//    #if DEBUG
+//    completion(true)
+//    return
+//    #else
+//
     UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
       if granted {
         print("Notification permission granted.")
@@ -29,6 +29,6 @@ class NotificationManager: ObservableObject {
       
       completion(true)
     }
-    #endif
+//    #endif
   }
 }
