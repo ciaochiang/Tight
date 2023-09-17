@@ -9,7 +9,8 @@ import SwiftUI
 import HealthKit
 
 struct MainView: View {
-  @StateObject var viewModel: MainViewModel = MainViewModel()
+  @StateObject var viewModel: MainViewModel = MainViewModel(
+    dependency: MainViewModelDependencyImp(logger: Logger(configuration: AppConfiguration.loggerConfig)))
   
   var body: some View {
     ZStack {
