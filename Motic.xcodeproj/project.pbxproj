@@ -35,7 +35,7 @@
 		E56A55DA2AB2BC7300A35BF3 /* MoticTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55D92AB2BC7300A35BF3 /* MoticTests.swift */; };
 		E56A55E42AB2BC7300A35BF3 /* MoticUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55E32AB2BC7300A35BF3 /* MoticUITests.swift */; };
 		E56A55E62AB2BC7300A35BF3 /* MoticUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55E52AB2BC7300A35BF3 /* MoticUITestsLaunchTests.swift */; };
-		E59EB8482AB58BF20057F630 /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8472AB58BF20057F630 /* Onboarding.swift */; };
+		E59EB8482AB58BF20057F630 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8472AB58BF20057F630 /* OnboardingView.swift */; };
 		E59EB84A2AB5934E0057F630 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8492AB5934E0057F630 /* OnboardingViewModel.swift */; };
 		E59EB84D2AB5E29F0057F630 /* HealthStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB84C2AB5E29F0057F630 /* HealthStoreManager.swift */; };
 		E59EB8512AB5ED020057F630 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8502AB5ED020057F630 /* LocationManager.swift */; };
@@ -144,7 +144,7 @@
 		E56A55E32AB2BC7300A35BF3 /* MoticUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticUITests.swift; sourceTree = "<group>"; };
 		E56A55E52AB2BC7300A35BF3 /* MoticUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E56A55F22AB2C03000A35BF3 /* Motic.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Motic.entitlements; sourceTree = "<group>"; };
-		E59EB8472AB58BF20057F630 /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
+		E59EB8472AB58BF20057F630 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		E59EB8492AB5934E0057F630 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		E59EB84C2AB5E29F0057F630 /* HealthStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStoreManager.swift; sourceTree = "<group>"; };
 		E59EB8502AB5ED020057F630 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
@@ -272,6 +272,15 @@
 			path = HealthStore;
 			sourceTree = "<group>";
 		};
+		E521001D2AB72F78000CF3AD /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				E59EB8462AB58BDD0057F630 /* Onboarding */,
+				E59EB8552AB5F7500057F630 /* Main */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
 		E56A55BC2AB2BC7100A35BF3 = {
 			isa = PBXGroup;
 			children = (
@@ -303,15 +312,14 @@
 		E56A55C72AB2BC7100A35BF3 /* Motic */ = {
 			isa = PBXGroup;
 			children = (
-				E59EB85B2AB6B4050057F630 /* Logger */,
-				E59EB8582AB6A9290057F630 /* Calculator */,
-				E59EB8552AB5F7500057F630 /* MainView */,
-				E59EB8542AB5F2F70057F630 /* Info.plist */,
-				E59EB84B2AB5E2770057F630 /* Managers */,
 				E56A55F22AB2C03000A35BF3 /* Motic.entitlements */,
 				E56A55C82AB2BC7100A35BF3 /* MoticApp.swift */,
+				E59EB8542AB5F2F70057F630 /* Info.plist */,
 				E56A55CC2AB2BC7300A35BF3 /* Assets.xcassets */,
-				E59EB8462AB58BDD0057F630 /* Onboarding */,
+				E521001D2AB72F78000CF3AD /* Scenes */,
+				E59EB85B2AB6B4050057F630 /* Logger */,
+				E59EB8582AB6A9290057F630 /* Calculator */,
+				E59EB84B2AB5E2770057F630 /* Managers */,
 				E56A55CE2AB2BC7300A35BF3 /* Preview Content */,
 				E50163F52AB333F100C87D67 /* MessageViewModel.swift */,
 			);
@@ -346,7 +354,7 @@
 		E59EB8462AB58BDD0057F630 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				E59EB8472AB58BF20057F630 /* Onboarding.swift */,
+				E59EB8472AB58BF20057F630 /* OnboardingView.swift */,
 				E59EB8492AB5934E0057F630 /* OnboardingViewModel.swift */,
 			);
 			path = Onboarding;
@@ -362,13 +370,13 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
-		E59EB8552AB5F7500057F630 /* MainView */ = {
+		E59EB8552AB5F7500057F630 /* Main */ = {
 			isa = PBXGroup;
 			children = (
 				E56A55CA2AB2BC7100A35BF3 /* MainView.swift */,
 				E59EB8562AB5F76A0057F630 /* MainViewModel.swift */,
 			);
-			path = MainView;
+			path = Main;
 			sourceTree = "<group>";
 		};
 		E59EB8582AB6A9290057F630 /* Calculator */ = {
@@ -805,7 +813,7 @@
 				E56A55CB2AB2BC7100A35BF3 /* MainView.swift in Sources */,
 				E59EB8512AB5ED020057F630 /* LocationManager.swift in Sources */,
 				E50163F62AB333F100C87D67 /* MessageViewModel.swift in Sources */,
-				E59EB8482AB58BF20057F630 /* Onboarding.swift in Sources */,
+				E59EB8482AB58BF20057F630 /* OnboardingView.swift in Sources */,
 				E59EB8532AB5EE650057F630 /* NotificationManager.swift in Sources */,
 				E52100182AB7204A000CF3AD /* BaseSample.swift in Sources */,
 				E56A55C92AB2BC7100A35BF3 /* MoticApp.swift in Sources */,

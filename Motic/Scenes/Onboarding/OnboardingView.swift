@@ -1,5 +1,5 @@
 //
-//  Onboarding.swift
+//  OnboardingView.swift
 //  Motic
 //
 //  Created by Ciao Chiang on 2023/9/16.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Onboarding: View {
+struct OnboardingView: View {
   // Onboarding states:
   /*
    0 - Welcome screen
@@ -48,14 +48,14 @@ struct Onboarding: View {
   }
 }
 
-struct Onboarding_Previews: PreviewProvider {
+struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
-        Onboarding()
+      OnboardingView()
     }
 }
 
 // MARK: COMPONENTS
-extension Onboarding {
+extension OnboardingView {
   private var bottomButton: some View {
     Text(viewModel.state.buttonTitle)
       .font(.headline)
@@ -228,7 +228,7 @@ extension Onboarding {
 
 
 // MARK: FUNCTIONS
-extension Onboarding {
+extension OnboardingView {
   func handleNextButtonPressed() {
     withAnimation(.spring()) {
       viewModel.handleButtonAction(with: viewModel.state)
