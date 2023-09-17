@@ -224,8 +224,8 @@
 		E50163C72AB2E90500C87D67 /* MoticWatch Watch App */ = {
 			isa = PBXGroup;
 			children = (
-				E50163F42AB30A4600C87D67 /* MoticWatch Watch App.entitlements */,
 				E50163C82AB2E90500C87D67 /* MoticWatchApp.swift */,
+				E50163F42AB30A4600C87D67 /* MoticWatch Watch App.entitlements */,
 				E50163CA2AB2E90500C87D67 /* ContentView.swift */,
 				E50163CC2AB2E90600C87D67 /* Assets.xcassets */,
 				E50163CE2AB2E90600C87D67 /* Preview Content */,

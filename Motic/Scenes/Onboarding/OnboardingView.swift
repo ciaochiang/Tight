@@ -22,28 +22,28 @@ struct OnboardingView: View {
   
   var body: some View {
     ZStack {
-      // Content
-      ZStack {
-        switch viewModel.state {
-        case .welcome: welcomeSection.transition(transition)
-        case .requestHealthKitPermission: authorizeHealthKitSection.transition(transition)
-        case .requestLocationPermission: locationSeciton.transition(transition)
-        case .requestNotificationPermission: notificationSection.transition(transition)
-        case .done: doneSection.transition(transition)
-        }
-      }
-      .drawingGroup()
-      
-      
-      // Button
       VStack {
-        Spacer()
+        // Content
+        ZStack {
+          switch viewModel.state {
+          case .welcome: welcomeSection.transition(transition)
+          case .requestHealthKitPermission: authorizeHealthKitSection.transition(transition)
+          case .requestLocationPermission: locationSeciton.transition(transition)
+          case .requestNotificationPermission: notificationSection.transition(transition)
+          case .done: doneSection.transition(transition)
+          }
+        }
+        .drawingGroup()
+        
         bottomButton
       }
       .padding(30)
     }
     .background(
-      Color.purple.ignoresSafeArea()
+      LinearGradient(
+        gradient: Gradient(colors: [Color(#colorLiteral(red: 0.2155034244, green: 0.1681891978, blue: 0.6775737405, alpha: 1)), Color(#colorLiteral(red: 0.5557671189, green: 0.3490214944, blue: 0.8648703694, alpha: 1))]),
+        startPoint: .topTrailing,
+        endPoint: .bottomLeading).ignoresSafeArea()
     )
   }
 }
@@ -71,16 +71,11 @@ extension OnboardingView {
   }
   
   private var welcomeSection: some View {
-    VStack(spacing: 24) {
+    VStack(spacing: 60) {
       Spacer()
-      Image(systemName: "figure.run.square.stack.fill")
-        .resizable()
-        .scaledToFit()
-        .frame(width: 200, height: 200)
-        .foregroundColor(.white)
-      
-      Text("Celebrate Every Stribe")
+      Text("Motic")
         .textCase(.uppercase)
+        .font(.largeTitle)
         .fontWeight(.semibold)
         .foregroundColor(.white)
         .overlay(
@@ -90,19 +85,19 @@ extension OnboardingView {
             .foregroundColor(.white)
           , alignment: .bottom
         )
-      
-      Text("Lace up those sneakers and hit the pavement! Our app is your running buddy, guiding you through exhilarating workouts, tracking your progress, and celebrating every milestone along the way.")
+      Spacer()
+      Text("Lace up those sneakers and hit the pavement!")
+        .textCase(.uppercase)
+        .font(.headline)
         .fontWeight(.medium)
         .foregroundColor(.white)
         .multilineTextAlignment(.center)
-      Spacer()
-      Spacer()
     }
     .padding(30)
   }
   
   private var authorizeHealthKitSection: some View {
-    VStack(spacing: 24) {
+    VStack(spacing: 60) {
       Spacer()
       Image(systemName: "heart.text.square.fill")
         .resizable()
@@ -110,30 +105,18 @@ extension OnboardingView {
         .frame(width: 200, height: 200)
         .foregroundColor(.white)
       
-      Text("Let's Get Moving")
-        .textCase(.uppercase)
-        .fontWeight(.semibold)
-        .foregroundColor(.white)
-        .overlay(
-          Capsule(style: .continuous)
-            .frame(height: 3)
-            .offset(y: 5)
-            .foregroundColor(.white)
-          , alignment: .bottom
-        )
-      
+      Spacer()
       Text("Once you give us the green light, we'll start bringing in all the fitness data you need, like your heart rate, activity levels, and more. We'll use this info to tailor your experience and provide you with personalized tips and encouragement.")
         .fontWeight(.medium)
         .foregroundColor(.white)
         .multilineTextAlignment(.center)
-      Spacer()
-      Spacer()
     }
+    .frame(maxWidth: .infinity)
     .padding(30)
   }
   
   private var locationSeciton: some View {
-    VStack(spacing: 24) {
+    VStack(spacing: 60) {
       Spacer()
       Image(systemName: "location.fill")
         .resizable()
@@ -152,14 +135,13 @@ extension OnboardingView {
             .foregroundColor(.white)
           , alignment: .bottom
         )
-      
+      Spacer()
       Text("blah blah blah")
         .fontWeight(.medium)
         .foregroundColor(.white)
         .multilineTextAlignment(.center)
-      Spacer()
-      Spacer()
     }
+    .frame(maxWidth: .infinity)
     .padding(30)
   }
   
@@ -184,13 +166,13 @@ extension OnboardingView {
           , alignment: .bottom
         )
       
+      Spacer()
       Text("blah blah blah")
         .fontWeight(.medium)
         .foregroundColor(.white)
         .multilineTextAlignment(.center)
-      Spacer()
-      Spacer()
     }
+    .frame(maxWidth: .infinity)
     .padding(30)
   }
   
@@ -215,13 +197,13 @@ extension OnboardingView {
           , alignment: .bottom
         )
       
+      Spacer()
       Text("Now you can start the jounry for this app.")
         .fontWeight(.medium)
         .foregroundColor(.white)
         .multilineTextAlignment(.center)
-      Spacer()
-      Spacer()
     }
+    .frame(maxWidth: .infinity)
     .padding(30)
   }
 }
