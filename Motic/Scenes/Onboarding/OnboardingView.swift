@@ -6,6 +6,26 @@
 //
 
 import SwiftUI
+import AuthenticationServices
+
+struct AppleUser: Codable {
+  let userId: String
+  let firstName: String
+  let lastName: String
+  let email: String
+  
+  init?(credential: ASAuthorizationAppleIDCredential) {
+    guard let firstName = credential.fullName?.givenName,
+          let lastName = credential.fullName?.familyName,
+          let email = credential.email
+    else { return nil }
+    
+    self.userId = credential.user
+    self.firstName = firstName
+    self.lastName = lastName
+    self.email = email
+  }
+}
 
 struct OnboardingView: View {
   // Onboarding states:
@@ -35,7 +55,20 @@ struct OnboardingView: View {
         }
         .drawingGroup()
         
-        bottomButton
+        if viewModel.state == .welcome {
+          SignInWithAppleButton(
+              .continue,
+              onRequest: configure,
+              onCompletion: handle
+          )
+          .signInWithAppleButtonStyle(.white)
+          .frame(height: 48)
+          .frame(maxWidth: .infinity)
+          .cornerRadius(8)
+        } else {
+          bottomButton
+        }
+
       }
       .padding(30)
     }
@@ -45,6 +78,37 @@ struct OnboardingView: View {
         startPoint: .topTrailing,
         endPoint: .bottomLeading).ignoresSafeArea()
     )
+  }
+  
+  func configure(_ request: ASAuthorizationAppleIDRequest) {
+    request.requestedScopes = [.fullName, .email]
+  }
+  
+  func handle(_ authResult: Result<ASAuthorization, Error>) {
+    switch authResult {
+    case .success(let auth):
+      switch auth.credential {
+      case let appleIdCredential as ASAuthorizationAppleIDCredential:
+        if let appleUser = AppleUser(credential: appleIdCredential),
+            let appleUserData = try? JSONEncoder().encode(appleUser){
+          UserDefaults.standard.setValue(appleUserData, forKey: appleUser.userId)
+          print("saved apple user", appleUser)
+        } else {
+          print("missing some fields", appleIdCredential.email, appleIdCredential.fullName, appleIdCredential.user)
+          
+          guard let appleUserData = UserDefaults.standard.data(forKey: appleIdCredential.user),
+                let appleUser = try? JSONDecoder().decode(AppleUser.self, from: appleUserData)
+          else { return }
+          
+          print(appleUser)
+        }
+      default:
+        print(auth.credential)
+      }
+    case .failure(let error):
+      print("Error: \(error.localizedDescription)")
+
+    }
   }
 }
 
