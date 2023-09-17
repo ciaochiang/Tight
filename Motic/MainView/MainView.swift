@@ -13,17 +13,23 @@ struct MainView: View {
   
   var body: some View {
     ZStack {
-      VStack(spacing: 16) {
-        topBar
-        heartRateWidgetCard
-        zoneWidgetCard
-        MainViewSectionHeader(sectionTitle: "Activities")
-        Spacer()
-        bottomBar
+      ScrollView(showsIndicators: false) {
+        VStack(spacing: 16) {
+          topBar
+          heartRateWidgetCard
+          zoneWidgetCard
+          MainViewSectionHeader(sectionTitle: "Activities")
+          activitiesWidgetCard
+          Spacer()
+          bottomBar
+        }
+        .padding(30)
       }
-      .padding(30)
     }
     .background(Color.gray.ignoresSafeArea())
+    .onAppear {
+      viewModel.healthStoreManager.retrieveOneMonthActivities()
+    }
   }
 }
 
@@ -118,6 +124,34 @@ extension MainView {
     .background(Color.white)
     .cornerRadius(8)
     .shadow(radius: 12)
+  }
+  
+  var activitiesWidgetCard: some View {
+    VStack(spacing: 16) {
+      ForEach(viewModel.healthStoreManager.activities, id: \.self) { activity in
+        VStack {
+          HStack {
+            Image(systemName: "figure.indoor.cycle")
+              .foregroundColor(.pink)
+            Text("Indoor Cycling")
+              .font(.caption)
+              .foregroundColor(.black)
+            Spacer()
+          }
+          .padding(16)
+          .frame(height: 40)
+          
+          
+          HStack {
+            Text("Duration: xxxx s").font(.title2).foregroundColor(.black)
+          }
+        }
+        .frame(maxWidth: .infinity)
+        .background(Color.white)
+        .cornerRadius(8)
+        .shadow(radius: 12)
+      }
+    }
   }
 }
 
