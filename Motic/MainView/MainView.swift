@@ -107,9 +107,9 @@ extension MainView {
           .foregroundColor(.pink)
         Text("Zone").fontWeight(.medium).foregroundColor(.black)
         Spacer()
-        Text("Zone 1")
+        Text("\(viewModel.healthStoreManager.currentZone?.zoneName ?? "")")
           .font(.caption)
-          .foregroundColor(Color.secondary)
+          .foregroundColor(.black)
       }
       .padding(16)
     }

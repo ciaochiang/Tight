@@ -38,6 +38,16 @@ struct HeartRateSample<T, U>: BaseSample {
   var startDate: Date
   var endDate: Date
   
+  init() {
+    quantitySameple = HKQuantitySample(type: HKQuantityType(.heartRate),
+                                       quantity: HKQuantity(unit: HKUnit.count().unitDivided(by: HKUnit.minute()), doubleValue: 0.0),
+                                       start: Date(),
+                                       end: Date())
+    value = 0.0
+    startDate = Date()
+    endDate = Date()
+  }
+  
   init(sample: HKQuantitySample) {
     self.quantitySameple = sample
     
@@ -55,6 +65,8 @@ class HealthStoreManager: NSObject, ObservableObject {
   private let healthStore = HKHealthStore()
   private var heartRateObserverQuery: HKObserverQuery?
   @Published var latestHeartRate: HeartRateSample<HKQuantitySample, Double>
+  private var personalHeartRateZones: HeartRateZones
+  @Published var currentZone: Zone?
   
   @AppStorage("isHealthKitAuthorized") var isHealthKitAuthorized: Bool = false
   
@@ -74,8 +86,13 @@ class HealthStoreManager: NSObject, ObservableObject {
     HKObjectType.workoutType()
   ])
   
-  override init() {    
-    latestHeartRate = HeartRateSample(sample: HKQuantitySample(type: HKQuantityType(.heartRate), quantity: HKQuantity(unit: HKUnit.count().unitDivided(by: HKUnit.minute()), doubleValue: 0.0), start: Date(), end: Date()))
+  override init() {
+    let hearRate = HeartRateSample<HKQuantitySample, Double>()
+    self.latestHeartRate = hearRate
+    personalHeartRateZones = HeartRateZones(maxHeartRate: 190, age: 36)
+    let zone = personalHeartRateZones.getCurrentZone(heartRate: hearRate)
+    print(zone)
+    currentZone = zone
   }
   
   enum ObjectType {
@@ -155,6 +172,7 @@ extension HealthStoreManager {
         
         DispatchQueue.main.async {
           self.latestHeartRate = HeartRateSample(sample: sample)
+          self.currentZone = self.personalHeartRateZones.getCurrentZone(heartRate: self.latestHeartRate)
         }
       }
     }
