@@ -39,6 +39,7 @@
 		E59EB8532AB5EE650057F630 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8522AB5EE650057F630 /* NotificationManager.swift */; };
 		E59EB8572AB5F76A0057F630 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8562AB5F76A0057F630 /* MainViewModel.swift */; };
 		E59EB85A2AB6A9530057F630 /* HeartRateZones.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8592AB6A9530057F630 /* HeartRateZones.swift */; };
+		E59EB85D2AB6B4150057F630 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB85C2AB6B4150057F630 /* Logger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,6 +146,7 @@
 		E59EB8542AB5F2F70057F630 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		E59EB8562AB5F76A0057F630 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		E59EB8592AB6A9530057F630 /* HeartRateZones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateZones.swift; sourceTree = "<group>"; };
+		E59EB85C2AB6B4150057F630 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		F94F05AD57F2E461B5D138DA /* Pods_MoticWatch_Watch_App_MoticWatch_Watch_AppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoticWatch_Watch_App_MoticWatch_Watch_AppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -284,6 +286,7 @@
 		E56A55C72AB2BC7100A35BF3 /* Motic */ = {
 			isa = PBXGroup;
 			children = (
+				E59EB85B2AB6B4050057F630 /* Logger */,
 				E59EB8582AB6A9290057F630 /* Calculator */,
 				E59EB8552AB5F7500057F630 /* MainView */,
 				E59EB8542AB5F2F70057F630 /* Info.plist */,
@@ -357,6 +360,14 @@
 				E59EB8592AB6A9530057F630 /* HeartRateZones.swift */,
 			);
 			path = Calculator;
+			sourceTree = "<group>";
+		};
+		E59EB85B2AB6B4050057F630 /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				E59EB85C2AB6B4150057F630 /* Logger.swift */,
+			);
+			path = Logger;
 			sourceTree = "<group>";
 		};
 		EB11988EA2B5C753E8AD56E0 /* Pods */ = {
@@ -771,6 +782,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E59EB84A2AB5934E0057F630 /* OnboardingViewModel.swift in Sources */,
+				E59EB85D2AB6B4150057F630 /* Logger.swift in Sources */,
 				E59EB84D2AB5E29F0057F630 /* HealthStoreManager.swift in Sources */,
 				E56A55CB2AB2BC7100A35BF3 /* MainView.swift in Sources */,
 				E59EB8512AB5ED020057F630 /* LocationManager.swift in Sources */,
