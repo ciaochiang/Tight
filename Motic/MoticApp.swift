@@ -11,8 +11,11 @@ import SwiftUI
 struct MoticApp: App {
     var body: some Scene {
         WindowGroup {
+          if AccountManager.shared.isLoggedIn {
+            MainView()
+          } else {
             OnboardingView()
-//          MainView()
+          }
         }
     }
 }
