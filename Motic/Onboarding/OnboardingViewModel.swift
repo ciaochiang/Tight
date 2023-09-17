@@ -53,7 +53,8 @@ extension OnboardingViewModel {
   }
   
   private func requestHealthKitPermission() {
-    let healthStoreManager = HealthStoreManager()
+    let dependency = HealthStoreManagerDependencyImp(logger: Logger(configuration: AppConfiguration.loggerConfig))
+    let healthStoreManager = HealthStoreManager(dependency: dependency)
     healthStoreManager.authorizeHealthKit { [weak self] completed in
       self?.nextState()
     }

@@ -25,6 +25,8 @@
 		E50163F82AB346BD00C87D67 /* WatchConnectivityProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163F72AB346BD00C87D67 /* WatchConnectivityProvider.swift */; };
 		E50163FA2AB460F500C87D67 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163F92AB460F500C87D67 /* ContentViewModel.swift */; };
 		E50163FC2AB4638100C87D67 /* WorkoutSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163FB2AB4638100C87D67 /* WorkoutSessionManager.swift */; };
+		E52100182AB7204A000CF3AD /* BaseSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52100172AB7204A000CF3AD /* BaseSample.swift */; };
+		E521001A2AB72069000CF3AD /* HeartRateSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52100192AB72069000CF3AD /* HeartRateSample.swift */; };
 		E56A55C92AB2BC7100A35BF3 /* MoticApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55C82AB2BC7100A35BF3 /* MoticApp.swift */; };
 		E56A55CB2AB2BC7100A35BF3 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55CA2AB2BC7100A35BF3 /* MainView.swift */; };
 		E56A55CD2AB2BC7300A35BF3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E56A55CC2AB2BC7300A35BF3 /* Assets.xcassets */; };
@@ -127,6 +129,8 @@
 		E50163F72AB346BD00C87D67 /* WatchConnectivityProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityProvider.swift; sourceTree = "<group>"; };
 		E50163F92AB460F500C87D67 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		E50163FB2AB4638100C87D67 /* WorkoutSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSessionManager.swift; sourceTree = "<group>"; };
+		E52100172AB7204A000CF3AD /* BaseSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSample.swift; sourceTree = "<group>"; };
+		E52100192AB72069000CF3AD /* HeartRateSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateSample.swift; sourceTree = "<group>"; };
 		E56A55C52AB2BC7100A35BF3 /* Motic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Motic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E56A55C82AB2BC7100A35BF3 /* MoticApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticApp.swift; sourceTree = "<group>"; };
 		E56A55CA2AB2BC7100A35BF3 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -255,6 +259,16 @@
 			path = "MoticWatch Watch AppUITests";
 			sourceTree = "<group>";
 		};
+		E52100162AB72031000CF3AD /* HealthStore */ = {
+			isa = PBXGroup;
+			children = (
+				E59EB84C2AB5E29F0057F630 /* HealthStoreManager.swift */,
+				E52100172AB7204A000CF3AD /* BaseSample.swift */,
+				E52100192AB72069000CF3AD /* HeartRateSample.swift */,
+			);
+			path = HealthStore;
+			sourceTree = "<group>";
+		};
 		E56A55BC2AB2BC7100A35BF3 = {
 			isa = PBXGroup;
 			children = (
@@ -338,7 +352,7 @@
 		E59EB84B2AB5E2770057F630 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				E59EB84C2AB5E29F0057F630 /* HealthStoreManager.swift */,
+				E52100162AB72031000CF3AD /* HealthStore */,
 				E59EB8502AB5ED020057F630 /* LocationManager.swift */,
 				E59EB8522AB5EE650057F630 /* NotificationManager.swift */,
 			);
@@ -789,9 +803,11 @@
 				E50163F62AB333F100C87D67 /* MessageViewModel.swift in Sources */,
 				E59EB8482AB58BF20057F630 /* Onboarding.swift in Sources */,
 				E59EB8532AB5EE650057F630 /* NotificationManager.swift in Sources */,
+				E52100182AB7204A000CF3AD /* BaseSample.swift in Sources */,
 				E56A55C92AB2BC7100A35BF3 /* MoticApp.swift in Sources */,
 				E59EB85A2AB6A9530057F630 /* HeartRateZones.swift in Sources */,
 				E59EB8572AB5F76A0057F630 /* MainViewModel.swift in Sources */,
+				E521001A2AB72069000CF3AD /* HeartRateSample.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

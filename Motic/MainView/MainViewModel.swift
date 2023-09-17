@@ -11,12 +11,15 @@ import SwiftUI
 import Combine
 
 class MainViewModel: ObservableObject {
-  @Published var healthStoreManager: HealthStoreManager = HealthStoreManager()
+  @Published var healthStoreManager: HealthStoreManager
   @Published var isHeartRateAuthoized: HKAuthorizationStatus = .notDetermined
   
   var cancellable : AnyCancellable?
   
   init() {
+    let dependency = HealthStoreManagerDependencyImp(logger: Logger(configuration: AppConfiguration.loggerConfig))
+    healthStoreManager = HealthStoreManager(dependency: dependency)
+    
     checkAllAuthoizationStatus()
     cancellable = healthStoreManager.objectWillChange.sink { [weak self] (_) in
       self?.objectWillChange.send()
@@ -33,18 +36,4 @@ class MainViewModel: ObservableObject {
       print("not determined")
     }
   }
-  
-  
-//  func checkHKSampleTypeAuthorization(with sampleType: HealthStoreManager.SampleType) ->  {
-//    let status = healthStoreManager.checkIsAuthorized(with: sampleType)
-//    if status == .notDetermined {
-//      print("not determined")
-//    } else if status == .sharingAuthorized {
-//      print("sharing authorized")
-//    } else if status == .sharingDenied {
-//      print("sharing denied")
-//    } else {
-//      // do nothing
-//    }
-//  }
 }

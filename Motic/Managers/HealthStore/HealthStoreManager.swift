@@ -8,64 +8,25 @@
 import HealthKit
 import SwiftUI
 
-protocol BaseSample {
-  associatedtype SampleType
-  associatedtype SampleValueType
-  
-  var quantitySameple: SampleType { get }
-  var value: SampleValueType { get }
-  var startDate: Date { get }
-  var endDate: Date { get }
-  
-  func getTimeString(from: Date, with timezone: TimeZone) -> String
+protocol HealthStoreManagerDependency {
+  var logger: Logger { get }
 }
 
-extension BaseSample {
-  func getTimeString(from: Date, with timezone: TimeZone = .current) -> String {
-    let dateFormmater = DateFormatter()
-    dateFormmater.dateFormat = "yyyy-MM-dd HH:mm:ss"
-    dateFormmater.timeZone = timezone
-    return dateFormmater.string(from: from)
-  }
-}
-
-struct HeartRateSample<T, U>: BaseSample {
-  typealias SampleType = HKQuantitySample
-  typealias SampleValueType = Double
+class HealthStoreManagerDependencyImp: HealthStoreManagerDependency {
+  var logger: Logger
   
-  var quantitySameple: HKQuantitySample
-  var value: Double
-  var startDate: Date
-  var endDate: Date
-  
-  init() {
-    quantitySameple = HKQuantitySample(type: HKQuantityType(.heartRate),
-                                       quantity: HKQuantity(unit: HKUnit.count().unitDivided(by: HKUnit.minute()), doubleValue: 0.0),
-                                       start: Date(),
-                                       end: Date())
-    value = 0.0
-    startDate = Date()
-    endDate = Date()
-  }
-  
-  init(sample: HKQuantitySample) {
-    self.quantitySameple = sample
-    
-    let heartRateUnit = HKUnit.count().unitDivided(by: HKUnit.minute())
-    let heartRate = sample.quantity.doubleValue(for: heartRateUnit)
-    print("Heart Rate: \(heartRate)")
-    
-    self.value = heartRate
-    self.startDate = sample.startDate
-    self.endDate = sample.endDate
+  init(logger: Logger) {
+    self.logger = logger
   }
 }
 
 class HealthStoreManager: NSObject, ObservableObject {
+  private let dependency: HealthStoreManagerDependency
   private let healthStore = HKHealthStore()
   private var heartRateObserverQuery: HKObserverQuery?
-  @Published var latestHeartRate: HeartRateSample<HKQuantitySample, Double>
   private var personalHeartRateZones: HeartRateZones
+  
+  @Published var latestHeartRate: HeartRateSample<HKQuantitySample, Double>
   @Published var currentZone: Zone?
   @Published var activities: [HKWorkout] = []
   
@@ -87,15 +48,6 @@ class HealthStoreManager: NSObject, ObservableObject {
     HKObjectType.workoutType()
   ])
   
-  override init() {
-    let hearRate = HeartRateSample<HKQuantitySample, Double>()
-    self.latestHeartRate = hearRate
-    personalHeartRateZones = HeartRateZones(maxHeartRate: 190, age: 36)
-    
-    let zone = personalHeartRateZones.getCurrentZone(heartRate: hearRate)
-    currentZone = zone
-  }
-  
   enum ObjectType {
     case biologicalSex
     case dateOfBirth
@@ -114,38 +66,49 @@ class HealthStoreManager: NSObject, ObservableObject {
     }
   }
   
-  /// Get specific authorization status by  custom ObjectType
+  init(dependency: HealthStoreManagerDependency) {
+    self.dependency = dependency
+    
+    let hearRate = HeartRateSample<HKQuantitySample, Double>()
+    self.latestHeartRate = hearRate
+    personalHeartRateZones = HeartRateZones(maxHeartRate: 190, age: 36)
+    
+    let zone = personalHeartRateZones.getCurrentZone(heartRate: hearRate)
+    currentZone = zone
+  }
+}
+
+// MARK: Authorization Functions
+extension HealthStoreManager {
+  /// Get specific authorization status thorugh custom ObjectType enum
   ///
   /// - Parameter objectType: This is a custom enum of HKObjectType
-  /// - Returns: Returns HKAuthorizationStatus
+  /// - Returns: Returns a HKAuthorizationStatus
   func checkIsAuthorized(objectType: ObjectType) -> HKAuthorizationStatus {
     return healthStore.authorizationStatus(for: objectType.objectType)
   }
   
   func authorizeHealthKit(completion: @escaping (Bool) -> ()) {
-    if HKHealthStore.isHealthDataAvailable() {
-      healthStore.requestAuthorization(toShare: infoToWrite, read: infoToRead) { (success, error) in
-        if success {
-          // Do nothing
-          self.isHealthKitAuthorized = true
-        } else {
-          // Handle authorization failure
-          print("HealthKit authorization denied.")
-          self.isHealthKitAuthorized = false
-        }
-        
-        completion(true)
+    guard HKHealthStore.isHealthDataAvailable() else {
+      self.isHealthKitAuthorized = false
+      completion(true)
+      return
+    }
+    
+    healthStore.requestAuthorization(toShare: infoToWrite, read: infoToRead) { (success, error) in
+      if success {
+        self.isHealthKitAuthorized = true
+      } else {
+        // Handle authorization failure
+        self.isHealthKitAuthorized = false
       }
       
-    } else {
-      print("Health data is not supported.")
-      self.isHealthKitAuthorized = false
       completion(true)
     }
   }
 }
 
-// MARK: FUNCTIONS
+// MARK: Heart Rate Function
 extension HealthStoreManager {
   func stopObserveHeartRateSamples() {
     if let observerQuery = heartRateObserverQuery {
@@ -207,7 +170,8 @@ extension HealthStoreManager {
   }
 }
 
-// MARK: WORKOUT SESSIONS
+
+// MARK: Workout Functions
 extension HealthStoreManager {
   func retrieveOneMonthActivities() {
     // Test
@@ -243,5 +207,33 @@ extension HealthStoreManager {
     
     // Execute the query
     healthStore.execute(query)
+  }
+}
+
+// MARK: Cycling
+extension HealthStoreManager {
+  func calculateWattage(forCyclingActivity cyclingActivity: HKWorkout) -> Double? {
+    // Check if the activity type is cycling
+    guard cyclingActivity.workoutActivityType == .cycling else {
+        return nil
+    }
+    
+    // Extract relevant data from the workout
+    if let distance = cyclingActivity.totalDistance?.doubleValue(for: .meter()) {
+        
+      // Constants for typical cycling calculations
+      let riderWeightKg = 70.0  // Rider's weight in kilograms
+      let rollingResistanceCoefficient = 0.004  // Typical value for road cycling
+        
+      // Calculate speed in meters per second
+      let speed = distance / cyclingActivity.duration
+        
+      // Calculate power in watts (wattage)
+      let power = (0.5 * rollingResistanceCoefficient * speed * speed * riderWeightKg * 9.81)
+      
+      return power
+    }
+    
+    return nil
   }
 }

@@ -5,7 +5,6 @@
 //  Created by Ciao Chiang on 2023/9/16.
 //
 
-import Foundation
 import CoreLocation
 
 class LocationManager: NSObject, ObservableObject {
