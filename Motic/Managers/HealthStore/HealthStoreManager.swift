@@ -29,7 +29,7 @@ class HealthStoreManager: NSObject, ObservableObject {
   @Published var latestHeartRate: HeartRateSample<HKQuantitySample, Double>
   @Published var currentZone: Zone?
   @Published var activities: [HKWorkout] = []
-  
+
   @AppStorage("isHealthKitAuthorized") var isHealthKitAuthorized: Bool = false
   
   let infoToRead = Set([
@@ -84,7 +84,7 @@ extension HealthStoreManager {
   ///
   /// - Parameter objectType: This is a custom enum of HKObjectType
   /// - Returns: Returns a HKAuthorizationStatus
-  func checkIsAuthorized(objectType: ObjectType) -> HKAuthorizationStatus {
+  func getAthorizationStatus(objectType: ObjectType) -> HKAuthorizationStatus {
     return healthStore.authorizationStatus(for: objectType.objectType)
   }
   

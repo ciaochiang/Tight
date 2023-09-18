@@ -25,7 +25,7 @@ class MainViewModelDependencyImp: MainViewModelDependency {
 class MainViewModel: ObservableObject {
   var dependency: MainViewModelDependency
   @Published var healthStoreManager: HealthStoreManager
-  @Published var isHeartRateAuthoized: HKAuthorizationStatus = .notDetermined
+  @Published var isHeartRateAuthorized: Bool = false
   
   var cancellable : AnyCancellable?
   
@@ -35,20 +35,20 @@ class MainViewModel: ObservableObject {
     let storeDependency = HealthStoreManagerDependencyImp(logger: dependency.logger)
     healthStoreManager = HealthStoreManager(dependency: storeDependency)
     
-    checkAllAuthoizationStatus()
     cancellable = healthStoreManager.objectWillChange.sink { [weak self] (_) in
-      self?.objectWillChange.send()
+      DispatchQueue.main.async {
+        self?.objectWillChange.send()
+      }
     }
-  }
-  
-  func checkAllAuthoizationStatus() {
-    isHeartRateAuthoized = healthStoreManager.checkIsAuthorized(objectType: .heartRate)
-    if isHeartRateAuthoized == .sharingAuthorized {
-      dependency.logger.log("Health store sharing is authorized", level: .info)
-    } else if isHeartRateAuthoized == .sharingDenied {
-      dependency.logger.log("Health store sharing is denied", level: .warning)
+
+    // Start observe heart rate
+    let heartRateAuthorizationStatus = healthStoreManager.getAthorizationStatus(objectType: .heartRate)
+    if heartRateAuthorizationStatus == .sharingAuthorized {
+      isHeartRateAuthorized = true
+      healthStoreManager.startObserveHeartRateSamples()
     } else {
-      dependency.logger.log("Health store sharing is not determined", level: .warning)
+      isHeartRateAuthorized = false
+      healthStoreManager.stopObserveHeartRateSamples()
     }
   }
 }
