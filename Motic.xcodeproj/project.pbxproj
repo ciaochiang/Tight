@@ -15,7 +15,7 @@
 		E50163E42AB2E90700C87D67 /* MoticWatch_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163E32AB2E90700C87D67 /* MoticWatch_Watch_AppUITests.swift */; };
 		E50163E62AB2E90700C87D67 /* MoticWatch_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163E52AB2E90700C87D67 /* MoticWatch_Watch_AppUITestsLaunchTests.swift */; };
 		E50163E92AB2E90700C87D67 /* MoticWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = E50163C62AB2E90500C87D67 /* MoticWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		E50163F62AB333F100C87D67 /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163F52AB333F100C87D67 /* MessageViewModel.swift */; };
+		E50163F62AB333F100C87D67 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163F52AB333F100C87D67 /* Connectivity.swift */; };
 		E50163F82AB346BD00C87D67 /* WatchConnectivityProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163F72AB346BD00C87D67 /* WatchConnectivityProvider.swift */; };
 		E50163FA2AB460F500C87D67 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163F92AB460F500C87D67 /* ContentViewModel.swift */; };
 		E50163FC2AB4638100C87D67 /* WorkoutSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163FB2AB4638100C87D67 /* WorkoutSessionManager.swift */; };
@@ -111,7 +111,7 @@
 		E50163E32AB2E90700C87D67 /* MoticWatch_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticWatch_Watch_AppUITests.swift; sourceTree = "<group>"; };
 		E50163E52AB2E90700C87D67 /* MoticWatch_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticWatch_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E50163F42AB30A4600C87D67 /* MoticWatch Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "MoticWatch Watch App.entitlements"; sourceTree = "<group>"; };
-		E50163F52AB333F100C87D67 /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
+		E50163F52AB333F100C87D67 /* Connectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
 		E50163F72AB346BD00C87D67 /* WatchConnectivityProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityProvider.swift; sourceTree = "<group>"; };
 		E50163F92AB460F500C87D67 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		E50163FB2AB4638100C87D67 /* WorkoutSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSessionManager.swift; sourceTree = "<group>"; };
@@ -243,6 +243,14 @@
 			path = "MoticWatch Watch AppUITests";
 			sourceTree = "<group>";
 		};
+		E51DE1EB2AB8684800957395 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				E50163F52AB333F100C87D67 /* Connectivity.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		E52100162AB72031000CF3AD /* HealthStore */ = {
 			isa = PBXGroup;
 			children = (
@@ -301,8 +309,8 @@
 				E59EB85B2AB6B4050057F630 /* Logger */,
 				E59EB8582AB6A9290057F630 /* Calculator */,
 				E59EB84B2AB5E2770057F630 /* Managers */,
+				E51DE1EB2AB8684800957395 /* Utils */,
 				E56A55CE2AB2BC7300A35BF3 /* Preview Content */,
-				E50163F52AB333F100C87D67 /* MessageViewModel.swift */,
 				E51DE1E92AB861DE00957395 /* GoogleService-Info.plist */,
 			);
 			path = Motic;
@@ -670,7 +678,7 @@
 				E56A55CB2AB2BC7100A35BF3 /* MainView.swift in Sources */,
 				E521001F2AB74D13000CF3AD /* AccountManager.swift in Sources */,
 				E59EB8512AB5ED020057F630 /* LocationManager.swift in Sources */,
-				E50163F62AB333F100C87D67 /* MessageViewModel.swift in Sources */,
+				E50163F62AB333F100C87D67 /* Connectivity.swift in Sources */,
 				E59EB8482AB58BF20057F630 /* OnboardingView.swift in Sources */,
 				E59EB8532AB5EE650057F630 /* NotificationManager.swift in Sources */,
 				E52100182AB7204A000CF3AD /* BaseSample.swift in Sources */,
