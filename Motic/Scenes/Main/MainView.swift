@@ -148,13 +148,13 @@ extension MainView {
       HStack {
         Image(systemName: "heart.fill")
           .resizable()
-          .foregroundColor(viewModel.isHeartRateAuthoized == .sharingAuthorized
+          .foregroundColor(viewModel.isHeartRateAuthorized
                            ? .themeStyle.theme.red
                            : .themeStyle.theme.secondaryTextColor)
           .frame(width: 12, height: 12)
           .scaledToFit()
         Text("Heart Rate")
-          .foregroundColor(viewModel.isHeartRateAuthoized == .sharingAuthorized
+          .foregroundColor(viewModel.isHeartRateAuthorized
                            ? .themeStyle.theme.primary
                            : .themeStyle.theme.secondaryTextColor)
           .font(.caption)
@@ -162,10 +162,12 @@ extension MainView {
       }
       .padding(16)
       HStack(spacing: 8) {
-        Text(viewModel.isHeartRateAuthoized == .sharingAuthorized ? "\(Int(viewModel.healthStoreManager.latestHeartRate.value))" : "0")
+        Text(viewModel.isHeartRateAuthorized
+             ? "\(Int(viewModel.healthStoreManager.latestHeartRate.value))"
+             : "0")
           .font(.title)
           .fontWeight(.bold)
-          .foregroundColor(viewModel.isHeartRateAuthoized == .sharingAuthorized
+          .foregroundColor(viewModel.isHeartRateAuthorized
                            ? .themeStyle.theme.red
                            : .themeStyle.theme.secondaryTextColor)
           .multilineTextAlignment(.center)
@@ -181,7 +183,7 @@ extension MainView {
     .background(Color.themeStyle.theme.secondaryBackground)
     .cornerRadius(16)
     .onTapGesture {
-      if viewModel.isHeartRateAuthoized != .sharingAuthorized {
+      if viewModel.isHeartRateAuthorized {
         // lead user to setting page
         if let url = URL(string: "x-apple-health://") {
                 if UIApplication.shared.canOpenURL(url) {
