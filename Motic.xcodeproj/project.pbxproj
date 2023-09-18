@@ -21,6 +21,7 @@
 		E50163FC2AB4638100C87D67 /* WorkoutSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163FB2AB4638100C87D67 /* WorkoutSessionManager.swift */; };
 		E51DE1E72AB8607200957395 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = E51DE1E62AB8607200957395 /* FirebaseCrashlytics */; };
 		E51DE1EA2AB861DE00957395 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E51DE1E92AB861DE00957395 /* GoogleService-Info.plist */; };
+		E51DE1EE2AB8998E00957395 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE1ED2AB8998E00957395 /* Color.swift */; };
 		E52100182AB7204A000CF3AD /* BaseSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52100172AB7204A000CF3AD /* BaseSample.swift */; };
 		E521001A2AB72069000CF3AD /* HeartRateSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52100192AB72069000CF3AD /* HeartRateSample.swift */; };
 		E521001C2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E521001B2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift */; };
@@ -116,6 +117,7 @@
 		E50163F92AB460F500C87D67 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		E50163FB2AB4638100C87D67 /* WorkoutSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSessionManager.swift; sourceTree = "<group>"; };
 		E51DE1E92AB861DE00957395 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E51DE1ED2AB8998E00957395 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		E52100172AB7204A000CF3AD /* BaseSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSample.swift; sourceTree = "<group>"; };
 		E52100192AB72069000CF3AD /* HeartRateSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateSample.swift; sourceTree = "<group>"; };
 		E521001B2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthStoreManager+HeartRate.swift"; sourceTree = "<group>"; };
@@ -251,6 +253,14 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		E51DE1EC2AB8998100957395 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E51DE1ED2AB8998E00957395 /* Color.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		E52100162AB72031000CF3AD /* HealthStore */ = {
 			isa = PBXGroup;
 			children = (
@@ -301,6 +311,7 @@
 		E56A55C72AB2BC7100A35BF3 /* Motic */ = {
 			isa = PBXGroup;
 			children = (
+				E51DE1EC2AB8998100957395 /* Extensions */,
 				E56A55F22AB2C03000A35BF3 /* Motic.entitlements */,
 				E56A55C82AB2BC7100A35BF3 /* MoticApp.swift */,
 				E59EB8542AB5F2F70057F630 /* Info.plist */,
@@ -676,6 +687,7 @@
 				E59EB85D2AB6B4150057F630 /* Logger.swift in Sources */,
 				E59EB84D2AB5E29F0057F630 /* HealthStoreManager.swift in Sources */,
 				E56A55CB2AB2BC7100A35BF3 /* MainView.swift in Sources */,
+				E51DE1EE2AB8998E00957395 /* Color.swift in Sources */,
 				E521001F2AB74D13000CF3AD /* AccountManager.swift in Sources */,
 				E59EB8512AB5ED020057F630 /* LocationManager.swift in Sources */,
 				E50163F62AB333F100C87D67 /* Connectivity.swift in Sources */,

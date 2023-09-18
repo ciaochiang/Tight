@@ -26,7 +26,7 @@ struct MainView: View {
       }
     }
     .background(
-      Color(UIColor.secondarySystemBackground).ignoresSafeArea()
+      Color.themeStyle.theme.background.ignoresSafeArea()
     )
   }
 }
@@ -44,11 +44,11 @@ extension MainView {
       VStack(alignment: .leading, spacing: 8) {
         Text("Welcome Back")
           .font(.subheadline)
-          .foregroundColor(.primary)
+          .foregroundColor(.themeStyle.theme.primary)
         Text("Ciao Chiang")
           .font(.title2)
           .fontWeight(.semibold)
-          .foregroundColor(.primary)
+          .foregroundColor(.themeStyle.theme.primary)
       }
 
       Spacer()
@@ -57,7 +57,6 @@ extension MainView {
         .foregroundColor(.black)
         .background(Color.white)
         .cornerRadius(30)
-        .shadow(color: Color(UIColor(white: 1, alpha: 0.7)), radius: 4)
     }
   }
   
@@ -67,23 +66,23 @@ extension MainView {
         Text("Working Out...")
           .font(.headline)
           .fontWeight(.bold)
-          .foregroundColor(.white)
+          .foregroundColor(.themeStyle.theme.white)
         Text("Indoor Cycling")
           .font(.subheadline)
           .fontWeight(.regular)
-          .foregroundColor(.accentColor)
+          .foregroundColor(.themeStyle.theme.accent)
       }
       Spacer()
       VStack(alignment: .center) {
         Text("1:30:20")
           .font(.title)
           .fontWeight(.bold)
-          .foregroundColor(.white)
+          .foregroundColor(.themeStyle.theme.accent)
       }
     }
     .padding(24)
     .frame(maxWidth: .infinity)
-    .background(Color.black)
+    .background(Color.themeStyle.theme.black)
     .cornerRadius(16)
   }
   
@@ -119,7 +118,7 @@ extension MainView {
       }
       .frame(height: 60)
       .frame(maxWidth: .infinity)
-      .foregroundColor(.white)
+      .foregroundColor(.themeStyle.theme.white)
       .background(Color.orange)
       .cornerRadius(8)
     }
@@ -133,7 +132,7 @@ struct MainViewSectionHeader: View {
     HStack {
       Text(sectionTitle)
         .font(.headline)
-        .foregroundColor(Color.primary)
+        .foregroundColor(.themeStyle.theme.primary)
       Spacer()
     }
     .frame(height: 60)
@@ -149,11 +148,15 @@ extension MainView {
       HStack {
         Image(systemName: "heart.fill")
           .resizable()
-          .foregroundColor(viewModel.isHeartRateAuthoized == .sharingAuthorized ? .pink : .gray)
+          .foregroundColor(viewModel.isHeartRateAuthoized == .sharingAuthorized
+                           ? .themeStyle.theme.red
+                           : .themeStyle.theme.secondaryTextColor)
           .frame(width: 12, height: 12)
           .scaledToFit()
         Text("Heart Rate")
-          .foregroundColor(viewModel.isHeartRateAuthoized == .sharingAuthorized ? .primary : .gray)
+          .foregroundColor(viewModel.isHeartRateAuthoized == .sharingAuthorized
+                           ? .themeStyle.theme.primary
+                           : .themeStyle.theme.secondaryTextColor)
           .font(.caption)
           .fontWeight(.semibold)
       }
@@ -162,7 +165,9 @@ extension MainView {
         Text(viewModel.isHeartRateAuthoized == .sharingAuthorized ? "\(Int(viewModel.healthStoreManager.latestHeartRate.value))" : "0")
           .font(.title)
           .fontWeight(.bold)
-          .foregroundColor(viewModel.isHeartRateAuthoized == .sharingAuthorized ? .pink : .gray)
+          .foregroundColor(viewModel.isHeartRateAuthoized == .sharingAuthorized
+                           ? .themeStyle.theme.red
+                           : .themeStyle.theme.secondaryTextColor)
           .multilineTextAlignment(.center)
         Text("BPM")
           .foregroundColor(.primary)
@@ -173,7 +178,7 @@ extension MainView {
       .padding(.bottom, 24)
     }
     .frame(maxWidth: .infinity)
-    .background(Color(UIColor.systemBackground))
+    .background(Color.themeStyle.theme.secondaryBackground)
     .cornerRadius(16)
     .onTapGesture {
       if viewModel.isHeartRateAuthoized != .sharingAuthorized {
@@ -192,11 +197,11 @@ extension MainView {
       HStack {
         Image(systemName: "flame.fill")
           .resizable()
-          .foregroundColor(.pink)
+          .foregroundColor(.themeStyle.theme.red)
           .frame(width: 12, height: 12)
           .scaledToFit()
         Text("Zone")
-          .foregroundColor(.primary)
+          .foregroundColor(.themeStyle.theme.primary)
           .font(.caption)
           .fontWeight(.semibold)
       }
@@ -205,14 +210,14 @@ extension MainView {
         Text("\(viewModel.healthStoreManager.currentZone?.zoneName ?? "Zone 1")")
           .font(.title)
           .fontWeight(.bold)
-          .foregroundColor(Color.pink)
+          .foregroundColor(.themeStyle.theme.red)
           .multilineTextAlignment(.center)
       }
       .frame(maxWidth: .infinity)
       .padding(.bottom, 24)
     }
     .frame(maxWidth: .infinity)
-    .background(Color(UIColor.systemBackground))
+    .background(Color.themeStyle.theme.secondaryBackground)
     .cornerRadius(16)
   }
 }
@@ -248,7 +253,7 @@ struct MainViewActivityCard: View {
     }
     .padding(16)
     .frame(maxWidth: .infinity)
-    .background(Color(UIColor.systemBackground))
+    .background(Color.themeStyle.theme.secondaryBackground)
     .cornerRadius(16)
   }
 }
