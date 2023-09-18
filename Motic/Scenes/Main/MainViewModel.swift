@@ -47,5 +47,8 @@ class MainViewModel: ObservableObject {
       isHeartRateAuthorized = true
       healthStoreManager.startObserveHeartRateSamples()
     }
+    
+    // Retrieve Workout Sesssions
+    healthStoreManager.retrieveOneMonthActivities()
   }
 }

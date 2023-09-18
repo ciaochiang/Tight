@@ -20,6 +20,25 @@ class HealthStoreManagerDependencyImp: HealthStoreManagerDependency {
   }
 }
 
+enum ActivityType {
+  case cycling
+  case unknown
+  
+  init(activityType: HKWorkoutActivityType) {
+    switch activityType {
+    case .cycling: self = .cycling
+    default: self = .unknown
+    }
+  }
+  
+  var description: String {
+    switch self {
+    case .cycling: return "Cycling"
+    case .unknown: return "Unknown"
+    }
+  }
+}
+
 class HealthStoreManager: NSObject, ObservableObject {
   let dependency: HealthStoreManagerDependency
   let healthStore = HKHealthStore()
@@ -120,10 +139,16 @@ extension HealthStoreManager {
     // Test
     let fromDate = Calendar.current.date(byAdding: .month, value: -1, to: Date())! // One month ago
     let toDate = Date()
-    retrieveWorkoutSessions(from: fromDate, to: toDate)
+    fetchWorkoutSessions(from: fromDate, to: toDate) { [weak self] workouts in
+      guard let self = self else { return }
+      
+      DispatchQueue.main.async {
+        self.activities = workouts
+      }
+    }
   }
   
-  func retrieveWorkoutSessions(from: Date, to: Date) {
+  func fetchWorkoutSessions(from: Date, to: Date, completion: @escaping ([HKWorkout]) -> ()) {
     let workoutType = HKSampleType.workoutType()
     let predicate = HKQuery.predicateForSamples(withStart: from, end: to, options: .strictStartDate)
 
@@ -134,19 +159,14 @@ extension HealthStoreManager {
                               sortDescriptors: [NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)]) { (query, results, error) in
       if let workoutSessions = results as? [HKWorkout] {
         self.dependency.logger.log("Workout activities is fetching succeed", level: .info)
-        DispatchQueue.main.async {
-          self.activities = workoutSessions
-        }
-      
-        for workoutSession in workoutSessions {
-            // Process each workout session
-            print("Workout Session: \(workoutSession)")
-        }
+        completion(workoutSessions)
       } else {
         // Handle the case where no workout sessions were found or an error occurred
         if let error = error {
           self.dependency.logger.log("Error fetching workout session: \(error.localizedDescription)", level: .error)
         }
+        
+        completion([])
       }
     }
     

@@ -101,8 +101,8 @@ extension MainView {
       MainViewSectionHeader(sectionTitle: "Activites")
       
       VStack(spacing: 16) {
-        ForEach(0..<4) { _ in
-          MainViewActivityCard()
+        ForEach(viewModel.healthStoreManager.activities, id: \.self) { activity in
+          MainViewActivityCard(activity: activity)
         }
       }
     }
@@ -230,6 +230,23 @@ struct MainViewActivityCard: View {
 //  init(activity: HKWorkout) {
 //    self.activtiy = activity
 //  }
+  @State var activity: HKWorkout
+  @State var activityType: String
+  @State var totalEnergyBurned: Double
+  
+  init(activity: HKWorkout) {
+    self.activity = activity
+    activityType = ActivityType(activityType: activity.workoutActivityType).description
+    
+    if let totalEnergyBurned = activity.totalEnergyBurned {
+      // Get the value in kilocalories (kcal)
+      let totalEnergyBurnedInKcal = totalEnergyBurned.doubleValue(for: HKUnit.kilocalorie())
+      self.totalEnergyBurned = totalEnergyBurnedInKcal
+    } else {
+        // The workout did not provide energy burned data
+      self.totalEnergyBurned = 0
+    }
+  }
   
   var body: some View {
     HStack(spacing: 16) {
@@ -239,13 +256,13 @@ struct MainViewActivityCard: View {
         .foregroundColor(Color(UIColor.systemPink))
         .frame(maxWidth: 16)
       VStack(alignment: .leading, spacing: 4) {
-        Text("Indoor Cycling")
+        Text(activityType)
           .font(.caption)
           .foregroundColor(.secondary)
-        Text("360.18 Kcal")
+        Text("\(totalEnergyBurned) Kcal")
           .fontWeight(.semibold)
           .foregroundColor(.primary)
-        Text("30 mins")
+        Text("\(Int(activity.duration / 60)) mins")
           .fontWeight(.semibold)
           .foregroundColor(.primary)
       }
