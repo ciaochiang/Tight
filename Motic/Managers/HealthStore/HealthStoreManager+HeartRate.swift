@@ -34,13 +34,6 @@ extension HealthStoreManager {
     healthStore.execute(query)
   }
   
-  func stopObserveHeartRateSamples() {
-    if let observerQuery = heartRateObserverQuery {
-      healthStore.stop(observerQuery)
-      dependency.logger.log("Heart rate observer query is stoped.", level: .info)
-    }
-  }
-  
   func fetchLatestHeartRateSample(completionHandler: @escaping (_ sample: HKQuantitySample?) -> Void) {
     guard let sampleType = HKObjectType.quantityType(forIdentifier: .heartRate) else {
       completionHandler(nil)

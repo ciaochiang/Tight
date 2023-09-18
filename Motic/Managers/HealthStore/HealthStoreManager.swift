@@ -23,10 +23,13 @@ class HealthStoreManagerDependencyImp: HealthStoreManagerDependency {
 class HealthStoreManager: NSObject, ObservableObject {
   let dependency: HealthStoreManagerDependency
   let healthStore = HKHealthStore()
-  var heartRateObserverQuery: HKObserverQuery?
   var personalHeartRateZones: HeartRateZones
   
-  @Published var latestHeartRate: HeartRateSample<HKQuantitySample, Double>
+  @Published var latestHeartRate: HeartRateSample<HKQuantitySample, Double> {
+    didSet {
+      self.currentZone = self.personalHeartRateZones.zones.first(where: { $0.heartRateRange.contains(Int(latestHeartRate.value))})
+    }
+  }
   @Published var currentZone: Zone?
   @Published var activities: [HKWorkout] = []
 

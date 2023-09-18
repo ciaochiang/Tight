@@ -46,9 +46,6 @@ class MainViewModel: ObservableObject {
     if heartRateAuthorizationStatus == .sharingAuthorized {
       isHeartRateAuthorized = true
       healthStoreManager.startObserveHeartRateSamples()
-    } else {
-      isHeartRateAuthorized = false
-      healthStoreManager.stopObserveHeartRateSamples()
     }
   }
 }
