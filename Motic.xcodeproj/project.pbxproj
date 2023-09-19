@@ -22,6 +22,8 @@
 		E51DE1E72AB8607200957395 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = E51DE1E62AB8607200957395 /* FirebaseCrashlytics */; };
 		E51DE1EA2AB861DE00957395 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E51DE1E92AB861DE00957395 /* GoogleService-Info.plist */; };
 		E51DE1EE2AB8998E00957395 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE1ED2AB8998E00957395 /* Color.swift */; };
+		E51DE1F12AB9553300957395 /* BaseUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE1F02AB9553300957395 /* BaseUser.swift */; };
+		E51DE1F32AB9555A00957395 /* AppleUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE1F22AB9555A00957395 /* AppleUser.swift */; };
 		E52100182AB7204A000CF3AD /* BaseSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52100172AB7204A000CF3AD /* BaseSample.swift */; };
 		E521001A2AB72069000CF3AD /* HeartRateSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52100192AB72069000CF3AD /* HeartRateSample.swift */; };
 		E521001C2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E521001B2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift */; };
@@ -118,6 +120,8 @@
 		E50163FB2AB4638100C87D67 /* WorkoutSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSessionManager.swift; sourceTree = "<group>"; };
 		E51DE1E92AB861DE00957395 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E51DE1ED2AB8998E00957395 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		E51DE1F02AB9553300957395 /* BaseUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUser.swift; sourceTree = "<group>"; };
+		E51DE1F22AB9555A00957395 /* AppleUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleUser.swift; sourceTree = "<group>"; };
 		E52100172AB7204A000CF3AD /* BaseSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSample.swift; sourceTree = "<group>"; };
 		E52100192AB72069000CF3AD /* HeartRateSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateSample.swift; sourceTree = "<group>"; };
 		E521001B2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthStoreManager+HeartRate.swift"; sourceTree = "<group>"; };
@@ -261,6 +265,16 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		E51DE1EF2AB9551C00957395 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				E521001E2AB74D13000CF3AD /* AccountManager.swift */,
+				E51DE1F02AB9553300957395 /* BaseUser.swift */,
+				E51DE1F22AB9555A00957395 /* AppleUser.swift */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
 		E52100162AB72031000CF3AD /* HealthStore */ = {
 			isa = PBXGroup;
 			children = (
@@ -311,7 +325,6 @@
 		E56A55C72AB2BC7100A35BF3 /* Motic */ = {
 			isa = PBXGroup;
 			children = (
-				E51DE1EC2AB8998100957395 /* Extensions */,
 				E56A55F22AB2C03000A35BF3 /* Motic.entitlements */,
 				E56A55C82AB2BC7100A35BF3 /* MoticApp.swift */,
 				E59EB8542AB5F2F70057F630 /* Info.plist */,
@@ -321,6 +334,7 @@
 				E59EB8582AB6A9290057F630 /* Calculator */,
 				E59EB84B2AB5E2770057F630 /* Managers */,
 				E51DE1EB2AB8684800957395 /* Utils */,
+				E51DE1EC2AB8998100957395 /* Extensions */,
 				E56A55CE2AB2BC7300A35BF3 /* Preview Content */,
 				E51DE1E92AB861DE00957395 /* GoogleService-Info.plist */,
 			);
@@ -364,10 +378,10 @@
 		E59EB84B2AB5E2770057F630 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				E51DE1EF2AB9551C00957395 /* Account */,
 				E52100162AB72031000CF3AD /* HealthStore */,
 				E59EB8502AB5ED020057F630 /* LocationManager.swift */,
 				E59EB8522AB5EE650057F630 /* NotificationManager.swift */,
-				E521001E2AB74D13000CF3AD /* AccountManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -689,11 +703,13 @@
 				E56A55CB2AB2BC7100A35BF3 /* MainView.swift in Sources */,
 				E51DE1EE2AB8998E00957395 /* Color.swift in Sources */,
 				E521001F2AB74D13000CF3AD /* AccountManager.swift in Sources */,
+				E51DE1F32AB9555A00957395 /* AppleUser.swift in Sources */,
 				E59EB8512AB5ED020057F630 /* LocationManager.swift in Sources */,
 				E50163F62AB333F100C87D67 /* Connectivity.swift in Sources */,
 				E59EB8482AB58BF20057F630 /* OnboardingView.swift in Sources */,
 				E59EB8532AB5EE650057F630 /* NotificationManager.swift in Sources */,
 				E52100182AB7204A000CF3AD /* BaseSample.swift in Sources */,
+				E51DE1F12AB9553300957395 /* BaseUser.swift in Sources */,
 				E56A55C92AB2BC7100A35BF3 /* MoticApp.swift in Sources */,
 				E59EB85A2AB6A9530057F630 /* HeartRateZones.swift in Sources */,
 				E59EB8572AB5F76A0057F630 /* MainViewModel.swift in Sources */,

@@ -49,6 +49,7 @@ class HealthStoreManager: NSObject, ObservableObject {
       self.currentZone = self.personalHeartRateZones.zones.first(where: { $0.heartRateRange.contains(Int(latestHeartRate.value))})
     }
   }
+  @Published var dateOfBirth: DateComponents?
   @Published var currentZone: Zone?
   @Published var activities: [HKWorkout] = []
 
@@ -97,6 +98,10 @@ class HealthStoreManager: NSObject, ObservableObject {
     
     let zone = personalHeartRateZones.getCurrentZone(heartRate: hearRate)
     currentZone = zone
+    
+    super.init()
+    
+    self.retrieveDateOfBirth()
   }
 }
 
@@ -129,6 +134,22 @@ extension HealthStoreManager {
       }
       
       completion(true)
+    }
+  }
+}
+
+// MARK: Biological Characteristic
+extension HealthStoreManager {
+  func retrieveDateOfBirth() {
+    if let dateOfBirthComponent = try? healthStore.dateOfBirthComponents() {
+      dateOfBirth = dateOfBirthComponent
+      
+      let year = dateOfBirthComponent.year ?? 0
+      let month = dateOfBirthComponent.month ?? 0
+      let day = dateOfBirthComponent.day ?? 0
+      dependency.logger.log("Date of birth: \(year)/\(month)/\(day)", level: .info)
+    } else {
+      dependency.logger.log("Date of birth is not available.", level: .info)
     }
   }
 }

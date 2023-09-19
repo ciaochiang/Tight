@@ -8,32 +8,6 @@
 import SwiftUI
 import AuthenticationServices
 
-protocol BaseUser: Codable {
-  var userId: String { get }
-  var firstName: String { get }
-  var lastName: String { get }
-  var email: String { get }
-}
-
-struct AppleUser: BaseUser {
-  let userId: String
-  let firstName: String
-  let lastName: String
-  let email: String
-  
-  init?(credential: ASAuthorizationAppleIDCredential) {
-    guard let firstName = credential.fullName?.givenName,
-          let lastName = credential.fullName?.familyName,
-          let email = credential.email
-    else { return nil }
-    
-    self.userId = credential.user
-    self.firstName = firstName
-    self.lastName = lastName
-    self.email = email
-  }
-}
-
 class AccountManager: ObservableObject {
   static let shared = AccountManager()
   let logger: Logger = Logger(configuration: AppConfiguration.loggerConfig)

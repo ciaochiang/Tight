@@ -11,7 +11,6 @@ class LocationManager: NSObject, ObservableObject {
   private var locationManager = CLLocationManager()
   @Published var status: CLAuthorizationStatus = .notDetermined
   
-
   override init() {
     super.init()
     locationManager.delegate = self
