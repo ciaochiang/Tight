@@ -15,31 +15,43 @@ struct ProfileView: View {
     let dependency = ProfileViewModelDependencyImp(logger: logger,
                                                    currentUser: AccountManager.shared.currentUser)
     _viewModel = StateObject(wrappedValue: ProfileViewModel(dependency: dependency))
-    
   }
   
     var body: some View {
       VStack(spacing: 32) {
         HStack(spacing: 16) {
-          Image(systemName: "person")
-            .frame(width: 60, height: 60)
-            .foregroundColor(.themeStyle.theme.primary)
-            .background(Color.white)
-            .cornerRadius(30)
           Text("Ciao Chiang")
             .font(.title)
             .fontWeight(.bold)
             .foregroundColor(.themeStyle.theme.primary)
           Spacer()
+          Image(systemName: "person")
+            .frame(width: 48, height: 48)
+            .foregroundColor(.themeStyle.theme.primary)
+            .background(Color.white)
+            .cornerRadius(30)
         }
         .frame(maxWidth: .infinity)
-        VStack(spacing: 32) {
-          ForEach(0..<4) { int in
-            HStack {
-              Text("Item")
-                .font(.title2)
-              Spacer()
-              Toggle("", isOn: $viewModel.isDarkModeOn)
+        VStack(spacing: 8) {
+          ForEach(viewModel.sections, id: \.self) { section in
+            VStack {
+              HStack {
+                Text(section.title)
+                  .font(.headline)
+                  .foregroundColor(.themeStyle.theme.primary)
+                Spacer()
+              }
+              .frame(height: 40)
+              
+              ForEach(section.items, id: \.self) { item in
+                HStack {
+                  Text(item.title)
+                    .font(.subheadline)
+                    .foregroundColor(.themeStyle.theme.primary)
+                  Spacer()
+                }
+                .frame(height: 40)
+              }
             }
           }
         }
