@@ -20,7 +20,7 @@ class HealthStoreManagerDependencyImp: HealthStoreManagerDependency {
   }
 }
 
-enum ActivityType {
+enum WorkoutActivityType {
   case cycling
   case unknown
   

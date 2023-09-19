@@ -232,11 +232,17 @@ struct MainViewActivityCard: View {
 //  }
   @State var activity: HKWorkout
   @State var activityType: String
+  @State var formmatedStartDate: String
   @State var totalEnergyBurned: Double
   
   init(activity: HKWorkout) {
     self.activity = activity
-    activityType = ActivityType(activityType: activity.workoutActivityType).description
+    activityType = WorkoutActivityType(activityType: activity.workoutActivityType).description
+    
+    let dateFormatter = DateFormatter()
+    dateFormatter.timeZone = TimeZone.current // Use the current timezone
+    dateFormatter.dateFormat = "yyyy/MM/dd"
+    formmatedStartDate = dateFormatter.string(from: activity.startDate)
     
     if let totalEnergyBurned = activity.totalEnergyBurned {
       // Get the value in kilocalories (kcal)
@@ -258,17 +264,21 @@ struct MainViewActivityCard: View {
       VStack(alignment: .leading, spacing: 4) {
         Text(activityType)
           .font(.caption)
-          .foregroundColor(.secondary)
-        Text("\(totalEnergyBurned) Kcal")
+          .foregroundColor(.themeStyle.theme.secondaryTextColor)
+        Text("\(String(format: "%.1f", totalEnergyBurned)) Kcal")
           .fontWeight(.semibold)
-          .foregroundColor(.primary)
+          .foregroundColor(.themeStyle.theme.primary)
         Text("\(Int(activity.duration / 60)) mins")
           .fontWeight(.semibold)
-          .foregroundColor(.primary)
+          .foregroundColor(.themeStyle.theme.primary)
       }
       
       Spacer()
-
+      VStack {
+        Text(formmatedStartDate)
+          .font(.caption)
+          .foregroundColor(.themeStyle.theme.secondaryTextColor)
+      }
     }
     .padding(16)
     .frame(maxWidth: .infinity)
