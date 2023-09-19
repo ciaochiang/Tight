@@ -22,68 +22,55 @@ struct ProfileViewModelDependencyImp: ProfileViewModelDependency {
   }
 }
 
-struct ProfileSectionItem: Hashable {
-  var title: String
+struct Profile {
+  var fullName: String
+  var thumbnailURL: URL?
+  var sections: [ProfileSection]
 }
 
-enum ProfileSection: Hashable {
-  case account([AccountSectionItem])
-  case preferences([PreferencesSectionItem])
-  case appearance([AppearanceSectionItem])
+struct ProfileSection: Hashable {
+  var type: ProfileSectionType
+  var items: [ProfileSectionItem]
+}
+
+struct ProfileSectionItem: Hashable {
+  var type: ProfileSectionItemType
+  var value: String
+}
+
+enum ProfileSectionType {
+  case account
+  case appearance
 
   var title: String {
     switch self {
     case .account: return "Account"
-    case .preferences: return "Preferences"
     case .appearance: return "Appearance"
     }
   }
-  
-  var items: [ProfileSectionItem] {
-    switch self {
-    case .account(let sectionItems): return sectionItems.map { ProfileSectionItem(title: $0.title) }
-    case .preferences(let sectionItems): return sectionItems.map { ProfileSectionItem(title: $0.title) }
-    case .appearance(let sectionItems): return sectionItems.map { ProfileSectionItem(title: $0.title) }
-    }
-  }
-  
-  static let allCases: [ProfileSection] = [
-    .account(AccountSectionItem.allCases),
-    .preferences(PreferencesSectionItem.allCases),
-    .appearance(AppearanceSectionItem.allCases)
-  ]
 }
 
-enum AccountSectionItem: CaseIterable {
+enum ProfileSectionItemType {
+  
+  // Account
   case username
   case email
   case birthday
   case chanagePassword
   
+  // Appearance
+  case darkMode
+
+  
   var title: String {
     switch self {
+    // Account
     case .username: return "Username"
     case .email: return "Mail"
     case .birthday: return "Birthday"
     case .chanagePassword: return "Change Password"
-    }
-  }
-}
 
-enum PreferencesSectionItem: CaseIterable {
-  case test
-  var title: String {
-    switch self {
-    case .test: return "Test"
-    }
-  }
-}
-
-enum AppearanceSectionItem: CaseIterable {
-  case darkMode
-  
-  var title: String {
-    switch self {
+    // Appearance
     case .darkMode: return "Dark Mode"
     }
   }
@@ -93,11 +80,20 @@ class ProfileViewModel: ObservableObject {
   var dependency: ProfileViewModelDependency
   @Published var currentUser: BaseUser?
   @Published var isDarkModeOn: Bool = false
-  @Published var sections: [ProfileSection]
+  @Published var profile: Profile
   
   init(dependency: ProfileViewModelDependency) {
     self.dependency = dependency
     self.currentUser = dependency.currentUser
-    self.sections = ProfileSection.allCases
+    
+//    let username = ProfileSectionItem(type: .username, value: "")
+    let mail = ProfileSectionItem(type: .email, value: "\(dependency.currentUser?.email ?? "")")
+    let accountSection = ProfileSection(type: .account, items: [mail])
+    
+    let darkMode = ProfileSectionItem(type: .darkMode, value: "Dark")
+    let appearanceSection = ProfileSection(type: .appearance, items: [darkMode])
+    
+    let profile = Profile(fullName: "\(dependency.currentUser?.firstName ?? "") \(dependency.currentUser?.lastName ?? "")", sections: [accountSection, appearanceSection])
+    self.profile = profile
   }
 }

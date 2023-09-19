@@ -20,7 +20,7 @@ struct ProfileView: View {
     var body: some View {
       VStack(spacing: 32) {
         HStack(spacing: 16) {
-          Text("Ciao Chiang")
+          Text(viewModel.profile.fullName)
             .font(.title)
             .fontWeight(.bold)
             .foregroundColor(.themeStyle.theme.primary)
@@ -33,10 +33,10 @@ struct ProfileView: View {
         }
         .frame(maxWidth: .infinity)
         VStack(spacing: 8) {
-          ForEach(viewModel.sections, id: \.self) { section in
+          ForEach(viewModel.profile.sections, id: \.self) { section in
             VStack {
               HStack {
-                Text(section.title)
+                Text(section.type.title)
                   .font(.headline)
                   .foregroundColor(.themeStyle.theme.primary)
                 Spacer()
@@ -44,11 +44,23 @@ struct ProfileView: View {
               .frame(height: 40)
               
               ForEach(section.items, id: \.self) { item in
-                HStack {
-                  Text(item.title)
+                HStack(alignment: .bottom) {
+                  Text(item.type.title)
                     .font(.subheadline)
                     .foregroundColor(.themeStyle.theme.primary)
                   Spacer()
+                  
+                  switch item.type {
+                  case .darkMode:
+                    Toggle("", isOn: $viewModel.isDarkModeOn)
+                      .onChange(of: viewModel.isDarkModeOn) { bool in
+                        print("Dark mode change: \(bool)")
+                      }
+                  default:
+                    Text(item.value)
+                      .font(.caption)
+                      .foregroundColor(.themeStyle.theme.secondaryTextColor)
+                  }
                 }
                 .frame(height: 40)
               }
