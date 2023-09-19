@@ -45,7 +45,7 @@ extension MainView {
         Text("Welcome Back")
           .font(.subheadline)
           .foregroundColor(.themeStyle.theme.primary)
-        Text("Ciao Chiang")
+        Text(viewModel.user?.firstName ?? "")
           .font(.title2)
           .fontWeight(.semibold)
           .foregroundColor(.themeStyle.theme.primary)

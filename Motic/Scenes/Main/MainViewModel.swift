@@ -26,6 +26,7 @@ class MainViewModel: ObservableObject {
   var dependency: MainViewModelDependency
   @Published var healthStoreManager: HealthStoreManager
   @Published var isHeartRateAuthorized: Bool = false
+  @Published var user: BaseUser?
   
   var cancellable : AnyCancellable?
   
@@ -50,5 +51,9 @@ class MainViewModel: ObservableObject {
     
     // Retrieve Workout Sesssions
     healthStoreManager.retrieveOneMonthActivities()
+    
+    // Get current user
+    let accountManager = AccountManager.shared
+    user = accountManager.currentUser
   }
 }

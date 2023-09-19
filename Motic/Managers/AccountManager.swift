@@ -46,8 +46,17 @@ class AccountManager: ObservableObject {
     case "apple":
       // retrieve apple user data
       isLoggedIn = true
+      retreiveCurrentUser()
     default: break
     }
+  }
+  
+  func retreiveCurrentUser() {
+    guard let appleUserData = UserDefaults.standard.data(forKey: "User"),
+          let appleUser = try? JSONDecoder().decode(AppleUser.self, from: appleUserData)
+    else { return }
+    
+    currentUser = appleUser
   }
 }
 
@@ -68,7 +77,7 @@ extension AccountManager {
           UserDefaults.standard.setValue(appleUserData, forKey: appleUser.userId)
           logger.log("Save apple user: \(appleUser)", level: .info)
         } else {
-          guard let appleUserData = UserDefaults.standard.data(forKey: appleIdCredential.user),
+          guard let appleUserData = UserDefaults.standard.data(forKey: "User"),
                 let appleUser = try? JSONDecoder().decode(AppleUser.self, from: appleUserData)
           else { return }
           
