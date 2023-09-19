@@ -9,8 +9,14 @@ import SwiftUI
 import HealthKit
 
 struct MainView: View {
-  @StateObject var viewModel: MainViewModel = MainViewModel(
-    dependency: MainViewModelDependencyImp(logger: Logger(configuration: AppConfiguration.loggerConfig)))
+  @StateObject var viewModel: MainViewModel
+  @State var isPresented: Bool = false
+  
+  init() {
+    let logger = Logger(configuration: AppConfiguration.loggerConfig)
+    let dependency = MainViewModelDependencyImp(logger: logger)
+    _viewModel = StateObject(wrappedValue: MainViewModel(dependency: dependency))
+  }
   
   var body: some View {
     ZStack {
@@ -52,11 +58,18 @@ extension MainView {
       }
 
       Spacer()
-      Image(systemName: "person")
-        .frame(width: 60, height: 60)
-        .foregroundColor(.black)
-        .background(Color.white)
-        .cornerRadius(30)
+      Button(action: {
+        isPresented = true
+      }) {
+        Image(systemName: "person")
+          .frame(width: 60, height: 60)
+          .foregroundColor(.black)
+          .background(Color.white)
+          .cornerRadius(30)
+      }
+      .sheet(isPresented: $isPresented) {
+        ProfileView()
+      }
     }
   }
   
