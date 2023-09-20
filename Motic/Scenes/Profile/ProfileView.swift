@@ -33,7 +33,8 @@ struct ProfileView: View {
         }
         .frame(maxWidth: .infinity)
         VStack(spacing: 8) {
-          ForEach(viewModel.profile.sections, id: \.self) { section in
+          
+          ForEach(viewModel.profile.sections) { section in
             VStack {
               HStack {
                 Text(section.type.title)
@@ -43,7 +44,7 @@ struct ProfileView: View {
               }
               .frame(height: 40)
               
-              ForEach(section.items, id: \.self) { item in
+              ForEach(section.items) { item in
                 HStack(alignment: .bottom) {
                   Text(item.type.title)
                     .font(.subheadline)

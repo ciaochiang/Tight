@@ -28,12 +28,14 @@ struct Profile {
   var sections: [ProfileSection]
 }
 
-struct ProfileSection: Hashable {
+struct ProfileSection: Identifiable {
+  let id = UUID().uuidString
   var type: ProfileSectionType
   var items: [ProfileSectionItem]
 }
 
-struct ProfileSectionItem: Hashable {
+struct ProfileSectionItem: Identifiable {
+  let id = UUID().uuidString
   var type: ProfileSectionItemType
   var value: String
 }
