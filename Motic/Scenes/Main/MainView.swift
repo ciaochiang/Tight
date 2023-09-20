@@ -69,6 +69,7 @@ extension MainView {
       }
       .sheet(isPresented: $isPresented) {
         ProfileView()
+          .presentationDetents([.medium])
       }
     }
   }
