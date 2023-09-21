@@ -11,6 +11,7 @@ import HealthKit
 struct MainView: View {
   @StateObject var viewModel: MainViewModel
   @State var isPresented: Bool = false
+  @State var isActivityViewPresented: Bool = false
   
   init() {
     let logger = Logger(configuration: AppConfiguration.loggerConfig)
@@ -115,8 +116,22 @@ extension MainView {
       MainViewSectionHeader(sectionTitle: "Activites")
       
       VStack(spacing: 16) {
-        ForEach(viewModel.healthStoreManager.activities, id: \.self) { activity in
-          MainViewActivityCard(activity: activity)
+        ForEach(viewModel.healthStoreManager.activities, id: \.self) { workout in
+          Button {
+            viewModel.selectedWorkout = workout
+            isActivityViewPresented.toggle()
+          } label: {
+            MainViewActivityCard(activity: workout)
+          }
+        }
+      }
+      .sheet(isPresented: $isActivityViewPresented) {
+        if let selectedWorkout = viewModel.selectedWorkout {
+          let dependency = CyclingActivityViewModelDependencyImp(logger: viewModel.dependency.logger)
+          let viewModel = CyclingActivityViewModel(dependency: dependency,
+                                                   healthStoreManager: viewModel.healthStoreManager,
+                                                   workout: selectedWorkout)
+          CyclingActivityView(viewModel: viewModel).presentationDetents([.large])
         }
       }
     }

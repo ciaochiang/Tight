@@ -22,11 +22,13 @@ class HealthStoreManagerDependencyImp: HealthStoreManagerDependency {
 
 enum WorkoutActivityType {
   case cycling
+  case traditionalStrengthTraining
   case unknown
   
   init(activityType: HKWorkoutActivityType) {
     switch activityType {
     case .cycling: self = .cycling
+    case .traditionalStrengthTraining:  self = .traditionalStrengthTraining
     default: self = .unknown
     }
   }
@@ -34,6 +36,7 @@ enum WorkoutActivityType {
   var description: String {
     switch self {
     case .cycling: return "Cycling"
+    case .traditionalStrengthTraining: return "Traditional Strength Training"
     case .unknown: return "Unknown"
     }
   }

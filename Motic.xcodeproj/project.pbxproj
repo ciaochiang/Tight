@@ -26,6 +26,9 @@
 		E51DE1F32AB9555A00957395 /* AppleUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE1F22AB9555A00957395 /* AppleUser.swift */; };
 		E51DE1F82AB96CEF00957395 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE1F72AB96CEF00957395 /* ProfileView.swift */; };
 		E51DE1FA2AB96D0A00957395 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE1F92AB96D0A00957395 /* ProfileViewModel.swift */; };
+		E51DE1FE2ABB2E0300957395 /* CyclingActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE1FD2ABB2E0300957395 /* CyclingActivityView.swift */; };
+		E51DE2002ABB303100957395 /* CyclingActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE1FF2ABB303100957395 /* CyclingActivityViewModel.swift */; };
+		E51DE2022ABCA03C00957395 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE2012ABCA03C00957395 /* Mocks.swift */; };
 		E52100182AB7204A000CF3AD /* BaseSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52100172AB7204A000CF3AD /* BaseSample.swift */; };
 		E521001A2AB72069000CF3AD /* HeartRateSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52100192AB72069000CF3AD /* HeartRateSample.swift */; };
 		E521001C2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E521001B2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift */; };
@@ -126,6 +129,9 @@
 		E51DE1F22AB9555A00957395 /* AppleUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleUser.swift; sourceTree = "<group>"; };
 		E51DE1F72AB96CEF00957395 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		E51DE1F92AB96D0A00957395 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		E51DE1FD2ABB2E0300957395 /* CyclingActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingActivityView.swift; sourceTree = "<group>"; };
+		E51DE1FF2ABB303100957395 /* CyclingActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingActivityViewModel.swift; sourceTree = "<group>"; };
+		E51DE2012ABCA03C00957395 /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
 		E52100172AB7204A000CF3AD /* BaseSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSample.swift; sourceTree = "<group>"; };
 		E52100192AB72069000CF3AD /* HeartRateSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateSample.swift; sourceTree = "<group>"; };
 		E521001B2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthStoreManager+HeartRate.swift"; sourceTree = "<group>"; };
@@ -257,6 +263,7 @@
 			isa = PBXGroup;
 			children = (
 				E50163F52AB333F100C87D67 /* Connectivity.swift */,
+				E51DE2012ABCA03C00957395 /* Mocks.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -288,6 +295,23 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
+		E51DE1FB2ABB2DD100957395 /* Activtiy */ = {
+			isa = PBXGroup;
+			children = (
+				E51DE1FC2ABB2DEC00957395 /* Cycling */,
+			);
+			path = Activtiy;
+			sourceTree = "<group>";
+		};
+		E51DE1FC2ABB2DEC00957395 /* Cycling */ = {
+			isa = PBXGroup;
+			children = (
+				E51DE1FD2ABB2E0300957395 /* CyclingActivityView.swift */,
+				E51DE1FF2ABB303100957395 /* CyclingActivityViewModel.swift */,
+			);
+			path = Cycling;
+			sourceTree = "<group>";
+		};
 		E52100162AB72031000CF3AD /* HealthStore */ = {
 			isa = PBXGroup;
 			children = (
@@ -305,6 +329,7 @@
 				E59EB8462AB58BDD0057F630 /* Onboarding */,
 				E59EB8552AB5F7500057F630 /* Main */,
 				E51DE1F42AB96CCB00957395 /* Profile */,
+				E51DE1FB2ABB2DD100957395 /* Activtiy */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -710,7 +735,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E51DE2022ABCA03C00957395 /* Mocks.swift in Sources */,
 				E521001C2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift in Sources */,
+				E51DE2002ABB303100957395 /* CyclingActivityViewModel.swift in Sources */,
 				E59EB84A2AB5934E0057F630 /* OnboardingViewModel.swift in Sources */,
 				E59EB85D2AB6B4150057F630 /* Logger.swift in Sources */,
 				E59EB84D2AB5E29F0057F630 /* HealthStoreManager.swift in Sources */,
@@ -727,6 +754,7 @@
 				E51DE1FA2AB96D0A00957395 /* ProfileViewModel.swift in Sources */,
 				E56A55C92AB2BC7100A35BF3 /* MoticApp.swift in Sources */,
 				E59EB85A2AB6A9530057F630 /* HeartRateZones.swift in Sources */,
+				E51DE1FE2ABB2E0300957395 /* CyclingActivityView.swift in Sources */,
 				E51DE1F82AB96CEF00957395 /* ProfileView.swift in Sources */,
 				E59EB8572AB5F76A0057F630 /* MainViewModel.swift in Sources */,
 				E521001A2AB72069000CF3AD /* HeartRateSample.swift in Sources */,
