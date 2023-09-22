@@ -30,6 +30,7 @@
 		E51DE2002ABB303100957395 /* CyclingActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE1FF2ABB303100957395 /* CyclingActivityViewModel.swift */; };
 		E51DE2022ABCA03C00957395 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE2012ABCA03C00957395 /* Mocks.swift */; };
 		E51DE2042ABDF26900957395 /* HealthStoreManager+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE2032ABDF26900957395 /* HealthStoreManager+Distance.swift */; };
+		E51DE2062ABDF6B000957395 /* HealthStoreManager+Energy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE2052ABDF6B000957395 /* HealthStoreManager+Energy.swift */; };
 		E52100182AB7204A000CF3AD /* BaseSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52100172AB7204A000CF3AD /* BaseSample.swift */; };
 		E521001A2AB72069000CF3AD /* HeartRateSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52100192AB72069000CF3AD /* HeartRateSample.swift */; };
 		E521001C2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E521001B2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift */; };
@@ -134,6 +135,7 @@
 		E51DE1FF2ABB303100957395 /* CyclingActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingActivityViewModel.swift; sourceTree = "<group>"; };
 		E51DE2012ABCA03C00957395 /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
 		E51DE2032ABDF26900957395 /* HealthStoreManager+Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthStoreManager+Distance.swift"; sourceTree = "<group>"; };
+		E51DE2052ABDF6B000957395 /* HealthStoreManager+Energy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthStoreManager+Energy.swift"; sourceTree = "<group>"; };
 		E52100172AB7204A000CF3AD /* BaseSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSample.swift; sourceTree = "<group>"; };
 		E52100192AB72069000CF3AD /* HeartRateSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateSample.swift; sourceTree = "<group>"; };
 		E521001B2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthStoreManager+HeartRate.swift"; sourceTree = "<group>"; };
@@ -322,6 +324,7 @@
 				E52100192AB72069000CF3AD /* HeartRateSample.swift */,
 				E521001B2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift */,
 				E51DE2032ABDF26900957395 /* HealthStoreManager+Distance.swift */,
+				E51DE2052ABDF6B000957395 /* HealthStoreManager+Energy.swift */,
 			);
 			path = HealthStore;
 			sourceTree = "<group>";
@@ -762,6 +765,7 @@
 				E51DE1F82AB96CEF00957395 /* ProfileView.swift in Sources */,
 				E59EB8572AB5F76A0057F630 /* MainViewModel.swift in Sources */,
 				E521001A2AB72069000CF3AD /* HeartRateSample.swift in Sources */,
+				E51DE2062ABDF6B000957395 /* HealthStoreManager+Energy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

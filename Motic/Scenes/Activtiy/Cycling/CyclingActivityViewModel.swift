@@ -34,15 +34,14 @@ class CyclingActivityViewModelDependencyImp: CyclingActivityViewModelDependency 
 
 class CyclingActivityViewModel: ObservableObject {
   var dependency: CyclingActivityViewModelDependency
-  @Published var healthStoreManager: HealthStoreManager
   var workout: HKWorkout
+  @Published var healthStoreManager: HealthStoreManager
   @Published var workoutType: WorkoutActivityType
   @Published var duraiton: TimeInterval
   @Published var totalDistanceMeters: Double
   @Published var avgHeartRate: Double = 0
   @Published var avgSpeedPerHour: Double = 0
-  
-  // Temp data
+  @Published var avgMETs: Double?
   @Published var heartRateSamples: [ChartData<Double>] = []
   
   init(dependency: CyclingActivityViewModelDependency,
@@ -52,8 +51,14 @@ class CyclingActivityViewModel: ObservableObject {
     _healthStoreManager = Published(wrappedValue: healthStoreManager)
     self.workout = workout
     self.duraiton = workout.duration
+    self.avgMETs = healthStoreManager.getAvgMETs(from: workout)
     self.totalDistanceMeters = healthStoreManager.getTotalDistanceMeters(workout: workout)
     self.workoutType = WorkoutActivityType(activityType: workout.workoutActivityType)
+    
+    if let metadata = workout.metadata {
+      dependency.logger.log("Metadata: \(metadata)", level: .info)
+    }
+    
 
     // After initialization
     self.avgSpeedPerHour = healthStoreManager.getAvgSpeedPerHour(duration: self.duraiton,
