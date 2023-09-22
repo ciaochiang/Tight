@@ -43,6 +43,7 @@ class CyclingActivityViewModel: ObservableObject {
   @Published var avgSpeedPerHour: Double = 0
   @Published var avgMETs: Double?
   @Published var heartRateSamples: [ChartData<Double>] = []
+  @Published var weatherTemperatureCelsius: Double?
   
   init(dependency: CyclingActivityViewModelDependency,
        healthStoreManager: HealthStoreManager,
@@ -52,6 +53,7 @@ class CyclingActivityViewModel: ObservableObject {
     self.workout = workout
     self.duraiton = workout.duration
     self.avgMETs = healthStoreManager.getAvgMETs(from: workout)
+    self.weatherTemperatureCelsius = healthStoreManager.getWeatherTemperatureCelsius(from: workout)
     self.totalDistanceMeters = healthStoreManager.getTotalDistanceMeters(workout: workout)
     self.workoutType = WorkoutActivityType(activityType: workout.workoutActivityType)
     

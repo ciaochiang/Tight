@@ -31,6 +31,7 @@
 		E51DE2022ABCA03C00957395 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE2012ABCA03C00957395 /* Mocks.swift */; };
 		E51DE2042ABDF26900957395 /* HealthStoreManager+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE2032ABDF26900957395 /* HealthStoreManager+Distance.swift */; };
 		E51DE2062ABDF6B000957395 /* HealthStoreManager+Energy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE2052ABDF6B000957395 /* HealthStoreManager+Energy.swift */; };
+		E51DE2082ABDFB3A00957395 /* HealthStoreManager+Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE2072ABDFB3A00957395 /* HealthStoreManager+Weather.swift */; };
 		E52100182AB7204A000CF3AD /* BaseSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52100172AB7204A000CF3AD /* BaseSample.swift */; };
 		E521001A2AB72069000CF3AD /* HeartRateSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52100192AB72069000CF3AD /* HeartRateSample.swift */; };
 		E521001C2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E521001B2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift */; };
@@ -136,6 +137,7 @@
 		E51DE2012ABCA03C00957395 /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
 		E51DE2032ABDF26900957395 /* HealthStoreManager+Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthStoreManager+Distance.swift"; sourceTree = "<group>"; };
 		E51DE2052ABDF6B000957395 /* HealthStoreManager+Energy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthStoreManager+Energy.swift"; sourceTree = "<group>"; };
+		E51DE2072ABDFB3A00957395 /* HealthStoreManager+Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthStoreManager+Weather.swift"; sourceTree = "<group>"; };
 		E52100172AB7204A000CF3AD /* BaseSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSample.swift; sourceTree = "<group>"; };
 		E52100192AB72069000CF3AD /* HeartRateSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateSample.swift; sourceTree = "<group>"; };
 		E521001B2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthStoreManager+HeartRate.swift"; sourceTree = "<group>"; };
@@ -325,6 +327,7 @@
 				E521001B2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift */,
 				E51DE2032ABDF26900957395 /* HealthStoreManager+Distance.swift */,
 				E51DE2052ABDF6B000957395 /* HealthStoreManager+Energy.swift */,
+				E51DE2072ABDFB3A00957395 /* HealthStoreManager+Weather.swift */,
 			);
 			path = HealthStore;
 			sourceTree = "<group>";
@@ -753,6 +756,7 @@
 				E521001F2AB74D13000CF3AD /* AccountManager.swift in Sources */,
 				E51DE1F32AB9555A00957395 /* AppleUser.swift in Sources */,
 				E59EB8512AB5ED020057F630 /* LocationManager.swift in Sources */,
+				E51DE2082ABDFB3A00957395 /* HealthStoreManager+Weather.swift in Sources */,
 				E50163F62AB333F100C87D67 /* Connectivity.swift in Sources */,
 				E59EB8482AB58BF20057F630 /* OnboardingView.swift in Sources */,
 				E59EB8532AB5EE650057F630 /* NotificationManager.swift in Sources */,
