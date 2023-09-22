@@ -9,14 +9,14 @@ import SwiftUI
 import HealthKit
 
 // Temp struct
-struct HeartRate: Identifiable {
+struct ChartData<T>: Identifiable {
   let id: String = UUID().uuidString
   var date: Date
-  var heartRate: Double
+  var value: T
 
-  init(date: Date, heartRate: Double) {
+  init(date: Date, value: T) {
     self.date = date
-    self.heartRate = heartRate
+    self.value = value
   }
 }
 
@@ -43,7 +43,7 @@ class CyclingActivityViewModel: ObservableObject {
   @Published var avgSpeedPerHour: Double = 0
   
   // Temp data
-  @Published var heartRateSamples: [HeartRate] = []
+  @Published var heartRateSamples: [ChartData<Double>] = []
   
   init(dependency: CyclingActivityViewModelDependency,
        healthStoreManager: HealthStoreManager,
@@ -56,24 +56,21 @@ class CyclingActivityViewModel: ObservableObject {
     self.workoutType = WorkoutActivityType(activityType: workout.workoutActivityType)
 
     // After initialization
-    self.healthStoreManager.getAvgHeartRateSamples(workout: workout)
     self.avgSpeedPerHour = healthStoreManager.getAvgSpeedPerHour(duration: self.duraiton,
                                                                  totalDistanceMeters: self.totalDistanceMeters)
     
     
     // Get all heart rate samples
     healthStoreManager.getAllHeartRateSamples(workout: workout) { [weak self] heartRates in
-      self?.heartRateSamples = heartRates
+      DispatchQueue.main.async {
+        self?.heartRateSamples = heartRates
+      }
     }
     
     // Get avg. heart rate
-    healthStoreManager.getAvgHeartRate(from: workout) { heartRate, error in
-      if let error = error {
-        print("Error: \(error.localizedDescription)")
-      } else {
-        DispatchQueue.main.async {
-          self.avgHeartRate = heartRate
-        }
+    healthStoreManager.getAvgHeartRate(from: workout) { heartRate, _ in
+      DispatchQueue.main.async {
+        self.avgHeartRate = heartRate
       }
     }
   }

@@ -103,7 +103,7 @@ extension CyclingActivityView {
           .font(.headline)
           .foregroundColor(.themeStyle.theme.primary)
         Spacer()
-        Text("\(String(format: "%.1f", viewModel.avgSpeedPerHour)) m / hr")
+        Text("\(viewModel.healthStoreManager.formattedTotalDistance(meters: viewModel.avgSpeedPerHour))/hr")
           .font(.subheadline)
           .foregroundColor(.themeStyle.theme.secondaryTextColor)
       }
@@ -135,8 +135,8 @@ extension CyclingActivityView {
   var heartRateChart: some View {
     Chart(viewModel.heartRateSamples) {
       LineMark(
-        x: .value("Month", $0.date),
-        y: .value("Hours of Sunshine", $0.heartRate)
+        x: .value("Time", $0.date),
+        y: .value("Heart Rate", $0.value)
       )
     }
     .chartXAxis {
