@@ -26,6 +26,7 @@ class CyclingActivityViewModel: ObservableObject {
   var workout: HKWorkout
   @Published var workoutType: WorkoutActivityType
   @Published var duraiton: TimeInterval
+  @Published var totalDistanceMeters: Double
   
   init(dependency: CyclingActivityViewModelDependency,
        healthStoreManager: HealthStoreManager,
@@ -34,8 +35,9 @@ class CyclingActivityViewModel: ObservableObject {
     _healthStoreManager = Published(wrappedValue: healthStoreManager)
     self.workout = workout
     self.duraiton = workout.duration
+    self.totalDistanceMeters = healthStoreManager.getTotalDistanceMeters(workout: workout)
     self.workoutType = WorkoutActivityType(activityType: workout.workoutActivityType)
-        
+
     // After initialization
     self.healthStoreManager.getAvgHeartRateSamples(workout: workout)
   }

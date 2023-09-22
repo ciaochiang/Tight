@@ -59,6 +59,40 @@ extension HealthStoreManager {
     healthStore.execute(query)
   }
   
+  
+  func getTotalDistanceMeters(workout: HKWorkout) -> Double {
+    var distanceMeters: Double = 0
+    if let totalDistanceMeters = workout.totalDistance?.doubleValue(for: HKUnit.meter()) {
+      distanceMeters = totalDistanceMeters
+    } else if let quantity = workout.metadata?["HKIndoorBikeDistance"] as? HKQuantity {
+      let totalDistanceMeters = quantity.doubleValue(for: HKUnit.meter())
+      distanceMeters = totalDistanceMeters
+    }
+    
+    return distanceMeters
+  }
+  
+  func formattedTotalDistance(meters: Double) -> String {
+ 
+    // Use integer division to get kilometers and modulus operator for remaining meters
+    let kilometers = Int(meters / 1000)
+    let meters = Int(meters.truncatingRemainder(dividingBy: 1000))
+
+    // Create a formatted string
+    var formattedDistance = ""
+    if kilometers > 0 {
+      formattedDistance = "\(kilometers) km"
+    }
+    if meters > 0 {
+      if !formattedDistance.isEmpty {
+          formattedDistance += " "
+      }
+      formattedDistance += "\(meters) m"
+    }
+    
+    return formattedDistance
+  }
+  
   func getAvgHeartRateSamples(workout: HKWorkout) {
 
     // Assume you have fetched workouts into an array called "workouts"
@@ -68,13 +102,60 @@ extension HealthStoreManager {
     var accumulatedHeartRate: Double = 0
     var segmentDistance: Double = 1000  // 1 kilometer in meters
     
+    // Ensure the workout has distance and heart rate data
+    // Getting all heart rate samples from workout
+    let predicate = HKQuery.predicateForObjects(from: workout)
+    guard let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate),
+          let distanceType = HKQuantityType.quantityType(forIdentifier: .distanceCycling),
+          let metadata = workout.metadata else {
+      return
+    }
     
-    let statistics = workout.allStatistics
-    print(statistics)
-//    // Ensure the workout has distance and heart rate data
-//    guard  else {
-//      return
-//    }
+    print("Metadata: \(metadata)")
+    
+
+    
+    let heartRateQuery = HKSampleQuery(sampleType: heartRateType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { (query, results, error) in
+      if let heartRateSamples = results as? [HKQuantitySample] {
+        // Iterate through heart rate samples
+        for sample in heartRateSamples {
+            let heartRate = sample.quantity.doubleValue(for: HKUnit.count().unitDivided(by: HKUnit.minute()))
+            let timestamp = sample.startDate
+            // Do something with the heart rate and timestamp
+//            print("Heart Rate: \(heartRate), Timestamp: \(timestamp)")
+        }
+      } else {
+        if let error = error {
+            print("Error fetching heart rate samples: \(error.localizedDescription)")
+        }
+      }
+    }
+    healthStore.execute(heartRateQuery)
+    
+    
+    let readTypes: Set<HKObjectType> = [HKObjectType.quantityType(forIdentifier: .distanceCycling)!]
+    healthStore.requestAuthorization(toShare: nil, read: readTypes) { (success, error) in
+      if success {
+        let distanceQuery = HKSampleQuery(sampleType: distanceType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { (query, results, error) in
+          if let distanceSamples = results as? [HKQuantitySample] {
+            // Iterate through heart rate samples
+            for sample in distanceSamples {
+                let distance = sample.quantity.doubleValue(for: HKUnit.count().unitDivided(by: HKUnit.minute()))
+                let timestamp = sample.startDate
+                // Do something with the heart rate and timestamp
+//                print("Distance: \(distance), Timestamp: \(timestamp)")
+            }
+          } else {
+            if let error = error {
+                print("Error fetching distance samples: \(error.localizedDescription)")
+            }
+          }
+        }
+        
+        self.healthStore.execute(distanceQuery)
+      }
+    }
+    
 //
 //    // Iterate through distance samples and calculate average heart rate per kilometer
 //    for i in 0..<distanceSamples.count {

@@ -48,6 +48,7 @@ struct CyclingActivityView: View {
             }
             
             durationCard
+            totalDistance
             averageSpeedCard
             averageHeartRateCard
             
@@ -106,6 +107,24 @@ extension CyclingActivityView {
           .foregroundColor(.themeStyle.theme.primary)
         Spacer()
         Text(viewModel.getFormattedDuration(duration: viewModel.duraiton))
+          .font(.subheadline)
+          .foregroundColor(.themeStyle.theme.secondaryTextColor)
+      }
+      .padding(16)
+    }
+    .frame(maxWidth: .infinity)
+    .background(Color.themeStyle.theme.secondaryBackground)
+    .cornerRadius(16)
+  }
+  
+  var totalDistance: some View {
+    VStack {
+      HStack {
+        Text("Total Distance")
+          .font(.headline)
+          .foregroundColor(.themeStyle.theme.primary)
+        Spacer()
+        Text(viewModel.healthStoreManager.formattedTotalDistance(meters: viewModel.totalDistanceMeters))
           .font(.subheadline)
           .foregroundColor(.themeStyle.theme.secondaryTextColor)
       }
