@@ -93,6 +93,34 @@ extension HealthStoreManager {
     return formattedDistance
   }
   
+  func getAvgHeartRate(from workout: HKWorkout, _completion: @escaping (Double, Error?) -> ()) {
+    guard let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate) else { return }
+    let readTypes: Set<HKObjectType> = [heartRateType]
+    let predicate = HKQuery.predicateForObjects(from: workout)
+    
+    healthStore.requestAuthorization(toShare: nil, read: readTypes) { (success, error) in
+      if success {
+        let query = HKStatisticsQuery(quantityType: heartRateType,
+                                      quantitySamplePredicate: predicate,
+                                      options: .discreteAverage) { (query, result, error) in
+          if let result = result, let averageHeartRate = result.averageQuantity() {
+            // The averageHeartRate variable now contains the average heart rate value
+            let beatsPerMinute = averageHeartRate.doubleValue(for: HKUnit.count().unitDivided(by: HKUnit.minute()))
+            _completion(beatsPerMinute, nil)
+            print("Average Heart Rate: \(beatsPerMinute) bpm")
+          } else {
+            if let error = error {
+                print("Error calculating average heart rate: \(error.localizedDescription)")
+              _completion(0, error)
+            }
+          }
+        }
+        
+        self.healthStore.execute(query)
+      }
+    }
+  }
+  
   func getAvgHeartRateSamples(workout: HKWorkout) {
 
     // Assume you have fetched workouts into an array called "workouts"

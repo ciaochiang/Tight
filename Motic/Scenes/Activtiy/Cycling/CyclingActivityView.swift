@@ -160,7 +160,7 @@ extension CyclingActivityView {
           .font(.headline)
           .foregroundColor(.themeStyle.theme.primary)
         Spacer()
-        Text("154")
+        Text("\(String(format: "%.0f", viewModel.avgHeartRate)) bpm")
           .font(.subheadline)
           .foregroundColor(.themeStyle.theme.secondaryTextColor)
       }

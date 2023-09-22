@@ -27,6 +27,7 @@ class CyclingActivityViewModel: ObservableObject {
   @Published var workoutType: WorkoutActivityType
   @Published var duraiton: TimeInterval
   @Published var totalDistanceMeters: Double
+  @Published var avgHeartRate: Double = 0
   
   init(dependency: CyclingActivityViewModelDependency,
        healthStoreManager: HealthStoreManager,
@@ -40,6 +41,17 @@ class CyclingActivityViewModel: ObservableObject {
 
     // After initialization
     self.healthStoreManager.getAvgHeartRateSamples(workout: workout)
+    
+    // Get avg. heart rate
+    healthStoreManager.getAvgHeartRate(from: workout) { heartRate, error in
+      if let error = error {
+        print("Error: \(error.localizedDescription)")
+      } else {
+        DispatchQueue.main.async {
+          self.avgHeartRate = heartRate
+        }
+      }
+    }
   }
   
   func getFormattedDuration(duration: TimeInterval) -> String {
