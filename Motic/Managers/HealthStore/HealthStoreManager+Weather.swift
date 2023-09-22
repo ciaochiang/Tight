@@ -18,4 +18,15 @@ extension HealthStoreManager {
     
     return nil
   }
+  
+  func getWeatherHumidity(from workout: HKWorkout) -> Double? {
+    if let quantity = workout.metadata?["HKWeatherHumidity"] as? HKQuantity {
+      let unit = HKUnit.percent()
+      let value = quantity.doubleValue(for: unit)
+      dependency.logger.log("Activtiy Weather Humidity: \(value)", level: .info)
+      return value
+    }
+    
+    return nil
+  }
 }
