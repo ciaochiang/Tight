@@ -138,11 +138,11 @@ extension CyclingActivityView {
   var averageSpeedCard: some View {
     VStack {
       HStack {
-        Text("Avg. Speed / Km")
+        Text("Avg. Speed / hr")
           .font(.headline)
           .foregroundColor(.themeStyle.theme.primary)
         Spacer()
-        Text("10:40 / km")
+        Text("\(String(format: "%.1f", viewModel.avgSpeedPerHour)) m / hr")
           .font(.subheadline)
           .foregroundColor(.themeStyle.theme.secondaryTextColor)
       }

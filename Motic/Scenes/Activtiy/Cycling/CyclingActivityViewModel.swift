@@ -28,6 +28,7 @@ class CyclingActivityViewModel: ObservableObject {
   @Published var duraiton: TimeInterval
   @Published var totalDistanceMeters: Double
   @Published var avgHeartRate: Double = 0
+  @Published var avgSpeedPerHour: Double = 0
   
   init(dependency: CyclingActivityViewModelDependency,
        healthStoreManager: HealthStoreManager,
@@ -41,6 +42,8 @@ class CyclingActivityViewModel: ObservableObject {
 
     // After initialization
     self.healthStoreManager.getAvgHeartRateSamples(workout: workout)
+    self.avgSpeedPerHour = healthStoreManager.getAvgSpeedPerHour(duration: self.duraiton,
+                                                                 totalDistanceMeters: self.totalDistanceMeters)
     
     // Get avg. heart rate
     healthStoreManager.getAvgHeartRate(from: workout) { heartRate, error in

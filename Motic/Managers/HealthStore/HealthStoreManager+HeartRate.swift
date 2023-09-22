@@ -121,6 +121,11 @@ extension HealthStoreManager {
     }
   }
   
+  func getAvgSpeedPerHour(duration: Double, totalDistanceMeters: Double) -> Double {
+    let avgSpeed = totalDistanceMeters / duration
+    return avgSpeed
+  }
+  
   func getAvgHeartRateSamples(workout: HKWorkout) {
 
     // Assume you have fetched workouts into an array called "workouts"
