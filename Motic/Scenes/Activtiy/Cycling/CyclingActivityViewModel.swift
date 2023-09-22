@@ -8,6 +8,18 @@
 import SwiftUI
 import HealthKit
 
+// Temp struct
+struct HeartRate: Identifiable {
+  let id: String = UUID().uuidString
+  var date: Date
+  var heartRate: Double
+
+  init(date: Date, heartRate: Double) {
+    self.date = date
+    self.heartRate = heartRate
+  }
+}
+
 protocol CyclingActivityViewModelDependency {
   var logger: Logger { get }
 }
@@ -30,6 +42,9 @@ class CyclingActivityViewModel: ObservableObject {
   @Published var avgHeartRate: Double = 0
   @Published var avgSpeedPerHour: Double = 0
   
+  // Temp data
+  @Published var heartRateSamples: [HeartRate] = []
+  
   init(dependency: CyclingActivityViewModelDependency,
        healthStoreManager: HealthStoreManager,
        workout: HKWorkout) {
@@ -44,6 +59,12 @@ class CyclingActivityViewModel: ObservableObject {
     self.healthStoreManager.getAvgHeartRateSamples(workout: workout)
     self.avgSpeedPerHour = healthStoreManager.getAvgSpeedPerHour(duration: self.duraiton,
                                                                  totalDistanceMeters: self.totalDistanceMeters)
+    
+    
+    // Get all heart rate samples
+    healthStoreManager.getAllHeartRateSamples(workout: workout) { [weak self] heartRates in
+      self?.heartRateSamples = heartRates
+    }
     
     // Get avg. heart rate
     healthStoreManager.getAvgHeartRate(from: workout) { heartRate, error in

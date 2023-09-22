@@ -126,6 +126,34 @@ extension HealthStoreManager {
     return avgSpeed
   }
   
+  func getAllHeartRateSamples(workout: HKWorkout, _completion: @escaping ([HeartRate]) -> ()) {
+    guard let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate) else { return }
+    let predicate = HKQuery.predicateForObjects(from: workout)
+    
+    var hearRates: [HeartRate] = []
+    let heartRateQuery = HKSampleQuery(sampleType: heartRateType,
+                                       predicate: predicate,
+                                       limit: HKObjectQueryNoLimit,
+                                       sortDescriptors: nil) { (query, results, error) in
+      if let heartRateSamples = results as? [HKQuantitySample] {
+        // Iterate through heart rate samples
+        for sample in heartRateSamples {
+          let heartRateValue = sample.quantity.doubleValue(for: HKUnit.count().unitDivided(by: HKUnit.minute()))
+          let timestamp = sample.startDate
+          let heartRate = HeartRate(date: timestamp, heartRate: heartRateValue)
+          hearRates.append(heartRate)
+        }
+        _completion(hearRates)
+      } else {
+        if let error = error {
+            print("Error fetching heart rate samples: \(error.localizedDescription)")
+        }
+        _completion(hearRates)
+      }
+    }
+    healthStore.execute(heartRateQuery)
+  }
+  
   func getAvgHeartRateSamples(workout: HKWorkout) {
 
     // Assume you have fetched workouts into an array called "workouts"
@@ -148,22 +176,7 @@ extension HealthStoreManager {
     
 
     
-    let heartRateQuery = HKSampleQuery(sampleType: heartRateType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { (query, results, error) in
-      if let heartRateSamples = results as? [HKQuantitySample] {
-        // Iterate through heart rate samples
-        for sample in heartRateSamples {
-            let heartRate = sample.quantity.doubleValue(for: HKUnit.count().unitDivided(by: HKUnit.minute()))
-            let timestamp = sample.startDate
-            // Do something with the heart rate and timestamp
-//            print("Heart Rate: \(heartRate), Timestamp: \(timestamp)")
-        }
-      } else {
-        if let error = error {
-            print("Error fetching heart rate samples: \(error.localizedDescription)")
-        }
-      }
-    }
-    healthStore.execute(heartRateQuery)
+   
     
     
     let readTypes: Set<HKObjectType> = [HKObjectType.quantityType(forIdentifier: .distanceCycling)!]

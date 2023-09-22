@@ -9,19 +9,6 @@ import SwiftUI
 import HealthKit
 import Charts
 
-struct MonthlyHoursOfSunshine: Identifiable {
-  let id: String = UUID().uuidString
-    var date: Date
-    var hoursOfSunshine: Double
-
-
-    init(month: Int, hoursOfSunshine: Double) {
-        let calendar = Calendar.autoupdatingCurrent
-        self.date = calendar.date(from: DateComponents(year: 2020, month: month))!
-        self.hoursOfSunshine = hoursOfSunshine
-    }
-}
-
 struct CyclingActivityView: View {
   @StateObject var viewModel: CyclingActivityViewModel
 
@@ -29,61 +16,27 @@ struct CyclingActivityView: View {
     _viewModel = StateObject(wrappedValue: viewModel)
   }
   
-  var data: [MonthlyHoursOfSunshine] = [
-    MonthlyHoursOfSunshine(month: 1, hoursOfSunshine: 74),
-    MonthlyHoursOfSunshine(month: 2, hoursOfSunshine: 99),
-    MonthlyHoursOfSunshine(month: 12, hoursOfSunshine: 62)
-  ]
-
-
-    var body: some View {
-      ZStack {
-        VStack(alignment: .leading) {
- 
-          VStack(alignment: .leading, spacing: 24) {
-            HStack {
-              Text(viewModel.workoutType.description)
-                .font(.largeTitle)
-              Spacer()
-            }
-            
-            durationCard
-            totalDistance
-            averageSpeedCard
-            averageHeartRateCard
-            
-            Chart(data) {
-                    LineMark(
-                        x: .value("Month", $0.date),
-                        y: .value("Hours of Sunshine", $0.hoursOfSunshine)
-                    )
-                }
-            .chartXAxis {
-              AxisMarks(values: .automatic) { _ in
-                AxisValueLabel()
-              }
-            }
-            .chartYAxis {
-              AxisMarks(position: .leading, values: .automatic) { _ in
-                AxisValueLabel()	
-              }
-            }
-            .padding()
-            .frame(height: 300)
-            
-            Spacer()
-          }
-          .padding()
-          .background(Color.themeStyle.theme.background)
+  var body: some View {
+    ZStack {
+      VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 24) {
+          header
+          durationCard
+          totalDistance
+          averageSpeedCard
+          averageHeartRateCard
+          heartRateChart
+          Spacer()
         }
-        Spacer()
+        .padding()
+        .background(Color.themeStyle.theme.background)
       }
-      .background(
-        Color.themeStyle.theme.background.ignoresSafeArea()
-      )
+      Spacer()
     }
-  
- 
+    .background(
+      Color.themeStyle.theme.background.ignoresSafeArea()
+    )
+  }
 }
 
 struct CyclingActivityView_Previews: PreviewProvider {
@@ -99,6 +52,14 @@ struct CyclingActivityView_Previews: PreviewProvider {
 
 // MARK: Components
 extension CyclingActivityView {
+  var header: some View {
+    HStack {
+      Text(viewModel.workoutType.description)
+        .font(.largeTitle)
+      Spacer()
+    }
+  }
+  
   var durationCard: some View {
     VStack {
       HStack {
@@ -169,5 +130,26 @@ extension CyclingActivityView {
     .frame(maxWidth: .infinity)
     .background(Color.themeStyle.theme.secondaryBackground)
     .cornerRadius(16)
+  }
+  
+  var heartRateChart: some View {
+    Chart(viewModel.heartRateSamples) {
+      LineMark(
+        x: .value("Month", $0.date),
+        y: .value("Hours of Sunshine", $0.heartRate)
+      )
+    }
+    .chartXAxis {
+      AxisMarks(values: .automatic) { _ in
+        AxisValueLabel()
+      }
+    }
+    .chartYAxis {
+      AxisMarks(position: .leading, values: .automatic) { _ in
+        AxisValueLabel()
+      }
+    }
+    .padding()
+    .frame(height: 300)
   }
 }
