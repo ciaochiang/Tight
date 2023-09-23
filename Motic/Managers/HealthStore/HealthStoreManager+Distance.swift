@@ -81,4 +81,15 @@ extension HealthStoreManager {
       }
     }
   }
+  
+  func getElavationAscendedMeters(from workout: HKWorkout) -> Double? {
+    if let quantity = workout.metadata?["HKElevationAscended"] as? HKQuantity {
+      let unit = HKUnit.meter()
+      let value = quantity.doubleValue(for: unit)
+      dependency.logger.log("Elavation Ascended: \(value)", level: .info)
+      return value
+    }
+    
+    return nil
+  }
 }

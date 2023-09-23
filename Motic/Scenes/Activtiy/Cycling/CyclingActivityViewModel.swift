@@ -36,18 +36,35 @@ class CyclingActivityViewModel: ObservableObject {
   var dependency: CyclingActivityViewModelDependency
   var workout: HKWorkout
   @Published var healthStoreManager: HealthStoreManager
+  
+  // MARK: Basic
   @Published var workoutType: WorkoutActivityType
   @Published var duraiton: TimeInterval
-  @Published var totalDistanceMeters: Double
+  @Published var timezone: TimeZone?
+  
+  // MARK: Heart Rate
   @Published var avgHeartRate: Double = 0
-  @Published var avgSpeedPerHour: Double = 0
-  @Published var avgMETs: Double?
   @Published var heartRateSamples: [ChartData<Double>] = []
+    
+  // MARK: Distance
+  @Published var totalDistanceMeters: Double
   @Published var distanceSamples: [ChartData<Double>]?
+  @Published var elevationAscendedMeters: Double?
+  
+  // MARK: Speed
+  @Published var avgSpeedPerHour: Double = 0
+  
+  // MARK: Energy
+  @Published var basalEnergyBurned: Double?
+  @Published var basalEnergyBurnedSamples: [ChartData<Double>]?
+  @Published var activeEnergyBurned: Double?
+  @Published var activeEnergyBurnedSamples: [ChartData<Double>]?
+  @Published var avgMETs: Double?
+  
+  // MARK: Weather
   @Published var weatherTemperatureCelsius: Double?
   @Published var weatherHumidity: Double?
-  @Published var elevationAscendedMeters: Double?
-  @Published var timezone: TimeZone?
+  
   
   init(dependency: CyclingActivityViewModelDependency,
        healthStoreManager: HealthStoreManager,
@@ -74,6 +91,13 @@ class CyclingActivityViewModel: ObservableObject {
     }
     
     // Get all heart rate samples
+    healthStoreManager.getAvgHeartRate(from: workout) { [weak self] heartRate, _ in
+      DispatchQueue.main.async {
+        self?.avgHeartRate = heartRate
+      }
+    }
+    
+    // Get avg. heart rate
     healthStoreManager.getAllHeartRateSamples(workout: workout) { [weak self] heartRates in
       DispatchQueue.main.async {
         self?.heartRateSamples = heartRates
@@ -87,10 +111,24 @@ class CyclingActivityViewModel: ObservableObject {
       }
     }
     
-    // Get avg. heart rate
-    healthStoreManager.getAvgHeartRate(from: workout) { [weak self] heartRate, _ in
+    // Get all energy burned samples
+    healthStoreManager.getBasalEnergyBurnedSamples(from: workout) { [weak self] data, _ in
+      // Calculate avg value
+      let avgValue = healthStoreManager.getAvgValue(from: data)
+      
       DispatchQueue.main.async {
-        self?.avgHeartRate = heartRate
+        self?.basalEnergyBurned = avgValue
+        self?.basalEnergyBurnedSamples = data
+      }
+    }
+    
+    healthStoreManager.getActiveEnergyBurnedSamples(from: workout) { [weak self] data, _ in
+      // Calculate avg value
+      let avgValue = healthStoreManager.getAvgValue(from: data)
+      
+      DispatchQueue.main.async {
+        self?.activeEnergyBurned = avgValue
+        self?.activeEnergyBurnedSamples = data
       }
     }
   }
