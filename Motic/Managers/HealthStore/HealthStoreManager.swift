@@ -43,6 +43,15 @@ enum WorkoutActivityType {
     case .unknown: return "Unknown"
     }
   }
+  
+  var systemIconName: String {
+    switch self {
+    case .cycling: return "figure.indoor.cycle"
+    case .walking: return "figure.walk"
+    case .traditionalStrengthTraining: return "figure.strengthtraining.traditional"
+    case .unknown: return "figure.run.square.stack"
+    }
+  }
 }
 
 class HealthStoreManager: NSObject, ObservableObject {

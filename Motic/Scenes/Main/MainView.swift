@@ -260,13 +260,13 @@ struct MainViewActivityCard: View {
 //    self.activtiy = activity
 //  }
   @State var activity: HKWorkout
-  @State var activityType: String
+  @State var activityType: WorkoutActivityType
   @State var formmatedStartDate: String
   @State var totalEnergyBurned: Double
   
   init(activity: HKWorkout) {
     self.activity = activity
-    activityType = WorkoutActivityType(activityType: activity.workoutActivityType).description
+    activityType = WorkoutActivityType(activityType: activity.workoutActivityType)
     
     let dateFormatter = DateFormatter()
     dateFormatter.timeZone = TimeZone.current // Use the current timezone
@@ -285,13 +285,14 @@ struct MainViewActivityCard: View {
   
   var body: some View {
     HStack(spacing: 16) {
-      Image(systemName: "figure.indoor.cycle")
+      Image(systemName: activityType.systemIconName)
         .resizable()
         .scaledToFit()
         .foregroundColor(Color(UIColor.systemPink))
-        .frame(maxWidth: 16)
+        .frame(maxWidth: 24)
+        .frame(maxHeight: 24)
       VStack(alignment: .leading, spacing: 4) {
-        Text(activityType)
+        Text(activityType.description)
           .font(.caption)
           .foregroundColor(.themeStyle.theme.secondaryTextColor)
         Text("\(String(format: "%.1f", totalEnergyBurned)) Kcal")
