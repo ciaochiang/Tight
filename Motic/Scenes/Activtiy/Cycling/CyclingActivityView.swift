@@ -137,6 +137,10 @@ extension CyclingActivityView {
         heartRateChart
           .frame(maxHeight: 160)
       }
+      
+      if let zones = viewModel.zones {
+        ZoneDurationSection(zones: zones)
+      }
     }
     .frame(maxWidth: .infinity)
     .background(Color.themeStyle.theme.secondaryBackground)
@@ -181,5 +185,30 @@ extension CyclingActivityView {
       }
     }
     .padding()
+  }
+}
+
+struct ZoneDurationSection: View {
+  var zones: [Zone]
+  
+  init(zones: [Zone]) {
+    self.zones = zones
+  }
+  
+  var body: some View {
+    HStack(spacing: 24) {
+      ForEach(zones) { zone in
+        VStack(spacing: 4) {
+          Text("\(zone.duration.formatTimeInterval)")
+            .font(.subheadline)
+            .fontWeight(.semibold)
+            .foregroundColor(.themeStyle.theme.secondaryTextColor)
+          Text(zone.type.aliasName)
+            .font(.caption)
+            .foregroundColor(.themeStyle.theme.secondaryTextColor)
+        }
+      }
+    }
+    .padding(16)
   }
 }

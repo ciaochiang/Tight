@@ -33,6 +33,7 @@
 		E51DE2062ABDF6B000957395 /* HealthStoreManager+Energy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE2052ABDF6B000957395 /* HealthStoreManager+Energy.swift */; };
 		E51DE2082ABDFB3A00957395 /* HealthStoreManager+Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE2072ABDFB3A00957395 /* HealthStoreManager+Weather.swift */; };
 		E51DE20A2ABDFDD100957395 /* HealthStoreManager+Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE2092ABDFDD100957395 /* HealthStoreManager+Metadata.swift */; };
+		E51DE20C2ABEF13F00957395 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE20B2ABEF13F00957395 /* TimeInterval.swift */; };
 		E52100182AB7204A000CF3AD /* BaseSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52100172AB7204A000CF3AD /* BaseSample.swift */; };
 		E521001A2AB72069000CF3AD /* HeartRateSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52100192AB72069000CF3AD /* HeartRateSample.swift */; };
 		E521001C2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E521001B2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift */; };
@@ -140,6 +141,7 @@
 		E51DE2052ABDF6B000957395 /* HealthStoreManager+Energy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthStoreManager+Energy.swift"; sourceTree = "<group>"; };
 		E51DE2072ABDFB3A00957395 /* HealthStoreManager+Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthStoreManager+Weather.swift"; sourceTree = "<group>"; };
 		E51DE2092ABDFDD100957395 /* HealthStoreManager+Metadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthStoreManager+Metadata.swift"; sourceTree = "<group>"; };
+		E51DE20B2ABEF13F00957395 /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		E52100172AB7204A000CF3AD /* BaseSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSample.swift; sourceTree = "<group>"; };
 		E52100192AB72069000CF3AD /* HeartRateSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateSample.swift; sourceTree = "<group>"; };
 		E521001B2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthStoreManager+HeartRate.swift"; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				E51DE1ED2AB8998E00957395 /* Color.swift */,
+				E51DE20B2ABEF13F00957395 /* TimeInterval.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -768,6 +771,7 @@
 				E51DE1FA2AB96D0A00957395 /* ProfileViewModel.swift in Sources */,
 				E56A55C92AB2BC7100A35BF3 /* MoticApp.swift in Sources */,
 				E59EB85A2AB6A9530057F630 /* HeartRateZones.swift in Sources */,
+				E51DE20C2ABEF13F00957395 /* TimeInterval.swift in Sources */,
 				E51DE1FE2ABB2E0300957395 /* CyclingActivityView.swift in Sources */,
 				E51DE1F82AB96CEF00957395 /* ProfileView.swift in Sources */,
 				E59EB8572AB5F76A0057F630 /* MainViewModel.swift in Sources */,

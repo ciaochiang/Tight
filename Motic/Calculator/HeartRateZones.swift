@@ -41,7 +41,8 @@ enum ZoneType: Int, CaseIterable {
   }
 }
 
-struct Zone {
+struct Zone: Identifiable {
+  let id: String = UUID().uuidString
   let type: ZoneType
   let name: String
   let heartRateRange: ClosedRange<Int>
