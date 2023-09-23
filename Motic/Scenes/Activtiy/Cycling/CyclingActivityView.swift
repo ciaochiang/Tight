@@ -199,12 +199,12 @@ struct ZoneDurationSection: View {
     HStack(spacing: 24) {
       ForEach(zones) { zone in
         VStack(spacing: 4) {
+          Text(zone.type.aliasName)
+            .font(.caption2)
+            .foregroundColor(.themeStyle.theme.secondaryTextColor)
           Text("\(zone.duration.formatTimeInterval)")
             .font(.subheadline)
             .fontWeight(.semibold)
-            .foregroundColor(.themeStyle.theme.secondaryTextColor)
-          Text(zone.type.aliasName)
-            .font(.caption)
             .foregroundColor(.themeStyle.theme.secondaryTextColor)
         }
       }

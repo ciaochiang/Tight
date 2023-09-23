@@ -86,13 +86,12 @@ extension HealthStoreManager {
   func getAllHeartRateSamples(workout: HKWorkout, _completion: @escaping ([ChartData<Double>]) -> ()) {
     guard let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate) else { return }
     let predicate = HKQuery.predicateForObjects(from: workout)
-    let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)
     
-    var hearRates: [ChartData<Double>] = []
+    var heartRates: [ChartData<Double>] = []
     let heartRateQuery = HKSampleQuery(sampleType: heartRateType,
                                        predicate: predicate,
                                        limit: HKObjectQueryNoLimit,
-                                       sortDescriptors: [sortDescriptor]) { (query, results, error) in
+                                       sortDescriptors: nil) { (query, results, error) in
       if let heartRateSamples = results as? [HKQuantitySample] {
         // Iterate through heart rate samples
         for sample in heartRateSamples {
@@ -100,14 +99,15 @@ extension HealthStoreManager {
           let heartRate = ChartData<Double>(startDate: sample.startDate,
                                             endDate: sample.endDate,
                                             value: heartRateValue)
-          hearRates.append(heartRate)
+          heartRates.append(heartRate)
         }
-        _completion(hearRates)
+        
+        _completion(heartRates.sorted(by: { $0.startDate < $1.startDate }))
       } else {
         if let error = error {
             print("Error fetching heart rate samples: \(error.localizedDescription)")
         }
-        _completion(hearRates)
+        _completion(heartRates)
       }
     }
     healthStore.execute(heartRateQuery)

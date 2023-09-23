@@ -12,18 +12,11 @@ extension TimeInterval {
     let hours = Int(self / 3600)
     let minutes = Int((self.truncatingRemainder(dividingBy: 3600)) / 60)
     let seconds = Int(self.truncatingRemainder(dividingBy: 60))
-
-    var formattedTime = ""
-
-    if hours > 0 {
-      formattedTime += "\(hours):"
-    }
     
-    if minutes > 0 || hours > 0 {
-      formattedTime += "\(minutes):"
+    if hours > 0 {
+      return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+    } else {
+      return String(format: "%02d:%02d", minutes, seconds)
     }
-    formattedTime += "\(seconds)"
-
-    return formattedTime
   }
 }

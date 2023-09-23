@@ -51,7 +51,6 @@ extension HealthStoreManager {
                              _completion: @escaping ([ChartData<Double>]?, Error?) -> ()) {
     guard let distanceType = HKQuantityType.quantityType(forIdentifier: identifier) else { return }
     let predicate = HKQuery.predicateForObjects(from: workout)
-    let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)
 
     var data: [ChartData<Double>] = []
     let readTypes: Set<HKObjectType> = [distanceType]
@@ -60,7 +59,7 @@ extension HealthStoreManager {
         let distanceQuery = HKSampleQuery(sampleType: distanceType,
                                           predicate: predicate,
                                           limit: HKObjectQueryNoLimit,
-                                          sortDescriptors: [sortDescriptor]) { (query, results, error) in
+                                          sortDescriptors: nil) { (query, results, error) in
           if let distanceSamples = results as? [HKQuantitySample] {
             for sample in distanceSamples {
               let distance = sample.quantity.doubleValue(for: HKUnit.meter())
@@ -68,7 +67,7 @@ extension HealthStoreManager {
               data.append(sample)
             }
             self.dependency.logger.log("All Distance Samples: \(data)", level: .info)
-            _completion(data, nil)
+            _completion(data.sorted(by: { $0.startDate < $1.startDate }), nil)
           } else {
             if let error = error {
               self.dependency.logger.log("Error fetching distance samples: \(error.localizedDescription)", level: .error)
