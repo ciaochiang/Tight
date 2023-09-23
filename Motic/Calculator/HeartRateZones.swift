@@ -45,7 +45,7 @@ struct Zone {
   let type: ZoneType
   let name: String
   let heartRateRange: ClosedRange<Int>
-  let duration: TimeInterval
+  var duration: TimeInterval
   
   init(type: ZoneType, heartRateRange: ClosedRange<Int>, duration: TimeInterval) {
     self.type = type

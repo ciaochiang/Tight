@@ -48,7 +48,7 @@ class CyclingActivityViewModel: ObservableObject {
   @Published var avgHeartRate: Double = 0
   @Published var heartRateSamples: [ChartData<Double>] = []
   @Published var heartRateZones: HeartRateZones
-  @Published var zoneDurations: [ZoneType: TimeInterval]?
+  @Published var zones: [Zone]?
     
   // MARK: Distance
   @Published var totalDistanceMeters: Double
@@ -105,9 +105,9 @@ class CyclingActivityViewModel: ObservableObject {
     // Get all heart rate samples
     healthStoreManager.getAllHeartRateSamples(workout: workout) { [weak self] heartRates in
       if let zones = self?.heartRateZones.zones {
-        let zoneDuration = self?.healthStoreManager.getHeartRateZoneDurations(from: heartRates, zones: zones)
+        let zones = self?.healthStoreManager.getHeartRateZoneDurations(from: heartRates, zones: zones)
         DispatchQueue.main.async {
-          self?.zoneDurations = zoneDuration
+          self?.zones = zones
         }
       }
       

@@ -112,24 +112,27 @@ extension HealthStoreManager {
     healthStore.execute(heartRateQuery)
   }
   
-  func getHeartRateZoneDurations(from heartRates: [ChartData<Double>], zones: [Zone]) -> [ZoneType: TimeInterval] {
-    var zoneDurations: [ZoneType: TimeInterval] = [:]
-
+  func getHeartRateZoneDurations(from heartRates: [ChartData<Double>], zones: [Zone]) -> [Zone] {
+    // Make array is mutable
+    var zones = zones
+    
     var previousSample: ChartData<Double>? = nil
     for sample in heartRates {
       if let previusStartDate = previousSample?.startDate {
         let heartRate = Int(sample.value)
-                
-        if let zone = zones.first(where: { $0.heartRateRange.contains(heartRate) }) {
+        
+        if let index = zones.firstIndex(where: { $0.heartRateRange.contains(heartRate) }) {
           let duration = sample.startDate.timeIntervalSince(previusStartDate)
-          zoneDurations[zone.type, default: 0.0] += duration
+          var zone = zones[index]
+          zone.duration += duration
+          zones[index] = zone
         }
       }
 
       previousSample = sample
     }
     
-    dependency.logger.log("Zone Durations: \(zoneDurations)", level: .info)
-    return  zoneDurations
+    dependency.logger.log("Zones: \(zones)", level: .info)
+    return zones
   }
 }
