@@ -86,12 +86,13 @@ extension HealthStoreManager {
   func getAllHeartRateSamples(workout: HKWorkout, _completion: @escaping ([ChartData<Double>]) -> ()) {
     guard let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate) else { return }
     let predicate = HKQuery.predicateForObjects(from: workout)
+    let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)
     
     var hearRates: [ChartData<Double>] = []
     let heartRateQuery = HKSampleQuery(sampleType: heartRateType,
                                        predicate: predicate,
                                        limit: HKObjectQueryNoLimit,
-                                       sortDescriptors: nil) { (query, results, error) in
+                                       sortDescriptors: [sortDescriptor]) { (query, results, error) in
       if let heartRateSamples = results as? [HKQuantitySample] {
         // Iterate through heart rate samples
         for sample in heartRateSamples {
