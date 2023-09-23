@@ -46,12 +46,14 @@ extension HealthStoreManager {
     return formattedDistance
   }
   
-  func getAllCyclingDistanceSamples(workout: HKWorkout, _completion: @escaping ([ChartData<Double>]) -> ()) {
-    guard let distanceType = HKQuantityType.quantityType(forIdentifier: .distanceCycling) else { return }
+  func getAllDistanceSamples(workout: HKWorkout,
+                             identifier: HKQuantityTypeIdentifier,
+                             _completion: @escaping ([ChartData<Double>]?, Error?) -> ()) {
+    guard let distanceType = HKQuantityType.quantityType(forIdentifier: identifier) else { return }
     let predicate = HKQuery.predicateForObjects(from: workout)
 
     var data: [ChartData<Double>] = []
-    let readTypes: Set<HKObjectType> = [HKObjectType.quantityType(forIdentifier: .distanceCycling)!]
+    let readTypes: Set<HKObjectType> = [distanceType]
     healthStore.requestAuthorization(toShare: nil, read: readTypes) { (success, error) in
       if success {
         let distanceQuery = HKSampleQuery(sampleType: distanceType,
@@ -60,18 +62,18 @@ extension HealthStoreManager {
                                           sortDescriptors: nil) { (query, results, error) in
           if let distanceSamples = results as? [HKQuantitySample] {
             for sample in distanceSamples {
-              let distance = sample.quantity.doubleValue(for: HKUnit.count().unitDivided(by: HKUnit.minute()))
+              let distance = sample.quantity.doubleValue(for: HKUnit.meter())
               let timestamp = sample.startDate
               let sample = ChartData<Double>(date: timestamp, value: distance)
               data.append(sample)
             }
             self.dependency.logger.log("All Distance Samples: \(data)", level: .info)
-            _completion(data)
+            _completion(data, nil)
           } else {
             if let error = error {
               self.dependency.logger.log("Error fetching distance samples: \(error.localizedDescription)", level: .error)
             }
-            _completion(data)
+            _completion(nil, error)
           }
         }
         

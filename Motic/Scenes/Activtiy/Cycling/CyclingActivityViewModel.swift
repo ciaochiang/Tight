@@ -43,6 +43,7 @@ class CyclingActivityViewModel: ObservableObject {
   @Published var avgSpeedPerHour: Double = 0
   @Published var avgMETs: Double?
   @Published var heartRateSamples: [ChartData<Double>] = []
+  @Published var distanceSamples: [ChartData<Double>]?
   @Published var weatherTemperatureCelsius: Double?
   @Published var weatherHumidity: Double?
   @Published var elevationAscendedMeters: Double?
@@ -72,7 +73,6 @@ class CyclingActivityViewModel: ObservableObject {
       dependency.logger.log("All Statistics: \(workout.allStatistics)", level: .info)
     }
     
-    
     // Get all heart rate samples
     healthStoreManager.getAllHeartRateSamples(workout: workout) { [weak self] heartRates in
       DispatchQueue.main.async {
@@ -80,10 +80,17 @@ class CyclingActivityViewModel: ObservableObject {
       }
     }
     
-    // Get avg. heart rate
-    healthStoreManager.getAvgHeartRate(from: workout) { heartRate, _ in
+    // Get all distance samples
+    healthStoreManager.getAllDistanceSamples(workout: workout, identifier: .distanceWalkingRunning) { [weak self] data, _ in
       DispatchQueue.main.async {
-        self.avgHeartRate = heartRate
+        self?.distanceSamples = data
+      }
+    }
+    
+    // Get avg. heart rate
+    healthStoreManager.getAvgHeartRate(from: workout) { [weak self] heartRate, _ in
+      DispatchQueue.main.async {
+        self?.avgHeartRate = heartRate
       }
     }
   }
