@@ -8,38 +8,64 @@
 import Foundation
 import HealthKit
 
-struct Zone {
-  let zoneName: String
-  let heartRateRange: ClosedRange<Int>
+enum ZoneType: Int, CaseIterable {
+  case resting = 1
+  case fatBuring = 2
+  case aerobic = 3
+  case anaerobic = 4
+  case maximumEffort = 5
   
-  init(zoneName: String, heartRateRange: ClosedRange<Int>) {
-    self.zoneName = zoneName
+  func getHeartRateClosedRange(maxHeartRate: Int) -> ClosedRange<Int> {
+    // Define heart rate zones as ClosedRanges based on percentages of max heart rate
+    switch self {
+    case .resting: return 0...Int(0.5 * Double(maxHeartRate)) // 0-50% of max heart rate
+    case .fatBuring: return (Int(0.5 * Double(maxHeartRate)) + 1)...Int(0.6 * Double(maxHeartRate)) // 51-60%
+    case .aerobic: return (Int(0.6 * Double(maxHeartRate)) + 1)...Int(0.7 * Double(maxHeartRate)) // 61-70%
+    case .anaerobic: return (Int(0.7 * Double(maxHeartRate)) + 1)...Int(0.8 * Double(maxHeartRate)) // 71-80%
+    case .maximumEffort: return (Int(0.8 * Double(maxHeartRate)) + 1)...maxHeartRate // 81-100%
+    }
+  }
+  
+  var aliasName: String {
+    return "Zone \(self.rawValue)"
+  }
+  
+  var description: String {
+    switch self {
+    case .resting: return "Resting"
+    case .fatBuring: return "Fat Burning"
+    case .aerobic: return "Aerobic"
+    case .anaerobic: return "Anaerobic"
+    case .maximumEffort: return "Max. Effort"
+    }
+  }
+}
+
+struct Zone {
+  let type: ZoneType
+  let name: String
+  let heartRateRange: ClosedRange<Int>
+  let duration: TimeInterval
+  
+  init(type: ZoneType, heartRateRange: ClosedRange<Int>, duration: TimeInterval) {
+    self.type = type
+    self.name = type.aliasName
     self.heartRateRange = heartRateRange
+    self.duration = duration
   }
 }
 
 struct HeartRateZones {
   let maxHeartRate: Int
-  let age: Int
   let zones: [Zone]
     
-  init(maxHeartRate: Int, age: Int) {
+  init(maxHeartRate: Int) {
     self.maxHeartRate = maxHeartRate
-    self.age = age
     
-    let heartRateReserve = maxHeartRate - 60  // Using 60 as a resting heart rate
-    let lowerBound = 0.6
-    let upperBounds: [Double] = [0.7, 0.8, 0.9, 1.0]
-        
-    var list: [Zone] = []
-        
-    for (index, upperBound) in upperBounds.enumerated() {
-      let lower = Int(Double(heartRateReserve) * lowerBound)
-      let upper = Int(Double(heartRateReserve) * upperBound)
-      let zone = Zone(zoneName: "Zone \(index + 1)", heartRateRange: lower...(upper + 60))
-      list.append(zone)
+    let allZoneTypes = ZoneType.allCases
+    zones = allZoneTypes.map {
+      Zone(type: $0, heartRateRange: $0.getHeartRateClosedRange(maxHeartRate: maxHeartRate), duration: .zero)
     }
-    self.zones = list
   }
   
   func getCurrentZone(heartRate: HeartRateSample<HKQuantitySample, Double>) -> Zone? {

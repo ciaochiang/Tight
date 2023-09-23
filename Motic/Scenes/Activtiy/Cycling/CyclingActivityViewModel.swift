@@ -11,11 +11,13 @@ import HealthKit
 // Temp struct
 struct ChartData<T>: Identifiable {
   let id: String = UUID().uuidString
-  var date: Date
+  var startDate: Date
+  var endDate: Date
   var value: T
 
-  init(date: Date, value: T) {
-    self.date = date
+  init(startDate: Date, endDate: Date, value: T) {
+    self.startDate = startDate
+    self.endDate = endDate
     self.value = value
   }
 }
@@ -45,6 +47,8 @@ class CyclingActivityViewModel: ObservableObject {
   // MARK: Heart Rate
   @Published var avgHeartRate: Double = 0
   @Published var heartRateSamples: [ChartData<Double>] = []
+  @Published var heartRateZones: HeartRateZones
+  @Published var zoneDurations: [ZoneType: TimeInterval]?
     
   // MARK: Distance
   @Published var totalDistanceMeters: Double
@@ -78,6 +82,7 @@ class CyclingActivityViewModel: ObservableObject {
     self.weatherHumidity = healthStoreManager.getWeatherHumidity(from: workout)
     self.elevationAscendedMeters = healthStoreManager.getElavationAscendedMeters(from: workout)
     self.timezone = healthStoreManager.getTimezone(from: workout)
+    self.heartRateZones = HeartRateZones(maxHeartRate: 194)
     self.totalDistanceMeters = healthStoreManager.getTotalDistanceMeters(workout: workout)
     self.workoutType = WorkoutActivityType(activityType: workout.workoutActivityType)
 
@@ -90,15 +95,22 @@ class CyclingActivityViewModel: ObservableObject {
       dependency.logger.log("All Statistics: \(workout.allStatistics)", level: .info)
     }
     
-    // Get all heart rate samples
+    // Get avg. heart rate
     healthStoreManager.getAvgHeartRate(from: workout) { [weak self] heartRate, _ in
       DispatchQueue.main.async {
         self?.avgHeartRate = heartRate
       }
     }
     
-    // Get avg. heart rate
+    // Get all heart rate samples
     healthStoreManager.getAllHeartRateSamples(workout: workout) { [weak self] heartRates in
+      if let zones = self?.heartRateZones.zones {
+        let zoneDuration = self?.healthStoreManager.getHeartRateZoneDurations(from: heartRates, zones: zones)
+        DispatchQueue.main.async {
+          self?.zoneDurations = zoneDuration
+        }
+      }
+      
       DispatchQueue.main.async {
         self?.heartRateSamples = heartRates
       }

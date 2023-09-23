@@ -146,7 +146,7 @@ extension CyclingActivityView {
   var distanceChart: some View {
     Chart(viewModel.distanceSamples ?? []) {
       LineMark(
-        x: .value("Time", $0.date),
+        x: .value("Time", $0.startDate),
         y: .value("Distance", $0.value)
       )
     }
@@ -166,7 +166,7 @@ extension CyclingActivityView {
   var heartRateChart: some View {
     Chart(viewModel.heartRateSamples) {
       LineMark(
-        x: .value("Time", $0.date),
+        x: .value("Time", $0.startDate),
         y: .value("Heart Rate", $0.value)
       )
     }

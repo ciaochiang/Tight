@@ -63,8 +63,7 @@ extension HealthStoreManager {
           if let distanceSamples = results as? [HKQuantitySample] {
             for sample in distanceSamples {
               let distance = sample.quantity.doubleValue(for: HKUnit.meter())
-              let timestamp = sample.startDate
-              let sample = ChartData<Double>(date: timestamp, value: distance)
+              let sample = ChartData<Double>(startDate: sample.startDate, endDate: sample.endDate, value: distance)
               data.append(sample)
             }
             self.dependency.logger.log("All Distance Samples: \(data)", level: .info)

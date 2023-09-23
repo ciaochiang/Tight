@@ -126,7 +126,7 @@ extension MainView {
         }
       }
       .sheet(isPresented: $isActivityViewPresented) {
-        if let selectedWorkout = viewModel.selectedWorkout {
+        if let selectedWorkout = viewModel.selectedWorkout  {
           let dependency = CyclingActivityViewModelDependencyImp(logger: viewModel.dependency.logger)
           let viewModel = CyclingActivityViewModel(dependency: dependency,
                                                    healthStoreManager: viewModel.healthStoreManager,
@@ -238,7 +238,7 @@ extension MainView {
       }
       .padding(16)
       HStack(spacing: 8) {
-        Text("\(viewModel.healthStoreManager.currentZone?.zoneName ?? "Zone 1")")
+        Text("\(viewModel.healthStoreManager.currentZone?.name ?? "Zone 1")")
           .font(.title)
           .fontWeight(.bold)
           .foregroundColor(.themeStyle.theme.red)

@@ -13,6 +13,7 @@ struct AppleUser: BaseUser {
   let firstName: String
   let lastName: String
   let email: String
+  var age: Int?
   
   init?(credential: ASAuthorizationAppleIDCredential) {
     guard let firstName = credential.fullName?.givenName,

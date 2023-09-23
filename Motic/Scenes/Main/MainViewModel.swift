@@ -56,5 +56,8 @@ class MainViewModel: ObservableObject {
     // Get current user
     let accountManager = AccountManager.shared
     user = accountManager.currentUser
+    
+    // Temp
+    user?.age = 36
   }
 }

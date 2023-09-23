@@ -12,4 +12,5 @@ protocol BaseUser: Codable {
   var firstName: String { get }
   var lastName: String { get }
   var email: String { get }
+  var age: Int? { set get }
 }

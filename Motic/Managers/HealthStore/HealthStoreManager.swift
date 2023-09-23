@@ -100,7 +100,7 @@ class HealthStoreManager: NSObject, ObservableObject {
     
     let hearRate = HeartRateSample<HKQuantitySample, Double>()
     self.latestHeartRate = hearRate
-    personalHeartRateZones = HeartRateZones(maxHeartRate: 190, age: 36)
+    personalHeartRateZones = HeartRateZones(maxHeartRate: 192)
     
     let zone = personalHeartRateZones.getCurrentZone(heartRate: hearRate)
     currentZone = zone
