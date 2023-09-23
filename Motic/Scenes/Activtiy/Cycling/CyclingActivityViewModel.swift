@@ -45,6 +45,7 @@ class CyclingActivityViewModel: ObservableObject {
   @Published var heartRateSamples: [ChartData<Double>] = []
   @Published var weatherTemperatureCelsius: Double?
   @Published var weatherHumidity: Double?
+  @Published var elevationAscendedMeters: Double?
   @Published var timezone: TimeZone?
   
   init(dependency: CyclingActivityViewModelDependency,
@@ -57,6 +58,7 @@ class CyclingActivityViewModel: ObservableObject {
     self.avgMETs = healthStoreManager.getAvgMETs(from: workout)
     self.weatherTemperatureCelsius = healthStoreManager.getWeatherTemperatureCelsius(from: workout)
     self.weatherHumidity = healthStoreManager.getWeatherHumidity(from: workout)
+    self.elevationAscendedMeters = healthStoreManager.getElavationAscendedMeters(from: workout)
     self.timezone = healthStoreManager.getTimezone(from: workout)
     self.totalDistanceMeters = healthStoreManager.getTotalDistanceMeters(workout: workout)
     self.workoutType = WorkoutActivityType(activityType: workout.workoutActivityType)
@@ -64,6 +66,12 @@ class CyclingActivityViewModel: ObservableObject {
     // After initialization
     self.avgSpeedPerHour = healthStoreManager.getAvgSpeedPerHour(duration: self.duraiton,
                                                                  totalDistanceMeters: self.totalDistanceMeters)
+    
+    if let metadata = workout.metadata {
+      dependency.logger.log("Metadata: \(metadata)", level: .info)
+      dependency.logger.log("All Statistics: \(workout.allStatistics)", level: .info)
+    }
+    
     
     // Get all heart rate samples
     healthStoreManager.getAllHeartRateSamples(workout: workout) { [weak self] heartRates in
