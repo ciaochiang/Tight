@@ -18,20 +18,21 @@ struct CyclingActivityView: View {
   
   var body: some View {
     ZStack {
-      VStack(alignment: .leading) {
-        VStack(alignment: .leading, spacing: 24) {
-          header
-          durationCard
-          totalDistance
-          averageSpeedCard
-          averageHeartRateCard
-          heartRateChart
-          Spacer()
+      ScrollView {
+        VStack(alignment: .leading) {
+          VStack(alignment: .leading, spacing: 16) {
+            header
+            durationCard
+            totalDistance
+            averageSpeedCard
+            averageHeartRateCard
+            Spacer()
+          }
+          .padding()
+          .background(Color.themeStyle.theme.background)
         }
-        .padding()
-        .background(Color.themeStyle.theme.background)
+        Spacer()
       }
-      Spacer()
     }
     .background(
       Color.themeStyle.theme.background.ignoresSafeArea()
@@ -90,6 +91,11 @@ extension CyclingActivityView {
           .foregroundColor(.themeStyle.theme.secondaryTextColor)
       }
       .padding(16)
+      
+      if viewModel.distanceSamples?.isEmpty != true {
+        distanceChart
+          .frame(maxHeight: 160)
+      }
     }
     .frame(maxWidth: .infinity)
     .background(Color.themeStyle.theme.secondaryBackground)
@@ -126,10 +132,35 @@ extension CyclingActivityView {
           .foregroundColor(.themeStyle.theme.secondaryTextColor)
       }
       .padding(16)
+    
+      if viewModel.heartRateSamples.isEmpty != true {
+        heartRateChart
+          .frame(maxHeight: 160)
+      }
     }
     .frame(maxWidth: .infinity)
     .background(Color.themeStyle.theme.secondaryBackground)
     .cornerRadius(16)
+  }
+  
+  var distanceChart: some View {
+    Chart(viewModel.distanceSamples ?? []) {
+      LineMark(
+        x: .value("Time", $0.date),
+        y: .value("Distance", $0.value)
+      )
+    }
+    .chartXAxis {
+      AxisMarks(values: .automatic) { _ in
+        AxisValueLabel()
+      }
+    }
+    .chartYAxis {
+      AxisMarks(position: .leading, values: .automatic) { _ in
+        AxisValueLabel()
+      }
+    }
+    .padding()
   }
   
   var heartRateChart: some View {
@@ -150,6 +181,5 @@ extension CyclingActivityView {
       }
     }
     .padding()
-    .frame(height: 300)
   }
 }
