@@ -254,11 +254,6 @@ extension MainView {
 }
 
 struct MainViewActivityCard: View {
-//  @State var activtiy: HKWorkout
-//
-//  init(activity: HKWorkout) {
-//    self.activtiy = activity
-//  }
   @State var activity: HKWorkout
   @State var activityType: WorkoutActivityType
   @State var formmatedStartDate: String
