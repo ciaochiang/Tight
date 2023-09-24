@@ -24,7 +24,11 @@ struct MoticApp: App {
   var body: some Scene {
     WindowGroup {
       if AccountManager.shared.isLoggedIn {
-        MainView()
+        let logger = Logger(configuration: AppConfiguration.loggerConfig)
+        let dependency = MainViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
+                                                    logger: logger)
+        let viewModel = MainViewModel(dependency: dependency)
+        MainView(viewModel: viewModel)
       } else {
         OnboardingView()
       }

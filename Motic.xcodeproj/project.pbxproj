@@ -34,6 +34,7 @@
 		E51DE2082ABDFB3A00957395 /* HealthStoreManager+Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE2072ABDFB3A00957395 /* HealthStoreManager+Weather.swift */; };
 		E51DE20A2ABDFDD100957395 /* HealthStoreManager+Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE2092ABDFDD100957395 /* HealthStoreManager+Metadata.swift */; };
 		E51DE20C2ABEF13F00957395 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE20B2ABEF13F00957395 /* TimeInterval.swift */; };
+		E51DE20E2AC0546700957395 /* PreferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE20D2AC0546700957395 /* PreferenceManager.swift */; };
 		E52100182AB7204A000CF3AD /* BaseSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52100172AB7204A000CF3AD /* BaseSample.swift */; };
 		E521001A2AB72069000CF3AD /* HeartRateSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52100192AB72069000CF3AD /* HeartRateSample.swift */; };
 		E521001C2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E521001B2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift */; };
@@ -142,6 +143,7 @@
 		E51DE2072ABDFB3A00957395 /* HealthStoreManager+Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthStoreManager+Weather.swift"; sourceTree = "<group>"; };
 		E51DE2092ABDFDD100957395 /* HealthStoreManager+Metadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthStoreManager+Metadata.swift"; sourceTree = "<group>"; };
 		E51DE20B2ABEF13F00957395 /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
+		E51DE20D2AC0546700957395 /* PreferenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceManager.swift; sourceTree = "<group>"; };
 		E52100172AB7204A000CF3AD /* BaseSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSample.swift; sourceTree = "<group>"; };
 		E52100192AB72069000CF3AD /* HeartRateSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateSample.swift; sourceTree = "<group>"; };
 		E521001B2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthStoreManager+HeartRate.swift"; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 				E521001E2AB74D13000CF3AD /* AccountManager.swift */,
 				E51DE1F02AB9553300957395 /* BaseUser.swift */,
 				E51DE1F22AB9555A00957395 /* AppleUser.swift */,
+				E51DE20D2AC0546700957395 /* PreferenceManager.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -760,6 +763,7 @@
 				E56A55CB2AB2BC7100A35BF3 /* MainView.swift in Sources */,
 				E51DE1EE2AB8998E00957395 /* Color.swift in Sources */,
 				E521001F2AB74D13000CF3AD /* AccountManager.swift in Sources */,
+				E51DE20E2AC0546700957395 /* PreferenceManager.swift in Sources */,
 				E51DE1F32AB9555A00957395 /* AppleUser.swift in Sources */,
 				E59EB8512AB5ED020057F630 /* LocationManager.swift in Sources */,
 				E51DE2082ABDFB3A00957395 /* HealthStoreManager+Weather.swift in Sources */,

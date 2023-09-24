@@ -11,13 +11,16 @@ import SwiftUI
 import Combine
 
 protocol MainViewModelDependency {
+  var preferenceManager: PreferenceManager { get }
   var logger: Logger { get }
 }
 
 class MainViewModelDependencyImp: MainViewModelDependency {
+  var preferenceManager: PreferenceManager
   var logger: Logger
   
-  init(logger: Logger) {
+  init(preferenceManager: PreferenceManager, logger: Logger) {
+    self.preferenceManager = preferenceManager
     self.logger = logger
   }
 }

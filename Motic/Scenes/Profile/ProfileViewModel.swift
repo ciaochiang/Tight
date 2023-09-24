@@ -6,17 +6,23 @@
 //
 
 import SwiftUI
+import Combine
 
 protocol ProfileViewModelDependency {
+  var preferenceManager: PreferenceManager { get }
   var logger: Logger { get }
   var currentUser: BaseUser? { get }
 }
 
 struct ProfileViewModelDependencyImp: ProfileViewModelDependency {
+  var preferenceManager: PreferenceManager
   var logger: Logger
   var currentUser: BaseUser?
   
-  init(logger: Logger, currentUser: BaseUser?) {
+  init(preferenceManager: PreferenceManager,
+       logger: Logger,
+       currentUser: BaseUser?) {
+    self.preferenceManager = preferenceManager
     self.logger = logger
     self.currentUser = currentUser
   }
@@ -83,7 +89,7 @@ class ProfileViewModel: ObservableObject {
   @Published var currentUser: BaseUser?
   @Published var isDarkModeOn: Bool = false
   @Published var profile: Profile
-  
+    
   init(dependency: ProfileViewModelDependency) {
     self.dependency = dependency
     self.currentUser = dependency.currentUser
@@ -97,5 +103,14 @@ class ProfileViewModel: ObservableObject {
     
     let profile = Profile(fullName: "\(dependency.currentUser?.firstName ?? "") \(dependency.currentUser?.lastName ?? "")", sections: [accountSection, appearanceSection])
     self.profile = profile
+    
+    self.isDarkModeOn = dependency.preferenceManager.colorScheme == .dark
+  }
+  
+  func toggleDarkMode(isOn: Bool) {
+    
+    // Store preference to user defaults
+//    UserDefaults.standard.setValue(isOn, forKey: "PREF_IS_DARK_MOOE")
+    PreferenceManager.shared.toggleDarkMode(isOn: isOn)
   }
 }

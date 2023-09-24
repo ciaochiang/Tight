@@ -10,13 +10,13 @@ import HealthKit
 
 struct MainView: View {
   @StateObject var viewModel: MainViewModel
+  @StateObject var preferenceManager: PreferenceManager
   @State var isPresented: Bool = false
   @State var isActivityViewPresented: Bool = false
   
-  init() {
-    let logger = Logger(configuration: AppConfiguration.loggerConfig)
-    let dependency = MainViewModelDependencyImp(logger: logger)
-    _viewModel = StateObject(wrappedValue: MainViewModel(dependency: dependency))
+  init(viewModel: MainViewModel) {
+    _viewModel = StateObject(wrappedValue: viewModel)
+    _preferenceManager = StateObject(wrappedValue: viewModel.dependency.preferenceManager)
   }
   
   var body: some View {
@@ -35,12 +35,17 @@ struct MainView: View {
     .background(
       Color.themeStyle.theme.background.ignoresSafeArea()
     )
+    .preferredColorScheme(preferenceManager.colorScheme)
   }
 }
 
 struct MainView_Previews: PreviewProvider {
   static var previews: some View {
-    MainView()
+    let logger = Logger(configuration: AppConfiguration.loggerConfig)
+    let dependency = MainViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
+                                                logger: logger)
+    let viewModel = MainViewModel(dependency: dependency)
+    MainView(viewModel: viewModel)
   }
 }
 
@@ -69,7 +74,12 @@ extension MainView {
           .cornerRadius(30)
       }
       .sheet(isPresented: $isPresented) {
-        ProfileView()
+        let logger = Logger(configuration: AppConfiguration.loggerConfig)
+        let dependency = ProfileViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
+                                                       logger: logger,
+                                                       currentUser: AccountManager.shared.currentUser)
+        let viewModel = ProfileViewModel(dependency: dependency)
+        ProfileView(viewModel: viewModel)
           .presentationDetents([.medium])
       }
     }
