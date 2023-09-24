@@ -20,10 +20,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct MoticApp: App {
   @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+  @StateObject var accountManager: AccountManager = AccountManager.shared
 
   var body: some Scene {
     WindowGroup {
-      if AccountManager.shared.isLoggedIn {
+      if accountManager.isLoggedIn {
+        // Navigate to Main view
         let logger = Logger(configuration: AppConfiguration.loggerConfig)
         let dependency = MainViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
                                                     logger: logger)

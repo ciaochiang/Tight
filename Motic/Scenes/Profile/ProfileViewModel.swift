@@ -108,9 +108,12 @@ class ProfileViewModel: ObservableObject {
   }
   
   func toggleDarkMode(isOn: Bool) {
-    
-    // Store preference to user defaults
-//    UserDefaults.standard.setValue(isOn, forKey: "PREF_IS_DARK_MOOE")
     PreferenceManager.shared.toggleDarkMode(isOn: isOn)
+  }
+  
+  func logout() {
+    DispatchQueue.main.async {
+      AccountManager.shared.logout()
+    }
   }
 }

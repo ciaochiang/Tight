@@ -11,6 +11,7 @@ import AuthenticationServices
 class AccountManager: ObservableObject {
   static let shared = AccountManager()
   let logger: Logger = Logger(configuration: AppConfiguration.loggerConfig)
+  
   @AppStorage("UserType") var userType: String?
   @Published var currentUser: BaseUser?
   @Published var isLoggedIn: Bool = false
@@ -31,6 +32,12 @@ class AccountManager: ObservableObject {
     else { return }
     
     currentUser = appleUser
+  }
+  
+  func logout() {
+    // Clean user data
+    currentUser = nil
+    isLoggedIn = false
   }
 }
 

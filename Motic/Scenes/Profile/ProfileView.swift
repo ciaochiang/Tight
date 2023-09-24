@@ -73,8 +73,14 @@ struct ProfileView: View {
       .preferredColorScheme(preferenceManager.colorScheme)
       .background(Color.themeStyle.theme.background)
       Spacer()
-      Button("Log Out") {
-        // Log Out and lead user to onboarding page
+      
+      Button {
+        print("Log out")
+        viewModel.logout()
+      } label: {
+        Text("Log Out")
+          .frame(maxWidth: .infinity)
+          .frame(maxHeight: .infinity)
       }
       .frame(height: 60)
       .frame(maxWidth: .infinity)
