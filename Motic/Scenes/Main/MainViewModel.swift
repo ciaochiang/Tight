@@ -30,8 +30,8 @@ class MainViewModel: ObservableObject {
     @Published var healthStoreManager: HealthStoreManager
     @Published var isHeartRateAuthorized: Bool = false
     @Published var user: BaseUser?
-    @Published var activities: [HKWorkout] = []
-    @Published var selectedWorkout: HKWorkout?
+    @Published var activities: [Activity] = []
+    @Published var selectedActivity: Activity?
     var cancellable : AnyCancellable?
   
     init(dependency: MainViewModelDependency) {

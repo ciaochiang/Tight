@@ -16,37 +16,37 @@ struct MainView: View {
   @State var isActivityViewPresented: Bool = false
   
   init(viewModel: MainViewModel) {
-    _viewModel = StateObject(wrappedValue: viewModel)
-    _preferenceManager = StateObject(wrappedValue: viewModel.dependency.preferenceManager)
+      _viewModel = StateObject(wrappedValue: viewModel)
+      _preferenceManager = StateObject(wrappedValue: viewModel.dependency.preferenceManager)
   }
   
   var body: some View {
-    ZStack {
-      ScrollView(showsIndicators: false) {
-        VStack(spacing: 16) {
-          topSeciton
-          currentActivitySection
-          sumamrySection
-          activitiesSeciton
-          Spacer()
-        }
-        .padding()
+      ZStack {
+          ScrollView(showsIndicators: false) {
+              VStack(spacing: 16) {
+                  topSeciton
+                  currentActivitySection
+                  sumamrySection
+                  activitiesSeciton
+                  Spacer()
+              }
+              .padding()
+          }
       }
-    }
-    .background(
-      Color.themeStyle.theme.background.ignoresSafeArea()
-    )
-    .preferredColorScheme(preferenceManager.colorScheme)
+      .background(
+          Color.themeStyle.theme.background.ignoresSafeArea()
+      )
+      .preferredColorScheme(preferenceManager.colorScheme)
   }
 }
 
 struct MainView_Previews: PreviewProvider {
-  static var previews: some View {
-    let dependency = MainViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
-                                                logger: Mocks.logger)
-    let viewModel = MainViewModel(dependency: dependency)
-    MainView(viewModel: viewModel)
-  }
+    static var previews: some View {
+        let dependency = MainViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
+                                                    logger: Mocks.logger)
+        let viewModel = MainViewModel(dependency: dependency)
+        MainView(viewModel: viewModel)
+    }
 }
 
 // MARK: Sections
@@ -126,21 +126,21 @@ extension MainView {
       MainViewSectionHeader(sectionTitle: "Activites")
       
       VStack(spacing: 16) {
-        ForEach(viewModel.activities, id: \.self) { workout in
+        ForEach(viewModel.activities) { activity in
           Button {
-            viewModel.selectedWorkout = workout
+            viewModel.selectedActivity = activity
             isActivityViewPresented.toggle()
           } label: {
-            MainViewActivityCard(activity: workout)
+            MainViewActivityCard(activity: activity)
           }
         }
       }
       .sheet(isPresented: $isActivityViewPresented) {
-        if let selectedWorkout = viewModel.selectedWorkout  {
+        if let selectedWorkout = viewModel.selectedActivity  {
           let dependency = CyclingActivityViewModelDependencyImp(logger: viewModel.dependency.logger)
           let viewModel = CyclingActivityViewModel(dependency: dependency,
                                                    healthStoreManager: viewModel.healthStoreManager,
-                                                   workout: selectedWorkout)
+                                                   activity: selectedWorkout)
           CyclingActivityView(viewModel: viewModel).presentationDetents([.large])
         }
       }
@@ -265,60 +265,60 @@ extension MainView {
 }
 
 struct MainViewActivityCard: View {
-  @State var activity: HKWorkout
-  @State var activityType: WorkoutActivityType
-  @State var formmatedStartDate: String
-  @State var totalEnergyBurned: Double
+    var activity: Activity
+    var activityType: WorkoutActivityType
+    var formmatedStartDate: String
+    var totalEnergyBurned: Double
   
-  init(activity: HKWorkout) {
-    self.activity = activity
-    activityType = WorkoutActivityType(activityType: activity.workoutActivityType)
-    
-    let dateFormatter = DateFormatter()
-    dateFormatter.timeZone = TimeZone.current // Use the current timezone
-    dateFormatter.dateFormat = "yyyy/MM/dd"
-    formmatedStartDate = dateFormatter.string(from: activity.startDate)
-    
-    if let totalEnergyBurned = activity.totalEnergyBurned {
-      // Get the value in kilocalories (kcal)
-      let totalEnergyBurnedInKcal = totalEnergyBurned.doubleValue(for: HKUnit.kilocalorie())
-      self.totalEnergyBurned = totalEnergyBurnedInKcal
-    } else {
-        // The workout did not provide energy burned data
-      self.totalEnergyBurned = 0
-    }
-  }
-  
-  var body: some View {
-    HStack(spacing: 16) {
-      Image(systemName: activityType.systemIconName)
-        .resizable()
-        .scaledToFit()
-        .foregroundColor(Color(UIColor.systemPink))
-        .frame(maxWidth: 24)
-        .frame(maxHeight: 24)
-      VStack(alignment: .leading, spacing: 4) {
-        Text(activityType.description)
-          .font(.caption)
-          .foregroundColor(.themeStyle.theme.secondaryTextColor)
-        Text("\(String(format: "%.1f", totalEnergyBurned)) Kcal")
-          .fontWeight(.semibold)
-          .foregroundColor(.themeStyle.theme.primary)
-        Text("\(Int(activity.duration / 60)) mins")
-          .fontWeight(.semibold)
-          .foregroundColor(.themeStyle.theme.primary)
-      }
+    init(activity: Activity) {
+        self.activity = activity
+        activityType = WorkoutActivityType(activityType: activity.workoutActivityType)
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone.current // Use the current timezone
+        dateFormatter.dateFormat = "yyyy/MM/dd"
+        formmatedStartDate = dateFormatter.string(from: activity.startDate)
       
-      Spacer()
-      VStack {
-        Text(formmatedStartDate)
-          .font(.caption)
-          .foregroundColor(.themeStyle.theme.secondaryTextColor)
-      }
+        if let totalEnergyBurned = activity.totalEnergyBurned {
+            // Get the value in kilocalories (kcal)
+            let totalEnergyBurnedInKcal = totalEnergyBurned.doubleValue(for: HKUnit.kilocalorie())
+            self.totalEnergyBurned = totalEnergyBurnedInKcal
+        } else {
+            // The workout did not provide energy burned data
+            self.totalEnergyBurned = 0
+        }
     }
-    .padding(16)
-    .frame(maxWidth: .infinity)
-    .background(Color.themeStyle.theme.secondaryBackground)
-    .cornerRadius(16)
-  }
+  
+    var body: some View {
+        HStack(spacing: 16) {
+            Image(systemName: activityType.systemIconName)
+              .resizable()
+              .scaledToFit()
+              .foregroundColor(Color(UIColor.systemPink))
+              .frame(maxWidth: 24)
+              .frame(maxHeight: 24)
+            VStack(alignment: .leading, spacing: 4) {
+              Text(activityType.description)
+                .font(.caption)
+                .foregroundColor(.themeStyle.theme.secondaryTextColor)
+              Text("\(String(format: "%.1f", totalEnergyBurned)) Kcal")
+                .fontWeight(.semibold)
+                .foregroundColor(.themeStyle.theme.primary)
+              Text("\(Int(activity.duration / 60)) mins")
+                .fontWeight(.semibold)
+                .foregroundColor(.themeStyle.theme.primary)
+            }
+            
+            Spacer()
+            VStack {
+              Text(formmatedStartDate)
+                .font(.caption)
+                .foregroundColor(.themeStyle.theme.secondaryTextColor)
+            }
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity)
+        .background(Color.themeStyle.theme.secondaryBackground)
+        .cornerRadius(16)
+    }
 }

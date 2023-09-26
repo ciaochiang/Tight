@@ -42,11 +42,10 @@ struct CyclingActivityView: View {
 
 struct CyclingActivityView_Previews: PreviewProvider {
     static var previews: some View {
-      let dependency = CyclingActivityViewModelDependencyImp(
-        logger: Logger(configuration: AppConfiguration.loggerConfig))
+      let dependency = CyclingActivityViewModelDependencyImp(logger: Mocks.logger)
       let viewModel = CyclingActivityViewModel(dependency: dependency,
                                                healthStoreManager: Mocks.mockHealthStoreManager,
-                                               workout: Mocks.mockWorkout)
+                                               activity: Mocks.mockActivity)
       CyclingActivityView(viewModel: viewModel)
                 
         

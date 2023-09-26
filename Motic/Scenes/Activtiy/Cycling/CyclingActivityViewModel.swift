@@ -34,7 +34,7 @@ class CyclingActivityViewModelDependencyImp: CyclingActivityViewModelDependency 
 
 class CyclingActivityViewModel: ObservableObject {
   var dependency: CyclingActivityViewModelDependency
-  var workout: HKWorkout
+  var activity: Activity
   @Published var healthStoreManager: HealthStoreManager
   
   // MARK: Basic
@@ -70,34 +70,34 @@ class CyclingActivityViewModel: ObservableObject {
   
   init(dependency: CyclingActivityViewModelDependency,
        healthStoreManager: HealthStoreManager,
-       workout: HKWorkout) {
-    self.dependency = dependency
-    _healthStoreManager = Published(wrappedValue: healthStoreManager)
-    self.workout = workout
-    self.duraiton = workout.duration
-    self.avgMETs = healthStoreManager.getAvgMETs(from: workout)
-    self.weatherTemperatureCelsius = healthStoreManager.getWeatherTemperatureCelsius(from: workout)
-    self.weatherHumidity = healthStoreManager.getWeatherHumidity(from: workout)
-    self.elevationAscendedMeters = healthStoreManager.getElavationAscendedMeters(from: workout)
-    self.timezone = healthStoreManager.getTimezone(from: workout)
-    self.heartRateZones = HeartRateZones(maxHeartRate: 194)
-    self.totalDistanceMeters = healthStoreManager.getTotalDistanceMeters(workout: workout)
-    self.workoutType = WorkoutActivityType(activityType: workout.workoutActivityType)
+       activity: Activity) {
+      self.dependency = dependency
+      _healthStoreManager = Published(wrappedValue: healthStoreManager)
+      self.activity = activity
+      self.duraiton = activity.workout.duration
+      self.avgMETs = healthStoreManager.getAvgMETs(from: activity.workout)
+      self.weatherTemperatureCelsius = healthStoreManager.getWeatherTemperatureCelsius(from: activity.workout)
+      self.weatherHumidity = healthStoreManager.getWeatherHumidity(from: activity.workout)
+      self.elevationAscendedMeters = healthStoreManager.getElavationAscendedMeters(from: activity.workout)
+      self.timezone = healthStoreManager.getTimezone(from: activity.workout)
+      self.heartRateZones = HeartRateZones(maxHeartRate: 194)
+      self.totalDistanceMeters = healthStoreManager.getTotalDistanceMeters(workout: activity.workout)
+      self.workoutType = WorkoutActivityType(activityType: activity.workoutActivityType)
 
-    // After initialization
-    self.avgSpeedPerHour = healthStoreManager.getAvgSpeedPerHour(duration: self.duraiton,
+      // After initialization
+      self.avgSpeedPerHour = healthStoreManager.getAvgSpeedPerHour(duration: self.duraiton,
                                                                  totalDistanceMeters: self.totalDistanceMeters)
     
-    if let metadata = workout.metadata {
-      dependency.logger.log("Metadata: \(metadata)", level: .info)
-      dependency.logger.log("All Statistics: \(workout.allStatistics)", level: .info)
-    }
+      if let metadata = activity.workout.metadata {
+        dependency.logger.log("Metadata: \(metadata)", level: .info)
+        dependency.logger.log("All Statistics: \(activity.workout.allStatistics)", level: .info)
+      }
     
     
       // Get all heart rate metadata
       Task {
           do {
-              let heartRates = try await healthStoreManager.getHearRateSamples(from: workout)
+              let heartRates = try await healthStoreManager.getHearRateSamples(from: activity.workout)
               let avgHeartRate = healthStoreManager.getAverage(by: heartRates)
               let zones = healthStoreManager.getHeartRateZoneDurations(from: heartRates, zones: heartRateZones.zones)
 
@@ -115,7 +115,7 @@ class CyclingActivityViewModel: ObservableObject {
       // Get all distance metadata
       Task {
           do {
-              let distances = try await healthStoreManager.getDistanceSamples(from: workout)
+              let distances = try await healthStoreManager.getDistanceSamples(from: activity.workout)
 
               await MainActor.run {
                   self.distanceSamples = distances
@@ -129,8 +129,8 @@ class CyclingActivityViewModel: ObservableObject {
       // Get energy metadata
       Task {
           do {
-              let basalEnergyBurned = try await healthStoreManager.getBasalEnergyBurnedSamples(from: workout)
-              let activeEnergyBurned = try await healthStoreManager.getActiveEnergyBurnedSamples(from: workout)
+              let basalEnergyBurned = try await healthStoreManager.getBasalEnergyBurnedSamples(from: activity.workout)
+              let activeEnergyBurned = try await healthStoreManager.getActiveEnergyBurnedSamples(from: activity.workout)
               let avgBasalEnergyBurned = healthStoreManager.getAverage(by: basalEnergyBurned)
               let avgActiveEnergyBurned = healthStoreManager.getAverage(by: activeEnergyBurned)
 

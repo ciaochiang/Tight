@@ -7,8 +7,18 @@
 
 import HealthKit
 
+struct Activity: Identifiable {
+    let id = UUID()
+    let workoutActivityType: HKWorkoutActivityType
+    let startDate: Date
+    let endDate: Date
+    let duration: TimeInterval
+    let totalEnergyBurned: HKQuantity?
+    let workout: HKWorkout
+}
+
 extension HealthStoreManager {
-    func getActivties(from start: Date, to end: Date) async throws -> [HKWorkout] {
+    func getActivties(from start: Date, to end: Date) async throws -> [Activity] {
         let predicate = HKQuery.predicateForSamples(withStart: start, end: end, options: .strictStartDate)
 
         // Create the descriptor.
@@ -19,6 +29,15 @@ extension HealthStoreManager {
 
         let results = try await descriptor.result(for: healthStore)
         
-        return results.sorted(by: { $0.endDate > $1.endDate })
+        let collection = results.map { result in
+            Activity(workoutActivityType: result.workoutActivityType,
+                     startDate: result.startDate,
+                     endDate: result.endDate,
+                     duration: result.duration,
+                     totalEnergyBurned: result.totalEnergyBurned,
+                     workout: result)
+        }
+        
+        return collection.sorted(by: { $0.endDate > $1.endDate })
     }
 }

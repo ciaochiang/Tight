@@ -18,7 +18,7 @@ class Mocks {
     return HealthStoreManager(dependency: dependency)
   }
   
-  static var mockWorkout: HKWorkout {
+  static var mockActivity: Activity {
       // Define workout parameters
       let startDate = Date() // Start date of the workout
       let endDate = startDate.addingTimeInterval(3600) // End date (1 hour later in this example)
@@ -38,7 +38,7 @@ class Mocks {
           metadata: nil
       )
 
-      return workout
+      return Activity(workoutActivityType: workoutType, startDate: startDate, endDate: endDate, duration: 0, totalEnergyBurned: energyBurned, workout: workout)
   }
     
     static var chartDataSet: [ChartData<Double>] {
