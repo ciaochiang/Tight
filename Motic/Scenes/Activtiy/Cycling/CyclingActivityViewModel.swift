@@ -112,12 +112,20 @@ class CyclingActivityViewModel: ObservableObject {
           }
       }
       
-    // Get all distance samples
-    healthStoreManager.getAllDistanceSamples(workout: workout, identifier: .distanceWalkingRunning) { [weak self] data, _ in
-      DispatchQueue.main.async {
-        self?.distanceSamples = data
+      // Get all distance metadata
+      Task {
+          do {
+              let distances = try await healthStoreManager.getDistanceSamples(from: workout)
+
+              await MainActor.run {
+                  self.distanceSamples = distances
+              }
+          }
+          catch let error {
+              dependency.logger.log(error.localizedDescription, level: .error)
+          }
       }
-    }
+      
     
     // Get all energy burned samples
     healthStoreManager.getBasalEnergyBurnedSamples(from: workout) { [weak self] data, _ in

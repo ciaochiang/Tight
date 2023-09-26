@@ -68,11 +68,13 @@ extension HealthStoreManager {
 
         let results = try await descriptor.result(for: healthStore)
 
-        return results.map {
+        let collection = results.map {
             ChartData<Double>(date: $0.startDate,
                               value: $0.quantity.doubleValue(for: HKUnit.count().unitDivided(by: HKUnit.minute())))
             
         }
+        
+        return collection.sorted(by: { $0.date < $1.date })
     }
     
     func getAverage(by dataSet: [ChartData<Double>]) -> Double {
