@@ -10,14 +10,12 @@ import HealthKit
 
 // Temp struct
 struct ChartData<T>: Identifiable {
-  let id: String = UUID().uuidString
-  var startDate: Date
-  var endDate: Date
+  let id = UUID()
+  var date: Date
   var value: T
 
-  init(startDate: Date, endDate: Date, value: T) {
-    self.startDate = startDate
-    self.endDate = endDate
+  init(date: Date, value: T) {
+    self.date = date
     self.value = value
   }
 }

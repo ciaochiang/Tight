@@ -33,9 +33,9 @@ extension HealthStoreManager {
                                   sortDescriptors: nil) { (query, results, error) in
           if let energySamples = results as? [HKQuantitySample] {
             for sample in energySamples {
-              let distance = sample.quantity.doubleValue(for: HKUnit.smallCalorie())
-              let sample = ChartData<Double>(startDate: sample.startDate, endDate: sample.endDate, value: distance)
-              data.append(sample)
+                let distance = sample.quantity.doubleValue(for: HKUnit.smallCalorie())
+                let sample = ChartData<Double>(date: sample.startDate, value: distance)
+                data.append(sample)
             }
             self.dependency.logger.log("All Basal Energy Burned Samples: \(data)", level: .info)
             _completion(data, nil)
@@ -66,9 +66,9 @@ extension HealthStoreManager {
                                   sortDescriptors: nil) { (query, results, error) in
           if let energySamples = results as? [HKQuantitySample] {
             for sample in energySamples {
-              let distance = sample.quantity.doubleValue(for: HKUnit.kilocalorie())
-              let sample = ChartData<Double>(startDate: sample.startDate, endDate: sample.endDate, value: distance)
-              data.append(sample)
+                let distance = sample.quantity.doubleValue(for: HKUnit.kilocalorie())
+                let sample = ChartData<Double>(date: sample.startDate, value: distance)
+                data.append(sample)
             }
             self.dependency.logger.log("All Active Energy Burned Samples: \(data)", level: .info)
             _completion(data, nil)

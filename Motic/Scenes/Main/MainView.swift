@@ -7,6 +7,7 @@
 
 import SwiftUI
 import HealthKit
+import Charts
 
 struct MainView: View {
   @StateObject var viewModel: MainViewModel

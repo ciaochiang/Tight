@@ -48,6 +48,12 @@ struct CyclingActivityView_Previews: PreviewProvider {
                                                healthStoreManager: Mocks.mockHealthStoreManager,
                                                workout: Mocks.mockWorkout)
       CyclingActivityView(viewModel: viewModel)
+                
+        
+        // For Component Preview
+        /* DistanceLineChart(data: Mocks.chartDataSet)
+            .previewLayout(.sizeThatFits)
+            .frame(height: 160) */
     }
 }
 
@@ -123,7 +129,7 @@ extension CyclingActivityView {
   var averageHeartRateCard: some View {
     VStack {
       HStack {
-        Text("Avg. Heart Rate")
+        Text("Heart Rate")
           .font(.headline)
           .foregroundColor(.themeStyle.theme.primary)
         Spacer()
@@ -134,8 +140,8 @@ extension CyclingActivityView {
       .padding(16)
     
       if viewModel.heartRateSamples.isEmpty != true {
-        heartRateChart
-          .frame(maxHeight: 160)
+          HeartRateLineChart(data: viewModel.heartRateSamples)
+              .frame(maxHeight: 160)
       }
       
       if let zones = viewModel.zones {
@@ -149,15 +155,20 @@ extension CyclingActivityView {
   
   var distanceChart: some View {
     Chart(viewModel.distanceSamples ?? []) {
-      LineMark(
-        x: .value("Time", $0.startDate),
-        y: .value("Distance", $0.value)
-      )
+      
+        LineMark(
+            x: .value("Time", $0.date, unit: .second),
+            y: .value("Distance", $0.value)
+        )
+        .foregroundStyle(Color.blue.gradient)
+
+        AreaMark(x: .value("Time", $0.date), yStart: .value("Min", 0), yEnd: .value("Max", $0.value))
+            .foregroundStyle(LinearGradient(colors: [Color.blue.opacity(0.2), .clear], startPoint: .top, endPoint: .bottom))
     }
     .chartXAxis {
-      AxisMarks(values: .automatic) { _ in
-        AxisValueLabel()
-      }
+        AxisMarks(values: .automatic) { _ in
+            AxisValueLabel()
+        }
     }
     .chartYAxis {
       AxisMarks(position: .leading, values: .automatic) { _ in
@@ -166,26 +177,69 @@ extension CyclingActivityView {
     }
     .padding()
   }
-  
-  var heartRateChart: some View {
-    Chart(viewModel.heartRateSamples) {
-      LineMark(
-        x: .value("Time", $0.startDate),
-        y: .value("Heart Rate", $0.value)
-      )
+}
+
+struct DistanceLineChart: View {
+    let data: [ChartData<Double>]
+    
+    var body: some View {
+        Chart(data) {
+          LineMark(
+            x: .value("Time", $0.date, unit: .second),
+            y: .value("Distance", $0.value)
+          )
+          .foregroundStyle(Color.blue.gradient)
+
+            AreaMark(x: .value("Time", $0.date), yStart: .value("Min", 0), yEnd: .value("Max", $0.value))
+                .foregroundStyle(LinearGradient(colors: [Color.blue.opacity(0.2), .clear], startPoint: .top, endPoint: .bottom))
+        }
+        .chartXAxis {
+          AxisMarks(values: .automatic) { _ in
+            AxisValueLabel()
+          }
+        }
+        .chartYAxis {
+          AxisMarks(position: .leading, values: .automatic) { _ in
+            AxisValueLabel()
+          }
+        }
+        .padding()
     }
-    .chartXAxis {
-      AxisMarks(values: .automatic) { _ in
-        AxisValueLabel()
-      }
+}
+
+struct HeartRateLineChart: View {
+    let data: [ChartData<Double>]
+    
+    var body: some View {
+        Chart(data) {
+          LineMark(
+            x: .value("Time", $0.date, unit: .second),
+            y: .value("Heart Rate", $0.value)
+          )
+          .foregroundStyle(Color.pink.gradient)
+            AreaMark(x: .value("Time", $0.date), yStart: .value("Min", 0), yEnd: .value("Max", $0.value))
+                .foregroundStyle(LinearGradient(colors: [Color.pink.opacity(0.2), .clear], startPoint: .top, endPoint: .bottom))
+        }
+        .chartXAxis {
+    //        AxisMarks(values: viewModel.heartRateSamples.map { $0.startDate }) { value in
+    //            if let date = value.as(Date.self) {
+    //                let hour = Calendar.current.component(.hour, from: date)
+    //                switch hour {
+    //                case 0, 12:
+    //                    AxisValueLabel(format: .dateTime.hour())
+    //                default:
+    //                    AxisValueLabel(format: .dateTime.hour(.defaultDigits(amPM: .omitted)))
+    //                }
+    //            }
+    //        }
+        }
+        .chartYAxis {
+          AxisMarks(position: .leading, values: .automatic) { _ in
+            AxisValueLabel()
+          }
+        }
+        .padding()
     }
-    .chartYAxis {
-      AxisMarks(position: .leading, values: .automatic) { _ in
-        AxisValueLabel()
-      }
-    }
-    .padding()
-  }
 }
 
 struct ZoneDurationSection: View {

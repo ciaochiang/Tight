@@ -31,7 +31,6 @@ class MainViewModel: ObservableObject {
   @Published var isHeartRateAuthorized: Bool = false
   @Published var user: BaseUser?
   @Published var selectedWorkout: HKWorkout?
-  
   var cancellable : AnyCancellable?
   
   init(dependency: MainViewModelDependency) {

@@ -36,6 +36,8 @@
 		E51DE20C2ABEF13F00957395 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE20B2ABEF13F00957395 /* TimeInterval.swift */; };
 		E51DE20E2AC0546700957395 /* PreferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE20D2AC0546700957395 /* PreferenceManager.swift */; };
 		E51DE2122AC076DD00957395 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E51DE2112AC076DD00957395 /* LaunchScreen.storyboard */; };
+		E51DE2142AC1C6F400957395 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE2132AC1C6F400957395 /* Date.swift */; };
+		E51DE2302AC2BB3200957395 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE22F2AC2BB3200957395 /* Error.swift */; };
 		E52100182AB7204A000CF3AD /* BaseSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52100172AB7204A000CF3AD /* BaseSample.swift */; };
 		E521001A2AB72069000CF3AD /* HeartRateSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52100192AB72069000CF3AD /* HeartRateSample.swift */; };
 		E521001C2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E521001B2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift */; };
@@ -146,6 +148,8 @@
 		E51DE20B2ABEF13F00957395 /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		E51DE20D2AC0546700957395 /* PreferenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceManager.swift; sourceTree = "<group>"; };
 		E51DE2112AC076DD00957395 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E51DE2132AC1C6F400957395 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		E51DE22F2AC2BB3200957395 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		E52100172AB7204A000CF3AD /* BaseSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSample.swift; sourceTree = "<group>"; };
 		E52100192AB72069000CF3AD /* HeartRateSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateSample.swift; sourceTree = "<group>"; };
 		E521001B2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthStoreManager+HeartRate.swift"; sourceTree = "<group>"; };
@@ -278,6 +282,7 @@
 			children = (
 				E50163F52AB333F100C87D67 /* Connectivity.swift */,
 				E51DE2012ABCA03C00957395 /* Mocks.swift */,
+				E51DE22F2AC2BB3200957395 /* Error.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -287,6 +292,7 @@
 			children = (
 				E51DE1ED2AB8998E00957395 /* Color.swift */,
 				E51DE20B2ABEF13F00957395 /* TimeInterval.swift */,
+				E51DE2132AC1C6F400957395 /* Date.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -774,6 +780,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E51DE2042ABDF26900957395 /* HealthStoreManager+Distance.swift in Sources */,
+				E51DE2142AC1C6F400957395 /* Date.swift in Sources */,
 				E51DE2022ABCA03C00957395 /* Mocks.swift in Sources */,
 				E521001C2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift in Sources */,
 				E51DE2002ABB303100957395 /* CyclingActivityViewModel.swift in Sources */,
@@ -784,6 +791,7 @@
 				E51DE1EE2AB8998E00957395 /* Color.swift in Sources */,
 				E521001F2AB74D13000CF3AD /* AccountManager.swift in Sources */,
 				E51DE20E2AC0546700957395 /* PreferenceManager.swift in Sources */,
+				E51DE2302AC2BB3200957395 /* Error.swift in Sources */,
 				E51DE1F32AB9555A00957395 /* AppleUser.swift in Sources */,
 				E59EB8512AB5ED020057F630 /* LocationManager.swift in Sources */,
 				E51DE2082ABDFB3A00957395 /* HealthStoreManager+Weather.swift in Sources */,

@@ -62,12 +62,12 @@ extension HealthStoreManager {
                                           sortDescriptors: nil) { (query, results, error) in
           if let distanceSamples = results as? [HKQuantitySample] {
             for sample in distanceSamples {
-              let distance = sample.quantity.doubleValue(for: HKUnit.meter())
-              let sample = ChartData<Double>(startDate: sample.startDate, endDate: sample.endDate, value: distance)
-              data.append(sample)
+                let distance = sample.quantity.doubleValue(for: HKUnit.meter())
+                let sample = ChartData<Double>(date: sample.startDate, value: distance)
+                data.append(sample)
             }
             self.dependency.logger.log("All Distance Samples: \(data)", level: .info)
-            _completion(data.sorted(by: { $0.startDate < $1.startDate }), nil)
+            _completion(data.sorted(by: { $0.date < $1.date }), nil)
           } else {
             if let error = error {
               self.dependency.logger.log("Error fetching distance samples: \(error.localizedDescription)", level: .error)

@@ -32,29 +32,6 @@ extension HealthStoreManager {
     healthStore.execute(query)
   }
   
-  func fetchLatestHeartRateSample(completionHandler: @escaping (_ sample: HKQuantitySample?) -> Void) {
-    guard let sampleType = HKObjectType.quantityType(forIdentifier: .heartRate) else {
-      completionHandler(nil)
-      return
-    }
-    
-    let predicate = HKQuery.predicateForSamples(withStart: Date.distantPast, end: Date(), options: .strictEndDate)
-    let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
-    let query = HKSampleQuery(sampleType: sampleType,
-                              predicate: predicate,
-                              limit: Int(HKObjectQueryNoLimit),
-                              sortDescriptors: [sortDescriptor]) { (_, results, error) in
-                                if let error = error {
-                                    print("Error: \(error.localizedDescription)")
-                                    return
-                                }
-                                
-                                completionHandler(results?[0] as? HKQuantitySample)
-    }
-    
-    healthStore.execute(query)
-  }
-  
   func getAvgHeartRate(from workout: HKWorkout, _completion: @escaping (Double, Error?) -> ()) {
     guard let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate) else { return }
     let readTypes: Set<HKObjectType> = [heartRateType]
@@ -95,14 +72,13 @@ extension HealthStoreManager {
       if let heartRateSamples = results as? [HKQuantitySample] {
         // Iterate through heart rate samples
         for sample in heartRateSamples {
-          let heartRateValue = sample.quantity.doubleValue(for: HKUnit.count().unitDivided(by: HKUnit.minute()))
-          let heartRate = ChartData<Double>(startDate: sample.startDate,
-                                            endDate: sample.endDate,
-                                            value: heartRateValue)
-          heartRates.append(heartRate)
+            let heartRateValue = sample.quantity.doubleValue(for: HKUnit.count().unitDivided(by: HKUnit.minute()))
+            let heartRate = ChartData<Double>(date: sample.startDate,
+                                              value: heartRateValue)
+            heartRates.append(heartRate)
         }
         
-        _completion(heartRates.sorted(by: { $0.startDate < $1.startDate }))
+        _completion(heartRates.sorted(by: { $0.date < $1.date }))
       } else {
         if let error = error {
             print("Error fetching heart rate samples: \(error.localizedDescription)")
@@ -119,11 +95,11 @@ extension HealthStoreManager {
     
     var previousSample: ChartData<Double>? = nil
     for sample in heartRates {
-      if let previusStartDate = previousSample?.startDate {
+      if let previusStartDate = previousSample?.date {
         let heartRate = Int(sample.value)
         
         if let index = zones.firstIndex(where: { $0.heartRateRange.contains(heartRate) }) {
-          let duration = sample.startDate.timeIntervalSince(previusStartDate)
+          let duration = sample.date.timeIntervalSince(previusStartDate)
           var zone = zones[index]
           zone.duration += duration
           zones[index] = zone

@@ -36,4 +36,19 @@ class Mocks {
 
       return workout
   }
+    
+    static var chartDataSet: [ChartData<Double>] {
+        let data: [ChartData<Double>] = [
+            .init(date: Date.from(year: 2023, month: 9, day: 1), value: 60),
+            .init(date: Date.from(year: 2023, month: 9, day: 2), value: 40),
+            .init(date: Date.from(year: 2023, month: 9, day: 3), value: 200),
+            .init(date: Date.from(year: 2023, month: 9, day: 4), value: 162),
+            .init(date: Date.from(year: 2023, month: 9, day: 5), value: 240),
+            .init(date: Date.from(year: 2023, month: 9, day: 6), value: 45),
+            .init(date: Date.from(year: 2023, month: 9, day: 7), value: 68),
+            .init(date: Date.from(year: 2023, month: 9, day: 8), value: 91)
+        ]
+        
+        return data
+    }
 }
