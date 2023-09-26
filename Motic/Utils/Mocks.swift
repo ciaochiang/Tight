@@ -9,6 +9,10 @@ import Foundation
 import HealthKit
 
 class Mocks {
+    static var logger: Logger {
+        return Logger(configuration: AppConfiguration.loggerConfig)
+    }
+    
   static var mockHealthStoreManager: HealthStoreManager {
     let dependency = HealthStoreManagerDependencyImp(logger: Logger(configuration: AppConfiguration.loggerConfig))
     return HealthStoreManager(dependency: dependency)

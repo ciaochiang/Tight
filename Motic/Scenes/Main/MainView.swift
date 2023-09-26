@@ -23,14 +23,14 @@ struct MainView: View {
   var body: some View {
     ZStack {
       ScrollView(showsIndicators: false) {
-        VStack(spacing: 24) {
+        VStack(spacing: 16) {
           topSeciton
           currentActivitySection
           sumamrySection
           activitiesSeciton
           Spacer()
         }
-        .padding(24)
+        .padding()
       }
     }
     .background(
@@ -42,9 +42,8 @@ struct MainView: View {
 
 struct MainView_Previews: PreviewProvider {
   static var previews: some View {
-    let logger = Logger(configuration: AppConfiguration.loggerConfig)
     let dependency = MainViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
-                                                logger: logger)
+                                                logger: Mocks.logger)
     let viewModel = MainViewModel(dependency: dependency)
     MainView(viewModel: viewModel)
   }
@@ -127,7 +126,7 @@ extension MainView {
       MainViewSectionHeader(sectionTitle: "Activites")
       
       VStack(spacing: 16) {
-        ForEach(viewModel.healthStoreManager.activities, id: \.self) { workout in
+        ForEach(viewModel.activities, id: \.self) { workout in
           Button {
             viewModel.selectedWorkout = workout
             isActivityViewPresented.toggle()
@@ -166,18 +165,19 @@ extension MainView {
 }
 
 struct MainViewSectionHeader: View {
-  let sectionTitle: String
+    let sectionTitle: String
   
-  var body: some View {
-    HStack {
-      Text(sectionTitle)
-        .font(.headline)
-        .foregroundColor(.themeStyle.theme.primary)
-      Spacer()
+    var body: some View {
+      HStack {
+          Text(sectionTitle)
+              .font(.title2)
+              .fontWeight(.semibold)
+              .foregroundColor(.themeStyle.theme.primary)
+          Spacer()
+      }
+      .frame(maxWidth: .infinity)
+      .padding(.bottom)
     }
-    .frame(height: 60)
-    .frame(maxWidth: .infinity)
-  }
 }
 
 // MARK: Widget Card

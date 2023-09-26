@@ -66,8 +66,6 @@ class HealthStoreManager: NSObject, ObservableObject {
   }
   @Published var dateOfBirth: DateComponents?
   @Published var currentZone: Zone?
-  @Published var activities: [HKWorkout] = []
-
   @AppStorage("isHealthKitAuthorized") var isHealthKitAuthorized: Bool = false
   
   let infoToRead = Set([
@@ -166,48 +164,6 @@ extension HealthStoreManager {
     } else {
       dependency.logger.log("Date of birth is not available.", level: .info)
     }
-  }
-}
-
-// MARK: Workout Functions
-extension HealthStoreManager {
-  func retrieveOneMonthActivities() {
-    // Test
-    let fromDate = Calendar.current.date(byAdding: .month, value: -1, to: Date())! // One month ago
-    let toDate = Date()
-    fetchWorkoutSessions(from: fromDate, to: toDate) { [weak self] workouts in
-      guard let self = self else { return }
-      
-      DispatchQueue.main.async {
-        self.activities = workouts
-      }
-    }
-  }
-  
-  func fetchWorkoutSessions(from: Date, to: Date, completion: @escaping ([HKWorkout]) -> ()) {
-    let workoutType = HKSampleType.workoutType()
-    let predicate = HKQuery.predicateForSamples(withStart: from, end: to, options: .strictStartDate)
-
-    // Create a query to fetch workout sessions
-    let query = HKSampleQuery(sampleType: workoutType,
-                              predicate: predicate,
-                              limit: Int(HKObjectQueryNoLimit),
-                              sortDescriptors: [NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)]) { (query, results, error) in
-      if let workoutSessions = results as? [HKWorkout] {
-        self.dependency.logger.log("Workout activities is fetching succeed", level: .info)
-        completion(workoutSessions)
-      } else {
-        // Handle the case where no workout sessions were found or an error occurred
-        if let error = error {
-          self.dependency.logger.log("Error fetching workout session: \(error.localizedDescription)", level: .error)
-        }
-        
-        completion([])
-      }
-    }
-    
-    // Execute the query
-    healthStore.execute(query)
   }
 }
 
