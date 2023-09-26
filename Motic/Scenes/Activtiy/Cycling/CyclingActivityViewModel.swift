@@ -126,27 +126,26 @@ class CyclingActivityViewModel: ObservableObject {
           }
       }
       
-    
-    // Get all energy burned samples
-    healthStoreManager.getBasalEnergyBurnedSamples(from: workout) { [weak self] data, _ in
-      // Calculate avg value
-      let avgValue = healthStoreManager.getAvgValue(from: data)
-      
-      DispatchQueue.main.async {
-        self?.basalEnergyBurned = avgValue
-        self?.basalEnergyBurnedSamples = data
+      // Get energy metadata
+      Task {
+          do {
+              let basalEnergyBurned = try await healthStoreManager.getBasalEnergyBurnedSamples(from: workout)
+              let activeEnergyBurned = try await healthStoreManager.getActiveEnergyBurnedSamples(from: workout)
+              let avgBasalEnergyBurned = healthStoreManager.getAverage(by: basalEnergyBurned)
+              let avgActiveEnergyBurned = healthStoreManager.getAverage(by: activeEnergyBurned)
+
+
+              await MainActor.run {
+                  self.basalEnergyBurnedSamples = basalEnergyBurned
+                  self.activeEnergyBurnedSamples = activeEnergyBurned
+                  self.basalEnergyBurned = avgBasalEnergyBurned
+                  self.activeEnergyBurned = avgActiveEnergyBurned
+              }
+          }
+          catch let error {
+              dependency.logger.log(error.localizedDescription, level: .error)
+          }
       }
-    }
-    
-    healthStoreManager.getActiveEnergyBurnedSamples(from: workout) { [weak self] data, _ in
-      // Calculate avg value
-      let avgValue = healthStoreManager.getAvgValue(from: data)
-      
-      DispatchQueue.main.async {
-        self?.activeEnergyBurned = avgValue
-        self?.activeEnergyBurnedSamples = data
-      }
-    }
   }
   
   func getFormattedDuration(duration: TimeInterval) -> String {
