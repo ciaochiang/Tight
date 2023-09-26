@@ -49,7 +49,6 @@ class MainViewModel: ObservableObject {
     let heartRateAuthorizationStatus = healthStoreManager.getAthorizationStatus(objectType: .heartRate)
     if heartRateAuthorizationStatus == .sharingAuthorized {
       isHeartRateAuthorized = true
-      healthStoreManager.startObserveHeartRateSamples()
     }
     
     // Retrieve Workout Sesssions

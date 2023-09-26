@@ -93,27 +93,25 @@ class CyclingActivityViewModel: ObservableObject {
       dependency.logger.log("All Statistics: \(workout.allStatistics)", level: .info)
     }
     
-    // Get avg. heart rate
-    healthStoreManager.getAvgHeartRate(from: workout) { [weak self] heartRate, _ in
-      DispatchQueue.main.async {
-        self?.avgHeartRate = heartRate
-      }
-    }
     
-    // Get all heart rate samples
-    healthStoreManager.getAllHeartRateSamples(workout: workout) { [weak self] heartRates in
-      if let zones = self?.heartRateZones.zones {
-        let zones = self?.healthStoreManager.getHeartRateZoneDurations(from: heartRates, zones: zones)
-        DispatchQueue.main.async {
-          self?.zones = zones
-        }
+      // Get all heart rate metadata
+      Task {
+          do {
+              let heartRates = try await healthStoreManager.getHearRateSamples(from: workout)
+              let avgHeartRate = healthStoreManager.getAverage(by: heartRates)
+              let zones = healthStoreManager.getHeartRateZoneDurations(from: heartRates, zones: heartRateZones.zones)
+
+              await MainActor.run {
+                  self.heartRateSamples = heartRates
+                  self.avgHeartRate = avgHeartRate
+                  self.zones = zones
+              }
+          }
+          catch let error {
+              dependency.logger.log(error.localizedDescription, level: .error)
+          }
       }
       
-      DispatchQueue.main.async {
-        self?.heartRateSamples = heartRates
-      }
-    }
-    
     // Get all distance samples
     healthStoreManager.getAllDistanceSamples(workout: workout, identifier: .distanceWalkingRunning) { [weak self] data, _ in
       DispatchQueue.main.async {
