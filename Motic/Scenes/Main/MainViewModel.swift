@@ -31,11 +31,11 @@ class MainViewModel: ObservableObject {
     @Published var isHeartRateAuthorized: Bool = false
     @Published var user: BaseUser?
     @Published var activities: [Activity] = []
+    @Published var lastestActivites: [Activity] = []
     @Published var selectedActivity: Activity?
     @Published var totalDuration: TimeInterval = 0.0
     @Published var totalDistanceKilometers: Double = 0.0
-    @Published var avgSpeed: Double = 0.0
-    var cancellable : AnyCancellable?
+    @Published var avgSpeed: TimeInterval = 0.0
   
     init(dependency: MainViewModelDependency) {
         self.dependency = dependency
@@ -43,12 +43,6 @@ class MainViewModel: ObservableObject {
         let storeDependency = HealthStoreManagerDependencyImp(logger: dependency.logger)
         healthStoreManager = HealthStoreManager(dependency: storeDependency)
         
-        cancellable = healthStoreManager.objectWillChange.sink { [weak self] (_) in
-          DispatchQueue.main.async {
-            self?.objectWillChange.send()
-          }
-        }
-
         // Start observe heart rate
         let heartRateAuthorizationStatus = healthStoreManager.getAthorizationStatus(objectType: .heartRate)
         if heartRateAuthorizationStatus == .sharingAuthorized {
@@ -60,28 +54,17 @@ class MainViewModel: ObservableObject {
             do {
                 let activities = try await healthStoreManager.getActivties(from: thisMonth.from, to: thisMonth.end)
                 let workouts = activities.map { $0.workout }
-                
+
                 let totalDistanceKilometers = healthStoreManager.getTotalDistance(from: workouts)
                 let totalDuration = healthStoreManager.getTotalDuration(from: workouts)
                 let avgSpeed = healthStoreManager.getAvgSpeed(totalDistance: totalDistanceKilometers, totalDuration: totalDuration)
-                
+
                 await MainActor.run(body: {
+                    self.activities = activities
+                    self.lastestActivites = Array(activities.prefix(3))
                     self.totalDistanceKilometers = totalDistanceKilometers
                     self.totalDuration = totalDuration
                     self.avgSpeed = avgSpeed
-                })
-            }
-        }
-      
-        // Retrieve this month activities
-        let fromDate = Calendar.current.date(byAdding: .day, value: -7, to: Date())! // One month ago
-        let toDate = Date()
-        Task {
-            do {
-                let activities = try await healthStoreManager.getActivties(from: fromDate, to: toDate)
-                
-                await MainActor.run(body: {
-                    self.activities = activities
                 })
             }
             catch let error {

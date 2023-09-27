@@ -26,6 +26,7 @@ struct MainView: View {
               ScrollView(showsIndicators: false) {
                   VStack(spacing: 16) {
                       topSeciton
+                          .padding(.bottom)
                       sumamrySection
                       activitiesSeciton
                       Spacer()
@@ -57,7 +58,7 @@ extension MainView {
           .font(.subheadline)
           .foregroundColor(.themeStyle.theme.primary)
         Text(viewModel.user?.firstName ?? "Ciao Chiang")
-          .font(.title2)
+          .font(.title)
           .fontWeight(.semibold)
           .foregroundColor(.themeStyle.theme.primary)
       }
@@ -130,7 +131,7 @@ extension MainView {
       MainViewSectionHeader(sectionTitle: "Activites")
       
       VStack(spacing: 16) {
-        ForEach(viewModel.activities) { activity in
+        ForEach(viewModel.lastestActivites) { activity in
           Button {
             viewModel.selectedActivity = activity
             isActivityViewPresented.toggle()

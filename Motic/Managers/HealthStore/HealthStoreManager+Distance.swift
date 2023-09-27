@@ -19,7 +19,8 @@ extension HealthStoreManager {
         return allDuration.reduce(0.0) { $0 + $1 }
     }
     
-    func getAvgSpeed(totalDistance: Double, totalDuration: TimeInterval) -> Double {
+    func getAvgSpeed(totalDistance: Double, totalDuration: Double) -> Double {
+        guard totalDistance > 0 else { return 0 }
         return (totalDuration / totalDistance)
     }
     
