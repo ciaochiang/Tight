@@ -25,13 +25,8 @@ struct MoticApp: App {
   var body: some Scene {
     WindowGroup {
       if accountManager.isLoggedIn {
-        // Navigate to Main view
-        let logger = Logger(configuration: AppConfiguration.loggerConfig)
-        let dependency = MainViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
-                                                    logger: logger)
-        let viewModel = MainViewModel(dependency: dependency)
-        MainView(viewModel: viewModel)
-              .background(.red)
+        // Navigate to AppTabBar view
+        AppTabBarView()
       } else {
         OnboardingView()
       }

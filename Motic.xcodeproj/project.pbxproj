@@ -58,6 +58,11 @@
 		E59EB8572AB5F76A0057F630 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8562AB5F76A0057F630 /* MainViewModel.swift */; };
 		E59EB85A2AB6A9530057F630 /* HeartRateZones.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8592AB6A9530057F630 /* HeartRateZones.swift */; };
 		E59EB85D2AB6B4150057F630 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB85C2AB6B4150057F630 /* Logger.swift */; };
+		E5AB33EB2AC47764004B8973 /* AppTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AB33EA2AC47764004B8973 /* AppTabBarView.swift */; };
+		E5AB33ED2AC478B0004B8973 /* CustomTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AB33EC2AC478B0004B8973 /* CustomTabBarView.swift */; };
+		E5AB33EF2AC47CC7004B8973 /* CustomTabBarContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AB33EE2AC47CC7004B8973 /* CustomTabBarContainerView.swift */; };
+		E5AB33F12AC47FF9004B8973 /* TabBarItemPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AB33F02AC47FF9004B8973 /* TabBarItemPreferenceKey.swift */; };
+		E5AB33F32AC48360004B8973 /* TabBarItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AB33F22AC48360004B8973 /* TabBarItemType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -176,6 +181,11 @@
 		E59EB8562AB5F76A0057F630 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		E59EB8592AB6A9530057F630 /* HeartRateZones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateZones.swift; sourceTree = "<group>"; };
 		E59EB85C2AB6B4150057F630 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		E5AB33EA2AC47764004B8973 /* AppTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabBarView.swift; sourceTree = "<group>"; };
+		E5AB33EC2AC478B0004B8973 /* CustomTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarView.swift; sourceTree = "<group>"; };
+		E5AB33EE2AC47CC7004B8973 /* CustomTabBarContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarContainerView.swift; sourceTree = "<group>"; };
+		E5AB33F02AC47FF9004B8973 /* TabBarItemPreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItemPreferenceKey.swift; sourceTree = "<group>"; };
+		E5AB33F22AC48360004B8973 /* TabBarItemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItemType.swift; sourceTree = "<group>"; };
 		F94F05AD57F2E461B5D138DA /* Pods_MoticWatch_Watch_App_MoticWatch_Watch_AppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoticWatch_Watch_App_MoticWatch_Watch_AppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -419,6 +429,7 @@
 				E59EB8582AB6A9290057F630 /* Calculator */,
 				E59EB84B2AB5E2770057F630 /* Managers */,
 				E51DE1EB2AB8684800957395 /* Utils */,
+				E5AB33E92AC47750004B8973 /* Conponents */,
 				E51DE1EC2AB8998100957395 /* Extensions */,
 				E56A55CE2AB2BC7300A35BF3 /* Preview Content */,
 				E51DE1E92AB861DE00957395 /* GoogleService-Info.plist */,
@@ -494,6 +505,18 @@
 				E59EB85C2AB6B4150057F630 /* Logger.swift */,
 			);
 			path = Logger;
+			sourceTree = "<group>";
+		};
+		E5AB33E92AC47750004B8973 /* Conponents */ = {
+			isa = PBXGroup;
+			children = (
+				E5AB33EA2AC47764004B8973 /* AppTabBarView.swift */,
+				E5AB33EC2AC478B0004B8973 /* CustomTabBarView.swift */,
+				E5AB33EE2AC47CC7004B8973 /* CustomTabBarContainerView.swift */,
+				E5AB33F02AC47FF9004B8973 /* TabBarItemPreferenceKey.swift */,
+				E5AB33F22AC48360004B8973 /* TabBarItemType.swift */,
+			);
+			path = Conponents;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -785,6 +808,8 @@
 				E51DE2042ABDF26900957395 /* HealthStoreManager+Distance.swift in Sources */,
 				E51DE2142AC1C6F400957395 /* Date.swift in Sources */,
 				E51DE2022ABCA03C00957395 /* Mocks.swift in Sources */,
+				E5AB33F32AC48360004B8973 /* TabBarItemType.swift in Sources */,
+				E5AB33F12AC47FF9004B8973 /* TabBarItemPreferenceKey.swift in Sources */,
 				E521001C2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift in Sources */,
 				E51DE2002ABB303100957395 /* CyclingActivityViewModel.swift in Sources */,
 				E59EB84A2AB5934E0057F630 /* OnboardingViewModel.swift in Sources */,
@@ -793,6 +818,7 @@
 				E56A55CB2AB2BC7100A35BF3 /* MainView.swift in Sources */,
 				E51DE1EE2AB8998E00957395 /* Color.swift in Sources */,
 				E521001F2AB74D13000CF3AD /* AccountManager.swift in Sources */,
+				E5AB33EB2AC47764004B8973 /* AppTabBarView.swift in Sources */,
 				E51DE20E2AC0546700957395 /* PreferenceManager.swift in Sources */,
 				E51DE2302AC2BB3200957395 /* Error.swift in Sources */,
 				E51DE1F32AB9555A00957395 /* AppleUser.swift in Sources */,
@@ -802,6 +828,7 @@
 				E59EB8482AB58BF20057F630 /* OnboardingView.swift in Sources */,
 				E59EB8532AB5EE650057F630 /* NotificationManager.swift in Sources */,
 				E52100182AB7204A000CF3AD /* BaseSample.swift in Sources */,
+				E5AB33ED2AC478B0004B8973 /* CustomTabBarView.swift in Sources */,
 				E51DE1F12AB9553300957395 /* BaseUser.swift in Sources */,
 				E51DE1FA2AB96D0A00957395 /* ProfileViewModel.swift in Sources */,
 				E51DE2322AC2ED6700957395 /* HealthStoreManager+Activity.swift in Sources */,
@@ -814,6 +841,7 @@
 				E51DE20A2ABDFDD100957395 /* HealthStoreManager+Metadata.swift in Sources */,
 				E521001A2AB72069000CF3AD /* HeartRateSample.swift in Sources */,
 				E51DE2062ABDF6B000957395 /* HealthStoreManager+Energy.swift in Sources */,
+				E5AB33EF2AC47CC7004B8973 /* CustomTabBarContainerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
