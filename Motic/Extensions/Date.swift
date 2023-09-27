@@ -25,4 +25,34 @@ extension Date {
             return Date.now
         }
     }
+    
+    static func thisMonth() -> (from: Date, end: Date) {
+        // Retrieve this month activities
+        let calendar = Calendar.current
+        // Get the date components for the current date
+        let components = calendar.dateComponents([.year, .month], from: Date())
+
+        // Create the start date by setting the day and time components to the minimum
+        var startComponents = components
+        startComponents.day = 1
+        startComponents.hour = 0
+        startComponents.minute = 0
+        startComponents.second = 0
+
+        // Create the end date by setting the day to the last day of the month and time components to the maximum
+        var endComponents = components
+        endComponents.month! += 1
+        endComponents.day = 0
+        endComponents.hour = 23
+        endComponents.minute = 59
+        endComponents.second = 59
+
+        // Get the start date and end date
+        if let startDate = calendar.date(from: startComponents),
+           let endDate = calendar.date(from: endComponents) {
+            return (startDate, endDate)
+        } else {
+            return (Date(), Date())
+        }
+    }
 }

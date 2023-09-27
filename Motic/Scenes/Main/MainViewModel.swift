@@ -32,6 +32,9 @@ class MainViewModel: ObservableObject {
     @Published var user: BaseUser?
     @Published var activities: [Activity] = []
     @Published var selectedActivity: Activity?
+    @Published var totalDuration: TimeInterval = 0.0
+    @Published var totalDistanceKilometers: Double = 0.0
+    @Published var avgSpeed: Double = 0.0
     var cancellable : AnyCancellable?
   
     init(dependency: MainViewModelDependency) {
@@ -51,8 +54,26 @@ class MainViewModel: ObservableObject {
         if heartRateAuthorizationStatus == .sharingAuthorized {
           isHeartRateAuthorized = true
         }
+        
+        let thisMonth = Date.thisMonth()
+        Task {
+            do {
+                let activities = try await healthStoreManager.getActivties(from: thisMonth.from, to: thisMonth.end)
+                let workouts = activities.map { $0.workout }
+                
+                let totalDistanceKilometers = healthStoreManager.getTotalDistance(from: workouts)
+                let totalDuration = healthStoreManager.getTotalDuration(from: workouts)
+                let avgSpeed = healthStoreManager.getAvgSpeed(totalDistance: totalDistanceKilometers, totalDuration: totalDuration)
+                
+                await MainActor.run(body: {
+                    self.totalDistanceKilometers = totalDistanceKilometers
+                    self.totalDuration = totalDuration
+                    self.avgSpeed = avgSpeed
+                })
+            }
+        }
       
-        // Retrieve Workout Sesssions
+        // Retrieve this month activities
         let fromDate = Calendar.current.date(byAdding: .day, value: -7, to: Date())! // One month ago
         let toDate = Date()
         Task {

@@ -7,7 +7,22 @@
 
 import HealthKit
 
+
 extension HealthStoreManager {
+    func getTotalDistance(from workouts: [HKWorkout])-> Double {
+        let allDistance = workouts.map { getTotalDistanceMeters(workout: $0) / 1000 }
+        return allDistance.reduce(0.0) { $0 + $1 }
+    }
+    
+    func getTotalDuration(from workouts: [HKWorkout]) -> TimeInterval {
+        let allDuration = workouts.map { $0.duration }
+        return allDuration.reduce(0.0) { $0 + $1 }
+    }
+    
+    func getAvgSpeed(totalDistance: Double, totalDuration: TimeInterval) -> Double {
+        return (totalDuration / totalDistance)
+    }
+    
     func getTotalDistanceMeters(workout: HKWorkout) -> Double {
         var distanceMeters: Double = 0
         if let totalDistanceMeters = workout.totalDistance?.doubleValue(for: HKUnit.meter()) {

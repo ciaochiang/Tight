@@ -12,7 +12,7 @@ import Charts
 struct MainView: View {
   @StateObject var viewModel: MainViewModel
   @StateObject var preferenceManager: PreferenceManager
-  @State var isPresented: Bool = false
+  @State var isProfileViewPresented: Bool = false
   @State var isActivityViewPresented: Bool = false
   
   init(viewModel: MainViewModel) {
@@ -22,20 +22,19 @@ struct MainView: View {
   
   var body: some View {
       ZStack {
-          ScrollView(showsIndicators: false) {
-              VStack(spacing: 16) {
-                  topSeciton
-                  currentActivitySection
-                  sumamrySection
-                  activitiesSeciton
-                  Spacer()
+          NavigationView {
+              ScrollView(showsIndicators: false) {
+                  VStack(spacing: 16) {
+                      topSeciton
+                      sumamrySection
+                      activitiesSeciton
+                      Spacer()
+                  }
+                  .padding()
               }
-              .padding()
+              .background(Color.themeStyle.theme.background)
           }
       }
-      .background(
-          Color.themeStyle.theme.background.ignoresSafeArea()
-      )
       .preferredColorScheme(preferenceManager.colorScheme)
   }
 }
@@ -57,7 +56,7 @@ extension MainView {
         Text("Welcome Back")
           .font(.subheadline)
           .foregroundColor(.themeStyle.theme.primary)
-        Text(viewModel.user?.firstName ?? "")
+        Text(viewModel.user?.firstName ?? "Ciao Chiang")
           .font(.title2)
           .fontWeight(.semibold)
           .foregroundColor(.themeStyle.theme.primary)
@@ -65,22 +64,21 @@ extension MainView {
 
       Spacer()
       Button(action: {
-        isPresented = true
+          isProfileViewPresented = true
       }) {
         Image(systemName: "person")
-          .frame(width: 60, height: 60)
+          .frame(width: 48, height: 48)
           .foregroundColor(.black)
           .background(Color.white)
-          .cornerRadius(30)
+          .cornerRadius(24)
       }
-      .sheet(isPresented: $isPresented) {
-        let logger = Logger(configuration: AppConfiguration.loggerConfig)
-        let dependency = ProfileViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
-                                                       logger: logger,
-                                                       currentUser: AccountManager.shared.currentUser)
-        let viewModel = ProfileViewModel(dependency: dependency)
-        ProfileView(viewModel: viewModel)
-          .presentationDetents([.medium])
+      .sheet(isPresented: $isProfileViewPresented) {
+          let dependency = ProfileViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
+                                                         logger: viewModel.dependency.logger,
+                                                         currentUser: AccountManager.shared.currentUser)
+          let viewModel = ProfileViewModel(dependency: dependency)
+          ProfileView(viewModel: viewModel)
+            .presentationDetents([.medium])
       }
     }
   }
@@ -112,13 +110,19 @@ extension MainView {
   }
   
   var sumamrySection: some View {
-    VStack(spacing: 8) {
-      MainViewSectionHeader(sectionTitle: "Summary")
-      HStack(spacing: 16) {
-        heartRateWidgetCard
-        zoneWidgetCard
+      VStack {
+        MainViewSectionHeader(sectionTitle: "Summary")
+              .padding(.horizontal)
+              .padding(.top)
+          
+        HStack(spacing: 8) {
+            totalDistanceCard
+            totalDurationCard
+            avgSpeedCard
+        }
       }
-    }
+      .background(Color.themeStyle.theme.secondaryBackground)
+      .cornerRadius(16)
   }
   
   var activitiesSeciton: some View {
@@ -183,85 +187,71 @@ struct MainViewSectionHeader: View {
 // MARK: Widget Card
 extension MainView {
   // MARK: Summary Seciton
-  var heartRateWidgetCard: some View {
-    VStack(alignment: .leading, spacing: 8) {
-      HStack {
-        Image(systemName: "heart.fill")
-          .resizable()
-          .foregroundColor(viewModel.isHeartRateAuthorized
-                           ? .themeStyle.theme.red
-                           : .themeStyle.theme.secondaryTextColor)
-          .frame(width: 12, height: 12)
-          .scaledToFit()
-        Text("Heart Rate")
-          .foregroundColor(viewModel.isHeartRateAuthorized
-                           ? .themeStyle.theme.primary
-                           : .themeStyle.theme.secondaryTextColor)
-          .font(.caption)
-          .fontWeight(.semibold)
-      }
-      .padding(16)
-      HStack(spacing: 8) {
-        Text(viewModel.isHeartRateAuthorized
-             ? "\(Int(viewModel.healthStoreManager.latestHeartRate.value))"
-             : "0")
-          .font(.title)
-          .fontWeight(.bold)
-          .foregroundColor(viewModel.isHeartRateAuthorized
-                           ? .themeStyle.theme.red
-                           : .themeStyle.theme.secondaryTextColor)
-          .multilineTextAlignment(.center)
-        Text("BPM")
-          .foregroundColor(.primary)
-          .font(.caption2)
-          .multilineTextAlignment(.center)
-      }
-      .frame(maxWidth: .infinity)
-      .padding(.bottom, 24)
-    }
-    .frame(maxWidth: .infinity)
-    .background(Color.themeStyle.theme.secondaryBackground)
-    .cornerRadius(16)
-    .onTapGesture {
-      if viewModel.isHeartRateAuthorized {
-        // lead user to setting page
-        if let url = URL(string: "x-apple-health://") {
-                if UIApplication.shared.canOpenURL(url) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                }
+    var totalDistanceCard: some View {
+        VStack(spacing: 4) {
+            HStack(spacing: 4) {
+                Text("\(String(format: "%.1f", viewModel.totalDistanceKilometers))")
+                .font(.title2)
+                .fontWeight(.semibold)
+                .foregroundColor(.themeStyle.theme.green)
+                Text("km")
+                  .foregroundColor(.themeStyle.theme.secondaryTextColor)
+                  .font(.caption)
             }
-      }
+            .frame(maxWidth: .infinity)
+            
+            HStack {
+                Text("Distance")
+                  .foregroundColor(.themeStyle.theme.secondaryTextColor)
+                  .font(.caption)
+            }
+            .padding(.horizontal)
+        }
+        .padding(.bottom)
     }
-  }
+    
+    var totalDurationCard: some View {
+        VStack(spacing: 4) {
+            HStack(spacing: 4) {
+                Text(viewModel.totalDuration.shorterFormatInterval)
+                .font(.title2)
+                .fontWeight(.semibold)
+                .foregroundColor(.themeStyle.theme.green)
+            }
+            .frame(maxWidth: .infinity)
+            
+            HStack {
+                Text("Duration")
+                  .foregroundColor(.themeStyle.theme.secondaryTextColor)
+                  .font(.caption)
+            }
+            .padding(.horizontal)
+        }
+        .padding(.bottom)
+    }
   
-  var zoneWidgetCard: some View {
-    VStack(alignment: .leading, spacing: 8) {
-      HStack {
-        Image(systemName: "flame.fill")
-          .resizable()
-          .foregroundColor(.themeStyle.theme.red)
-          .frame(width: 12, height: 12)
-          .scaledToFit()
-        Text("Zone")
-          .foregroundColor(.themeStyle.theme.primary)
-          .font(.caption)
-          .fontWeight(.semibold)
-      }
-      .padding(16)
-      HStack(spacing: 8) {
-        Text("\(viewModel.healthStoreManager.currentZone?.name ?? "Zone 1")")
-          .font(.title)
-          .fontWeight(.bold)
-          .foregroundColor(.themeStyle.theme.red)
-          .multilineTextAlignment(.center)
-      }
-      .frame(maxWidth: .infinity)
-      .padding(.bottom, 24)
+    var avgSpeedCard: some View {
+        VStack(spacing: 4) {
+            HStack(spacing: 4) {
+                Text(viewModel.avgSpeed.formatAvgSpeedTimeInterval)
+                .font(.title2)
+                .fontWeight(.semibold)
+                .foregroundColor(.themeStyle.theme.green)
+                Text("/ km")
+                  .foregroundColor(.themeStyle.theme.secondaryTextColor)
+                  .font(.caption)
+            }
+            .frame(maxWidth: .infinity)
+            
+            HStack {
+                Text("Speed")
+                  .foregroundColor(.themeStyle.theme.secondaryTextColor)
+                  .font(.caption)
+            }
+            .padding(.horizontal)
+        }
+        .padding(.bottom)
     }
-    .frame(maxWidth: .infinity)
-    .background(Color.themeStyle.theme.secondaryBackground)
-    .cornerRadius(16)
-  }
 }
 
 struct MainViewActivityCard: View {

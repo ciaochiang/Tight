@@ -31,6 +31,7 @@ struct MoticApp: App {
                                                     logger: logger)
         let viewModel = MainViewModel(dependency: dependency)
         MainView(viewModel: viewModel)
+              .background(.red)
       } else {
         OnboardingView()
       }
