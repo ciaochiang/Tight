@@ -9,6 +9,8 @@ import SwiftUI
 
 struct AppTabBarView: View {
     @State private var tabSelection: TabBarItemType = .home
+    @State var isRecordViewPresented: Bool = false
+
     private var mainView: MainView
     
     init() {
@@ -24,9 +26,19 @@ struct AppTabBarView: View {
             mainView.tabBarItem(type: .home, selection: $tabSelection)
 
             Color.clear.tabBarItem(type: .record, selection: $tabSelection, disableContent: true) {
-
+                isRecordViewPresented.toggle()
             }
             Color.green.tabBarItem(type: .preference, selection: $tabSelection)
+        }
+        .sheet(isPresented: $isRecordViewPresented) {
+            let locationManager = LocationManager()
+            let logger = Logger(configuration: AppConfiguration.loggerConfig)
+
+            let dependency = RecordViewModelDependencyImp(logger: logger,
+                                                          locationManager: locationManager)
+            let viewModel = RecordViewModel(dependency: dependency)
+            RecordView(viewModel: viewModel)
+                .presentationDetents([.large])
         }
     }
 }
