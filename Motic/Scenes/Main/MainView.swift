@@ -26,14 +26,34 @@ struct MainView: View {
               ScrollView(showsIndicators: false) {
                   VStack(spacing: 16) {
                       topSeciton
-                          .padding(.bottom)
                       sumamrySection
                       activitiesSeciton
                       Spacer()
                   }
                   .padding()
               }
+              .toolbar {
+                  ToolbarItem(placement: .navigationBarTrailing) {
+                      Button(action: {
+                          isProfileViewPresented = true
+                      }) {
+                        Image(systemName: "person")
+                          .frame(width: 36, height: 36)
+                          .foregroundColor(.black)
+                          .background(Color.white)
+                          .cornerRadius(18)
+                      }
+                  }
+              }
               .background(Color.themeStyle.theme.background)
+          }
+          .sheet(isPresented: $isProfileViewPresented) {
+              let dependency = ProfileViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
+                                                             logger: viewModel.dependency.logger,
+                                                             currentUser: AccountManager.shared.currentUser)
+              let viewModel = ProfileViewModel(dependency: dependency)
+              ProfileView(viewModel: viewModel)
+                .presentationDetents([.medium])
           }
       }
       .preferredColorScheme(preferenceManager.colorScheme)
@@ -53,35 +73,22 @@ struct MainView_Previews: PreviewProvider {
 extension MainView {
   var topSeciton: some View {
     HStack {
-      VStack(alignment: .leading, spacing: 8) {
-        Text("Welcome Back")
-          .font(.subheadline)
-          .foregroundColor(.themeStyle.theme.primary)
-        Text(viewModel.user?.firstName ?? "Ciao Chiang")
-          .font(.title)
-          .fontWeight(.semibold)
-          .foregroundColor(.themeStyle.theme.primary)
-      }
-
-      Spacer()
-      Button(action: {
-          isProfileViewPresented = true
-      }) {
-        Image(systemName: "person")
-          .frame(width: 48, height: 48)
-          .foregroundColor(.black)
-          .background(Color.white)
-          .cornerRadius(24)
-      }
-      .sheet(isPresented: $isProfileViewPresented) {
-          let dependency = ProfileViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
-                                                         logger: viewModel.dependency.logger,
-                                                         currentUser: AccountManager.shared.currentUser)
-          let viewModel = ProfileViewModel(dependency: dependency)
-          ProfileView(viewModel: viewModel)
-            .presentationDetents([.medium])
-      }
+        VStack(alignment: .leading, spacing: 8) {
+//          Text("Welcome Back")
+//            .font(.subheadline)
+//            .foregroundColor(.themeStyle.theme.primary)
+          Text(viewModel.user?.firstName ?? "Ciao Chiang")
+            .font(.largeTitle)
+            .fontWeight(.semibold)
+            .foregroundColor(.themeStyle.theme.primary)
+            Text("You haven't have a workout today! Don't give it up!")
+                .font(.subheadline)
+                .foregroundColor(.themeStyle.theme.secondaryTextColor)
+                .frame(maxWidth: 240)
+        }
+        Spacer()
     }
+    .padding(.bottom, 48)
   }
   
   var currentActivitySection: some View {
@@ -112,7 +119,7 @@ extension MainView {
   
   var sumamrySection: some View {
       VStack {
-        MainViewSectionHeader(sectionTitle: "Summary")
+        MainViewSectionHeader(sectionTitle: "This month")
               .padding(.horizontal)
               .padding(.top)
           
@@ -131,7 +138,7 @@ extension MainView {
       MainViewSectionHeader(sectionTitle: "Activites")
       
       VStack(spacing: 16) {
-        ForEach(viewModel.lastestActivites) { activity in
+        ForEach(viewModel.activities) { activity in
           Button {
             viewModel.selectedActivity = activity
             isActivityViewPresented.toggle()
@@ -190,6 +197,13 @@ extension MainView {
   // MARK: Summary Seciton
     var totalDistanceCard: some View {
         VStack(spacing: 4) {
+            HStack {
+                Text("Distance")
+                  .foregroundColor(.themeStyle.theme.secondaryTextColor)
+                  .font(.caption2)
+            }
+            .padding(.horizontal)
+            
             HStack(spacing: 4) {
                 Text("\(String(format: "%.1f", viewModel.totalDistanceKilometers))")
                 .font(.title2)
@@ -200,19 +214,19 @@ extension MainView {
                   .font(.caption)
             }
             .frame(maxWidth: .infinity)
-            
-            HStack {
-                Text("Distance")
-                  .foregroundColor(.themeStyle.theme.secondaryTextColor)
-                  .font(.caption)
-            }
-            .padding(.horizontal)
         }
         .padding(.bottom)
     }
     
     var totalDurationCard: some View {
         VStack(spacing: 4) {
+            HStack {
+                Text("Time")
+                  .foregroundColor(.themeStyle.theme.secondaryTextColor)
+                  .font(.caption2)
+            }
+            .padding(.horizontal)
+            
             HStack(spacing: 4) {
                 Text(viewModel.totalDuration.shorterFormatInterval)
                 .font(.title2)
@@ -220,19 +234,19 @@ extension MainView {
                 .foregroundColor(.themeStyle.theme.green)
             }
             .frame(maxWidth: .infinity)
-            
-            HStack {
-                Text("Duration")
-                  .foregroundColor(.themeStyle.theme.secondaryTextColor)
-                  .font(.caption)
-            }
-            .padding(.horizontal)
         }
         .padding(.bottom)
     }
   
     var avgSpeedCard: some View {
         VStack(spacing: 4) {
+            HStack {
+                Text("Speed")
+                  .foregroundColor(.themeStyle.theme.secondaryTextColor)
+                  .font(.caption2)
+            }
+            .padding(.horizontal)
+            
             HStack(spacing: 4) {
                 Text(viewModel.avgSpeed.formatAvgSpeedTimeInterval)
                 .font(.title2)
@@ -243,13 +257,6 @@ extension MainView {
                   .font(.caption)
             }
             .frame(maxWidth: .infinity)
-            
-            HStack {
-                Text("Speed")
-                  .foregroundColor(.themeStyle.theme.secondaryTextColor)
-                  .font(.caption)
-            }
-            .padding(.horizontal)
         }
         .padding(.bottom)
     }

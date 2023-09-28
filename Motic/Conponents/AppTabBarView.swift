@@ -22,6 +22,7 @@ struct AppTabBarView: View {
     var body: some View {
         CustomTabBarContainerView(selection: $tabSelection) {
             mainView.tabBarItem(type: .home, selection: $tabSelection)
+
             Color.clear.tabBarItem(type: .record, selection: $tabSelection, disableContent: true) {
 
             }

@@ -14,9 +14,17 @@ enum TabBarItemType: Hashable {
     
     var iconName: String {
         switch self {
-        case .home: return "circle.hexagongrid.fill"
+        case .home: return "house"
         case .record: return "record.circle"
-        case .preference: return "list.dash"
+        case .preference: return "slider.horizontal.below.square.filled.and.square"
+        }
+    }
+    
+    var selectedIconName: String {
+        switch self {
+        case .home: return "house.fill"
+        case .record: return "record.circle"
+        case .preference: return "slider.horizontal.below.square.and.square.filled"
         }
     }
     
@@ -24,7 +32,7 @@ enum TabBarItemType: Hashable {
         switch self {
         case .home: return "Home"
         case .record: return "Record"
-        case .preference: return "Profile"
+        case .preference: return "Preference"
         }
     }
     

@@ -18,9 +18,9 @@ struct CustomTabBarView: View {
 
 struct CustomTabBarView_Previews: PreviewProvider {
     static let tabs: [TabBarItem] = [
-        .init(type: .home, disabledContent: false, completion: nil),
-        .init(type: .record, disabledContent: true, completion: nil),
-        .init(type: .preference, disabledContent: false, completion: nil)
+        TabBarItem(type: .home, disabledContent: false, completion: nil),
+        TabBarItem(type: .record, disabledContent: true, completion: nil),
+        TabBarItem(type: .preference, disabledContent: false, completion: nil)
     ]
     
     static var previews: some View {
@@ -40,14 +40,16 @@ extension CustomTabBarView {
 extension CustomTabBarView {
     private func tabView(tab: TabBarItem) -> some View {
         VStack {
-            Image(systemName: tab.type.iconName)
+            Image(systemName: selection == tab.type ? tab.type.selectedIconName : tab.type.iconName)
                 .resizable()
                 .scaledToFit()
                 .frame(maxHeight: 24)
                 .frame(maxWidth: 24)
+            Text(tab.type.title)
+                .font(.caption2)
         }
         .foregroundColor(selection == tab.type ? tab.type.accentColor : .gray)
-        .padding(.vertical, 16)
+        .padding(.top, 16)
         .frame(maxWidth: .infinity)
     }
     

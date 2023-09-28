@@ -28,7 +28,6 @@ class MainViewModelDependencyImp: MainViewModelDependency {
 class MainViewModel: ObservableObject {
     var dependency: MainViewModelDependency
     @Published var healthStoreManager: HealthStoreManager
-    @Published var isHeartRateAuthorized: Bool = false
     @Published var user: BaseUser?
     @Published var activities: [Activity] = []
     @Published var lastestActivites: [Activity] = []
@@ -42,12 +41,6 @@ class MainViewModel: ObservableObject {
         
         let storeDependency = HealthStoreManagerDependencyImp(logger: dependency.logger)
         healthStoreManager = HealthStoreManager(dependency: storeDependency)
-        
-        // Start observe heart rate
-        let heartRateAuthorizationStatus = healthStoreManager.getAthorizationStatus(objectType: .heartRate)
-        if heartRateAuthorizationStatus == .sharingAuthorized {
-          isHeartRateAuthorized = true
-        }
         
         let thisMonth = Date.thisMonth()
         Task {
