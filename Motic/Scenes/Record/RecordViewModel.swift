@@ -43,7 +43,7 @@ class RecordViewModel: ObservableObject {
         locationManager.$location
             .assign(to: \.location, on: self)
             .store(in: &cancellables)
-        
+
         locationManager.$region
             .assign(to: \.region, on: self)
             .store(in: &cancellables)

@@ -9,8 +9,10 @@ import SwiftUI
 import MapKit
 
 // MapView
+// - show map center in current location (V)
 // - start / end point
 // - route
+// Close Button
 // Time Counter
 // Distance
 // Avg. Speed
@@ -22,22 +24,34 @@ import MapKit
 
 struct RecordView: View {
     @StateObject private var viewModel: RecordViewModel
+    @Binding private var isPresented: Bool
     
-    init(viewModel: RecordViewModel) {
+    init(viewModel: RecordViewModel, isPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: viewModel)
+        _isPresented = isPresented
     }
     
     var body: some View {
-        ZStack {
+        VStack {
             NavigationView {
                 ZStack(alignment: .bottom) {
                     MapView(region: $viewModel.region).ignoresSafeArea(edges: .bottom)
-                        .navigationTitle("Record")
-                        .navigationBarTitleDisplayMode(.inline)
                     RecordPanelView()
-                        .frame(maxHeight: 240)
                         .frame(maxWidth: .infinity)
                         .padding()
+                }
+                .navigationTitle("Record")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            isPresented.toggle()
+                        } label: {
+                            Image(systemName: "xmark")
+                                .foregroundColor(.themeStyle.theme.primary)
+                        }
+
+                    }
                 }
             }
         }
@@ -50,9 +64,10 @@ struct RecordView: View {
 struct RecordView_Previews: PreviewProvider {
     static var previews: some View {
         let locationManager = LocationManager()
-        let dependency = RecordViewModelDependencyImp(logger: Mocks.logger, locationManager: locationManager)
+        let dependency = RecordViewModelDependencyImp(logger: Mocks.logger,
+                                                      locationManager: locationManager)
         let viewModel = RecordViewModel(dependency: dependency)
-        RecordView(viewModel: viewModel)
+        RecordView(viewModel: viewModel, isPresented: .constant(true))
     }
 }
 
@@ -71,72 +86,73 @@ struct MapView: View {
 struct RecordPanelView: View {
     var body: some View {
         VStack {
-            Spacer()
-            VStack {
-                VStack {
-                    VStack {
-                        Text("3:56:11")
-                            .font(.title)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.themeStyle.theme.primary)
-                    }
-                    .padding()
-                    
-                    HStack {
-                        VStack {
-                            Text("3:56:11")
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                                .foregroundColor(.themeStyle.theme.red)
-                            Text("Distance")
-                                .font(.caption)
-                                .foregroundColor(.themeStyle.theme.secondaryTextColor)
-                        }
-                        .frame(maxWidth: .infinity)
-
-                        VStack {
-                            Text("152")
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                                .foregroundColor(.themeStyle.theme.red)
-                            Text("Heart Rate")
-                                .font(.caption)
-                                .foregroundColor(.themeStyle.theme.secondaryTextColor)
-                        }
-                        .frame(maxWidth: .infinity)
-
-                        VStack {
-                            Text("3'11\"")
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                                .foregroundColor(.themeStyle.theme.red)
-                            Text("Speed")
-                                .font(.caption)
-                                .foregroundColor(.themeStyle.theme.secondaryTextColor)
-                        }
-                        .frame(maxWidth: .infinity)
-
-                    }
-                    .frame(maxWidth: .infinity)
-                }
-                
-                Spacer()
-                Button {
-                    
-                } label: {
-                    Text("START")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                }
-                .frame(maxWidth: .infinity)
-                .frame(maxHeight: 60)
-                .background(Color.themeStyle.theme.blue)
-                .foregroundColor(.themeStyle.theme.white)
-                .cornerRadius(8)
-                .padding()
-            }
+            timeCounter.padding()
+            metricSection
+            startButton
         }
         .background(Color.themeStyle.theme.secondaryBackground.opacity(0.9))
         .cornerRadius(16)
+    }
+    
+    var timeCounter: some View {
+        VStack {
+            Text("3:56:11")
+                .font(.title)
+                .fontWeight(.semibold)
+                .foregroundColor(.themeStyle.theme.primary)
+        }
+    }
+    
+    var metricSection: some View {
+        HStack {
+            VStack {
+                Text("3:56:11")
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.themeStyle.theme.green)
+                Text("Distance")
+                    .font(.caption)
+                    .foregroundColor(.themeStyle.theme.secondaryTextColor)
+            }
+            .frame(maxWidth: .infinity)
+
+            VStack {
+                Text("152")
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.themeStyle.theme.green)
+                Text("Heart Rate")
+                    .font(.caption)
+                    .foregroundColor(.themeStyle.theme.secondaryTextColor)
+            }
+            .frame(maxWidth: .infinity)
+
+            VStack {
+                Text("3'11\"")
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.themeStyle.theme.green)
+                Text("Speed")
+                    .font(.caption)
+                    .foregroundColor(.themeStyle.theme.secondaryTextColor)
+            }
+            .frame(maxWidth: .infinity)
+        }
+    }
+    
+    var startButton: some View {
+        Button {
+            
+        } label: {
+            Text("START")
+                .font(.title3)
+                .fontWeight(.bold)
+        }
+        .frame(maxWidth: .infinity)
+        .frame(maxHeight: 60)
+        .background(Color.themeStyle.theme.green)
+        .foregroundColor(.themeStyle.theme.black)
+        .cornerRadius(8)
+        .padding()
     }
 }

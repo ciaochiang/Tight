@@ -45,8 +45,10 @@ extension LocationManager: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let lastLocation = locations.last {
-            location = lastLocation
-            region.center = lastLocation.coordinate
+            DispatchQueue.main.async {
+                self.location = lastLocation
+                self.region.center = lastLocation.coordinate
+            }
         }
     }
 }

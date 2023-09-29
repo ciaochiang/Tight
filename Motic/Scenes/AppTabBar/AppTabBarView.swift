@@ -37,7 +37,7 @@ struct AppTabBarView: View {
             let dependency = RecordViewModelDependencyImp(logger: logger,
                                                           locationManager: locationManager)
             let viewModel = RecordViewModel(dependency: dependency)
-            RecordView(viewModel: viewModel)
+            RecordView(viewModel: viewModel, isPresented: $isRecordViewPresented)
                 .presentationDetents([.large])
         }
     }
