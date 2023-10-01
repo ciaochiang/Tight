@@ -53,7 +53,11 @@ struct RecordView: View {
 
                     }
                 }
+                .onReceive(viewModel.$location) { value in
+                    viewModel.handleNewLocation(location: value)
+                }
             }
+            .environmentObject(viewModel)
         }
         .onAppear {
             viewModel.locationManager.startUpdatingLocation()
@@ -79,11 +83,13 @@ struct MapView: View {
     }
     
     var body: some View {
-        Map(coordinateRegion: $region)
+        Map(coordinateRegion: $region, showsUserLocation: true)
     }
 }
 
 struct RecordPanelView: View {
+    @EnvironmentObject var viewModel: RecordViewModel
+    
     var body: some View {
         VStack {
             timeCounter.padding()
@@ -96,17 +102,22 @@ struct RecordPanelView: View {
     
     var timeCounter: some View {
         VStack {
-            Text("3:56:11")
+            Text("\(viewModel.elapsedSeconds.formatTimeInterval)")
                 .font(.title)
                 .fontWeight(.semibold)
                 .foregroundColor(.themeStyle.theme.primary)
+        }
+        .onReceive(viewModel.timer) { _ in
+            if let start = self.viewModel.startTime {
+                self.viewModel.elapsedSeconds = -start.timeIntervalSinceNow
+            }
         }
     }
     
     var metricSection: some View {
         HStack {
             VStack {
-                Text("3:56:11")
+                Text("\(String(format: "%.1f", viewModel.totalDistance))")
                     .font(.title3)
                     .fontWeight(.semibold)
                     .foregroundColor(.themeStyle.theme.green)
@@ -128,7 +139,7 @@ struct RecordPanelView: View {
             .frame(maxWidth: .infinity)
 
             VStack {
-                Text("3'11\"")
+                Text("\(viewModel.speed)")
                     .font(.title3)
                     .fontWeight(.semibold)
                     .foregroundColor(.themeStyle.theme.green)
@@ -142,15 +153,18 @@ struct RecordPanelView: View {
     
     var startButton: some View {
         Button {
-            
+            viewModel.isRecording ? viewModel.stopRecording() : viewModel.startRecording()
         } label: {
-            Text("START")
+            Text(viewModel.isRecording  ? "PASUE" : "START")
                 .font(.title3)
                 .fontWeight(.bold)
+                .frame(maxWidth: .infinity)
         }
         .frame(maxWidth: .infinity)
         .frame(maxHeight: 60)
-        .background(Color.themeStyle.theme.green)
+        .background(viewModel.isRecording
+                    ? Color.themeStyle.theme.red
+                    : Color.themeStyle.theme.green)
         .foregroundColor(.themeStyle.theme.black)
         .cornerRadius(8)
         .padding()

@@ -65,6 +65,7 @@
 		E5AB33F32AC48360004B8973 /* TabBarItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AB33F22AC48360004B8973 /* TabBarItemType.swift */; };
 		E5AB33F72AC5A939004B8973 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AB33F62AC5A939004B8973 /* RecordView.swift */; };
 		E5AB33F92AC5A946004B8973 /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AB33F82AC5A946004B8973 /* RecordViewModel.swift */; };
+		E5AB33FC2AC9591D004B8973 /* MoticModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E5AB33FA2AC9591D004B8973 /* MoticModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -190,6 +191,7 @@
 		E5AB33F22AC48360004B8973 /* TabBarItemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItemType.swift; sourceTree = "<group>"; };
 		E5AB33F62AC5A939004B8973 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		E5AB33F82AC5A946004B8973 /* RecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
+		E5AB33FB2AC9591D004B8973 /* MoticModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MoticModel.xcdatamodel; sourceTree = "<group>"; };
 		F94F05AD57F2E461B5D138DA /* Pods_MoticWatch_Watch_App_MoticWatch_Watch_AppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoticWatch_Watch_App_MoticWatch_Watch_AppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -439,6 +441,7 @@
 				E51DE1EC2AB8998100957395 /* Extensions */,
 				E56A55CE2AB2BC7300A35BF3 /* Preview Content */,
 				E51DE1E92AB861DE00957395 /* GoogleService-Info.plist */,
+				E5AB33FA2AC9591D004B8973 /* MoticModel.xcdatamodeld */,
 			);
 			path = Motic;
 			sourceTree = "<group>";
@@ -863,6 +866,7 @@
 				E51DE1F82AB96CEF00957395 /* ProfileView.swift in Sources */,
 				E59EB8572AB5F76A0057F630 /* MainViewModel.swift in Sources */,
 				E51DE20A2ABDFDD100957395 /* HealthStoreManager+Metadata.swift in Sources */,
+				E5AB33FC2AC9591D004B8973 /* MoticModel.xcdatamodeld in Sources */,
 				E521001A2AB72069000CF3AD /* HeartRateSample.swift in Sources */,
 				E51DE2062ABDF6B000957395 /* HealthStoreManager+Energy.swift in Sources */,
 				E5AB33EF2AC47CC7004B8973 /* CustomTabBarContainerView.swift in Sources */,
@@ -1417,6 +1421,19 @@
 			productName = FirebaseCrashlytics;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		E5AB33FA2AC9591D004B8973 /* MoticModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E5AB33FB2AC9591D004B8973 /* MoticModel.xcdatamodel */,
+			);
+			currentVersion = E5AB33FB2AC9591D004B8973 /* MoticModel.xcdatamodel */;
+			path = MoticModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E56A55BD2AB2BC7100A35BF3 /* Project object */;
 }
