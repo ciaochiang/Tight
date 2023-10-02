@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import CoreLocation
 
 class OnboardingViewModel: ObservableObject {
   @Published var state: OnboardingState = .welcome
@@ -61,8 +62,8 @@ extension OnboardingViewModel {
   }
   
   private func requestLocationPermission() {
-    let locationManager = LocationManager()
-    locationManager.requestLocationPermission()
+    let locationManager = CLLocationManager()
+    locationManager.requestWhenInUseAuthorization()
     nextState()
   }
   

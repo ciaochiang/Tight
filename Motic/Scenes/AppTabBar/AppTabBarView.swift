@@ -31,11 +31,10 @@ struct AppTabBarView: View {
             Color.green.tabBarItem(type: .preference, selection: $tabSelection)
         }
         .sheet(isPresented: $isRecordViewPresented) {
-            let locationManager = LocationManager()
             let logger = Logger(configuration: AppConfiguration.loggerConfig)
 
             let dependency = RecordViewModelDependencyImp(logger: logger,
-                                                          locationManager: locationManager)
+                                                          activitySessionManager: ActivitySessionManager.shared)
             let viewModel = RecordViewModel(dependency: dependency)
             RecordView(viewModel: viewModel, isPresented: $isRecordViewPresented)
                 .presentationDetents([.large])

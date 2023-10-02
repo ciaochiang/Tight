@@ -24,10 +24,12 @@ import MapKit
 
 struct RecordView: View {
     @StateObject private var viewModel: RecordViewModel
+    @StateObject private var activitySessionManager: ActivitySessionManager
     @Binding private var isPresented: Bool
     
     init(viewModel: RecordViewModel, isPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: viewModel)
+        _activitySessionManager = StateObject(wrappedValue: viewModel.dependency.activitySessionManager)
         _isPresented = isPresented
     }
     
@@ -35,7 +37,7 @@ struct RecordView: View {
         VStack {
             NavigationView {
                 ZStack(alignment: .bottom) {
-                    MapView(region: $viewModel.region).ignoresSafeArea(edges: .bottom)
+                    MapView(region: $activitySessionManager.region).ignoresSafeArea(edges: .bottom)
                     RecordPanelView()
                         .frame(maxWidth: .infinity)
                         .padding()
@@ -47,29 +49,29 @@ struct RecordView: View {
                         Button {
                             isPresented.toggle()
                         } label: {
-                            Image(systemName: "xmark")
+                            Image(systemName: activitySessionManager.isRecording
+                                  ? "chevron.down"
+                                  : "xmark")
                                 .foregroundColor(.themeStyle.theme.primary)
+                                
                         }
 
                     }
                 }
-                .onReceive(viewModel.$location) { value in
-                    viewModel.handleNewLocation(location: value)
-                }
             }
             .environmentObject(viewModel)
+            .environmentObject(activitySessionManager)
         }
         .onAppear {
-            viewModel.locationManager.startUpdatingLocation()
+            activitySessionManager.startUpdatingLocation()
         }
     }
 }
 
 struct RecordView_Previews: PreviewProvider {
     static var previews: some View {
-        let locationManager = LocationManager()
         let dependency = RecordViewModelDependencyImp(logger: Mocks.logger,
-                                                      locationManager: locationManager)
+                                                      activitySessionManager: ActivitySessionManager.shared)
         let viewModel = RecordViewModel(dependency: dependency)
         RecordView(viewModel: viewModel, isPresented: .constant(true))
     }
@@ -89,6 +91,7 @@ struct MapView: View {
 
 struct RecordPanelView: View {
     @EnvironmentObject var viewModel: RecordViewModel
+    @EnvironmentObject var activitySessionManager: ActivitySessionManager
     
     var body: some View {
         VStack {
@@ -102,22 +105,20 @@ struct RecordPanelView: View {
     
     var timeCounter: some View {
         VStack {
-            Text("\(viewModel.elapsedSeconds.formatTimeInterval)")
+            Text("\(activitySessionManager.elapsedSeconds.formatTimeInterval)")
                 .font(.title)
                 .fontWeight(.semibold)
                 .foregroundColor(.themeStyle.theme.primary)
         }
         .onReceive(viewModel.timer) { _ in
-            if let start = self.viewModel.startTime {
-                self.viewModel.elapsedSeconds = -start.timeIntervalSinceNow
-            }
+            activitySessionManager.handleTimerAction()
         }
     }
     
     var metricSection: some View {
         HStack {
             VStack {
-                Text("\(String(format: "%.1f", viewModel.totalDistance))")
+                Text(String(format: "%.1f", activitySessionManager.totalDistance))
                     .font(.title3)
                     .fontWeight(.semibold)
                     .foregroundColor(.themeStyle.theme.green)
@@ -139,7 +140,7 @@ struct RecordPanelView: View {
             .frame(maxWidth: .infinity)
 
             VStack {
-                Text("\(viewModel.speed)")
+                Text(String(format: "%1.f", activitySessionManager.currentSpeed))
                     .font(.title3)
                     .fontWeight(.semibold)
                     .foregroundColor(.themeStyle.theme.green)
@@ -153,16 +154,18 @@ struct RecordPanelView: View {
     
     var startButton: some View {
         Button {
-            viewModel.isRecording ? viewModel.stopRecording() : viewModel.startRecording()
+            activitySessionManager.isRecording
+            ? activitySessionManager.stopSession()
+            : activitySessionManager.startSession()
         } label: {
-            Text(viewModel.isRecording  ? "PASUE" : "START")
+            Text(activitySessionManager.isRecording  ? "PASUE" : "START")
                 .font(.title3)
                 .fontWeight(.bold)
                 .frame(maxWidth: .infinity)
         }
         .frame(maxWidth: .infinity)
         .frame(maxHeight: 60)
-        .background(viewModel.isRecording
+        .background(activitySessionManager.isRecording
                     ? Color.themeStyle.theme.red
                     : Color.themeStyle.theme.green)
         .foregroundColor(.themeStyle.theme.black)

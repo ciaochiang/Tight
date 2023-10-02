@@ -50,10 +50,10 @@
 		E56A55DA2AB2BC7300A35BF3 /* MoticTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55D92AB2BC7300A35BF3 /* MoticTests.swift */; };
 		E56A55E42AB2BC7300A35BF3 /* MoticUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55E32AB2BC7300A35BF3 /* MoticUITests.swift */; };
 		E56A55E62AB2BC7300A35BF3 /* MoticUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55E52AB2BC7300A35BF3 /* MoticUITestsLaunchTests.swift */; };
+		E58D15BB2ACAC7F3000D1918 /* ActivitySessionManager .swift in Sources */ = {isa = PBXBuildFile; fileRef = E58D15BA2ACAC7F3000D1918 /* ActivitySessionManager .swift */; };
 		E59EB8482AB58BF20057F630 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8472AB58BF20057F630 /* OnboardingView.swift */; };
 		E59EB84A2AB5934E0057F630 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8492AB5934E0057F630 /* OnboardingViewModel.swift */; };
 		E59EB84D2AB5E29F0057F630 /* HealthStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB84C2AB5E29F0057F630 /* HealthStoreManager.swift */; };
-		E59EB8512AB5ED020057F630 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8502AB5ED020057F630 /* LocationManager.swift */; };
 		E59EB8532AB5EE650057F630 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8522AB5EE650057F630 /* NotificationManager.swift */; };
 		E59EB8572AB5F76A0057F630 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8562AB5F76A0057F630 /* MainViewModel.swift */; };
 		E59EB85A2AB6A9530057F630 /* HeartRateZones.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8592AB6A9530057F630 /* HeartRateZones.swift */; };
@@ -175,10 +175,10 @@
 		E56A55E32AB2BC7300A35BF3 /* MoticUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticUITests.swift; sourceTree = "<group>"; };
 		E56A55E52AB2BC7300A35BF3 /* MoticUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E56A55F22AB2C03000A35BF3 /* Motic.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Motic.entitlements; sourceTree = "<group>"; };
+		E58D15BA2ACAC7F3000D1918 /* ActivitySessionManager .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivitySessionManager .swift"; sourceTree = "<group>"; };
 		E59EB8472AB58BF20057F630 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		E59EB8492AB5934E0057F630 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		E59EB84C2AB5E29F0057F630 /* HealthStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStoreManager.swift; sourceTree = "<group>"; };
-		E59EB8502AB5ED020057F630 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		E59EB8522AB5EE650057F630 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		E59EB8542AB5F2F70057F630 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		E59EB8562AB5F76A0057F630 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -485,8 +485,8 @@
 			children = (
 				E51DE1EF2AB9551C00957395 /* Account */,
 				E52100162AB72031000CF3AD /* HealthStore */,
-				E59EB8502AB5ED020057F630 /* LocationManager.swift */,
 				E59EB8522AB5EE650057F630 /* NotificationManager.swift */,
+				E58D15BA2ACAC7F3000D1918 /* ActivitySessionManager .swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -837,6 +837,7 @@
 				E5AB33F12AC47FF9004B8973 /* TabBarItemPreferenceKey.swift in Sources */,
 				E521001C2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift in Sources */,
 				E51DE2002ABB303100957395 /* CyclingActivityViewModel.swift in Sources */,
+				E58D15BB2ACAC7F3000D1918 /* ActivitySessionManager .swift in Sources */,
 				E59EB84A2AB5934E0057F630 /* OnboardingViewModel.swift in Sources */,
 				E5AB33F92AC5A946004B8973 /* RecordViewModel.swift in Sources */,
 				E59EB85D2AB6B4150057F630 /* Logger.swift in Sources */,
@@ -848,7 +849,6 @@
 				E51DE20E2AC0546700957395 /* PreferenceManager.swift in Sources */,
 				E51DE2302AC2BB3200957395 /* Error.swift in Sources */,
 				E51DE1F32AB9555A00957395 /* AppleUser.swift in Sources */,
-				E59EB8512AB5ED020057F630 /* LocationManager.swift in Sources */,
 				E51DE2082ABDFB3A00957395 /* HealthStoreManager+Weather.swift in Sources */,
 				E50163F62AB333F100C87D67 /* Connectivity.swift in Sources */,
 				E59EB8482AB58BF20057F630 /* OnboardingView.swift in Sources */,
