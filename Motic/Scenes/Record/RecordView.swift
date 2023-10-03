@@ -62,9 +62,6 @@ struct RecordView: View {
             .environmentObject(viewModel)
             .environmentObject(activitySessionManager)
         }
-        .onAppear {
-            activitySessionManager.startUpdatingLocation()
-        }
     }
 }
 
@@ -79,6 +76,7 @@ struct RecordView_Previews: PreviewProvider {
 
 struct MapView: View {
     @Binding private var region: MKCoordinateRegion
+    @EnvironmentObject var activitySessionManager: ActivitySessionManager
     
     init(region: Binding<MKCoordinateRegion>) {
         _region = region
@@ -86,6 +84,9 @@ struct MapView: View {
     
     var body: some View {
         Map(coordinateRegion: $region, showsUserLocation: true)
+            .onAppear {
+                activitySessionManager.startUpdatingLocation()
+            }
     }
 }
 
