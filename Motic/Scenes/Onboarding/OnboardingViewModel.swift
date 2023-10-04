@@ -10,81 +10,92 @@ import SwiftUI
 import CoreLocation
 
 class OnboardingViewModel: ObservableObject {
-  @Published var state: OnboardingState = .welcome
+    @Published var state: OnboardingState = .welcome
+    @Published var currentIndex: Int = 0
+    @Binding var isOnboardingCompleted: Bool
+    
+    init(isOnboardingCompleted: Binding<Bool>) {
+        _isOnboardingCompleted = isOnboardingCompleted
+    }
   
-  enum OnboardingState: Int, CaseIterable, Hashable {
-    case welcome
-    case requestHealthKitPermission
-    case requestLocationPermission
-    case requestNotificationPermission
-    case done
-    
-    init(stateRawValue: Int) {
-      switch stateRawValue {
-      case 0: self = .welcome
-      case 1: self = .requestHealthKitPermission
-      case 2: self = .requestLocationPermission
-      case 3: self = .requestNotificationPermission
-      case 4: self = .done
-      default: self = .welcome
-      }
+    enum OnboardingState: Int, CaseIterable, Hashable {
+        case welcome
+        case requestHealthKitPermission
+        case requestNotificationPermission
+        case requestLocationPermission
+        
+        init(stateRawValue: Int) {
+            switch stateRawValue {
+            case 0: self = .welcome
+            case 1: self = .requestHealthKitPermission
+            case 2: self = .requestNotificationPermission
+            case 3: self = .requestLocationPermission
+            default: self = .welcome
+            }
+        }
+        
+        static var count: Int {
+            return OnboardingState.allCases.count
+        }
     }
-    
-    var buttonTitle: String {
-      switch self {
-      case .welcome: return "Get Started"
-      case .requestHealthKitPermission: return "Connect HealthKit"
-      case .requestLocationPermission: return "Turn On Location"
-      case .requestNotificationPermission: return "Turn On Notification"
-      case .done: return "Done"
-      }
-    }
-  }
 }
 
 // MARK: FUNCTIONS
 extension OnboardingViewModel {
   func handleButtonAction(with state: OnboardingState) {
-    switch state {
-    case .requestHealthKitPermission: requestHealthKitPermission()
-    case .requestLocationPermission: requestLocationPermission()
-    case .requestNotificationPermission: requestNotificationPermission()
-    default: nextState()
-    }
+      switch state {
+      case .welcome: nextState()
+      case .requestHealthKitPermission: requestHealthKitPermission()
+      case .requestNotificationPermission: requestNotificationPermission()
+      case .requestLocationPermission: requestLocationPermission()
+      }
   }
   
   private func requestHealthKitPermission() {
-    let dependency = HealthStoreManagerDependencyImp(logger: Logger(configuration: AppConfiguration.loggerConfig))
-    let healthStoreManager = HealthStoreManager(dependency: dependency)
-    healthStoreManager.authorizeHealthKit { [weak self] completed in
-      self?.nextState()
-    }
+      let dependency = HealthStoreManagerDependencyImp(logger: Logger(configuration: AppConfiguration.loggerConfig))
+      let healthStoreManager = HealthStoreManager(dependency: dependency)
+      Task {
+          await MainActor.run(body: {
+              healthStoreManager.authorizeHealthKit { [weak self] _ in
+                self?.nextState()
+              }
+          })
+      }
   }
   
   private func requestLocationPermission() {
-    let locationManager = CLLocationManager()
-    locationManager.requestWhenInUseAuthorization()
-    nextState()
+      let locationManager = CLLocationManager()
+      locationManager.requestWhenInUseAuthorization()
+      nextState()
   }
   
   private func requestNotificationPermission() {
-    let notificationManager = NotificationManager()
-    notificationManager.requestNotificationAuthorization { [weak self] completed in
-      self?.nextState()
-    }
+      let notificationManager = NotificationManager()
+      Task {
+          await MainActor.run(body: {
+              notificationManager.requestNotificationAuthorization { [weak self] completed in
+                self?.nextState()
+              }
+          })
+      }
   }
   
   private func nextState() {
-    guard state.rawValue < 4 else {
-      return
-    }
-    
-    var stateRawValue = state.rawValue
-    stateRawValue += 1
-    DispatchQueue.main.async {
-      withAnimation {
-        self.state = OnboardingState(stateRawValue: stateRawValue)
+      if state == .requestLocationPermission {
+          // go to main view
+          isOnboardingCompleted = true
+          return
       }
-    }
+      
+      guard state.rawValue < 3 else { return }
+      
+      var stateRawValue = state.rawValue
+      stateRawValue += 1
+      DispatchQueue.main.async {
+          withAnimation {
+              self.currentIndex = stateRawValue
+              self.state = OnboardingState(stateRawValue: stateRawValue)
+          }
+      }
   }
 }

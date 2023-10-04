@@ -9,225 +9,194 @@ import SwiftUI
 import AuthenticationServices
 
 struct OnboardingView: View {
-  // Onboarding states:
-  /*
-   0 - Welcome screen
-   1 - Authorize healthkit
-   2 - Location
-   3 - Notification
-   2 - Done
-   */
-  @StateObject var viewModel: OnboardingViewModel = OnboardingViewModel()
-  let transition: AnyTransition = .asymmetric(insertion: .move(edge: .trailing),
-                                              removal: .move(edge: .leading))
-  
-  var body: some View {
-    ZStack {
-      VStack {
-        // Content
-        ZStack {
-          switch viewModel.state {
-          case .welcome: welcomeSection.transition(transition)
-          case .requestHealthKitPermission: authorizeHealthKitSection.transition(transition)
-          case .requestLocationPermission: locationSeciton.transition(transition)
-          case .requestNotificationPermission: notificationSection.transition(transition)
-          case .done: doneSection.transition(transition)
-          }
-        }
-        .drawingGroup()
-        
-        if viewModel.state == .welcome {
-          SignInWithAppleButton(.continue,
-                                onRequest: AccountManager.shared.requestAppleSignIn) { result in
-            AccountManager.shared.handleAppleSignIn(result)
-            self.handleNextButtonPressed()
-          }
-                                .signInWithAppleButtonStyle(.white)
-                                .frame(height: 48)
-                                .frame(maxWidth: .infinity)
-                                .cornerRadius(8)
-          
-        } else {
-          bottomButton
-        }
-      }
-      .padding(30)
+    // Onboarding states:
+    /*
+     0 - Welcome screen
+     1 - Authorize healthkit
+     2 - Location
+     3 - Notification
+     2 - Done
+     */
+    @StateObject var viewModel: OnboardingViewModel
+    let transition: AnyTransition = .asymmetric(insertion: .move(edge: .trailing),
+                                                removal: .move(edge: .leading))
+    
+    init(viewModel: OnboardingViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
-    .background(
-      LinearGradient(
-        gradient: Gradient(colors: [Color(#colorLiteral(red: 0.2155034244, green: 0.1681891978, blue: 0.6775737405, alpha: 1)), Color(#colorLiteral(red: 0.5557671189, green: 0.3490214944, blue: 0.8648703694, alpha: 1))]),
-        startPoint: .topTrailing,
-        endPoint: .bottomLeading).ignoresSafeArea()
-    )
-  }
+      
+    var body: some View {
+        VStack {
+            TabView(selection: $viewModel.currentIndex) {
+                OnboadingWelcomView().tag(0)
+                OnboardingHealthKitView().tag(1)
+                OnboardingNotificationView().tag(2)
+                OnboardingLocationView().tag(3)
+            }
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+            
+            footerSection
+                .padding(.horizontal, 32)
+                .padding(.bottom, 16)
+        }
+        .background(Color.themeStyle.theme.white)
+      
+//      VStack {
+        // Content
+//        authorizeHealthKitSection
+        
+//        if viewModel.state == .welcome {
+//          SignInWithAppleButton(.continue,
+//                                onRequest: AccountManager.shared.requestAppleSignIn) { result in
+//            AccountManager.shared.handleAppleSignIn(result)
+//            self.handleNextButtonPressed()
+//          }
+//                                .signInWithAppleButtonStyle(.white)
+//                                .frame(height: 48)
+//                                .frame(maxWidth: .infinity)
+//                                .cornerRadius(8)
+//        }
+//      }
+//      .padding(30)
+    }
 }
 
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
-      OnboardingView()
+        let viewModel = OnboardingViewModel(isOnboardingCompleted: .constant(false))
+        OnboardingView(viewModel: viewModel)
     }
 }
 
 // MARK: COMPONENTS
 extension OnboardingView {
-  private var bottomButton: some View {
-    Text(viewModel.state.buttonTitle)
-      .font(.headline)
-      .foregroundColor(.purple)
-      .frame(height: 55)
-      .frame(maxWidth: .infinity)
-      .background(.white)
-      .cornerRadius(10)
-      .shadow(radius: 10)
-      .onTapGesture {
-        handleNextButtonPressed()
-      }
-  }
-  
-  private var welcomeSection: some View {
-    VStack(spacing: 60) {
-      Spacer()
-      Text("Motic")
-        .textCase(.uppercase)
-        .font(.largeTitle)
-        .fontWeight(.semibold)
-        .foregroundColor(.white)
-        .overlay(
-          Capsule(style: .continuous)
-            .frame(height: 3)
-            .offset(y: 5)
-            .foregroundColor(.white)
-          , alignment: .bottom
-        )
-      Spacer()
-      Text("Lace up those sneakers and hit the pavement!")
-        .textCase(.uppercase)
-        .font(.headline)
-        .fontWeight(.medium)
-        .foregroundColor(.white)
-        .multilineTextAlignment(.center)
+    private var footerSection: some View {
+        HStack {
+            // Pagination
+            indicators
+            
+            Spacer()
+            
+            // Next button
+            Button {
+                handleNextButtonPressed()
+            } label: {
+                Image(systemName: "chevron.right")
+                    .foregroundColor(.themeStyle.theme.white)
+                    .frame(maxWidth: .infinity)
+                    .frame(maxHeight: .infinity)
+            }
+            .frame(width: 48, height: 48)
+            .background(Color.themeStyle.theme.black)
+            .cornerRadius(24)
+        }
     }
-    .padding(30)
-  }
-  
-  private var authorizeHealthKitSection: some View {
-    VStack(spacing: 60) {
-      Spacer()
-      Image(systemName: "heart.text.square.fill")
-        .resizable()
-        .scaledToFit()
-        .frame(width: 200, height: 200)
-        .foregroundColor(.white)
-      
-      Spacer()
-      Text("Once you give us the green light, we'll start bringing in all the fitness data you need, like your heart rate, activity levels, and more. We'll use this info to tailor your experience and provide you with personalized tips and encouragement.")
-        .fontWeight(.medium)
-        .foregroundColor(.white)
-        .multilineTextAlignment(.center)
+    
+    private var indicators: some View {
+        HStack(spacing: 15) {
+            ForEach(0..<4) { index in
+                Capsule().fill(Color.black)
+                    .frame(width:  viewModel.currentIndex == index ? 20 : 7, height: 7)
+            }
+        }
     }
-    .frame(maxWidth: .infinity)
-    .padding(30)
-  }
-  
-  private var locationSeciton: some View {
-    VStack(spacing: 60) {
-      Spacer()
-      Image(systemName: "location.fill")
-        .resizable()
-        .scaledToFit()
-        .frame(width: 100, height: 100)
-        .foregroundColor(.white)
-      
-      Text("Enable location")
-        .textCase(.uppercase)
-        .fontWeight(.semibold)
-        .foregroundColor(.white)
-        .overlay(
-          Capsule(style: .continuous)
-            .frame(height: 3)
-            .offset(y: 5)
-            .foregroundColor(.white)
-          , alignment: .bottom
-        )
-      Spacer()
-      Text("blah blah blah")
-        .fontWeight(.medium)
-        .foregroundColor(.white)
-        .multilineTextAlignment(.center)
-    }
-    .frame(maxWidth: .infinity)
-    .padding(30)
-  }
-  
-  private var notificationSection: some View {
-    VStack(spacing: 24) {
-      Spacer()
-      Image(systemName: "bubble.right")
-        .resizable()
-        .scaledToFit()
-        .frame(width: 100, height: 100)
-        .foregroundColor(.white)
-      
-      Text("Get notifition!")
-        .textCase(.uppercase)
-        .fontWeight(.semibold)
-        .foregroundColor(.white)
-        .overlay(
-          Capsule(style: .continuous)
-            .frame(height: 3)
-            .offset(y: 5)
-            .foregroundColor(.white)
-          , alignment: .bottom
-        )
-      
-      Spacer()
-      Text("blah blah blah")
-        .fontWeight(.medium)
-        .foregroundColor(.white)
-        .multilineTextAlignment(.center)
-    }
-    .frame(maxWidth: .infinity)
-    .padding(30)
-  }
-  
-  private var doneSection: some View {
-    VStack(spacing: 24) {
-      Spacer()
-      Image(systemName: "face.smiling.inverse")
-        .resizable()
-        .scaledToFit()
-        .frame(width: 100, height: 100)
-        .foregroundColor(.white)
-      
-      Text("All Done!")
-        .textCase(.uppercase)
-        .fontWeight(.semibold)
-        .foregroundColor(.white)
-        .overlay(
-          Capsule(style: .continuous)
-            .frame(height: 3)
-            .offset(y: 5)
-            .foregroundColor(.white)
-          , alignment: .bottom
-        )
-      
-      Spacer()
-      Text("Now you can start the jounry for this app.")
-        .fontWeight(.medium)
-        .foregroundColor(.white)
-        .multilineTextAlignment(.center)
-    }
-    .frame(maxWidth: .infinity)
-    .padding(30)
-  }
 }
 
 
 // MARK: FUNCTIONS
 extension OnboardingView {
   func handleNextButtonPressed() {
-    withAnimation(.spring()) {
       viewModel.handleButtonAction(with: viewModel.state)
-    }
   }
+}
+
+
+struct OnboadingWelcomView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Motic")
+                .font(.largeTitle)
+                .fontWeight(.heavy)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .foregroundColor(Color.themeStyle.theme.accent)
+            
+            Text("your best fitness assitant")
+                .font(.body)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .foregroundColor(Color.themeStyle.theme.black)
+        }
+        .padding(32)
+    }
+}
+
+struct OnboardingHealthKitView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("connect")
+                .font(.title)
+                .fontWeight(.semibold)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
+            
+            Text("Your Health")
+                .font(.largeTitle)
+                .fontWeight(.heavy)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .foregroundColor(Color.themeStyle.theme.accent)
+            
+            Text("We will save your workout data to the HealthKit to give you a consolidated view of your fitness activity and to help you track your progress over time")
+                .font(.body)
+                .foregroundColor(.themeStyle.theme.secondaryTextColor)
+                .frame(maxWidth: 360, alignment: .leading)
+        }
+        .padding(32)
+    }
+}
+
+struct OnboardingNotificationView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("receive")
+                .font(.title)
+                .fontWeight(.semibold)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
+            
+            Text("Notification")
+                .font(.largeTitle)
+                .fontWeight(.heavy)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .foregroundColor(Color.themeStyle.theme.accent)
+            
+            Text("Allow notifications to stay updated on your workout progress, receive motivational reminders, get informed about new fitness challenges, and never miss a training session.")
+                .font(.body)
+                .foregroundColor(.themeStyle.theme.secondaryTextColor)
+                .frame(maxWidth: 360, alignment: .leading)
+        }
+        .padding(32)
+    }
+}
+
+struct OnboardingLocationView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("record")
+                .font(.title)
+                .fontWeight(.semibold)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
+            
+            Text("Your Paths")
+                .font(.largeTitle)
+                .fontWeight(.heavy)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .foregroundColor(Color.themeStyle.theme.accent)
+            
+            Text("To accurately track your outdoor workouts like running or cycling, we continuously monitor your location, even when the app is in the background.")
+                .font(.body)
+                .foregroundColor(.themeStyle.theme.secondaryTextColor)
+                .frame(maxWidth: 360, alignment: .leading)
+        }
+        .padding(32)
+    }
 }
