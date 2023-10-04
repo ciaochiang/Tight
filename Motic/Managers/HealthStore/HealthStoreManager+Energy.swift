@@ -19,8 +19,12 @@ extension HealthStoreManager {
     }
   
     func getBasalEnergyBurnedSamples(from workout: HKWorkout) async throws -> [ChartData<Double>] {
-        // Define the type.
         let basalEnergyBurned = HKQuantityType(.basalEnergyBurned)
+
+        // check authorization first
+        guard healthStore.authorizationStatus(for: basalEnergyBurned) == .sharingAuthorized else { return [] }
+      
+        // Define the type.
         let predicate = HKQuery.predicateForObjects(from: workout)
 
         // Create the descriptor.
@@ -28,6 +32,7 @@ extension HealthStoreManager {
             predicates:[.quantitySample(type: basalEnergyBurned, predicate: predicate)],
             sortDescriptors: [],
             limit: HKObjectQueryNoLimit)
+      
 
         let results = try await descriptor.result(for: healthStore)
 
@@ -42,8 +47,12 @@ extension HealthStoreManager {
     
     
     func getActiveEnergyBurnedSamples(from workout: HKWorkout) async throws -> [ChartData<Double>] {
-        // Define the type.
         let activeEnergyBurned = HKQuantityType(.activeEnergyBurned)
+        
+        // check authorization first
+        guard healthStore.authorizationStatus(for: activeEnergyBurned) == .sharingAuthorized else { return [] }
+        
+        // Define the type.
         let predicate = HKQuery.predicateForObjects(from: workout)
 
         // Create the descriptor.

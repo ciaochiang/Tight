@@ -33,48 +33,50 @@ class CyclingActivityViewModelDependencyImp: CyclingActivityViewModelDependency 
 }
 
 class CyclingActivityViewModel: ObservableObject {
-  var dependency: CyclingActivityViewModelDependency
-  var activity: Activity
-  @Published var healthStoreManager: HealthStoreManager
+    var dependency: CyclingActivityViewModelDependency
+    var activity: Activity
+    @Published var healthStoreManager: HealthStoreManager
   
-  // MARK: Basic
-  @Published var workoutType: WorkoutActivityType
-  @Published var duraiton: TimeInterval
-  @Published var timezone: TimeZone?
-  
-  // MARK: Heart Rate
-  @Published var avgHeartRate: Double = 0
-  @Published var heartRateSamples: [ChartData<Double>] = []
-  @Published var heartRateZones: HeartRateZones
-  @Published var zones: [Zone]?
+    // MARK: Basic
+    @Published var workoutType: WorkoutActivityType
+    @Published var duraiton: TimeInterval
+    @Published var timezone: TimeZone?
     
-  // MARK: Distance
-  @Published var totalDistanceMeters: Double
-  @Published var distanceSamples: [ChartData<Double>]?
-  @Published var elevationAscendedMeters: Double?
+    // MARK: Heart Rate
+    @Published var avgHeartRate: Double = 0
+    @Published var heartRateSamples: [ChartData<Double>] = []
+    @Published var heartRateZones: HeartRateZones
+    @Published var zones: [Zone]?
+    
+    // MARK: Distance
+    @Published var totalDistanceMeters: Double = 0.0
+    @Published var distanceSamples: [ChartData<Double>]?
+    @Published var elevationAscendedMeters: Double?
   
-  // MARK: Speed
-  @Published var avgSpeedPerHour: Double = 0
-  
-  // MARK: Energy
-  @Published var basalEnergyBurned: Double?
-  @Published var basalEnergyBurnedSamples: [ChartData<Double>]?
-  @Published var activeEnergyBurned: Double?
-  @Published var activeEnergyBurnedSamples: [ChartData<Double>]?
-  @Published var avgMETs: Double?
-  
-  // MARK: Weather
-  @Published var weatherTemperatureCelsius: Double?
-  @Published var weatherHumidity: Double?
+    // MARK: Speed
+    @Published var avgSpeedPerHour: Double = 0
+    
+    // MARK: Energy
+    @Published var basalEnergyBurned: Double?
+    @Published var basalEnergyBurnedSamples: [ChartData<Double>]?
+    @Published var activeEnergyBurned: Double?
+    @Published var activeEnergyBurnedSamples: [ChartData<Double>]?
+    @Published var avgMETs: Double? = nil
+    
+    // MARK: Weather
+    @Published var weatherTemperatureCelsius: Double?
+    @Published var weatherHumidity: Double?
   
   
   init(dependency: CyclingActivityViewModelDependency,
        healthStoreManager: HealthStoreManager,
        activity: Activity) {
-      self.dependency = dependency
       _healthStoreManager = Published(wrappedValue: healthStoreManager)
+      
+      self.dependency = dependency
       self.activity = activity
       self.duraiton = activity.workout.duration
+      
       self.avgMETs = healthStoreManager.getAvgMETs(from: activity.workout)
       self.weatherTemperatureCelsius = healthStoreManager.getWeatherTemperatureCelsius(from: activity.workout)
       self.weatherHumidity = healthStoreManager.getWeatherHumidity(from: activity.workout)
@@ -89,10 +91,9 @@ class CyclingActivityViewModel: ObservableObject {
                                                                  totalDistanceMeters: self.totalDistanceMeters)
     
       if let metadata = activity.workout.metadata {
-        dependency.logger.log("Metadata: \(metadata)", level: .info)
-        dependency.logger.log("All Statistics: \(activity.workout.allStatistics)", level: .info)
+          dependency.logger.log("Metadata: \(metadata)", level: .info)
+          dependency.logger.log("All Statistics: \(activity.workout.allStatistics)", level: .info)
       }
-    
     
       // Get all heart rate metadata
       Task {
@@ -149,14 +150,14 @@ class CyclingActivityViewModel: ObservableObject {
   }
   
   func getFormattedDuration(duration: TimeInterval) -> String {
-    let formatter = DateComponentsFormatter()
-    formatter.unitsStyle = .abbreviated
-    formatter.allowedUnits = [.hour, .minute, .second]
-    
-    if let formattedString = formatter.string(from: duration) {
-        return formattedString
-    } else {
-        return "0s" // Default value or an error message
-    }
+      let formatter = DateComponentsFormatter()
+      formatter.unitsStyle = .abbreviated
+      formatter.allowedUnits = [.hour, .minute, .second]
+      
+      if let formattedString = formatter.string(from: duration) {
+          return formattedString
+      } else {
+          return "0s" // Default value or an error message
+      }
   }
 }
