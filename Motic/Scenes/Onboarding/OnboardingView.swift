@@ -114,7 +114,7 @@ extension OnboardingView {
 struct OnboadingWelcomView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Motic")
+            Text("Oasis")
                 .font(.largeTitle)
                 .fontWeight(.heavy)
                 .frame(maxWidth: .infinity, alignment: .leading)

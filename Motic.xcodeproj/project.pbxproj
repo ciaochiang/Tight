@@ -1197,6 +1197,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Motic/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Oasis;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "We will save your workout data to the Health app to give you a consolidated view of your fitness activity and to help you track your progress over time";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We will save your workout data to the Health app to give you a consolidated view of your fitness activity and to help you track your progress over time";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "To accurately track your outdoor workouts like running or cycling, we continuously monitor your location, even when the app is in the background.";
@@ -1235,6 +1236,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Motic/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Oasis;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "We will save your workout data to the Health app to give you a consolidated view of your fitness activity and to help you track your progress over time";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We will save your workout data to the Health app to give you a consolidated view of your fitness activity and to help you track your progress over time";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "To accurately track your outdoor workouts like running or cycling, we continuously monitor your location, even when the app is in the background.";
