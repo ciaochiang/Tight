@@ -19,7 +19,7 @@ class ActivitySessionManager: NSObject, ObservableObject {
     private var logger: Logger = Logger(configuration: AppConfiguration.loggerConfig)
     
     @Published var isRecording: Bool = false
-    @Published var workoutType: WorkoutActivityType = .unknown
+    @Published var workoutType: SportType = .others
     @Published var session: ActivitySession?
     @Published var elapsedSeconds: TimeInterval = 0
     @Published var currentSpeed: Double = 0.0
@@ -61,7 +61,7 @@ class ActivitySessionManager: NSObject, ObservableObject {
     /*
      Invoke this function when user clicked "start" button on record view
      */
-    func startSession(with workoutType: WorkoutActivityType = .cycling) {
+    func startSession(with workoutType: SportType = .cycling) {
         self.workoutType = workoutType
         createSessionIfNeeded(workoutType: workoutType)
         isRecording.toggle()
@@ -102,7 +102,7 @@ extension ActivitySessionManager {
 
 // MARK: Private fucntions
 extension ActivitySessionManager {
-    private func createSessionIfNeeded(workoutType: WorkoutActivityType) {
+    private func createSessionIfNeeded(workoutType: SportType) {
         if session == nil {
             session = ActivitySession(workoutType: workoutType, startTime: Date())
         }
@@ -164,7 +164,7 @@ extension ActivitySessionManager: CLLocationManagerDelegate {
 // MARK: Structs
 struct ActivitySession: Identifiable {
     let id = UUID()
-    var workoutType: WorkoutActivityType
+    var workoutType: SportType
     var startTime: Date
     var endTime: Date?
 }

@@ -264,13 +264,13 @@ extension MainView {
 
 struct MainViewActivityCard: View {
     var activity: Activity
-    var activityType: WorkoutActivityType
+    var activityType: SportType
     var formmatedStartDate: String
     var totalEnergyBurned: Double
   
     init(activity: Activity) {
         self.activity = activity
-        activityType = WorkoutActivityType(activityType: activity.workoutActivityType)
+        activityType = SportType(activityType: activity.workoutActivityType)
         
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone.current // Use the current timezone

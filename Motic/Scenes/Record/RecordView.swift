@@ -31,6 +31,7 @@ struct RecordView: View {
     @StateObject private var viewModel: RecordViewModel
     @StateObject private var activitySessionManager: ActivitySessionManager
     @Binding private var isPresented: Bool
+    @State private var isSportSelectorPresented: Bool = false
     
     init(viewModel: RecordViewModel, isPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -75,6 +76,14 @@ struct RecordView: View {
                     DispatchQueue.main.async {
                         self.viewModel.isLocationBottomSheetPresented.toggle()
                     }
+                }
+            }
+            .sheet(isPresented: $viewModel.isSportSelectorPresented) {
+                let depdendency = SportSelectorViewModelDependencyImp(logger: viewModel.dependency.logger)
+                let sportSelectorViewModel = SportSelectorViewModel(dependency: depdendency)
+                SportSelectorView(viewModel: sportSelectorViewModel,
+                                  isPresented: $viewModel.isSportSelectorPresented) { sport in
+                    viewModel.selectedSport = sport
                 }
             }
         }
@@ -122,12 +131,27 @@ struct RecordPanelView: View {
     
     var body: some View {
         VStack {
+            sportSelection
             timeCounter.padding()
             metricSection
             startButton
         }
         .background(Color.themeStyle.theme.secondaryBackground.opacity(0.9))
         .cornerRadius(16)
+    }
+    
+    var sportSelection: some View {
+        VStack {
+            Image(systemName: viewModel.selectedSport.systemIconName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 36, height: 36)
+                .onTapGesture {
+                    viewModel.isSportSelectorPresented.toggle()
+                }
+
+        }
+        .padding(.top)
     }
     
     var timeCounter: some View {
@@ -184,6 +208,8 @@ struct RecordPanelView: View {
             activitySessionManager.isRecording
             ? activitySessionManager.stopSession()
             : activitySessionManager.startSession()
+            
+            viewModel.selectedSport = .traditionalStrengthTraining
         } label: {
             Text(activitySessionManager.isRecording  ? "PASUE" : "START")
                 .font(.title3)

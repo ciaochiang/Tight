@@ -66,6 +66,8 @@
 		E5AB33F72AC5A939004B8973 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AB33F62AC5A939004B8973 /* RecordView.swift */; };
 		E5AB33F92AC5A946004B8973 /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AB33F82AC5A946004B8973 /* RecordViewModel.swift */; };
 		E5AB33FC2AC9591D004B8973 /* MoticModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E5AB33FA2AC9591D004B8973 /* MoticModel.xcdatamodeld */; };
+		E5E3872F2AD542E3008A7353 /* SportSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E3872E2AD542E3008A7353 /* SportSelectorView.swift */; };
+		E5E387312AD542F0008A7353 /* SportSelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E387302AD542F0008A7353 /* SportSelectorViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -192,6 +194,8 @@
 		E5AB33F62AC5A939004B8973 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		E5AB33F82AC5A946004B8973 /* RecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
 		E5AB33FB2AC9591D004B8973 /* MoticModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MoticModel.xcdatamodel; sourceTree = "<group>"; };
+		E5E3872E2AD542E3008A7353 /* SportSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportSelectorView.swift; sourceTree = "<group>"; };
+		E5E387302AD542F0008A7353 /* SportSelectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportSelectorViewModel.swift; sourceTree = "<group>"; };
 		F94F05AD57F2E461B5D138DA /* Pods_MoticWatch_Watch_App_MoticWatch_Watch_AppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoticWatch_Watch_App_MoticWatch_Watch_AppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -540,6 +544,8 @@
 			children = (
 				E5AB33F62AC5A939004B8973 /* RecordView.swift */,
 				E5AB33F82AC5A946004B8973 /* RecordViewModel.swift */,
+				E5E3872E2AD542E3008A7353 /* SportSelectorView.swift */,
+				E5E387302AD542F0008A7353 /* SportSelectorViewModel.swift */,
 			);
 			path = Record;
 			sourceTree = "<group>";
@@ -838,6 +844,8 @@
 				E521001C2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift in Sources */,
 				E51DE2002ABB303100957395 /* CyclingActivityViewModel.swift in Sources */,
 				E58D15BB2ACAC7F3000D1918 /* ActivitySessionManager .swift in Sources */,
+				E5E387312AD542F0008A7353 /* SportSelectorViewModel.swift in Sources */,
+				E5E3872F2AD542E3008A7353 /* SportSelectorView.swift in Sources */,
 				E59EB84A2AB5934E0057F630 /* OnboardingViewModel.swift in Sources */,
 				E5AB33F92AC5A946004B8973 /* RecordViewModel.swift in Sources */,
 				E59EB85D2AB6B4150057F630 /* Logger.swift in Sources */,

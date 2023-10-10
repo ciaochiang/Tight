@@ -38,7 +38,7 @@ class CyclingActivityViewModel: ObservableObject {
     @Published var healthStoreManager: HealthStoreManager
   
     // MARK: Basic
-    @Published var workoutType: WorkoutActivityType
+    @Published var workoutType: SportType
     @Published var duraiton: TimeInterval
     @Published var timezone: TimeZone?
     
@@ -84,7 +84,7 @@ class CyclingActivityViewModel: ObservableObject {
       self.timezone = healthStoreManager.getTimezone(from: activity.workout)
       self.heartRateZones = HeartRateZones(maxHeartRate: 194)
       self.totalDistanceMeters = healthStoreManager.getTotalDistanceMeters(workout: activity.workout)
-      self.workoutType = WorkoutActivityType(activityType: activity.workoutActivityType)
+      self.workoutType = SportType(activityType: activity.workoutActivityType)
 
       // After initialization
       self.avgSpeedPerHour = healthStoreManager.getAvgSpeedPerHour(duration: self.duraiton,

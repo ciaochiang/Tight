@@ -29,9 +29,15 @@ class RecordViewModel: ObservableObject {
     var dependency: RecordViewModelDependency
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @Published var isLocationBottomSheetPresented: Bool = false
+    @Published var isSportSelectorPresented: Bool = false
+    @Published var selectedSport: SportType = .cycling
+    
+    var preference: UserPreference = UserPreference()
     
     init(dependency: RecordViewModelDependency) {
         self.dependency = dependency
+        
+        selectedSport = preference.retrieveSelectedSport()
     }
     
     func validateLocationAuthorization() {
