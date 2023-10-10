@@ -22,6 +22,11 @@ import MapKit
 // Pause/Resume Button
 // End Avtivity
 
+/**
+ 
+ - 1. Check location permission when view is appeared
+ */
+
 struct RecordView: View {
     @StateObject private var viewModel: RecordViewModel
     @StateObject private var activitySessionManager: ActivitySessionManager
@@ -61,6 +66,20 @@ struct RecordView: View {
             }
             .environmentObject(viewModel)
             .environmentObject(activitySessionManager)
+            .sheet(isPresented: $viewModel.isLocationBottomSheetPresented) {
+                LocationPermissionDialogView {
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(url)
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.viewModel.isLocationBottomSheetPresented.toggle()
+                    }
+                }
+            }
+        }
+        .onAppear {
+            viewModel.validateLocationAuthorization()
         }
     }
 }
@@ -70,7 +89,14 @@ struct RecordView_Previews: PreviewProvider {
         let dependency = RecordViewModelDependencyImp(logger: Mocks.logger,
                                                       activitySessionManager: ActivitySessionManager.shared)
         let viewModel = RecordViewModel(dependency: dependency)
-        RecordView(viewModel: viewModel, isPresented: .constant(true))
+        
+        Group {
+            RecordView(viewModel: viewModel, isPresented: .constant(true))
+
+            LocationPermissionDialogView {
+                
+            }
+        }
     }
 }
 
@@ -172,5 +198,44 @@ struct RecordPanelView: View {
         .foregroundColor(.themeStyle.theme.black)
         .cornerRadius(8)
         .padding()
+    }
+}
+
+
+struct LocationPermissionDialogView: View {
+    var action: () -> Void
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            // Image
+            
+            // Headline
+            Text("Require your location")
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .font(.title)
+            Text("Location authorization is required for updating your location on the map.")
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .font(.body)
+                .foregroundColor(.themeStyle.theme.secondaryTextColor)
+            
+            Spacer()
+            
+            Button {
+                // Go to setting
+                action()
+            } label: {
+                Text("Turn on location".uppercased())
+                    .font(.headline)
+            }
+            .frame(maxWidth: .infinity)
+            .frame(height: 60)
+            .background(Color.themeStyle.theme.black)
+            .foregroundColor(.themeStyle.theme.white)
+            .cornerRadius(16)
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background(Color.themeStyle.theme.background)
+        .presentationDetents([.medium])
     }
 }

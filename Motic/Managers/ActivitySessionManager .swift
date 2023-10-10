@@ -15,7 +15,7 @@ class ActivitySessionManager: NSObject, ObservableObject {
      */
     static let shared = ActivitySessionManager()
     
-    private var locationManager = CLLocationManager()
+    var locationManager = CLLocationManager()
     private var logger: Logger = Logger(configuration: AppConfiguration.loggerConfig)
     
     @Published var isRecording: Bool = false

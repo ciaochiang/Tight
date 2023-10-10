@@ -28,8 +28,21 @@ class RecordViewModelDependencyImp: RecordViewModelDependency {
 class RecordViewModel: ObservableObject {
     var dependency: RecordViewModelDependency
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @Published var isLocationBottomSheetPresented: Bool = false
     
     init(dependency: RecordViewModelDependency) {
         self.dependency = dependency
+    }
+    
+    func validateLocationAuthorization() {
+        if dependency.activitySessionManager.locationAuthorizationStatus == .denied {
+            // Display the location request bottom sheet
+            DispatchQueue.main.async {
+                self.isLocationBottomSheetPresented.toggle()
+            }
+        } else if dependency.activitySessionManager.locationAuthorizationStatus == .notDetermined {
+            // Ask for permission directly
+            dependency.activitySessionManager.locationManager.requestAlwaysAuthorization()
+        }
     }
 }
