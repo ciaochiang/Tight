@@ -16,14 +16,15 @@ class ActivitySessionManager: NSObject, ObservableObject {
     static let shared = ActivitySessionManager()
     
     var locationManager = CLLocationManager()
-    private var logger: Logger = Logger(configuration: AppConfiguration.loggerConfig)
+    private var logger: Logger
+    private var storeManager: CoreDataManager
     
     @Published var isRecording: Bool = false
     @Published var workoutType: SportType = .others
     @Published var session: ActivitySession?
     @Published var elapsedSeconds: TimeInterval = 0
     @Published var currentSpeed: Double = 0.0
-    @Published var cachedLocations: [CLLocation] = []
+    @Published var cachedLocations: [Location] = []
     @Published var totalDistance: Double = 0.0
     @Published var distances: [Distance] = []
     @Published var heartRates: [HeartRate] = []
@@ -37,7 +38,12 @@ class ActivitySessionManager: NSObject, ObservableObject {
     )
     
     override init() {
+        logger = Logger(configuration: AppConfiguration.loggerConfig)
+        
+        let dependency = CoreDataManagerDependencyImp(logger: logger)
+        storeManager = CoreDataManager(dependency: dependency)
         super.init()
+        
         self.locationManager.delegate = self
         logger.log("ActivitySessionManager is inititated", level: .info)
     }
@@ -89,8 +95,15 @@ class ActivitySessionManager: NSObject, ObservableObject {
         isRecording.toggle()
         session?.endTime = Date()
         logger.log("Session is ended", level: .info)
+        
         if let session = session {
-            logger.log("Session metadat: \(session) location: \(cachedLocations) elapsedTime: \(elapsedSeconds) distance: \(distances)", level: .info)
+            // Save activity
+            storeManager.saveActivity(with: session)
+            
+            // Save locations
+            storeManager.saveLocations(with: cachedLocations, session: session)
+            
+            logger.log("Data is saved", level: .info)
         }
         
         session = nil
@@ -124,7 +137,7 @@ extension ActivitySessionManager {
         }
     }
     
-    private func handleLocations(locations: [CLLocation]) {
+    private func handleLocations(session: ActivitySession?, locations: [CLLocation]) {
         guard let lastLocation = locations.last else { return }
         // Update latest location
         Task {
@@ -138,7 +151,7 @@ extension ActivitySessionManager {
          Below required 'isRecording' is true
          */
         // Calculate distance and append distance struct to list
-        guard isRecording == true else { return }
+        guard isRecording == true, let session = session else { return }
         
         // Calculate and store distance
         if let lastCachedLocation = cachedLocations.last,
@@ -149,18 +162,19 @@ extension ActivitySessionManager {
             distances.append(Distance(distanceInMeter: distance, timestamp: lastLocation.timestamp))
             totalDistance += distance
         }
-
-        // Append to cached locations
-        cachedLocations.append(lastLocation)
         
         // Update speed
         currentSpeed = lastLocation.speed
+
+        // Append lcation to cachedLocations only if session is valid
+        let location = Location(activityId: session.id, location: lastLocation)
+        cachedLocations.append(location)
     }
     
-    private func calcualteDistance(from lastLocation: CLLocation?, to newLocation: CLLocation) -> Double {
+    private func calcualteDistance(from lastLocation: Location?, to newLocation: CLLocation) -> Double {
         guard let lastLocation = lastLocation else { return 0 }
         
-        let distance = newLocation.distance(from: lastLocation)
+        let distance = newLocation.distance(from: lastLocation.toCLLocation())
         return distance
     }
 }
@@ -174,7 +188,7 @@ extension ActivitySessionManager: CLLocationManagerDelegate {
     
     // TODO: Enhance gps location accuracy like user is indoor or outdoor
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        handleLocations(locations: locations)
+        handleLocations(session: session, locations: locations)
         
         if let latestLocation = locations.last {
             if latestLocation.horizontalAccuracy < 0 {
@@ -205,65 +219,22 @@ extension ActivitySessionManager: CLLocationManagerDelegate {
 
 // MARK: Structs
 struct ActivitySession: Identifiable {
-    let id = UUID()
+    let id: String = UUID().uuidString
     var workoutType: SportType
     var startTime: Date
     var endTime: Date?
 }
 
 struct HeartRate: Identifiable {
-    let id = UUID()
+    let id: String = UUID().uuidString
     let heartRate: Double
     let timestamp: Date
 }
 
 struct Distance: Identifiable {
-    let id = UUID()
+    let id: String = UUID().uuidString
     let distanceInMeter: Double
     let timestamp: Date
 }
 
-struct Location {
-    let longitude: Double
-    let latitude: Double
-    let altitude: Double
-    let ellipsoidalAltitude: Double
-    let speed: Double
-    let course: Double
-    let horizontalAccuracy: Double
-    let verticalAccuracy: Double
-    let courseAccuracy: Double
-    let speedAccuracy: Double
-    let timestamp: Date
-    let isSimulatedBySoftware: Bool?
-    let isProducedByAccessory: Bool?
-    
-    init(location: CLLocation) {
-        self.longitude = location.coordinate.longitude
-        self.latitude = location.coordinate.latitude
-        self.altitude = location.altitude
-        self.ellipsoidalAltitude = location.ellipsoidalAltitude
-        self.speed = location.speed
-        self.course = location.course
-        self.horizontalAccuracy = location.horizontalAccuracy
-        self.verticalAccuracy = location.verticalAccuracy
-        self.speedAccuracy = location.speedAccuracy
-        self.courseAccuracy = location.courseAccuracy
-        self.timestamp = location.timestamp
-        self.isSimulatedBySoftware = location.sourceInformation?.isSimulatedBySoftware
-        self.isProducedByAccessory = location.sourceInformation?.isProducedByAccessory
-    }
-    
-    func toCLLocation() -> CLLocation {
-        return CLLocation(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude),
-                          altitude: altitude,
-                          horizontalAccuracy: horizontalAccuracy,
-                          verticalAccuracy: verticalAccuracy,
-                          course: course,
-                          courseAccuracy: courseAccuracy,
-                          speed: speed,
-                          speedAccuracy: speedAccuracy,
-                          timestamp: timestamp,
-                          sourceInfo: CLLocationSourceInformation(softwareSimulationState: isSimulatedBySoftware ?? false, andExternalAccessoryState: isProducedByAccessory ?? false))
-    }
-}
+

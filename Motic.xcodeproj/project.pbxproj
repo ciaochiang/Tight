@@ -68,6 +68,8 @@
 		E5AB33FC2AC9591D004B8973 /* MoticModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E5AB33FA2AC9591D004B8973 /* MoticModel.xcdatamodeld */; };
 		E5E3872F2AD542E3008A7353 /* SportSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E3872E2AD542E3008A7353 /* SportSelectorView.swift */; };
 		E5E387312AD542F0008A7353 /* SportSelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E387302AD542F0008A7353 /* SportSelectorViewModel.swift */; };
+		E5E387352AD6E016008A7353 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E387342AD6E016008A7353 /* CoreDataManager.swift */; };
+		E5E387382AD6E57D008A7353 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E387372AD6E57D008A7353 /* Location.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -196,6 +198,8 @@
 		E5AB33FB2AC9591D004B8973 /* MoticModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MoticModel.xcdatamodel; sourceTree = "<group>"; };
 		E5E3872E2AD542E3008A7353 /* SportSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportSelectorView.swift; sourceTree = "<group>"; };
 		E5E387302AD542F0008A7353 /* SportSelectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportSelectorViewModel.swift; sourceTree = "<group>"; };
+		E5E387342AD6E016008A7353 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		E5E387372AD6E57D008A7353 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		F94F05AD57F2E461B5D138DA /* Pods_MoticWatch_Watch_App_MoticWatch_Watch_AppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoticWatch_Watch_App_MoticWatch_Watch_AppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -432,6 +436,7 @@
 		E56A55C72AB2BC7100A35BF3 /* Motic */ = {
 			isa = PBXGroup;
 			children = (
+				E5E387362AD6E572008A7353 /* Entities */,
 				E56A55F22AB2C03000A35BF3 /* Motic.entitlements */,
 				E56A55C82AB2BC7100A35BF3 /* MoticApp.swift */,
 				E59EB8542AB5F2F70057F630 /* Info.plist */,
@@ -487,6 +492,7 @@
 		E59EB84B2AB5E2770057F630 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				E5E387332AD6E009008A7353 /* Database */,
 				E51DE1EF2AB9551C00957395 /* Account */,
 				E52100162AB72031000CF3AD /* HealthStore */,
 				E59EB8522AB5EE650057F630 /* NotificationManager.swift */,
@@ -548,6 +554,22 @@
 				E5E387302AD542F0008A7353 /* SportSelectorViewModel.swift */,
 			);
 			path = Record;
+			sourceTree = "<group>";
+		};
+		E5E387332AD6E009008A7353 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				E5E387342AD6E016008A7353 /* CoreDataManager.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		E5E387362AD6E572008A7353 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				E5E387372AD6E57D008A7353 /* Location.swift */,
+			);
+			path = Entities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -858,6 +880,7 @@
 				E51DE2302AC2BB3200957395 /* Error.swift in Sources */,
 				E51DE1F32AB9555A00957395 /* AppleUser.swift in Sources */,
 				E51DE2082ABDFB3A00957395 /* HealthStoreManager+Weather.swift in Sources */,
+				E5E387352AD6E016008A7353 /* CoreDataManager.swift in Sources */,
 				E50163F62AB333F100C87D67 /* Connectivity.swift in Sources */,
 				E59EB8482AB58BF20057F630 /* OnboardingView.swift in Sources */,
 				E59EB8532AB5EE650057F630 /* NotificationManager.swift in Sources */,
@@ -869,6 +892,7 @@
 				E5AB33F72AC5A939004B8973 /* RecordView.swift in Sources */,
 				E56A55C92AB2BC7100A35BF3 /* MoticApp.swift in Sources */,
 				E59EB85A2AB6A9530057F630 /* HeartRateZones.swift in Sources */,
+				E5E387382AD6E57D008A7353 /* Location.swift in Sources */,
 				E51DE20C2ABEF13F00957395 /* TimeInterval.swift in Sources */,
 				E51DE1FE2ABB2E0300957395 /* CyclingActivityView.swift in Sources */,
 				E51DE1F82AB96CEF00957395 /* ProfileView.swift in Sources */,

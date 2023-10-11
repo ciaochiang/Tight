@@ -26,6 +26,15 @@ enum SportType: Int, CaseIterable, Codable, Identifiable {
     case traditionalStrengthTraining
     case others
     
+    init(rawValue: Int) {
+        switch rawValue {
+        case 0: self = .cycling
+        case 1: self = .walking
+        case 2: self = .traditionalStrengthTraining
+        default: self = .others
+        }
+    }
+    
     init(activityType: HKWorkoutActivityType) {
         switch activityType {
         case .cycling: self = .cycling

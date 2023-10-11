@@ -8,7 +8,7 @@
 import HealthKit
 
 struct Activity: Identifiable {
-    let id = UUID()
+    let id: String = UUID().uuidString
     let workoutActivityType: HKWorkoutActivityType
     let startDate: Date
     let endDate: Date
