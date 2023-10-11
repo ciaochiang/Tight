@@ -42,16 +42,24 @@ class ActivitySessionManager: NSObject, ObservableObject {
         logger.log("ActivitySessionManager is inititated", level: .info)
     }
     
-    /*
-     Invoke this functio then record view is appeared
+    /**
+     Invoke this function then record view is appeared
+     
+     Enable `allowsBackgroundLocationUpdates`
+     Disable `pausesLocationUpdatesAutomatically`
+
      */
     func startUpdatingLocation() {
         locationManager.startUpdatingLocation()
         logger.log("Location manager is updating locations", level: .info)
     }
     
-    /*
+    /**
      Invoke this function when record view is dismissed
+    
+     Disable `allowsBackgroundLocationUpdates`
+     Enable `pausesLocationUpdatesAutomatically`
+     
      */
     func stopUpdatingLocation() {
         locationManager.stopUpdatingLocation()
@@ -64,6 +72,11 @@ class ActivitySessionManager: NSObject, ObservableObject {
     func startSession(with workoutType: SportType = .cycling) {
         self.workoutType = workoutType
         createSessionIfNeeded(workoutType: workoutType)
+        
+        // Enable location background mode
+        locationManager.allowsBackgroundLocationUpdates = true
+        locationManager.pausesLocationUpdatesAutomatically = false
+        
         isRecording.toggle()
         
         logger.log("Session is started", level: .info)
@@ -76,7 +89,6 @@ class ActivitySessionManager: NSObject, ObservableObject {
         isRecording.toggle()
         session?.endTime = Date()
         logger.log("Session is ended", level: .info)
-        
         if let session = session {
             logger.log("Session metadat: \(session) location: \(cachedLocations) elapsedTime: \(elapsedSeconds) distance: \(distances)", level: .info)
         }
@@ -89,6 +101,10 @@ class ActivitySessionManager: NSObject, ObservableObject {
         cachedLocations = []
         distances = []
         heartRates = []
+        
+        // Disable location background mode
+        locationManager.allowsBackgroundLocationUpdates = false
+        locationManager.pausesLocationUpdatesAutomatically = true
     }
 }
 
@@ -156,8 +172,34 @@ extension ActivitySessionManager: CLLocationManagerDelegate {
         locationAuthorizationStatus = status
     }
     
+    // TODO: Enhance gps location accuracy like user is indoor or outdoor
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         handleLocations(locations: locations)
+        
+        if let latestLocation = locations.last {
+            if latestLocation.horizontalAccuracy < 0 {
+                print("Failed to get a valid location.")
+            } else if latestLocation.horizontalAccuracy > 100 { // Example: Accuracy more than 100 meters
+                print("Low accuracy location.")
+            } else {
+                print("Received location with good accuracy: \(latestLocation)")
+            }
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        guard let clError = error as? CLError else { return }
+        
+        switch clError.code {
+        case .locationUnknown: // Location manager is currently unable to receive location data
+            logger.log("No GPS signal or another issue", level: .error)
+        case .denied: // User denied location use for the app
+            logger.log("Location services denied by user.", level: .error)
+        case .network: // Network-related error
+            logger.log("Network issue.", level: .error)
+        default:
+            logger.log("Another location error occurred: \(error.localizedDescription)", level: .error)
+        }
     }
 }
 

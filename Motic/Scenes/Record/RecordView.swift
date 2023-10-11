@@ -59,9 +59,7 @@ struct RecordView: View {
                                   ? "chevron.down"
                                   : "xmark")
                                 .foregroundColor(.themeStyle.theme.primary)
-                                
                         }
-
                     }
                 }
             }
