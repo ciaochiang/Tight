@@ -19,6 +19,7 @@ class ActivitySessionManager: NSObject, ObservableObject {
     private var logger: Logger
     private var storeManager: CoreDataManager
     
+    @Published var recordingState: RecordingState = .notStarted
     @Published var isRecording: Bool = false
     @Published var workoutType: SportType = .others
     @Published var session: ActivitySession?
@@ -53,7 +54,6 @@ class ActivitySessionManager: NSObject, ObservableObject {
      
      Enable `allowsBackgroundLocationUpdates`
      Disable `pausesLocationUpdatesAutomatically`
-
      */
     func startUpdatingLocation() {
         locationManager.startUpdatingLocation()
@@ -65,17 +65,18 @@ class ActivitySessionManager: NSObject, ObservableObject {
     
      Disable `allowsBackgroundLocationUpdates`
      Enable `pausesLocationUpdatesAutomatically`
-     
      */
     func stopUpdatingLocation() {
         locationManager.stopUpdatingLocation()
         logger.log("Location manager stopped to update locations", level: .info)
     }
     
-    /*
+    /**
      Invoke this function when user clicked "start" button on record view
      */
     func startSession(with workoutType: SportType = .cycling) {
+        guard recordingState == .notStarted else { return }
+        
         self.workoutType = workoutType
         createSessionIfNeeded(workoutType: workoutType)
         
@@ -83,16 +84,42 @@ class ActivitySessionManager: NSObject, ObservableObject {
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.pausesLocationUpdatesAutomatically = false
         
-        isRecording.toggle()
+        isRecording = true
+        recordingState = .recording
         
         logger.log("Session is started", level: .info)
     }
     
-    /*
+    /**
+     Invoke this function to resume recording
+     */
+    func resumeSession() {
+        guard recordingState == .paused else { return }
+        
+        isRecording = true
+        recordingState = .recording
+    }
+    
+    /**
+     Invoke this function to pause recording
+     */
+    func pauseSession() {
+        guard recordingState == .recording, session != nil else { return }
+        
+        isRecording = false
+        recordingState = .paused
+    }
+    
+    /**
      Invoke this function when user clicked "stop" button on record view
      */
     func stopSession() {
-        isRecording.toggle()
+        guard recordingState == .recording else { return }
+        
+        // Update state
+        isRecording = false
+        recordingState = .notStarted
+        
         session?.endTime = Date()
         logger.log("Session is ended", level: .info)
         
@@ -237,4 +264,10 @@ struct Distance: Identifiable {
     let timestamp: Date
 }
 
+
+enum RecordingState {
+    case notStarted
+    case recording
+    case paused
+}
 

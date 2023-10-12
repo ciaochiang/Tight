@@ -99,10 +99,6 @@ struct RecordView_Previews: PreviewProvider {
         
         Group {
             RecordView(viewModel: viewModel, isPresented: .constant(true))
-
-            LocationPermissionDialogView {
-                
-            }
         }
     }
 }
@@ -160,7 +156,9 @@ struct RecordPanelView: View {
                 .foregroundColor(.themeStyle.theme.primary)
         }
         .onReceive(viewModel.timer) { _ in
-            activitySessionManager.handleTimerAction()
+            if activitySessionManager.isRecording {
+                activitySessionManager.handleTimerAction()
+            }
         }
     }
     
@@ -202,26 +200,69 @@ struct RecordPanelView: View {
     }
     
     var startButton: some View {
-        Button {
-            activitySessionManager.isRecording
-            ? activitySessionManager.stopSession()
-            : activitySessionManager.startSession()
-            
-            viewModel.selectedSport = .traditionalStrengthTraining
-        } label: {
-            Text(activitySessionManager.isRecording  ? "PASUE" : "START")
-                .font(.title3)
-                .fontWeight(.bold)
+        HStack(spacing: 8) {
+            if viewModel.dependency.activitySessionManager.recordingState == .notStarted {
+                Button {
+                    activitySessionManager.isRecording
+                    ? activitySessionManager.stopSession()
+                    : activitySessionManager.startSession()
+                    
+                    viewModel.selectedSport = .traditionalStrengthTraining
+                } label: {
+                    Text(activitySessionManager.isRecording  ? "PASUE" : "START")
+                        .font(.title3)
+                        .fontWeight(.bold)
+                        .frame(maxWidth: .infinity)
+                }
                 .frame(maxWidth: .infinity)
+                .frame(maxHeight: 60)
+                .background(activitySessionManager.isRecording
+                            ? Color.themeStyle.theme.red
+                            : Color.themeStyle.theme.green)
+                .foregroundColor(.themeStyle.theme.black)
+                .cornerRadius(8)
+                .padding()
+            } else {
+                Button {
+                    // Pause
+                    activitySessionManager.recordingState == .recording
+                    ? activitySessionManager.pauseSession()
+                    : activitySessionManager.resumeSession()
+                } label: {
+                    Text(activitySessionManager.recordingState == .recording  ? "PAUSE" : "RESUME")
+                        .font(.title3)
+                        .fontWeight(.bold)
+                        .frame(maxWidth: .infinity)
+                }
+                .frame(maxWidth: .infinity)
+                .frame(maxHeight: 60)
+                .background(Color.themeStyle.theme.green)
+                .foregroundColor(.themeStyle.theme.black)
+                .cornerRadius(8)
+                .padding(.vertical)
+                .padding(.leading)
+                
+                Button {
+                    // Pause)
+                    activitySessionManager.stopSession()
+                } label: {
+                    Text("END")
+                        .font(.title3)
+                        .fontWeight(.bold)
+                        .frame(maxWidth: .infinity)
+                }
+                .frame(maxWidth: .infinity)
+                .frame(maxHeight: 60)
+                .background(Color.themeStyle.theme.green)
+                .foregroundColor(.themeStyle.theme.black)
+                .cornerRadius(8)
+                .padding(.vertical)
+                .padding(.trailing)
+                
+
+            }
         }
-        .frame(maxWidth: .infinity)
-        .frame(maxHeight: 60)
-        .background(activitySessionManager.isRecording
-                    ? Color.themeStyle.theme.red
-                    : Color.themeStyle.theme.green)
-        .foregroundColor(.themeStyle.theme.black)
-        .cornerRadius(8)
-        .padding()
+       
     }
 }
 
