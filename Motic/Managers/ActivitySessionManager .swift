@@ -8,6 +8,7 @@
 import CoreLocation
 import SwiftUI
 import MapKit
+import Combine
 
 class ActivitySessionManager: NSObject, ObservableObject {
     /*
@@ -23,12 +24,17 @@ class ActivitySessionManager: NSObject, ObservableObject {
     @Published var isRecording: Bool = false
     @Published var workoutType: SportType = .others
     @Published var session: ActivitySession?
-    @Published var elapsedSeconds: TimeInterval = 0
+    @Published var acitveElapsedSeconds: TimeInterval = 0.0
+    @Published var restElapsedSeconds: TimeInterval = 0.0
+    @Published var coolElapsedSeconds: TimeInterval = 0.0
     @Published var currentSpeed: Double = 0.0
     @Published var cachedLocations: [Location] = []
     @Published var totalDistance: Double = 0.0
     @Published var distances: [Distance] = []
     @Published var heartRates: [HeartRate] = []
+    @Published var lastPausedTimestamp: Date?
+    var timer = Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()
+    
     
     // Location
     @Published var locationAuthorizationStatus: CLAuthorizationStatus = .notDetermined
@@ -76,6 +82,9 @@ class ActivitySessionManager: NSObject, ObservableObject {
      */
     func startSession(with workoutType: SportType = .cycling) {
         guard recordingState == .notStarted else { return }
+                
+        // Init timer
+        timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
         
         self.workoutType = workoutType
         createSessionIfNeeded(workoutType: workoutType)
@@ -86,6 +95,9 @@ class ActivitySessionManager: NSObject, ObservableObject {
         
         isRecording = true
         recordingState = .recording
+        
+        // Add active timestamp to timeline
+        session?.addElapasedTime(status: .active, timestamp: session?.startTime ?? Date())
         
         logger.log("Session is started", level: .info)
     }
@@ -98,6 +110,9 @@ class ActivitySessionManager: NSObject, ObservableObject {
         
         isRecording = true
         recordingState = .recording
+        
+        // Add active timestamp to timeline
+        session?.addElapasedTime(status: .active, timestamp: Date())
     }
     
     /**
@@ -106,23 +121,35 @@ class ActivitySessionManager: NSObject, ObservableObject {
     func pauseSession() {
         guard recordingState == .recording, session != nil else { return }
         
+        lastPausedTimestamp = Date()
+        
         isRecording = false
         recordingState = .paused
+        
+        // Add rest timestamp to timeline
+        session?.addElapasedTime(status: .rest, timestamp: Date())
     }
     
     /**
      Invoke this function when user clicked "stop" button on record view
      */
     func stopSession() {
-        guard recordingState == .recording else { return }
+        logger.log("Session is ended", level: .info)
+
+        guard recordingState == .recording || recordingState == .paused else { return }
         
-        // Update state
+        timer.upstream.connect().cancel()
+        
+        /**
+         Update states
+         */
         isRecording = false
         recordingState = .notStarted
-        
         session?.endTime = Date()
-        logger.log("Session is ended", level: .info)
         
+        /**
+         Save to core data
+         */
         if let session = session {
             // Save activity
             storeManager.saveActivity(with: session)
@@ -133,9 +160,12 @@ class ActivitySessionManager: NSObject, ObservableObject {
             logger.log("Data is saved", level: .info)
         }
         
+        /**
+        Clean up
+         */
         session = nil
         currentLocation = nil
-        elapsedSeconds = 0.0
+        acitveElapsedSeconds = 0.0
         currentSpeed = 0.0
         totalDistance = 0.0
         cachedLocations = []
@@ -145,23 +175,33 @@ class ActivitySessionManager: NSObject, ObservableObject {
         // Disable location background mode
         locationManager.allowsBackgroundLocationUpdates = false
         locationManager.pausesLocationUpdatesAutomatically = true
+        
+        logger.log("\(session?.timeline ?? [])", level: .info)
     }
 }
 
 // MARK: Public functions
 extension ActivitySessionManager {
     func handleTimerAction() {
-        guard let session = session else { return }
-        elapsedSeconds = -session.startTime.timeIntervalSinceNow
+        if recordingState == .recording {
+            acitveElapsedSeconds += 1
+            session?.activeElapsedSeconds = acitveElapsedSeconds
+        }
+        else if recordingState == .paused {
+            restElapsedSeconds += 1
+            session?.restElapsedSeconds = restElapsedSeconds
+        }
     }
 }
 
 // MARK: Private fucntions
 extension ActivitySessionManager {
-    private func createSessionIfNeeded(workoutType: SportType) {
+    @discardableResult private func createSessionIfNeeded(workoutType: SportType) -> ActivitySession? {
         if session == nil {
             session = ActivitySession(workoutType: workoutType, startTime: Date())
         }
+        
+        return session
     }
     
     private func handleLocations(session: ActivitySession?, locations: [CLLocation]) {
@@ -248,8 +288,28 @@ extension ActivitySessionManager: CLLocationManagerDelegate {
 struct ActivitySession: Identifiable {
     let id: String = UUID().uuidString
     var workoutType: SportType
+    var activeElapsedSeconds: Double = 0
+    var restElapsedSeconds: Double = 0
+    var timeline: [ElapsedTime] = []
     var startTime: Date
     var endTime: Date?
+    
+    mutating func addElapasedTime(status: ElapsedTimeStatus, timestamp: Date) {
+        let elapsedTime = ElapsedTime(activityId: id, status: status, timestamp: timestamp)
+        timeline.append(elapsedTime)
+    }
+}
+
+enum ElapsedTimeStatus: Int {
+    case active
+    case rest
+}
+
+struct ElapsedTime: Identifiable {
+    let id: String = UUID().uuidString
+    var activityId: String
+    var status: ElapsedTimeStatus
+    var timestamp: Date
 }
 
 struct HeartRate: Identifiable {
@@ -263,7 +323,6 @@ struct Distance: Identifiable {
     let distanceInMeter: Double
     let timestamp: Date
 }
-
 
 enum RecordingState {
     case notStarted

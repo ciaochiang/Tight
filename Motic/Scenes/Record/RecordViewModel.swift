@@ -51,4 +51,20 @@ class RecordViewModel: ObservableObject {
             dependency.activitySessionManager.locationManager.requestAlwaysAuthorization()
         }
     }
+    
+    func pauseSession() {
+        dependency.activitySessionManager.pauseSession()
+    }
+    
+    func resumeSession() {
+        dependency.activitySessionManager.resumeSession()
+    }
+    
+    func stopSession() {
+        dependency.activitySessionManager.stopSession()
+    }
+    
+    func startSession() {
+        dependency.activitySessionManager.startSession(with: selectedSport)
+    }
 }

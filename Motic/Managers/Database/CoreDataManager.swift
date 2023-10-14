@@ -49,9 +49,22 @@ extension CoreDataManager {
         
         activityEntity.id = session.id
         activityEntity.workoutType = Int64(session.workoutType.id)
+        activityEntity.activeElapsedSeconds = session.activeElapsedSeconds
+        activityEntity.restElapsedSeconds = session.restElapsedSeconds
         activityEntity.startTime = session.startTime
         activityEntity.endTime = session.endTime
         activityEntity.timestamp = Date()
+        
+        for elapsedTime in session.timeline {
+            let elapsedTimeEntity = ElapsedTimeEntity(context: container.viewContext)
+            
+            elapsedTimeEntity.id = elapsedTime.id
+            elapsedTimeEntity.activityId = elapsedTime.activityId
+            elapsedTimeEntity.status = Int16(elapsedTime.status.rawValue)
+            elapsedTimeEntity.timestamp = elapsedTime.timestamp
+            
+            dependency.logger.log("\(elapsedTimeEntity)", level: .info)
+        }
         
         do {
             try container.viewContext.save()

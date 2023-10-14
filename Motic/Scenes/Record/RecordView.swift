@@ -126,7 +126,7 @@ struct RecordPanelView: View {
     var body: some View {
         VStack {
             sportSelection
-            timeCounter.padding()
+            activeTimeCounter.padding()
             metricSection
             startButton
         }
@@ -148,17 +148,17 @@ struct RecordPanelView: View {
         .padding(.top)
     }
     
-    var timeCounter: some View {
+    var activeTimeCounter: some View {
         VStack {
-            Text("\(activitySessionManager.elapsedSeconds.formatTimeInterval)")
+            Text(activitySessionManager.recordingState == .paused
+                 ? "\(activitySessionManager.restElapsedSeconds.formatTimeInterval)"
+                 : "\(activitySessionManager.acitveElapsedSeconds.formatTimeInterval)")
                 .font(.title)
                 .fontWeight(.semibold)
                 .foregroundColor(.themeStyle.theme.primary)
         }
-        .onReceive(viewModel.timer) { _ in
-            if activitySessionManager.isRecording {
-                activitySessionManager.handleTimerAction()
-            }
+        .onReceive(activitySessionManager.timer) { _ in
+            activitySessionManager.handleTimerAction()
         }
     }
     
@@ -204,10 +204,8 @@ struct RecordPanelView: View {
             if viewModel.dependency.activitySessionManager.recordingState == .notStarted {
                 Button {
                     activitySessionManager.isRecording
-                    ? activitySessionManager.stopSession()
-                    : activitySessionManager.startSession()
-                    
-                    viewModel.selectedSport = .traditionalStrengthTraining
+                    ? viewModel.stopSession()
+                    : viewModel.startSession()
                 } label: {
                     Text(activitySessionManager.isRecording  ? "PASUE" : "START")
                         .font(.title3)
@@ -226,8 +224,8 @@ struct RecordPanelView: View {
                 Button {
                     // Pause
                     activitySessionManager.recordingState == .recording
-                    ? activitySessionManager.pauseSession()
-                    : activitySessionManager.resumeSession()
+                    ? viewModel.pauseSession()
+                    : viewModel.resumeSession()
                 } label: {
                     Text(activitySessionManager.recordingState == .recording  ? "PAUSE" : "RESUME")
                         .font(.title3)
@@ -243,8 +241,8 @@ struct RecordPanelView: View {
                 .padding(.leading)
                 
                 Button {
-                    // Pause)
-                    activitySessionManager.stopSession()
+                    // Stop
+                    viewModel.stopSession()
                 } label: {
                     Text("END")
                         .font(.title3)
@@ -258,8 +256,6 @@ struct RecordPanelView: View {
                 .cornerRadius(8)
                 .padding(.vertical)
                 .padding(.trailing)
-                
-
             }
         }
        
