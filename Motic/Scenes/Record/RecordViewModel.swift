@@ -35,6 +35,7 @@ class RecordViewModel: ObservableObject {
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @Published var isLocationBottomSheetPresented: Bool = false
     @Published var isSportSelectorPresented: Bool = false
+    @Published var isWearableDeviceSelectorPresented: Bool = false
     @Published var selectedSport: SportType = .cycling
     
     var preference: UserPreference = UserPreference()

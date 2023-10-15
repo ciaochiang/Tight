@@ -20,21 +20,45 @@ class WearableDeviceManagerDependencyImp: WearableDeviceManagerDependency {
     }
 }
 
+enum WearableDeviceType {
+    case apple
+    case garmin
+}
+
+struct WearableDevice: Hashable, Identifiable {
+    let id: String = UUID().uuidString
+    var type: WearableDeviceType
+}
+
 class WearableDeviceManager: NSObject, ObservableObject {
     var dependency: WearableDeviceManagerDependency
-    
-    @Published var isAppleWatchConnected: Bool = false
-    
+    @Published var isDeviceConnected: Bool = false
+    @Published var registeredDevices: [WearableDevice] = []
+    @Published var connectedDevice: WearableDevice?
+        
     init(dependency: WearableDeviceManagerDependency) {
         self.dependency = dependency
         super.init()
         
+        // Retreieve registered devices
+        registeredDevices = registeredDevices
+        
+        isDeviceConnected = activateDeviceIfApplicable()
+    }
+    
+    func retrieveRegisteredDevices() -> [WearableDevice] {
+        return []
+    }
+    
+    func activateDeviceIfApplicable() -> Bool {
         if WCSession.isSupported() {
             WCSession.default.delegate = self
             WCSession.default.activate()
+            
+            return WCSession.default.isReachable
         }
-        isAppleWatchConnected = WCSession.default.isReachable
-        dependency.logger.log("\(isAppleWatchConnected)", level: .info)
+        
+        return false
     }
 }
 
@@ -49,7 +73,7 @@ extension WearableDeviceManager: WCSessionDelegate {
     }
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        isAppleWatchConnected = activationState == .activated
+        isDeviceConnected = activationState == .activated
         dependency.logger.log("Watch activation complete with state: \(activationState)", level: .info)
         
         if let error = error {

@@ -32,7 +32,6 @@ struct RecordView: View {
     @StateObject private var activitySessionManager: ActivitySessionManager
     @StateObject private var wearableDeviceManager: WearableDeviceManager
     @Binding private var isPresented: Bool
-    @State private var isSportSelectorPresented: Bool = false
     
     init(viewModel: RecordViewModel, isPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -86,6 +85,13 @@ struct RecordView: View {
                                   isPresented: $viewModel.isSportSelectorPresented) { sport in
                     viewModel.selectedSport = sport
                 }
+            }
+            .sheet(isPresented: $viewModel.isWearableDeviceSelectorPresented) {
+                let dependency = WearableDeviceMainViewModelDependencyImp(
+                    logger: viewModel.dependency.logger,
+                    wearableDeviceManager: wearableDeviceManager)
+                let viewModel = WearableDeviceMainViewModel(dependency: dependency)
+                WearableDeviceMainView(viewModel: viewModel, isPresented: $viewModel.isWearableDeviceSelectorPresented)
             }
         }
         .onAppear {
@@ -164,9 +170,9 @@ struct RecordPanelView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 36, height: 36)
-                .foregroundColor(wearableDeviceManager.isAppleWatchConnected ? .orange : .black)
+                .foregroundColor(wearableDeviceManager.isDeviceConnected ? .orange : .black)
                 .onTapGesture {
-                    viewModel.isSportSelectorPresented.toggle()
+                    viewModel.isWearableDeviceSelectorPresented.toggle()
                 }
 
         }
