@@ -32,9 +32,11 @@ struct AppTabBarView: View {
         }
         .sheet(isPresented: $isRecordViewPresented) {
             let logger = Logger(configuration: AppConfiguration.loggerConfig)
+            let wdManagerDependency = WearableDeviceManagerDependencyImp(logger: logger)
+            let wdManager = WearableDeviceManager(dependency: wdManagerDependency)
 
             let dependency = RecordViewModelDependencyImp(logger: logger,
-                                                          activitySessionManager: ActivitySessionManager.shared)
+                                                          activitySessionManager: ActivitySessionManager.shared, wearableDeviceManager: wdManager)
             let viewModel = RecordViewModel(dependency: dependency)
             RecordView(viewModel: viewModel, isPresented: $isRecordViewPresented)
                 .presentationDetents([.large])

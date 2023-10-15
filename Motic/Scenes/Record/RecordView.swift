@@ -30,12 +30,14 @@ import MapKit
 struct RecordView: View {
     @StateObject private var viewModel: RecordViewModel
     @StateObject private var activitySessionManager: ActivitySessionManager
+    @StateObject private var wearableDeviceManager: WearableDeviceManager
     @Binding private var isPresented: Bool
     @State private var isSportSelectorPresented: Bool = false
     
     init(viewModel: RecordViewModel, isPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: viewModel)
         _activitySessionManager = StateObject(wrappedValue: viewModel.dependency.activitySessionManager)
+        _wearableDeviceManager = StateObject(wrappedValue: viewModel.dependency.wearableDeviceManager)
         _isPresented = isPresented
     }
     
@@ -65,6 +67,7 @@ struct RecordView: View {
             }
             .environmentObject(viewModel)
             .environmentObject(activitySessionManager)
+            .environmentObject(wearableDeviceManager)
             .sheet(isPresented: $viewModel.isLocationBottomSheetPresented) {
                 LocationPermissionDialogView {
                     if let url = URL(string: UIApplication.openSettingsURLString) {
@@ -93,8 +96,11 @@ struct RecordView: View {
 
 struct RecordView_Previews: PreviewProvider {
     static var previews: some View {
+        let wdManagerDependency = WearableDeviceManagerDependencyImp(logger: Mocks.logger)
+        let wdManager = WearableDeviceManager(dependency: wdManagerDependency)
+        
         let dependency = RecordViewModelDependencyImp(logger: Mocks.logger,
-                                                      activitySessionManager: ActivitySessionManager.shared)
+                                                      activitySessionManager: ActivitySessionManager.shared, wearableDeviceManager: wdManager)
         let viewModel = RecordViewModel(dependency: dependency)
         
         Group {
@@ -122,10 +128,14 @@ struct MapView: View {
 struct RecordPanelView: View {
     @EnvironmentObject var viewModel: RecordViewModel
     @EnvironmentObject var activitySessionManager: ActivitySessionManager
+    @EnvironmentObject var wearableDeviceManager: WearableDeviceManager
     
     var body: some View {
         VStack {
-            sportSelection
+            HStack(spacing: 32) {
+                sportSelection
+                wearableDeviceSelection
+            }
             activeTimeCounter.padding()
             metricSection
             startButton
@@ -140,6 +150,21 @@ struct RecordPanelView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 36, height: 36)
+                .onTapGesture {
+                    viewModel.isSportSelectorPresented.toggle()
+                }
+
+        }
+        .padding(.top)
+    }
+    
+    var wearableDeviceSelection: some View {
+        VStack {
+            Image(systemName: "applewatch")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 36, height: 36)
+                .foregroundColor(wearableDeviceManager.isAppleWatchConnected ? .orange : .black)
                 .onTapGesture {
                     viewModel.isSportSelectorPresented.toggle()
                 }

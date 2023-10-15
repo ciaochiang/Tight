@@ -13,15 +13,20 @@ import Combine
 protocol RecordViewModelDependency {
     var logger: Logger { get }
     var activitySessionManager: ActivitySessionManager { get }
+    var wearableDeviceManager: WearableDeviceManager { get }
 }
 
 class RecordViewModelDependencyImp: RecordViewModelDependency {
     var logger: Logger
     var activitySessionManager: ActivitySessionManager
+    var wearableDeviceManager: WearableDeviceManager
     
-    init(logger: Logger, activitySessionManager: ActivitySessionManager) {
+    init(logger: Logger,
+         activitySessionManager: ActivitySessionManager,
+         wearableDeviceManager: WearableDeviceManager) {
         self.logger = logger
         self.activitySessionManager = activitySessionManager
+        self.wearableDeviceManager = wearableDeviceManager
     }
 }
 
