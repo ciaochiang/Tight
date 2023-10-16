@@ -8,48 +8,75 @@
 import SwiftUI
 
 struct ContentView: View {
-  @StateObject var workoutSessionManager: WorkoutSessionManager = WorkoutSessionManager()
-  @StateObject var viewModel: ContentViewModel = ContentViewModel()
-  
-  var body: some View {
-    List {
-      ForEach(viewModel.supportedActivityTypes, id: \.self) { activityType in
-        Button(viewModel.getActivityName(activityType: activityType),
-               action: {
-//          workoutSessionManager.workoutSessionIsStarted
-//          ? workoutSessionManager.stopWorkoutSession()
-//          : workoutSessionManager.createWorkoutSession(activityType: .running)
-        })
-//          .frame(minWidth: 0, maxWidth: .infinity)
-//          .background(workoutSessionManager.workoutSessionIsStarted ? Color.red : Color.green)
-//          .cornerRadius(10)
-      }
-//      ForEach(viewModel.supportedActivityTypes, id: \.self) { activity in
-//
-//
-//      }
-    }
-    .onAppear {
-      workoutSessionManager.authorizeHealthKit()
+    @StateObject var workoutSessionManager: WorkoutSessionManager = WorkoutSessionManager()
+    @StateObject var viewModel: ContentViewModel = ContentViewModel()
+    @State var isRecording: Bool = false
+    @State var isPaused: Bool = false
+
+    var body: some View {
+        VStack {
+            if isRecording == false && isPaused == false {
+                playButtonView
+            } else {
+                VStack {
+                    pauseButtonView
+                    stopButtonView
+                }
+            }
+        }
+        .frame(maxHeight: .infinity)
+        .background(Color.clear)
+        .onAppear {
+            workoutSessionManager.authorizeHealthKit()
+        }
     }
     
-//    VStack(alignment: .leading) {
-//
-//      Button(workoutSessionManager.workoutSessionIsStarted ? "Stop" : "Start",
-//             action: {
-//        workoutSessionManager.workoutSessionIsStarted
-//        ? workoutSessionManager.stopWorkoutSession()
-//        : workoutSessionManager.createWorkoutSession(activityType: .running)
-//      })
-//        .frame(minWidth: 0, maxWidth: .infinity)
-//        .background(workoutSessionManager.workoutSessionIsStarted ? Color.red : Color.green)
-//        .cornerRadius(10)
-//    }
-//    .frame(maxHeight: .infinity)
-//    .onAppear {
-//      workoutSessionManager.authorizeHealthKit()
-//    }
-  }
+    var playButtonView: some View {
+        VStack {
+            Image(systemName: "play")
+        }
+        .frame(maxHeight: .infinity)
+        .frame(maxWidth: .infinity)
+        .background(Color.green)
+        .cornerRadius(16)
+        .padding()
+        .onTapGesture {
+            isRecording.toggle()
+            
+            if isRecording {
+                workoutSessionManager.createWorkoutSession()
+            }
+        }
+    }
+    
+    var pauseButtonView: some View {
+        VStack {
+            Image(systemName: isPaused ? "arrow.triangle.2.circlepath" : "pause")
+        }
+        .frame(maxHeight: .infinity)
+        .frame(maxWidth: .infinity)
+        .background(Color.yellow)
+        .cornerRadius(16)
+        .padding()
+        .onTapGesture {
+            isPaused.toggle()
+        }
+    }
+    
+    var stopButtonView: some View {
+        VStack {
+            Image(systemName: "stop")
+        }
+        .frame(maxHeight: .infinity)
+        .frame(maxWidth: .infinity)
+        .background(Color.red)
+        .cornerRadius(16)
+        .padding()
+        .onTapGesture {
+            isRecording = false
+            workoutSessionManager.stopWorkoutSession()
+        }
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
