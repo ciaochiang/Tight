@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C96E11A62ADE58B800586D25 /* SportSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96E11A52ADE58B800586D25 /* SportSelectorView.swift */; };
+		C96E11A82ADE58EF00586D25 /* SportSelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96E11A72ADE58EF00586D25 /* SportSelectorViewModel.swift */; };
+		C96E11AB2ADE594600586D25 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96E11AA2ADE594600586D25 /* Logger.swift */; };
 		E50163C92AB2E90500C87D67 /* MoticWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163C82AB2E90500C87D67 /* MoticWatchApp.swift */; };
 		E50163CB2AB2E90500C87D67 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163CA2AB2E90500C87D67 /* ContentView.swift */; };
 		E50163CD2AB2E90600C87D67 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E50163CC2AB2E90600C87D67 /* Assets.xcassets */; };
@@ -131,6 +134,9 @@
 		462D8F90FE461454A0069CB4 /* Pods_Motic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Motic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BD70DC15448EAA064F41ED4 /* Pods_MoticWatch_Watch_AppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoticWatch_Watch_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6371AD9F3CAED494EB17191 /* Pods_MoticWatch_Watch_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoticWatch_Watch_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C96E11A52ADE58B800586D25 /* SportSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportSelectorView.swift; sourceTree = "<group>"; };
+		C96E11A72ADE58EF00586D25 /* SportSelectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportSelectorViewModel.swift; sourceTree = "<group>"; };
+		C96E11AA2ADE594600586D25 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		CAD2E2A817DEB60DBCD990DE /* Pods_Motic_MoticUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Motic_MoticUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE50CE7136F60940081E942A /* Pods_MoticTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoticTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E50163C62AB2E90500C87D67 /* MoticWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MoticWatch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -269,9 +275,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C96E11A92ADE593400586D25 /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				C96E11AA2ADE594600586D25 /* Logger.swift */,
+			);
+			path = Logger;
+			sourceTree = "<group>";
+		};
 		E50163C72AB2E90500C87D67 /* MoticWatch Watch App */ = {
 			isa = PBXGroup;
 			children = (
+				C96E11A92ADE593400586D25 /* Logger */,
 				E50163C82AB2E90500C87D67 /* MoticWatchApp.swift */,
 				E50163F42AB30A4600C87D67 /* MoticWatch Watch App.entitlements */,
 				E50163CA2AB2E90500C87D67 /* ContentView.swift */,
@@ -280,6 +295,8 @@
 				E50163F72AB346BD00C87D67 /* WatchConnectivityProvider.swift */,
 				E50163F92AB460F500C87D67 /* ContentViewModel.swift */,
 				E50163FB2AB4638100C87D67 /* WorkoutSessionManager.swift */,
+				C96E11A52ADE58B800586D25 /* SportSelectorView.swift */,
+				C96E11A72ADE58EF00586D25 /* SportSelectorViewModel.swift */,
 			);
 			path = "MoticWatch Watch App";
 			sourceTree = "<group>";
@@ -847,10 +864,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				E50163FC2AB4638100C87D67 /* WorkoutSessionManager.swift in Sources */,
+				C96E11A82ADE58EF00586D25 /* SportSelectorViewModel.swift in Sources */,
 				E50163FA2AB460F500C87D67 /* ContentViewModel.swift in Sources */,
+				C96E11A62ADE58B800586D25 /* SportSelectorView.swift in Sources */,
 				E50163CB2AB2E90500C87D67 /* ContentView.swift in Sources */,
 				E50163C92AB2E90500C87D67 /* MoticWatchApp.swift in Sources */,
 				E50163F82AB346BD00C87D67 /* WatchConnectivityProvider.swift in Sources */,
+				C96E11AB2ADE594600586D25 /* Logger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1002,7 +1022,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.4;
+				WATCHOS_DEPLOYMENT_TARGET = 9.1;
 			};
 			name = Debug;
 		};
@@ -1035,7 +1055,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.4;
+				WATCHOS_DEPLOYMENT_TARGET = 9.1;
 			};
 			name = Release;
 		};
