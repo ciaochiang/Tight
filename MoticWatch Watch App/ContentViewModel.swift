@@ -10,6 +10,11 @@ import HealthKit
 
 class ContentViewModel: ObservableObject {
   var supportedActivityTypes: [HKWorkoutActivityType] = [.cycling, .running]
+    
+    var connectivity: WatchConnectivityProvider = WatchConnectivityProvider()
+    
+    @Published var sports: [Sport] = []
+
 
 //  @Published var workoutSessionIsStarted: Bool = false
   
@@ -26,4 +31,14 @@ class ContentViewModel: ObservableObject {
     default: return "Unknown"
     }
   }
+    
+    func fetchAllSports() {
+        connectivity.send(message: ["request": "fetchSports"]) { response in
+            if let values = response["reply"] as? [[String: Any]] {
+                let allSports = values.map { Sport(id: $0["id"] as? Int ?? 0, description: $0["description"] as? String ?? "") }
+                self.sports = allSports
+                print("all sports: \(allSports)")
+            }
+        }
+    }
 }

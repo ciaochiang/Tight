@@ -22,6 +22,7 @@ struct MoticApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var accountManager: AccountManager = AccountManager.shared
     @AppStorage("IS_ONBOARDING_COMPLETED") var isOnboardingCompleted: Bool = false
+    var connectivity: ConnectivityProvider = ConnectivityProvider()
 
     var body: some Scene {
         WindowGroup {

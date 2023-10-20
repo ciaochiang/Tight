@@ -43,6 +43,10 @@ struct ContentView: View {
         .onTapGesture {
             isRecording.toggle()
             
+            
+            viewModel.fetchAllSports()
+
+            
             if isRecording {
                 workoutSessionManager.createWorkoutSession()
             }
