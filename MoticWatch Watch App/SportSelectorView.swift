@@ -35,7 +35,7 @@ struct SportSelectorView: View {
 
 struct SportSelectorView_Previews: PreviewProvider {
     static var previews: some View {
-        let logger = Logger.init(configuration: AppConfiguration.loggerConfig)
+        let logger = CustomLogger()
         let connectivity = WatchConnectivityProvider()
         let sportProvider = SportProvider(connectivity: connectivity)
         let depenedency = SportSelectorViewModelDependencyImp(logger: logger, sportProvider: sportProvider)

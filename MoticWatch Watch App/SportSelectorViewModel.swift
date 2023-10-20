@@ -8,15 +8,15 @@
 import SwiftUI
 
 protocol SportSelectorViewModelDependency {
-    var logger: Logger  { get }
+    var logger: CustomLogger  { get }
     var sportProvider: SportProvider { get }
 }
 
 class SportSelectorViewModelDependencyImp: SportSelectorViewModelDependency {
-    var logger: Logger
+    var logger: CustomLogger
     var sportProvider: SportProvider
     
-    init(logger: Logger, sportProvider: SportProvider) {
+    init(logger: CustomLogger, sportProvider: SportProvider) {
         self.logger = logger
         self.sportProvider = sportProvider
     }
@@ -31,6 +31,7 @@ class SportSelectorViewModel: ObservableObject {
     }
     
     func fetchAllSports() {
+        dependency.logger.log(level: .debug, message: "fetch all sports")
         dependency.sportProvider.fetchAllSports { [weak self] sports in
             self?.allSports = sports
         }

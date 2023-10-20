@@ -6,45 +6,36 @@
 //
 
 import Foundation
-import os.log
+import os
 
-enum LogLevel: Int {
-  case debug = 1
-  case info = 2
-  case warning = 3
-  case error = 4
-}
-
-struct AppConfiguration {
-    static var loggerConfig = LoggerConfiguration()
-    // Add other app configurations as needed
-}
-
-struct LoggerConfiguration {
-  var minLogLevel: LogLevel = .debug
-  var logToConsole: Bool = true
-  var logToFile: Bool = false
-  // Add more configuration options as needed
-}
-
-class Logger {
-  private let configuration: LoggerConfiguration
-  
-  init(configuration: LoggerConfiguration) {
-    self.configuration = configuration
-  }
-  
-  func log(_ message: String, level: LogLevel) {
-    guard level.rawValue >= configuration.minLogLevel.rawValue else { return }
+struct CustomLogger {
+    private var logger: Logger
     
-    if configuration.logToConsole {
-        print("\(level): \(message)")
+    enum SubSystem {
+        case `default`
+        
+        var decription: String {
+            switch self {
+            case .`default`: return "default"
+            }
+        }
     }
     
-    if configuration.logToFile {
-        // Implement file logging here
+    enum Category {
+        case `default`
+        
+        var decription: String {
+            switch self {
+            case .`default`: return "default"
+            }
+        }
     }
     
-    // Add additional logging destinations or customizations
-  }
+    init(subSystem: SubSystem = .default, category: Category = .default) {
+        self.logger = Logger(subsystem: subSystem.decription, category: category.decription)
+    }
+    
+    func log(level: OSLogType = .default, message: String) {
+        logger.log(level: level, "\(message)")
+    }
 }

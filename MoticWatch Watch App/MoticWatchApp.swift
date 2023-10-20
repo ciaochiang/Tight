@@ -9,7 +9,8 @@ import SwiftUI
 
 @main
 struct MoticWatch_Watch_AppApp: App {
-    private var logger = Logger(configuration: AppConfiguration.loggerConfig)
+    private var logger = CustomLogger()
+    
     var body: some Scene {
         WindowGroup {
             let connectivity = WatchConnectivityProvider()
