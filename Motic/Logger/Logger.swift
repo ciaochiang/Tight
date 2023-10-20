@@ -1,5 +1,5 @@
 //
-//  Logger.swift
+//  CustomLogger.swift
 //  Motic
 //
 //  Created by Ciao Chiang on 2023/9/17.

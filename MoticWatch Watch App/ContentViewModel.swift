@@ -24,13 +24,13 @@ class ContentViewModel: ObservableObject {
 //    }
 //  }
   
-  func getActivityName(activityType: HKWorkoutActivityType) -> String {
-    switch activityType {
-    case .cycling: return "Cycling"
-    case .running: return "Running"
-    default: return "Unknown"
+    func getActivityName(activityType: HKWorkoutActivityType) -> String {
+        switch activityType {
+        case .cycling: return "Cycling"
+        case .running: return "Running"
+        default: return "Unknown"
+        }
     }
-  }
     
     func fetchAllSports() {
         connectivity.send(message: ["request": "fetchSports"]) { response in
