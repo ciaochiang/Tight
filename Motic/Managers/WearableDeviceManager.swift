@@ -9,13 +9,13 @@ import SwiftUI
 import WatchConnectivity
 
 protocol WearableDeviceManagerDependency {
-    var logger: Logger { get }
+    var logger: CustomLogger { get }
 }
 
 class WearableDeviceManagerDependencyImp: WearableDeviceManagerDependency {
-    var logger: Logger
+    var logger: CustomLogger
     
-    init(logger: Logger) {
+    init(logger: CustomLogger) {
         self.logger = logger
     }
 }

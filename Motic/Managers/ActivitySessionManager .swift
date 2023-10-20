@@ -17,7 +17,7 @@ class ActivitySessionManager: NSObject, ObservableObject {
     static let shared = ActivitySessionManager()
     
     var locationManager = CLLocationManager()
-    private var logger: Logger
+    private var logger: CustomLogger
     private var storeManager: CoreDataManager
     
     @Published var recordingState: RecordingState = .notStarted
@@ -45,7 +45,7 @@ class ActivitySessionManager: NSObject, ObservableObject {
     )
     
     override init() {
-        logger = Logger(configuration: AppConfiguration.loggerConfig)
+        logger = CustomLogger()
         
         let dependency = CoreDataManagerDependencyImp(logger: logger)
         storeManager = CoreDataManager(dependency: dependency)

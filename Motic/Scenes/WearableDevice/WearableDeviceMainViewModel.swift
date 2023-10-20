@@ -9,15 +9,15 @@ import SwiftUI
 import Combine
 
 protocol WearableDeviceMainViewModelDependency {
-    var logger: Logger { get }
+    var logger: CustomLogger { get }
     var wearableDeviceManager: WearableDeviceManager { get }
 }
 
 class WearableDeviceMainViewModelDependencyImp: WearableDeviceMainViewModelDependency {
-    var logger: Logger
+    var logger: CustomLogger
     var wearableDeviceManager: WearableDeviceManager
     
-    init(logger: Logger, wearableDeviceManager: WearableDeviceManager) {
+    init(logger: CustomLogger, wearableDeviceManager: WearableDeviceManager) {
         self.logger = logger
         self.wearableDeviceManager = wearableDeviceManager
     }

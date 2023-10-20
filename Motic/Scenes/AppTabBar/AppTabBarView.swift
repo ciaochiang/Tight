@@ -10,11 +10,13 @@ import SwiftUI
 struct AppTabBarView: View {
     @State private var tabSelection: TabBarItemType = .home
     @State var isRecordViewPresented: Bool = false
+    private var logger: CustomLogger
 
     private var mainView: MainView
     
-    init() {
-        let logger = Logger(configuration: AppConfiguration.loggerConfig)
+    init(logger: CustomLogger) {
+        self.logger = logger
+        
         let dependency = MainViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
                                                     logger: logger)
         let viewModel = MainViewModel(dependency: dependency)
@@ -31,10 +33,8 @@ struct AppTabBarView: View {
             Color.green.tabBarItem(type: .preference, selection: $tabSelection)
         }
         .sheet(isPresented: $isRecordViewPresented) {
-            let logger = Logger(configuration: AppConfiguration.loggerConfig)
             let wdManagerDependency = WearableDeviceManagerDependencyImp(logger: logger)
             let wdManager = WearableDeviceManager(dependency: wdManagerDependency)
-
             let dependency = RecordViewModelDependencyImp(logger: logger,
                                                           activitySessionManager: ActivitySessionManager.shared, wearableDeviceManager: wdManager)
             let viewModel = RecordViewModel(dependency: dependency)
@@ -46,6 +46,7 @@ struct AppTabBarView: View {
 
 struct AppTabBarView_Previews: PreviewProvider {
     static var previews: some View {
-        AppTabBarView()
+        let logger = CustomLogger()
+        AppTabBarView(logger: logger)
     }
 }

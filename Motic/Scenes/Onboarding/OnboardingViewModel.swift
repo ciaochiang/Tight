@@ -52,7 +52,8 @@ extension OnboardingViewModel {
   }
   
   private func requestHealthKitPermission() {
-      let dependency = HealthStoreManagerDependencyImp(logger: Logger(configuration: AppConfiguration.loggerConfig))
+      let logger = CustomLogger()
+      let dependency = HealthStoreManagerDependencyImp(logger: logger)
       let healthStoreManager = HealthStoreManager(dependency: dependency)
       Task {
           await MainActor.run(body: {

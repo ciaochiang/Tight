@@ -9,13 +9,13 @@ import HealthKit
 import SwiftUI
 
 protocol HealthStoreManagerDependency {
-  var logger: Logger { get }
+  var logger: CustomLogger { get }
 }
 
 class HealthStoreManagerDependencyImp: HealthStoreManagerDependency {
-  var logger: Logger
+  var logger: CustomLogger
   
-  init(logger: Logger) {
+  init(logger: CustomLogger) {
     self.logger = logger
   }
 }

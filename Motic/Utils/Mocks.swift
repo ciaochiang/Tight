@@ -9,14 +9,15 @@ import Foundation
 import HealthKit
 
 class Mocks {
-    static var logger: Logger {
-        return Logger(configuration: AppConfiguration.loggerConfig)
+    static var logger: CustomLogger {
+        return CustomLogger(subSystem: .dev)
     }
     
-  static var mockHealthStoreManager: HealthStoreManager {
-    let dependency = HealthStoreManagerDependencyImp(logger: Logger(configuration: AppConfiguration.loggerConfig))
-    return HealthStoreManager(dependency: dependency)
-  }
+    static var mockHealthStoreManager: HealthStoreManager {
+        let logger = CustomLogger(subSystem: .dev)
+        let dependency = HealthStoreManagerDependencyImp(logger: logger)
+        return HealthStoreManager(dependency: dependency)
+    }
   
   static var mockActivity: Activity {
       // Define workout parameters

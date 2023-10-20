@@ -23,12 +23,13 @@ struct MoticApp: App {
     @StateObject var accountManager: AccountManager = AccountManager.shared
     @AppStorage("IS_ONBOARDING_COMPLETED") var isOnboardingCompleted: Bool = false
     var connectivity: ConnectivityProvider = ConnectivityProvider()
+    private var logger = CustomLogger()
 
     var body: some Scene {
         WindowGroup {
             if isOnboardingCompleted {
                 // Navigate to AppTabBar view
-                AppTabBarView()
+                AppTabBarView(logger: logger)
                     
             } else {
                 let viewModel = OnboardingViewModel(isOnboardingCompleted: $isOnboardingCompleted)

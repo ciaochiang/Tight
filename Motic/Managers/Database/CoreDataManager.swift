@@ -8,13 +8,13 @@
 import CoreData
 
 protocol CoreDataManagerDependency {
-    var logger: Logger { get }
+    var logger: CustomLogger { get }
 }
 
 class CoreDataManagerDependencyImp: CoreDataManagerDependency {
-    var logger: Logger
+    var logger: CustomLogger
     
-    init(logger: Logger) {
+    init(logger: CustomLogger) {
         self.logger = logger
     }
 }
@@ -32,7 +32,7 @@ class CoreDataManager {
             if let error = error {
                 dependency.logger.log("Error loading core data: \(error.localizedDescription)", level: .error)
             } else {
-                dependency.logger.log("Successfully loaded core data", level: .info)
+                dependency.logger.log("Successfully loaded core data")
             }
         }
     }
@@ -63,7 +63,7 @@ extension CoreDataManager {
             elapsedTimeEntity.status = Int16(elapsedTime.status.rawValue)
             elapsedTimeEntity.timestamp = elapsedTime.timestamp
             
-            dependency.logger.log("\(elapsedTimeEntity)", level: .info)
+            dependency.logger.log("\(elapsedTimeEntity)")
         }
         
         do {

@@ -12,14 +12,14 @@ import Combine
 
 protocol MainViewModelDependency {
   var preferenceManager: PreferenceManager { get }
-  var logger: Logger { get }
+  var logger: CustomLogger { get }
 }
 
 class MainViewModelDependencyImp: MainViewModelDependency {
   var preferenceManager: PreferenceManager
-  var logger: Logger
+  var logger: CustomLogger
   
-  init(preferenceManager: PreferenceManager, logger: Logger) {
+  init(preferenceManager: PreferenceManager, logger: CustomLogger) {
     self.preferenceManager = preferenceManager
     self.logger = logger
   }

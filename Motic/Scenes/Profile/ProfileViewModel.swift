@@ -10,17 +10,17 @@ import Combine
 
 protocol ProfileViewModelDependency {
   var preferenceManager: PreferenceManager { get }
-  var logger: Logger { get }
+  var logger: CustomLogger { get }
   var currentUser: BaseUser? { get }
 }
 
 struct ProfileViewModelDependencyImp: ProfileViewModelDependency {
   var preferenceManager: PreferenceManager
-  var logger: Logger
+  var logger: CustomLogger
   var currentUser: BaseUser?
   
   init(preferenceManager: PreferenceManager,
-       logger: Logger,
+       logger: CustomLogger,
        currentUser: BaseUser?) {
     self.preferenceManager = preferenceManager
     self.logger = logger

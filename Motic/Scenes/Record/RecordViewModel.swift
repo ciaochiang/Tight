@@ -11,17 +11,17 @@ import MapKit
 import Combine
 
 protocol RecordViewModelDependency {
-    var logger: Logger { get }
+    var logger: CustomLogger { get }
     var activitySessionManager: ActivitySessionManager { get }
     var wearableDeviceManager: WearableDeviceManager { get }
 }
 
 class RecordViewModelDependencyImp: RecordViewModelDependency {
-    var logger: Logger
+    var logger: CustomLogger
     var activitySessionManager: ActivitySessionManager
     var wearableDeviceManager: WearableDeviceManager
     
-    init(logger: Logger,
+    init(logger: CustomLogger,
          activitySessionManager: ActivitySessionManager,
          wearableDeviceManager: WearableDeviceManager) {
         self.logger = logger

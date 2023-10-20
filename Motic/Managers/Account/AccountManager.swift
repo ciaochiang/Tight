@@ -10,7 +10,7 @@ import AuthenticationServices
 
 class AccountManager: ObservableObject {
     static let shared = AccountManager()
-    let logger: Logger = Logger(configuration: AppConfiguration.loggerConfig)
+    let logger: CustomLogger = CustomLogger()
     
     @AppStorage("UserType") var userType: String?
     @Published var currentUser: BaseUser?
@@ -69,12 +69,12 @@ extension AccountManager {
                 UserDefaults.standard.setValue("apple", forKey: "UserType")
                 UserDefaults.standard.setValue(newUser.userId, forKey: "UserId")
                 UserDefaults.standard.setValue(userData, forKey: newUser.userId)
-                logger.log("Save apple user: \(newUser)", level: .info)
+                logger.log("Save apple user: \(newUser)")
                 
                 // login
                 currentUser = newUser
             default:
-                logger.log("\(auth.credential)", level: .info)
+                logger.log("\(auth.credential)")
             }
         case .failure(let error):
             logger.log("Error: \(error.localizedDescription)", level: .error)

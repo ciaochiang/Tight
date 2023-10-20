@@ -76,7 +76,7 @@ struct SportSelectorView: View {
 
 struct SportSelectorView_Previews: PreviewProvider {
     static var previews: some View {
-        let dependency = SportSelectorViewModelDependencyImp(logger: Logger.init(configuration: AppConfiguration.loggerConfig))
+        let dependency = SportSelectorViewModelDependencyImp(logger: Mocks.logger)
         let viewModel = SportSelectorViewModel(dependency: dependency)
         SportSelectorView(viewModel: viewModel, isPresented: .constant(false)) { sport in
             print("Select sport: \(sport.description)")

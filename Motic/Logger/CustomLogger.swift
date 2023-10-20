@@ -1,5 +1,5 @@
 //
-//  Logger.swift
+//  CustomLogger.swift
 //  Motic
 //
 //  Created by Ciao Chiang on 2023/9/17.
@@ -8,17 +8,15 @@
 import Foundation
 import os
 
-class CustomLogger {
+struct CustomLogger {
     private var logger: Logger
     
     enum SubSystem {
         case `default`
-        case dev
         
         var decription: String {
             switch self {
             case .`default`: return "default"
-            case .dev: return "dev"
             }
         }
     }
@@ -37,7 +35,8 @@ class CustomLogger {
         self.logger = Logger(subsystem: subSystem.decription, category: category.decription)
     }
     
-    func log(_ message: String, level: OSLogType = .default) {
+    func log(level: OSLogType = .default, message: String) {
         logger.log(level: level, "\(message)")
     }
 }
+

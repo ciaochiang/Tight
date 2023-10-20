@@ -98,9 +98,8 @@ struct ProfileView: View {
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-      let logger = Logger(configuration: AppConfiguration.loggerConfig)
       let dependency = ProfileViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
-                                                     logger: logger,
+                                                     logger: Mocks.logger,
                                                      currentUser: AccountManager.shared.currentUser)
       let viewModel = ProfileViewModel(dependency: dependency)
       ProfileView(viewModel: viewModel)

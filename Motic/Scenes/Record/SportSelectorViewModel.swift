@@ -9,13 +9,13 @@ import Foundation
 import SwiftUI
 
 protocol SportSelectorViewModelDependency {
-    var logger: Logger { get }
+    var logger: CustomLogger { get }
 }
 
 class SportSelectorViewModelDependencyImp: SportSelectorViewModelDependency {
-    var logger: Logger
+    var logger: CustomLogger
     
-    init(logger: Logger) {
+    init(logger: CustomLogger) {
         self.logger = logger
     }
 }

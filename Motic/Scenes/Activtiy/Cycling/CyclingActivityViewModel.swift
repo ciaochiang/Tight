@@ -21,13 +21,13 @@ struct ChartData<T>: Identifiable {
 }
 
 protocol CyclingActivityViewModelDependency {
-  var logger: Logger { get }
+  var logger: CustomLogger { get }
 }
 
 class CyclingActivityViewModelDependencyImp: CyclingActivityViewModelDependency {
-  var logger: Logger
+  var logger: CustomLogger
   
-  init(logger: Logger) {
+  init(logger: CustomLogger) {
     self.logger = logger
   }
 }
