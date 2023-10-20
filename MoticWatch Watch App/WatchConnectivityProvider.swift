@@ -38,7 +38,4 @@ class WatchConnectivityProvider: NSObject, WCSessionDelegate, ObservableObject {
         isReacable = activationState == .activated
         logger.log("[connectivity] isReachable: \(activationState == .activated)", level: .debug)
     }
-    
-    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
-    }
 }

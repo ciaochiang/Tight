@@ -24,6 +24,7 @@ class SportSelectorViewModelDependencyImp: SportSelectorViewModelDependency {
 
 class SportSelectorViewModel: ObservableObject {
     var dependency: SportSelectorViewModelDependency
+    @Published var isLoading: Bool = false
     @Published var allSports: [Sport] = []
     
     init(dependency: SportSelectorViewModelDependency) {
@@ -32,8 +33,13 @@ class SportSelectorViewModel: ObservableObject {
     
     func fetchAllSports() {
         dependency.logger.log("fetch all sports")
+        isLoading = true
         dependency.sportProvider.fetchAllSports { [weak self] sports in
             self?.allSports = sports
+            
+            DispatchQueue.main.async {
+                self?.isLoading = false
+            }
         }
     }
 }

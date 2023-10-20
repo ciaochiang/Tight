@@ -10,27 +10,31 @@ import SwiftUI
 struct SportSelectorView: View {
     private var logger: CustomLogger
     @StateObject var viewModel: SportSelectorViewModel
+    @StateObject var connectivity: WatchConnectivityProvider
     
     init(viewModel: SportSelectorViewModel, logger: CustomLogger) {
         self.logger = logger
         _viewModel = StateObject(wrappedValue: viewModel)
+        _connectivity = StateObject(wrappedValue: viewModel.dependency.sportProvider.connectivity)
     }
     
     var body: some View {
         ZStack {
-            VStack {
-                List {
-                    ForEach(viewModel.allSports, id: \.self) { sport in
-                        Text(sport.description)
+            if viewModel.isLoading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
+            } else {
+                VStack {
+                    List {
+                        ForEach(viewModel.allSports, id: \.self) { sport in
+                            Text(sport.description)
+                        }
                     }
                 }
             }
-            
-            Button("load") {
-                logger.log("click load button", level: .debug)
-                viewModel.fetchAllSports()
-            }
-            .opacity(viewModel.allSports.count > 0 ? 0 : 1)
+        }
+        .onAppear {
+            viewModel.fetchAllSports()
         }
     }
 }
