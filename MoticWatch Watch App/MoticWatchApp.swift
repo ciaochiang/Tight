@@ -13,11 +13,11 @@ struct MoticWatch_Watch_AppApp: App {
     
     var body: some Scene {
         WindowGroup {
-            let connectivity = WatchConnectivityProvider()
+            let connectivity = WatchConnectivityProvider(logger: logger)
             let sportProvider = SportProvider(connectivity: connectivity)
             let dependency = SportSelectorViewModelDependencyImp(logger: logger, sportProvider: sportProvider)
             let viewModel = SportSelectorViewModel(dependency: dependency)
-            SportSelectorView(viewModel: viewModel)
+            SportSelectorView(viewModel: viewModel, logger: logger)
         }
     }
 }

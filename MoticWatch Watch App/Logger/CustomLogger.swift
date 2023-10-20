@@ -13,12 +13,10 @@ struct CustomLogger {
 
     enum SubSystem {
         case `default`
-        case watch
 
         var decription: String {
             switch self {
             case .`default`: return "default"
-            case .watch: return "watch"
             }
         }
     }
@@ -33,11 +31,11 @@ struct CustomLogger {
         }
     }
 
-    init(subSystem: SubSystem = .watch, category: Category = .default) {
+    init(subSystem: SubSystem = .default, category: Category = .default) {
         self.logger = Logger(subsystem: subSystem.decription, category: category.decription)
     }
 
-    func log(level: OSLogType = .default, message: String) {
+    func log(_ message: String, level: OSLogType = .default) {
         logger.log(level: level, "\(message)")
     }
 }

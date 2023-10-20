@@ -31,7 +31,7 @@ class SportSelectorViewModel: ObservableObject {
     }
     
     func fetchAllSports() {
-        dependency.logger.log(level: .debug, message: "fetch all sports")
+        dependency.logger.log("fetch all sports")
         dependency.sportProvider.fetchAllSports { [weak self] sports in
             self?.allSports = sports
         }

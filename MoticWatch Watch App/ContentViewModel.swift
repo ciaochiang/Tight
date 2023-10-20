@@ -11,7 +11,7 @@ import HealthKit
 class ContentViewModel: ObservableObject {
   var supportedActivityTypes: [HKWorkoutActivityType] = [.cycling, .running]
     
-    var connectivity: WatchConnectivityProvider = WatchConnectivityProvider()
+    var connectivity: WatchConnectivityProvider = WatchConnectivityProvider(logger: CustomLogger())
     
     @Published var sports: [Sport] = []
 
