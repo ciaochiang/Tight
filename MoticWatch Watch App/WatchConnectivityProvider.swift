@@ -8,10 +8,33 @@
 import WatchConnectivity
 import SwiftUI
 
+enum SessionStatus {
+    case start
+    case pause
+    case resume
+    case stop
+    
+    init(status: String) {
+        switch status {
+        case "start": self = .start
+        case "pause": self = .pause
+        case "resume": self = .resume
+        case "stop": self = .stop
+        default: self = .stop
+        }
+    }
+}
+
+protocol WatchConnectivityProviderDelegate: AnyObject {
+    func didReceived(status: SessionStatus)
+}
+
 class WatchConnectivityProvider: NSObject, WCSessionDelegate, ObservableObject {
     private let session: WCSession
     private let logger: CustomLogger
     @Published var isReacable: Bool = false
+    
+    weak var delegate: WatchConnectivityProviderDelegate?
 
     init(session: WCSession = .default, logger: CustomLogger) {
         self.session = session
@@ -37,5 +60,12 @@ class WatchConnectivityProvider: NSObject, WCSessionDelegate, ObservableObject {
                  error: Error?) {
         isReacable = activationState == .activated
         logger.log("[connectivity] isReachable: \(activationState == .activated)", level: .debug)
+    }
+    
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+        if let status = message["status"] as? String {
+            let sessionStatus = SessionStatus(status: status)
+            delegate?.didReceived(status: sessionStatus)
+        }
     }
 }

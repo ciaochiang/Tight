@@ -60,6 +60,20 @@ class WearableDeviceManager: NSObject, ObservableObject {
         
         return false
     }
+    
+    /**
+     Apple Watch Only
+     */
+    func send(message: [String:Any], replyHandler: (([String: Any]) -> Void)?) -> Void {
+        if WCSession.default.isReachable {
+            WCSession.default.sendMessage(message, replyHandler: replyHandler) { (error) in
+                print(error.localizedDescription)
+            }
+        }
+        else {
+            dependency.logger.log("session is not reachable", level: .debug)
+        }
+    }
 }
 
 // MARK: WCSessionDelegate

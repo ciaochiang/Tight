@@ -11,7 +11,7 @@
 		C96E11A82ADE58EF00586D25 /* SportSelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96E11A72ADE58EF00586D25 /* SportSelectorViewModel.swift */; };
 		C96E11AB2ADE594600586D25 /* CustomLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96E11AA2ADE594600586D25 /* CustomLogger.swift */; };
 		E50163C92AB2E90500C87D67 /* MoticWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163C82AB2E90500C87D67 /* MoticWatchApp.swift */; };
-		E50163CB2AB2E90500C87D67 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163CA2AB2E90500C87D67 /* ContentView.swift */; };
+		E50163CB2AB2E90500C87D67 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163CA2AB2E90500C87D67 /* MainView.swift */; };
 		E50163CD2AB2E90600C87D67 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E50163CC2AB2E90600C87D67 /* Assets.xcassets */; };
 		E50163D02AB2E90600C87D67 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E50163CF2AB2E90600C87D67 /* Preview Assets.xcassets */; };
 		E50163DA2AB2E90700C87D67 /* MoticWatch_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163D92AB2E90700C87D67 /* MoticWatch_Watch_AppTests.swift */; };
@@ -20,7 +20,6 @@
 		E50163E92AB2E90700C87D67 /* MoticWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = E50163C62AB2E90500C87D67 /* MoticWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E50163F62AB333F100C87D67 /* ConnectivityProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163F52AB333F100C87D67 /* ConnectivityProvider.swift */; };
 		E50163F82AB346BD00C87D67 /* WatchConnectivityProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163F72AB346BD00C87D67 /* WatchConnectivityProvider.swift */; };
-		E50163FA2AB460F500C87D67 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163F92AB460F500C87D67 /* ContentViewModel.swift */; };
 		E50163FC2AB4638100C87D67 /* WorkoutSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163FB2AB4638100C87D67 /* WorkoutSessionManager.swift */; };
 		E51DE1E72AB8607200957395 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = E51DE1E62AB8607200957395 /* FirebaseCrashlytics */; };
 		E51DE1EA2AB861DE00957395 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E51DE1E92AB861DE00957395 /* GoogleService-Info.plist */; };
@@ -47,6 +46,7 @@
 		E521001C2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E521001B2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift */; };
 		E521001F2AB74D13000CF3AD /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E521001E2AB74D13000CF3AD /* AccountManager.swift */; };
 		E5349D232AE169D2003B4808 /* SportProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5349D222AE169D2003B4808 /* SportProvider.swift */; };
+		E5349D272AE56430003B4808 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5349D262AE56430003B4808 /* MainViewModel.swift */; };
 		E53CA8A62ADA550A0009D572 /* WearableDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53CA8A52ADA550A0009D572 /* WearableDeviceManager.swift */; };
 		E53CA8AB2ADBD0180009D572 /* WearableDeviceMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53CA8AA2ADBD0180009D572 /* WearableDeviceMainView.swift */; };
 		E53CA8AD2ADBD02A0009D572 /* WearableDeviceMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53CA8AC2ADBD02A0009D572 /* WearableDeviceMainViewModel.swift */; };
@@ -142,7 +142,7 @@
 		CE50CE7136F60940081E942A /* Pods_MoticTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoticTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E50163C62AB2E90500C87D67 /* MoticWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MoticWatch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E50163C82AB2E90500C87D67 /* MoticWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticWatchApp.swift; sourceTree = "<group>"; };
-		E50163CA2AB2E90500C87D67 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E50163CA2AB2E90500C87D67 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		E50163CC2AB2E90600C87D67 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E50163CF2AB2E90600C87D67 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E50163D52AB2E90600C87D67 /* MoticWatch Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MoticWatch Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -153,7 +153,6 @@
 		E50163F42AB30A4600C87D67 /* MoticWatch Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "MoticWatch Watch App.entitlements"; sourceTree = "<group>"; };
 		E50163F52AB333F100C87D67 /* ConnectivityProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityProvider.swift; sourceTree = "<group>"; };
 		E50163F72AB346BD00C87D67 /* WatchConnectivityProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityProvider.swift; sourceTree = "<group>"; };
-		E50163F92AB460F500C87D67 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		E50163FB2AB4638100C87D67 /* WorkoutSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSessionManager.swift; sourceTree = "<group>"; };
 		E51DE1E92AB861DE00957395 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E51DE1ED2AB8998E00957395 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
@@ -179,6 +178,7 @@
 		E521001B2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthStoreManager+HeartRate.swift"; sourceTree = "<group>"; };
 		E521001E2AB74D13000CF3AD /* AccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
 		E5349D222AE169D2003B4808 /* SportProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportProvider.swift; sourceTree = "<group>"; };
+		E5349D262AE56430003B4808 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		E53CA8A52ADA550A0009D572 /* WearableDeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WearableDeviceManager.swift; sourceTree = "<group>"; };
 		E53CA8AA2ADBD0180009D572 /* WearableDeviceMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WearableDeviceMainView.swift; sourceTree = "<group>"; };
 		E53CA8AC2ADBD02A0009D572 /* WearableDeviceMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WearableDeviceMainViewModel.swift; sourceTree = "<group>"; };
@@ -292,11 +292,11 @@
 				C96E11A92ADE593400586D25 /* Logger */,
 				E50163C82AB2E90500C87D67 /* MoticWatchApp.swift */,
 				E50163F42AB30A4600C87D67 /* MoticWatch Watch App.entitlements */,
-				E50163CA2AB2E90500C87D67 /* ContentView.swift */,
+				E50163CA2AB2E90500C87D67 /* MainView.swift */,
+				E5349D262AE56430003B4808 /* MainViewModel.swift */,
 				E50163CC2AB2E90600C87D67 /* Assets.xcassets */,
 				E50163CE2AB2E90600C87D67 /* Preview Content */,
 				E50163F72AB346BD00C87D67 /* WatchConnectivityProvider.swift */,
-				E50163F92AB460F500C87D67 /* ContentViewModel.swift */,
 				E50163FB2AB4638100C87D67 /* WorkoutSessionManager.swift */,
 				C96E11A52ADE58B800586D25 /* SportSelectorView.swift */,
 				C96E11A72ADE58EF00586D25 /* SportSelectorViewModel.swift */,
@@ -877,9 +877,9 @@
 				E50163FC2AB4638100C87D67 /* WorkoutSessionManager.swift in Sources */,
 				E5349D232AE169D2003B4808 /* SportProvider.swift in Sources */,
 				C96E11A82ADE58EF00586D25 /* SportSelectorViewModel.swift in Sources */,
-				E50163FA2AB460F500C87D67 /* ContentViewModel.swift in Sources */,
 				C96E11A62ADE58B800586D25 /* SportSelectorView.swift in Sources */,
-				E50163CB2AB2E90500C87D67 /* ContentView.swift in Sources */,
+				E5349D272AE56430003B4808 /* MainViewModel.swift in Sources */,
+				E50163CB2AB2E90500C87D67 /* MainView.swift in Sources */,
 				E50163C92AB2E90500C87D67 /* MoticWatchApp.swift in Sources */,
 				E50163F82AB346BD00C87D67 /* WatchConnectivityProvider.swift in Sources */,
 				C96E11AB2ADE594600586D25 /* CustomLogger.swift in Sources */,

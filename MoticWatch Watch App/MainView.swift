@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  MainView.swift
 //  MoticWatch Watch App
 //
 //  Created by Ciao Chiang on 2023/9/14.
@@ -7,12 +7,15 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    @StateObject var workoutSessionManager: WorkoutSessionManager = WorkoutSessionManager()
-    @StateObject var viewModel: ContentViewModel = ContentViewModel()
+struct MainView: View {
+    @StateObject var viewModel: MainViewModel
     @State var isRecording: Bool = false
     @State var isPaused: Bool = false
-
+    
+    init(viewModel: MainViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
+    
     var body: some View {
         VStack {
             if isRecording == false && isPaused == false {
@@ -27,7 +30,7 @@ struct ContentView: View {
         .frame(maxHeight: .infinity)
         .background(Color.clear)
         .onAppear {
-            workoutSessionManager.authorizeHealthKit()
+//            workoutSessionManager.authorizeHealthKit()
         }
     }
     
@@ -43,13 +46,9 @@ struct ContentView: View {
         .onTapGesture {
             isRecording.toggle()
             
-            
-            viewModel.fetchAllSports()
-
-            
-            if isRecording {
-                workoutSessionManager.createWorkoutSession()
-            }
+//            if isRecording {
+//                workoutSessionManager.createWorkoutSession()
+//            }
         }
     }
     
@@ -78,13 +77,20 @@ struct ContentView: View {
         .padding()
         .onTapGesture {
             isRecording = false
-            workoutSessionManager.stopWorkoutSession()
+//            workoutSessionManager.stopWorkoutSession()
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        let logger = CustomLogger()
+        let connectivity = WatchConnectivityProvider(logger: logger)
+        let workoutSessionManager = WorkoutSessionManager()
+        let dependency = MainViewModelDependencyImp(logger: logger,
+                                                    connectivity: connectivity,
+                                                    workoutSessionManager: workoutSessionManager)
+        let viewModel = MainViewModel(dependency: dependency)
+        MainView(viewModel: viewModel)
     }
 }

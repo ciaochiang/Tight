@@ -9,18 +9,28 @@ import SwiftUI
 
 @main
 struct MoticWatch_Watch_AppApp: App {
-    private var logger = CustomLogger()
+    private var logger: CustomLogger
+    private var connectivity: WatchConnectivityProvider
+    
+    init() {
+        self.logger = CustomLogger()
+        self.connectivity = WatchConnectivityProvider(logger: logger)
+    }
 
     var body: some Scene {
         WindowGroup {
             TabView {
-                ContentView()
+                let workoutSessionManager = WorkoutSessionManager()
+                let mainViewDependency = MainViewModelDependencyImp(logger: logger,
+                                                            connectivity: connectivity,
+                                                            workoutSessionManager: workoutSessionManager)
+                let mainViewModel = MainViewModel(dependency: mainViewDependency)
+                MainView(viewModel: mainViewModel)
                 
-                let connectivity = WatchConnectivityProvider(logger: logger)
                 let sportProvider = SportProvider(connectivity: connectivity)
-                let dependency = SportSelectorViewModelDependencyImp(logger: logger, sportProvider: sportProvider)
-                let viewModel = SportSelectorViewModel(dependency: dependency)
-                SportSelectorView(viewModel: viewModel, logger: logger)
+                let sportSelectorViewDependency = SportSelectorViewModelDependencyImp(logger: logger, sportProvider: sportProvider)
+                let sportSelectorViewModel = SportSelectorViewModel(dependency: sportSelectorViewDependency)
+                SportSelectorView(viewModel: sportSelectorViewModel, logger: logger)
             }
         }
     }

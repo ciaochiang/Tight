@@ -60,17 +60,21 @@ class RecordViewModel: ObservableObject {
     
     func pauseSession() {
         dependency.activitySessionManager.pauseSession()
+        dependency.wearableDeviceManager.send(message: ["status": "pause"], replyHandler: nil)
     }
     
     func resumeSession() {
         dependency.activitySessionManager.resumeSession()
+        dependency.wearableDeviceManager.send(message: ["status": "resume"], replyHandler: nil)
     }
     
     func stopSession() {
         dependency.activitySessionManager.stopSession()
+        dependency.wearableDeviceManager.send(message: ["status": "stop"], replyHandler: nil)
     }
     
     func startSession() {
         dependency.activitySessionManager.startSession(with: selectedSport)
+        dependency.wearableDeviceManager.send(message: ["status": "start"], replyHandler: nil)
     }
 }
