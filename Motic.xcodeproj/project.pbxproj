@@ -18,7 +18,6 @@
 		E50163E42AB2E90700C87D67 /* MoticWatch_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163E32AB2E90700C87D67 /* MoticWatch_Watch_AppUITests.swift */; };
 		E50163E62AB2E90700C87D67 /* MoticWatch_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163E52AB2E90700C87D67 /* MoticWatch_Watch_AppUITestsLaunchTests.swift */; };
 		E50163E92AB2E90700C87D67 /* MoticWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = E50163C62AB2E90500C87D67 /* MoticWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		E50163F62AB333F100C87D67 /* ConnectivityProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163F52AB333F100C87D67 /* ConnectivityProvider.swift */; };
 		E50163F82AB346BD00C87D67 /* WatchConnectivityProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163F72AB346BD00C87D67 /* WatchConnectivityProvider.swift */; };
 		E50163FC2AB4638100C87D67 /* WorkoutSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163FB2AB4638100C87D67 /* WorkoutSessionManager.swift */; };
 		E51DE1E72AB8607200957395 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = E51DE1E62AB8607200957395 /* FirebaseCrashlytics */; };
@@ -151,7 +150,6 @@
 		E50163E32AB2E90700C87D67 /* MoticWatch_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticWatch_Watch_AppUITests.swift; sourceTree = "<group>"; };
 		E50163E52AB2E90700C87D67 /* MoticWatch_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticWatch_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E50163F42AB30A4600C87D67 /* MoticWatch Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "MoticWatch Watch App.entitlements"; sourceTree = "<group>"; };
-		E50163F52AB333F100C87D67 /* ConnectivityProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityProvider.swift; sourceTree = "<group>"; };
 		E50163F72AB346BD00C87D67 /* WatchConnectivityProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityProvider.swift; sourceTree = "<group>"; };
 		E50163FB2AB4638100C87D67 /* WorkoutSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSessionManager.swift; sourceTree = "<group>"; };
 		E51DE1E92AB861DE00957395 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -332,7 +330,6 @@
 		E51DE1EB2AB8684800957395 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				E50163F52AB333F100C87D67 /* ConnectivityProvider.swift */,
 				E51DE2012ABCA03C00957395 /* Mocks.swift */,
 				E51DE22F2AC2BB3200957395 /* Error.swift */,
 			);
@@ -931,7 +928,6 @@
 				E51DE1F32AB9555A00957395 /* AppleUser.swift in Sources */,
 				E51DE2082ABDFB3A00957395 /* HealthStoreManager+Weather.swift in Sources */,
 				E5E387352AD6E016008A7353 /* CoreDataManager.swift in Sources */,
-				E50163F62AB333F100C87D67 /* ConnectivityProvider.swift in Sources */,
 				E59EB8482AB58BF20057F630 /* OnboardingView.swift in Sources */,
 				E59EB8532AB5EE650057F630 /* NotificationManager.swift in Sources */,
 				E52100182AB7204A000CF3AD /* BaseSample.swift in Sources */,

@@ -102,10 +102,9 @@ struct RecordView: View {
 
 struct RecordView_Previews: PreviewProvider {
     static var previews: some View {
-        let wdManagerDependency = WearableDeviceManagerDependencyImp(logger: Mocks.logger)
-        let wdManager = WearableDeviceManager(dependency: wdManagerDependency)
-        
-        let dependency = RecordViewModelDependencyImp(logger: Mocks.logger,
+        let logger = CustomLogger()
+        let wdManager = WearableDeviceManager(logger: logger)
+        let dependency = RecordViewModelDependencyImp(logger: logger,
                                                       activitySessionManager: ActivitySessionManager.shared, wearableDeviceManager: wdManager)
         let viewModel = RecordViewModel(dependency: dependency)
         

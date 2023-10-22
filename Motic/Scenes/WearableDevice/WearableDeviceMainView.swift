@@ -52,10 +52,9 @@ struct WearableDeviceMainView: View {
 
 struct WearableDeviceMainView_Previews: PreviewProvider {
     static var previews: some View {
-        
-        let wearableDeviceManagerDependency = WearableDeviceManagerDependencyImp(logger: Mocks.logger)
-        let wearableDeviceManager = WearableDeviceManager(dependency: wearableDeviceManagerDependency)
-        let dependency = WearableDeviceMainViewModelDependencyImp(logger: Mocks.logger, wearableDeviceManager: wearableDeviceManager)
+        let logger = CustomLogger()
+        let wearableDeviceManager = WearableDeviceManager(logger: logger)
+        let dependency = WearableDeviceMainViewModelDependencyImp(logger: logger, wearableDeviceManager: wearableDeviceManager)
         let viewModel = WearableDeviceMainViewModel(dependency: dependency)
         WearableDeviceMainView(viewModel: viewModel, isPresented: .constant(false))
     }

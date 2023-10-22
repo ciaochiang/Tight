@@ -9,8 +9,6 @@ import SwiftUI
 
 struct MainView: View {
     @StateObject var viewModel: MainViewModel
-    @State var isRecording: Bool = false
-    @State var isPaused: Bool = false
     
     init(viewModel: MainViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -18,7 +16,7 @@ struct MainView: View {
     
     var body: some View {
         VStack {
-            if isRecording == false && isPaused == false {
+            if viewModel.isRecording == false && viewModel.isPaused == false {
                 playButtonView
             } else {
                 VStack {
@@ -44,7 +42,7 @@ struct MainView: View {
         .cornerRadius(16)
         .padding()
         .onTapGesture {
-            isRecording.toggle()
+            viewModel.onTapPlayButton()
             
 //            if isRecording {
 //                workoutSessionManager.createWorkoutSession()
@@ -54,7 +52,7 @@ struct MainView: View {
     
     var pauseButtonView: some View {
         VStack {
-            Image(systemName: isPaused ? "arrow.triangle.2.circlepath" : "pause")
+            Image(systemName: viewModel.isPaused ? "arrow.triangle.2.circlepath" : "pause")
         }
         .frame(maxHeight: .infinity)
         .frame(maxWidth: .infinity)
@@ -62,7 +60,7 @@ struct MainView: View {
         .cornerRadius(16)
         .padding()
         .onTapGesture {
-            isPaused.toggle()
+            viewModel.onTapPauseButton()
         }
     }
     
@@ -76,7 +74,7 @@ struct MainView: View {
         .cornerRadius(16)
         .padding()
         .onTapGesture {
-            isRecording = false
+            viewModel.onTapStopButton()
 //            workoutSessionManager.stopWorkoutSession()
         }
     }

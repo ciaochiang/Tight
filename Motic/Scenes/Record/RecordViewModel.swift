@@ -42,6 +42,7 @@ class RecordViewModel: ObservableObject {
     
     init(dependency: RecordViewModelDependency) {
         self.dependency = dependency
+        self.dependency.wearableDeviceManager.delegate = self
         
         selectedSport = preference.retrieveSelectedSport()
     }
@@ -78,3 +79,10 @@ class RecordViewModel: ObservableObject {
         dependency.wearableDeviceManager.send(message: ["status": "start"], replyHandler: nil)
     }
 }
+
+extension RecordViewModel: WearableDeviceManagerDelegate {
+    func didReceived(status: SessionStatus) {
+        dependency.logger.log("record view recived status: \(status)", level: .debug)
+    }
+}
+    

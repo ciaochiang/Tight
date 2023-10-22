@@ -11,11 +11,12 @@ struct AppTabBarView: View {
     @State private var tabSelection: TabBarItemType = .home
     @State var isRecordViewPresented: Bool = false
     private var logger: CustomLogger
-
+    private var wearableDeviceManager: WearableDeviceManager
     private var mainView: MainView
     
-    init(logger: CustomLogger) {
+    init(logger: CustomLogger, wearableDeviceManager: WearableDeviceManager) {
         self.logger = logger
+        self.wearableDeviceManager = wearableDeviceManager
         
         let dependency = MainViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
                                                     logger: logger)
@@ -33,10 +34,9 @@ struct AppTabBarView: View {
             Color.green.tabBarItem(type: .preference, selection: $tabSelection)
         }
         .sheet(isPresented: $isRecordViewPresented) {
-            let wdManagerDependency = WearableDeviceManagerDependencyImp(logger: logger)
-            let wdManager = WearableDeviceManager(dependency: wdManagerDependency)
             let dependency = RecordViewModelDependencyImp(logger: logger,
-                                                          activitySessionManager: ActivitySessionManager.shared, wearableDeviceManager: wdManager)
+                                                          activitySessionManager: ActivitySessionManager.shared,
+                                                          wearableDeviceManager: wearableDeviceManager)
             let viewModel = RecordViewModel(dependency: dependency)
             RecordView(viewModel: viewModel, isPresented: $isRecordViewPresented)
                 .presentationDetents([.large])
@@ -47,6 +47,7 @@ struct AppTabBarView: View {
 struct AppTabBarView_Previews: PreviewProvider {
     static var previews: some View {
         let logger = CustomLogger()
-        AppTabBarView(logger: logger)
+        let wearableDeviceManager = WearableDeviceManager(logger: logger)
+        AppTabBarView(logger: logger, wearableDeviceManager: wearableDeviceManager)
     }
 }

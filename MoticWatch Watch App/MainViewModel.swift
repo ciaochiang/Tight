@@ -29,10 +29,31 @@ class MainViewModelDependencyImp: MainViewModelDependency {
 
 class MainViewModel: ObservableObject {
     var dependency: MainViewModelDependency
+    @Published var isRecording: Bool = false
+    @Published var isPaused: Bool = false
     
     init(dependency: MainViewModelDependency) {
         self.dependency = dependency
         self.dependency.connectivity.delegate = self
+    }
+    
+    func onTapPlayButton() {
+        isRecording.toggle()
+        dependency.connectivity.send(message: ["status": "start"], replyHandler: nil)
+    }
+    
+    func onTapPauseButton() {
+        isPaused.toggle()
+        if isPaused == true {
+            dependency.connectivity.send(message: ["status": "pause"], replyHandler: nil)
+        } else {
+            dependency.connectivity.send(message: ["status": "resume"], replyHandler: nil)
+        }
+    }
+    
+    func onTapStopButton() {
+        isRecording = false
+        dependency.connectivity.send(message: ["status": "stop"], replyHandler: nil)
     }
 }
 

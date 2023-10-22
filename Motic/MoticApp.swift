@@ -22,14 +22,19 @@ struct MoticApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var accountManager: AccountManager = AccountManager.shared
     @AppStorage("IS_ONBOARDING_COMPLETED") var isOnboardingCompleted: Bool = false
-    var connectivity: ConnectivityProvider = ConnectivityProvider()
-    private var logger = CustomLogger()
+    private var logger: CustomLogger
+    private var wearableDeviceManager: WearableDeviceManager
+    
+    init() {
+        self.logger = CustomLogger()
+        self.wearableDeviceManager = WearableDeviceManager(logger: logger)
+    }
 
     var body: some Scene {
         WindowGroup {
             if isOnboardingCompleted {
                 // Navigate to AppTabBar view
-                AppTabBarView(logger: logger)
+                AppTabBarView(logger: logger, wearableDeviceManager: wearableDeviceManager)
                     
             } else {
                 let viewModel = OnboardingViewModel(isOnboardingCompleted: $isOnboardingCompleted)
