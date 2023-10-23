@@ -22,8 +22,8 @@ struct MoticWatch_Watch_AppApp: App {
             TabView {
                 let workoutSessionManager = WorkoutSessionManager()
                 let mainViewDependency = MainViewModelDependencyImp(logger: logger,
-                                                            connectivity: connectivity,
-                                                            workoutSessionManager: workoutSessionManager)
+                                                                    connectivity: connectivity,
+                                                                    workoutSessionManager: workoutSessionManager)
                 let mainViewModel = MainViewModel(dependency: mainViewDependency)
                 MainView(viewModel: mainViewModel)
                 

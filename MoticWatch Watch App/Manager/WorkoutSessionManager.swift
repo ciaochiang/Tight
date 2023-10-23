@@ -9,10 +9,16 @@ import Foundation
 import SwiftUI
 import HealthKit
 
+protocol WorkoutSessionManagerDelegate: AnyObject {
+    func didReceived(heartRate: Double)
+}
+
 class WorkoutSessionManager: NSObject, ObservableObject, HKWorkoutSessionDelegate {
-  @State var healthStore = HKHealthStore()
-  @Published var workoutSessionIsStarted: Bool = false
-  var workoutSession: HKWorkoutSession?
+    @State var healthStore = HKHealthStore()
+    @Published var workoutSessionIsStarted: Bool = false
+    @Published var heartRate: Double = 0.0
+    var workoutSession: HKWorkoutSession?
+    weak var delegate: WorkoutSessionManagerDelegate?
   
   let infoToRead = Set([
     HKSampleType.characteristicType(forIdentifier: .biologicalSex)!,
@@ -85,6 +91,35 @@ class WorkoutSessionManager: NSObject, ObservableObject, HKWorkoutSessionDelegat
       // Handle session failure
     print(error)
   }
+    
+    func startHeartRateMonitoring() {
+        let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
+        healthStore.requestAuthorization(toShare: [], read: [heartRateType]) { (success, error) in
+            if success {
+                let heartRateQuery = HKObserverQuery(sampleType: heartRateType, predicate: nil) { (query, completionHandler, error) in
+                    self.fetchHeartRateData()
+                }
+                self.healthStore.execute(heartRateQuery)
+            } else {
+                // Handle authorization failure
+            }
+        }
+    }
+    
+    private func fetchHeartRateData() {
+        let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
+        let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: false)
+        let heartRateQuery = HKSampleQuery(sampleType: heartRateType, predicate: nil, limit: 1, sortDescriptors: [sortDescriptor]) { (query, samples, error) in
+            if let sample = samples?.first as? HKQuantitySample {
+                DispatchQueue.main.async {
+                    let heartRateUnit = HKUnit.count().unitDivided(by: HKUnit.minute())
+                    self.heartRate = sample.quantity.doubleValue(for: heartRateUnit)
+                    self.delegate?.didReceived(heartRate: self.heartRate)
+                }
+            }
+        }
+        healthStore.execute(heartRateQuery)
+    }
   
 //  func sendHeartRate(heartRate: Double) {
 //    if WCSession.default.isReachable {

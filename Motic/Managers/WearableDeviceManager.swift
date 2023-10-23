@@ -37,6 +37,7 @@ enum SessionStatus {
 
 protocol WearableDeviceManagerDelegate: AnyObject {
     func didReceived(status: SessionStatus)
+    func didReceived(heartRate: Double)
 }
 
 class WearableDeviceManager: NSObject, ObservableObject {
@@ -109,6 +110,8 @@ extension WearableDeviceManager: WCSessionDelegate {
         if let status = message["status"] as? String {
             let sessionStatus = SessionStatus(status: status)
             delegate?.didReceived(status: sessionStatus)
+        } else if let heartRate = message["heartRate"] as? Double {
+            delegate?.didReceived(heartRate: heartRate)
         }
     }
     

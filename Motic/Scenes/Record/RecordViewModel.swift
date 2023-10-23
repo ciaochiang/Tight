@@ -37,6 +37,7 @@ class RecordViewModel: ObservableObject {
     @Published var isSportSelectorPresented: Bool = false
     @Published var isWearableDeviceSelectorPresented: Bool = false
     @Published var selectedSport: SportType = .cycling
+    @Published var heartRate: Double = 0.0
     
     var preference: UserPreference = UserPreference()
     
@@ -83,6 +84,14 @@ class RecordViewModel: ObservableObject {
 extension RecordViewModel: WearableDeviceManagerDelegate {
     func didReceived(status: SessionStatus) {
         dependency.logger.log("record view recived status: \(status)", level: .debug)
+    }
+    
+    func didReceived(heartRate: Double) {
+        dependency.logger.log("[iPhone] record view received heart rate: \(heartRate)", level: .debug)
+        
+        DispatchQueue.main.async {
+            self.heartRate = heartRate
+        }
     }
 }
     

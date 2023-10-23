@@ -35,15 +35,23 @@ class MainViewModel: ObservableObject {
     init(dependency: MainViewModelDependency) {
         self.dependency = dependency
         self.dependency.connectivity.delegate = self
+        self.dependency.workoutSessionManager.delegate = self
     }
     
-    func onTapPlayButton() {
+    func onTapPlayButton(isReceived: Bool = false) {
         isRecording.toggle()
+        
+        // Start monitoring heart rate
+        dependency.workoutSessionManager.startHeartRateMonitoring()
+        
+        guard isReceived == false else { return }
         dependency.connectivity.send(message: ["status": "start"], replyHandler: nil)
     }
     
-    func onTapPauseButton() {
+    func onTapPauseButton(isReceived: Bool = false) {
         isPaused.toggle()
+        
+        guard isReceived == false else { return }
         if isPaused == true {
             dependency.connectivity.send(message: ["status": "pause"], replyHandler: nil)
         } else {
@@ -51,14 +59,31 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    func onTapStopButton() {
+    func onTapStopButton(isReceived: Bool = false) {
         isRecording = false
+        
+        guard isReceived == false else { return }
         dependency.connectivity.send(message: ["status": "stop"], replyHandler: nil)
     }
 }
 
 extension MainViewModel: WatchConnectivityProviderDelegate {
     func didReceived(status: SessionStatus) {
+        switch status {
+        case .start: onTapPlayButton(isReceived: true)
+        case .stop: onTapStopButton(isReceived: true)
+        case .pause: onTapPauseButton(isReceived: true)
+        case .resume: onTapPlayButton(isReceived: true)
+        }
         dependency.logger.log("Main viewmodel received status: \(status)")
+    }
+}
+
+extension MainViewModel: WorkoutSessionManagerDelegate {
+    func didReceived(heartRate: Double) {
+        dependency.logger.log("Heart Rate: \(heartRate)", level: .debug)
+        
+        // Send to iPhone
+        dependency.connectivity.send(message: ["heartRate": heartRate], replyHandler: nil)
     }
 }

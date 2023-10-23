@@ -295,7 +295,6 @@
 				E50163CC2AB2E90600C87D67 /* Assets.xcassets */,
 				E50163CE2AB2E90600C87D67 /* Preview Content */,
 				E50163F72AB346BD00C87D67 /* WatchConnectivityProvider.swift */,
-				E50163FB2AB4638100C87D67 /* WorkoutSessionManager.swift */,
 				C96E11A52ADE58B800586D25 /* SportSelectorView.swift */,
 				C96E11A72ADE58EF00586D25 /* SportSelectorViewModel.swift */,
 			);
@@ -433,6 +432,7 @@
 		E5349D212AE169B9003B4808 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				E50163FB2AB4638100C87D67 /* WorkoutSessionManager.swift */,
 				E5349D222AE169D2003B4808 /* SportProvider.swift */,
 			);
 			path = Manager;

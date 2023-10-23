@@ -206,7 +206,7 @@ struct RecordPanelView: View {
             .frame(maxWidth: .infinity)
 
             VStack {
-                Text("152")
+                Text(String(format: "%.1f", viewModel.heartRate))
                     .font(.title3)
                     .fontWeight(.semibold)
                     .foregroundColor(.themeStyle.theme.green)
