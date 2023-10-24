@@ -39,7 +39,9 @@ class MainViewModel: ObservableObject {
     }
     
     func onTapPlayButton(isReceived: Bool = false) {
-        isRecording.toggle()
+        DispatchQueue.main.async {
+            self.isRecording.toggle()
+        }
         
         // Start monitoring heart rate
         dependency.workoutSessionManager.startHeartRateMonitoring()
@@ -49,7 +51,9 @@ class MainViewModel: ObservableObject {
     }
     
     func onTapPauseButton(isReceived: Bool = false) {
-        isPaused.toggle()
+        DispatchQueue.main.async {
+            self.isPaused.toggle()
+        }
         
         guard isReceived == false else { return }
         if isPaused == true {
@@ -60,7 +64,12 @@ class MainViewModel: ObservableObject {
     }
     
     func onTapStopButton(isReceived: Bool = false) {
-        isRecording = false
+        // Stop heart rate monitoring
+        dependency.workoutSessionManager.stopHeartRateMonitoring()
+        
+        DispatchQueue.main.async {
+            self.isRecording = false
+        }
         
         guard isReceived == false else { return }
         dependency.connectivity.send(message: ["status": "stop"], replyHandler: nil)

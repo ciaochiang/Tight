@@ -18,6 +18,7 @@ class WorkoutSessionManager: NSObject, ObservableObject, HKWorkoutSessionDelegat
     @Published var workoutSessionIsStarted: Bool = false
     @Published var heartRate: Double = 0.0
     var workoutSession: HKWorkoutSession?
+    var heartRateObserverQuery: HKObserverQuery?
     weak var delegate: WorkoutSessionManagerDelegate?
   
   let infoToRead = Set([
@@ -99,11 +100,17 @@ class WorkoutSessionManager: NSObject, ObservableObject, HKWorkoutSessionDelegat
                 let heartRateQuery = HKObserverQuery(sampleType: heartRateType, predicate: nil) { (query, completionHandler, error) in
                     self.fetchHeartRateData()
                 }
+                self.heartRateObserverQuery = heartRateQuery
                 self.healthStore.execute(heartRateQuery)
             } else {
                 // Handle authorization failure
             }
         }
+    }
+    
+    func stopHeartRateMonitoring() {
+        guard let heartRateQuery = heartRateObserverQuery else { return }
+        healthStore.stop(heartRateQuery)
     }
     
     private func fetchHeartRateData() {
