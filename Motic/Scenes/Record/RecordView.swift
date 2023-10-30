@@ -143,11 +143,12 @@ struct RecordPanelView: View {
     
     var body: some View {
         VStack {
-            HStack(spacing: 32) {
+            HStack(alignment: .center, spacing: 16) {
                 sportSelection
+                activeTimeCounter
                 wearableDeviceSelection
             }
-            activeTimeCounter.padding()
+            .padding()
             metricSection
             startButton
         }
@@ -166,7 +167,7 @@ struct RecordPanelView: View {
                 }
 
         }
-        .padding(.top)
+        .padding(.leading)
     }
     
     var wearableDeviceSelection: some View {
@@ -181,7 +182,7 @@ struct RecordPanelView: View {
                 }
 
         }
-        .padding(.top)
+        .padding(.trailing)
     }
     
     var activeTimeCounter: some View {
@@ -189,9 +190,12 @@ struct RecordPanelView: View {
             Text(activitySessionManager.sessionStatus == .pause
                  ? "\(activitySessionManager.restElapsedSeconds.formatTimeInterval)"
                  : "\(activitySessionManager.acitveElapsedSeconds.formatTimeInterval)")
+                .frame(maxWidth: .infinity, alignment: .center)
+                .frame(maxHeight: 60)
                 .font(.title)
                 .fontWeight(.semibold)
                 .foregroundColor(.themeStyle.theme.primary)
+
         }
         .onReceive(activitySessionManager.timer) { _ in
             activitySessionManager.handleTimerAction()
