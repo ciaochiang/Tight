@@ -8,7 +8,7 @@
 import WatchConnectivity
 import SwiftUI
 
-enum SessionStatus {
+enum SessionStatus: Int {
     case start
     case pause
     case resume
@@ -26,7 +26,9 @@ enum SessionStatus {
 }
 
 protocol WatchConnectivityProviderDelegate: AnyObject {
+    func connectivityStatusChanged(isReachable: Bool)
     func didReceived(status: SessionStatus)
+    func currentSessionStatus() -> SessionStatus
 }
 
 class WatchConnectivityProvider: NSObject, WCSessionDelegate, ObservableObject {
@@ -45,8 +47,8 @@ class WatchConnectivityProvider: NSObject, WCSessionDelegate, ObservableObject {
     }
     
     func send(message: [String:Any], replyHandler: (([String: Any]) -> Void)?) -> Void {        
-        if WCSession.default.isReachable {
-            WCSession.default.sendMessage(message, replyHandler: replyHandler) { (error) in
+        if session.isReachable {
+            session.sendMessage(message, replyHandler: replyHandler) { (error) in
                 print(error.localizedDescription)
             }
         }
@@ -66,6 +68,14 @@ class WatchConnectivityProvider: NSObject, WCSessionDelegate, ObservableObject {
         if let status = message["status"] as? String {
             let sessionStatus = SessionStatus(status: status)
             delegate?.didReceived(status: sessionStatus)
+        }
+    }
+    
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
+        if let request = message["request"] as? String,
+            request == "currentSessionStatus",
+           let status = delegate?.currentSessionStatus() {
+            replyHandler(["currentStatus": status.rawValue])
         }
     }
 }

@@ -103,9 +103,15 @@ struct RecordView: View {
 struct RecordView_Previews: PreviewProvider {
     static var previews: some View {
         let logger = CustomLogger()
-        let wdManager = WearableDeviceManager(logger: logger)
+        let wearableDeviceManager = WearableDeviceManager(logger: logger)
+        let storeManagerDependency = CoreDataManagerDependencyImp(logger: logger)
+        let storeManager = CoreDataManager(dependency: storeManagerDependency)
+        let activitySessionManager = ActivitySessionManager(logger: logger,
+                                                            storeManager: storeManager,
+                                                            wearableDeviceManager: wearableDeviceManager)
         let dependency = RecordViewModelDependencyImp(logger: logger,
-                                                      activitySessionManager: ActivitySessionManager.shared, wearableDeviceManager: wdManager)
+                                                      activitySessionManager: activitySessionManager,
+                                                      wearableDeviceManager: wearableDeviceManager)
         let viewModel = RecordViewModel(dependency: dependency)
         
         Group {
@@ -180,7 +186,7 @@ struct RecordPanelView: View {
     
     var activeTimeCounter: some View {
         VStack {
-            Text(activitySessionManager.recordingState == .paused
+            Text(activitySessionManager.sessionStatus == .pause
                  ? "\(activitySessionManager.restElapsedSeconds.formatTimeInterval)"
                  : "\(activitySessionManager.acitveElapsedSeconds.formatTimeInterval)")
                 .font(.title)
@@ -231,7 +237,7 @@ struct RecordPanelView: View {
     
     var startButton: some View {
         HStack(spacing: 8) {
-            if viewModel.dependency.activitySessionManager.recordingState == .notStarted {
+            if viewModel.dependency.activitySessionManager.sessionStatus == .stop {
                 Button {
                     activitySessionManager.isRecording
                     ? viewModel.stopSession()
@@ -253,11 +259,11 @@ struct RecordPanelView: View {
             } else {
                 Button {
                     // Pause
-                    activitySessionManager.recordingState == .recording
+                    activitySessionManager.sessionStatus == .start
                     ? viewModel.pauseSession()
                     : viewModel.resumeSession()
                 } label: {
-                    Text(activitySessionManager.recordingState == .recording  ? "PAUSE" : "RESUME")
+                    Text(activitySessionManager.sessionStatus == .start  ? "PAUSE" : "RESUME")
                         .font(.title3)
                         .fontWeight(.bold)
                         .frame(maxWidth: .infinity)

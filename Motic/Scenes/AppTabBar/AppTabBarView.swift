@@ -7,16 +7,57 @@
 
 import SwiftUI
 
+class AppTabBarViewModel: ObservableObject {
+    var logger: CustomLogger
+    var activitySessionManager: ActivitySessionManager
+    var wearableDeviceManager: WearableDeviceManager
+    
+    init(logger: CustomLogger,
+         activitySessionManager: ActivitySessionManager,
+         wearableDeviceManager: WearableDeviceManager) {
+        self.logger = logger
+        self.activitySessionManager = activitySessionManager
+        self.wearableDeviceManager = wearableDeviceManager
+        self.wearableDeviceManager.delegate = self
+        
+        // Sync session status
+        fetchWatchSessionStatus()
+    }
+    
+    /**
+     Get session status from Apple Watch
+     */
+    func fetchWatchSessionStatus() {
+//        wearableDeviceManager.send(message: ["request": "currentStatus"]) { response in
+//
+//        }
+    }
+}
+
+extension AppTabBarViewModel: WearableDeviceManagerDelegate {
+    func didReceived(status: SessionStatus) {
+        activitySessionManager.setSessionStatus(with: status)
+    }
+    
+    func didReceived(heartRate: Double) {
+        activitySessionManager.setHeartRate(with: heartRate)
+    }
+    
+    func currentSessionStatus() -> SessionStatus {
+        return activitySessionManager.sessionStatus
+    }
+}
+
 struct AppTabBarView: View {
+    @StateObject private var viewModel: AppTabBarViewModel
     @State private var tabSelection: TabBarItemType = .home
     @State var isRecordViewPresented: Bool = false
     private var logger: CustomLogger
-    private var wearableDeviceManager: WearableDeviceManager
     private var mainView: MainView
     
-    init(logger: CustomLogger, wearableDeviceManager: WearableDeviceManager) {
+    init(viewModel: AppTabBarViewModel, logger: CustomLogger) {
+        _viewModel = StateObject(wrappedValue: viewModel)
         self.logger = logger
-        self.wearableDeviceManager = wearableDeviceManager
         
         let dependency = MainViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
                                                     logger: logger)
@@ -35,8 +76,8 @@ struct AppTabBarView: View {
         }
         .sheet(isPresented: $isRecordViewPresented) {
             let dependency = RecordViewModelDependencyImp(logger: logger,
-                                                          activitySessionManager: ActivitySessionManager.shared,
-                                                          wearableDeviceManager: wearableDeviceManager)
+                                                          activitySessionManager: viewModel.activitySessionManager,
+                                                          wearableDeviceManager: viewModel.wearableDeviceManager)
             let viewModel = RecordViewModel(dependency: dependency)
             RecordView(viewModel: viewModel, isPresented: $isRecordViewPresented)
                 .presentationDetents([.large])
@@ -46,8 +87,9 @@ struct AppTabBarView: View {
 
 struct AppTabBarView_Previews: PreviewProvider {
     static var previews: some View {
-        let logger = CustomLogger()
-        let wearableDeviceManager = WearableDeviceManager(logger: logger)
-        AppTabBarView(logger: logger, wearableDeviceManager: wearableDeviceManager)
+        let viewModel = AppTabBarViewModel(logger: Mocks.logger,
+                                           activitySessionManager: Mocks.activitySessionManager,
+                                           wearableDeviceManager: Mocks.wearableDeviceManager)
+        AppTabBarView(viewModel: viewModel, logger: Mocks.logger)
     }
 }

@@ -11,16 +11,12 @@ import MapKit
 import Combine
 
 class ActivitySessionManager: NSObject, ObservableObject {
-    /*
-     Singleton instance for recording metadata across app.
-     */
-    static let shared = ActivitySessionManager()
-    
-    var locationManager = CLLocationManager()
+    private var locationManager = CLLocationManager()
     private var logger: CustomLogger
     private var storeManager: CoreDataManager
+    private var wearableDeviceManager: WearableDeviceManager
     
-    @Published var recordingState: RecordingState = .notStarted
+    @Published var sessionStatus: SessionStatus = .stop
     @Published var isRecording: Bool = false
     @Published var workoutType: SportType = .others
     @Published var session: ActivitySession?
@@ -33,6 +29,7 @@ class ActivitySessionManager: NSObject, ObservableObject {
     @Published var distances: [Distance] = []
     @Published var heartRates: [HeartRate] = []
     @Published var lastPausedTimestamp: Date?
+    @Published var currentHeartRate: Double = 0.0
     var timer = Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()
     
     
@@ -44,15 +41,47 @@ class ActivitySessionManager: NSObject, ObservableObject {
         span: MKCoordinateSpan(latitudeDelta: 0.003, longitudeDelta: 0.003)
     )
     
-    override init() {
-        logger = CustomLogger()
-        
-        let dependency = CoreDataManagerDependencyImp(logger: logger)
-        storeManager = CoreDataManager(dependency: dependency)
+    init(logger: CustomLogger,
+         storeManager: CoreDataManager,
+         wearableDeviceManager: WearableDeviceManager) {
+        self.logger = logger
+        self.storeManager = storeManager
+        self.wearableDeviceManager = wearableDeviceManager
         super.init()
         
         self.locationManager.delegate = self
-        logger.log("ActivitySessionManager is inititated", level: .info)
+        
+        // Try getting session status from Apple Watch
+        
+    }
+    
+//    override init() {
+//        logger = CustomLogger()
+//
+//        let dependency = CoreDataManagerDependencyImp(logger: logger)
+//        storeManager = CoreDataManager(dependency: dependency)
+//        super.init()
+//
+//        self.locationManager.delegate = self
+//        logger.log("ActivitySessionManager is inititated", level: .info)
+//    }
+    
+    func requestLocationPermission() {
+        locationManager.requestAlwaysAuthorization()
+    }
+    
+    /**
+     Set SessionStatus
+     */
+    func setSessionStatus(with sessionStatus: SessionStatus) {
+        self.sessionStatus = sessionStatus
+    }
+    
+    /**
+     Set heart rate
+     */
+    func setHeartRate(with heartRate: Double) {
+        self.currentHeartRate = heartRate
     }
     
     /**
@@ -81,7 +110,7 @@ class ActivitySessionManager: NSObject, ObservableObject {
      Invoke this function when user clicked "start" button on record view
      */
     func startSession(with workoutType: SportType = .cycling) {
-        guard recordingState == .notStarted else { return }
+        guard sessionStatus == .stop else { return }
                 
         // Init timer
         timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -94,7 +123,7 @@ class ActivitySessionManager: NSObject, ObservableObject {
         locationManager.pausesLocationUpdatesAutomatically = false
         
         isRecording = true
-        recordingState = .recording
+        sessionStatus = .start
         
         // Add active timestamp to timeline
         session?.addElapasedTime(status: .active, timestamp: session?.startTime ?? Date())
@@ -106,10 +135,10 @@ class ActivitySessionManager: NSObject, ObservableObject {
      Invoke this function to resume recording
      */
     func resumeSession() {
-        guard recordingState == .paused else { return }
+        guard sessionStatus == .pause else { return }
         
         isRecording = true
-        recordingState = .recording
+        sessionStatus = .start
         
         // Add active timestamp to timeline
         session?.addElapasedTime(status: .active, timestamp: Date())
@@ -119,12 +148,12 @@ class ActivitySessionManager: NSObject, ObservableObject {
      Invoke this function to pause recording
      */
     func pauseSession() {
-        guard recordingState == .recording, session != nil else { return }
+        guard sessionStatus == .start, session != nil else { return }
         
         lastPausedTimestamp = Date()
         
         isRecording = false
-        recordingState = .paused
+        sessionStatus = .pause
         
         // Add rest timestamp to timeline
         session?.addElapasedTime(status: .rest, timestamp: Date())
@@ -136,7 +165,7 @@ class ActivitySessionManager: NSObject, ObservableObject {
     func stopSession() {
         logger.log("Session is ended", level: .info)
 
-        guard recordingState == .recording || recordingState == .paused else { return }
+        guard sessionStatus == .start || sessionStatus == .pause else { return }
         
         timer.upstream.connect().cancel()
         
@@ -144,7 +173,7 @@ class ActivitySessionManager: NSObject, ObservableObject {
          Update states
          */
         isRecording = false
-        recordingState = .notStarted
+        sessionStatus = .stop
         session?.endTime = Date()
         
         /**
@@ -183,11 +212,11 @@ class ActivitySessionManager: NSObject, ObservableObject {
 // MARK: Public functions
 extension ActivitySessionManager {
     func handleTimerAction() {
-        if recordingState == .recording {
+        if sessionStatus == .start {
             acitveElapsedSeconds += 1
             session?.activeElapsedSeconds = acitveElapsedSeconds
         }
-        else if recordingState == .paused {
+        else if sessionStatus == .pause {
             restElapsedSeconds += 1
             session?.restElapsedSeconds = restElapsedSeconds
         }
@@ -323,10 +352,3 @@ struct Distance: Identifiable {
     let distanceInMeter: Double
     let timestamp: Date
 }
-
-enum RecordingState {
-    case notStarted
-    case recording
-    case paused
-}
-

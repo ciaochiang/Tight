@@ -18,7 +18,7 @@ struct WearableDevice: Hashable, Identifiable {
     var type: WearableDeviceType
 }
 
-enum SessionStatus {
+enum SessionStatus: Int {
     case start
     case pause
     case resume
@@ -38,6 +38,7 @@ enum SessionStatus {
 protocol WearableDeviceManagerDelegate: AnyObject {
     func didReceived(status: SessionStatus)
     func didReceived(heartRate: Double)
+    func currentSessionStatus() -> SessionStatus
 }
 
 class WearableDeviceManager: NSObject, ObservableObject {
@@ -123,6 +124,10 @@ extension WearableDeviceManager: WCSessionDelegate {
             let sports = SportType.allCases.map { ["id": $0.rawValue, "description": $0.description] as [String : Any] }
             replyHandler(["reply": sports])
         }
-        
+        else if let request = message["request"] as? String,
+                request == "currentSessionStatus",
+                let status = delegate?.currentSessionStatus() {
+            replyHandler(["currentStatus": status.rawValue])
+        }
     }
 }

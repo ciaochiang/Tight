@@ -27,14 +27,24 @@ struct MoticApp: App {
     
     init() {
         self.logger = CustomLogger()
-        self.wearableDeviceManager = WearableDeviceManager(logger: logger)
+        
+        let wearableDeviceManager = WearableDeviceManager(logger: logger)
+        self.wearableDeviceManager = wearableDeviceManager
     }
 
     var body: some Scene {
         WindowGroup {
             if isOnboardingCompleted {
+                let storeManagerDependency = CoreDataManagerDependencyImp(logger: logger)
+                let storeManager = CoreDataManager(dependency: storeManagerDependency)
+                let activitySessionManager = ActivitySessionManager(logger: logger,
+                                                                    storeManager: storeManager,
+                                                                    wearableDeviceManager: wearableDeviceManager)
+                let viewModel = AppTabBarViewModel(logger: logger,
+                                                   activitySessionManager: activitySessionManager,
+                                                   wearableDeviceManager: wearableDeviceManager)
                 // Navigate to AppTabBar view
-                AppTabBarView(logger: logger, wearableDeviceManager: wearableDeviceManager)
+                AppTabBarView(viewModel: viewModel, logger: logger)
                     
             } else {
                 let viewModel = OnboardingViewModel(isOnboardingCompleted: $isOnboardingCompleted)
@@ -47,5 +57,22 @@ struct MoticApp: App {
             // Store to user defaults
             UserDefaults.standard.setValue(newValue, forKey: "IS_ONBOARDING_COMPLETED")
         })
+    }
+}
+
+extension Mocks {
+    static var coreDataManager: CoreDataManager {
+        let dependency = CoreDataManagerDependencyImp(logger: CustomLogger())
+        return CoreDataManager(dependency: dependency)
+    }
+    
+    static var wearableDeviceManager: WearableDeviceManager {
+        return WearableDeviceManager(logger: CustomLogger())
+    }
+    
+    static var activitySessionManager: ActivitySessionManager {
+        return ActivitySessionManager(logger: CustomLogger(),
+                                      storeManager: Mocks.coreDataManager,
+                                      wearableDeviceManager: Mocks.wearableDeviceManager)
     }
 }

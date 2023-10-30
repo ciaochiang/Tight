@@ -21,77 +21,76 @@ class WorkoutSessionManager: NSObject, ObservableObject, HKWorkoutSessionDelegat
     var heartRateObserverQuery: HKObserverQuery?
     weak var delegate: WorkoutSessionManagerDelegate?
   
-  let infoToRead = Set([
-    HKSampleType.characteristicType(forIdentifier: .biologicalSex)!,
-    HKSampleType.characteristicType(forIdentifier: .dateOfBirth)!,
-    HKSampleType.quantityType(forIdentifier: .activeEnergyBurned)!,
-    HKSampleType.quantityType(forIdentifier: .distanceWalkingRunning)!,
-    HKSampleType.quantityType(forIdentifier: .heartRate)!,
-    HKSampleType.workoutType()
-  ])
-              
-  let infoToWrite = Set([
-    HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
-    HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
-    HKObjectType.quantityType(forIdentifier: .heartRate)!,
-    HKObjectType.workoutType()
-  ])
+    let infoToRead = Set([
+        HKSampleType.characteristicType(forIdentifier: .biologicalSex)!,
+        HKSampleType.characteristicType(forIdentifier: .dateOfBirth)!,
+        HKSampleType.quantityType(forIdentifier: .activeEnergyBurned)!,
+        HKSampleType.quantityType(forIdentifier: .distanceWalkingRunning)!,
+        HKSampleType.quantityType(forIdentifier: .heartRate)!,
+        HKSampleType.workoutType()
+    ])
+                
+    let infoToWrite = Set([
+        HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
+        HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
+        HKObjectType.quantityType(forIdentifier: .heartRate)!,
+        HKObjectType.workoutType()
+    ])
   
-  func authorizeHealthKit() {
-    if HKHealthStore.isHealthDataAvailable() {
-      healthStore.requestAuthorization(toShare: infoToWrite, read: infoToRead) { (success, error) in
-        if success {
-          // Do nothing
+    func authorizeHealthKit() {
+        if HKHealthStore.isHealthDataAvailable() {
+            healthStore.requestAuthorization(toShare: infoToWrite, read: infoToRead) { (success, error) in
+                if success {
+                    // Do nothing
+                } else {
+                    // Handle authorization failure
+                    print("HealthKit authorization denied.")
+                }
+            }
         } else {
-          // Handle authorization failure
-          print("HealthKit authorization denied.")
+            print("Health data is not supported.")
         }
-      }
-      
-    } else {
-      print("Health data is not supported.")
     }
-  }
   
-  func createWorkoutSession(activityType: HKWorkoutActivityType = .running) {
-    // Create a workout configuration
-    let workoutConfiguration = HKWorkoutConfiguration()
-    workoutConfiguration.activityType = activityType
-      
-    do {
-      // Start a workout session
-      workoutSession = try HKWorkoutSession(healthStore: healthStore,
-                                            configuration: workoutConfiguration)
-      workoutSession?.delegate = self
-      workoutSession?.startActivity(with: nil)
-    } catch {
-      // Handle error
-      print("Error starting workout session: \(error.localizedDescription)")
+    func createWorkoutSession(activityType: HKWorkoutActivityType = .running) {
+        // Create a workout configuration
+        let workoutConfiguration = HKWorkoutConfiguration()
+        workoutConfiguration.activityType = activityType
+          
+        do {
+            // Start a workout session
+            workoutSession = try HKWorkoutSession(healthStore: healthStore,
+                                                  configuration: workoutConfiguration)
+            workoutSession?.delegate = self
+            workoutSession?.startActivity(with: nil)
+        } catch {
+          // Handle error
+            print("Error starting workout session: \(error.localizedDescription)")
+        }
     }
-  }
   
-  func stopWorkoutSession() {
-    workoutSession?.end()
-  }
-  
-  func workoutSession(_ workoutSession: HKWorkoutSession,
-                      didChangeTo toState: HKWorkoutSessionState,
-                      from fromState: HKWorkoutSessionState,
-                      date: Date) {
-    if toState == .running {
-      // The workout session is running, and you can start receiving heart rate data
-      print("worksession is running")
-      toggle(isStarted: true)
-    } else if toState == .ended {
-      print("worksession is ended")
-      toggle(isStarted: false)
+    func stopWorkoutSession() {
+        workoutSession?.end()
     }
-  }
+  
+    func workoutSession(_ workoutSession: HKWorkoutSession,
+                        didChangeTo toState: HKWorkoutSessionState,
+                        from fromState: HKWorkoutSessionState,
+                        date: Date) {
+        if toState == .running {
+            // The workout session is running, and you can start receiving heart rate data
+            print("worksession is running")
+            toggle(isStarted: true)
+        } else if toState == .ended {
+            print("worksession is ended")
+            toggle(isStarted: false)
+        }
+    }
 
-  func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) {
-      // Handle session failure
-    print(error)
-  }
+    func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) {
+        // Handle session failure
+        print(error)
+    }
     
     func startHeartRateMonitoring() {
         let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
@@ -180,9 +179,9 @@ class WorkoutSessionManager: NSObject, ObservableObject, HKWorkoutSessionDelegat
 }
 
 extension WorkoutSessionManager {
-  private func toggle(isStarted: Bool) {
-    DispatchQueue.main.async {
-      self.workoutSessionIsStarted = isStarted
+    private func toggle(isStarted: Bool) {
+        DispatchQueue.main.async {
+            self.workoutSessionIsStarted = isStarted
+        }
     }
-  }
 }

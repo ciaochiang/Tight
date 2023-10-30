@@ -33,19 +33,39 @@ class RecordViewModelDependencyImp: RecordViewModelDependency {
 class RecordViewModel: ObservableObject {
     var dependency: RecordViewModelDependency
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @ObservedObject var activitySessionManager: ActivitySessionManager
     @Published var isLocationBottomSheetPresented: Bool = false
     @Published var isSportSelectorPresented: Bool = false
     @Published var isWearableDeviceSelectorPresented: Bool = false
     @Published var selectedSport: SportType = .cycling
     @Published var heartRate: Double = 0.0
+    @Published var sessionStatus: SessionStatus = .stop
+    
+    @State private var cancellables: Set<AnyCancellable> = []
     
     var preference: UserPreference = UserPreference()
     
+    
     init(dependency: RecordViewModelDependency) {
         self.dependency = dependency
-        self.dependency.wearableDeviceManager.delegate = self
+        _activitySessionManager = ObservedObject(wrappedValue: dependency.activitySessionManager)
         
+        // After init
+        self.dependency.wearableDeviceManager.delegate = self
         selectedSport = preference.retrieveSelectedSport()
+        
+        // Sinks
+        activitySessionManager.$currentHeartRate.sink { heartRate in
+            DispatchQueue.main.async {
+                self.heartRate = heartRate
+            }
+        }.store(in: &cancellables)
+        
+        activitySessionManager.$sessionStatus.sink { status in
+            DispatchQueue.main.async {
+                self.sessionStatus = status
+            }
+        }.store(in: &cancellables)
     }
     
     func validateLocationAuthorization() {
@@ -56,33 +76,55 @@ class RecordViewModel: ObservableObject {
             }
         } else if dependency.activitySessionManager.locationAuthorizationStatus == .notDetermined {
             // Ask for permission directly
-            dependency.activitySessionManager.locationManager.requestAlwaysAuthorization()
+            dependency.activitySessionManager.requestLocationPermission()
         }
     }
     
-    func pauseSession() {
+    func pauseSession(isReceived: Bool = false) {
         dependency.activitySessionManager.pauseSession()
+        
+        guard isReceived == false else { return }
         dependency.wearableDeviceManager.send(message: ["status": "pause"], replyHandler: nil)
     }
     
-    func resumeSession() {
+    func resumeSession(isReceived: Bool = false) {
         dependency.activitySessionManager.resumeSession()
+        
+        guard isReceived == false else { return }
         dependency.wearableDeviceManager.send(message: ["status": "resume"], replyHandler: nil)
     }
     
-    func stopSession() {
+    func stopSession(isReceived: Bool = false) {
         dependency.activitySessionManager.stopSession()
+
+        guard isReceived == false else { return }
         dependency.wearableDeviceManager.send(message: ["status": "stop"], replyHandler: nil)
     }
     
-    func startSession() {
+    func startSession(isReceived: Bool = false) {
         dependency.activitySessionManager.startSession(with: selectedSport)
+        
+        guard isReceived == false else { return }
         dependency.wearableDeviceManager.send(message: ["status": "start"], replyHandler: nil)
     }
 }
 
 extension RecordViewModel: WearableDeviceManagerDelegate {
+    func currentSessionStatus() -> SessionStatus {
+        return sessionStatus
+    }
+    
     func didReceived(status: SessionStatus) {
+        switch status {
+        case .start: startSession(isReceived: true)
+        case .stop: stopSession(isReceived: true)
+        case .pause: pauseSession(isReceived: true)
+        case .resume: resumeSession(isReceived: true)
+        }
+        
+        DispatchQueue.main.async {
+            self.sessionStatus = status
+        }
         dependency.logger.log("record view recived status: \(status)", level: .debug)
     }
     
