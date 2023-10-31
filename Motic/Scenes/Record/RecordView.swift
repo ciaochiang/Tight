@@ -148,7 +148,7 @@ struct RecordPanelView: View {
                 elapsedTimeCounter
                 wearableDeviceSelection
             }
-            .padding()
+            .padding(.horizontal)
             metricSection
             startButton
         }
@@ -161,7 +161,8 @@ struct RecordPanelView: View {
             Image(systemName: viewModel.selectedSport.systemIconName)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 36, height: 36)
+                .frame(width: 28, height: 28)
+                .foregroundColor(.themeStyle.theme.secondaryTextColor)
                 .onTapGesture {
                     viewModel.isSportSelectorPresented.toggle()
                 }
@@ -175,8 +176,8 @@ struct RecordPanelView: View {
             Image(systemName: "applewatch")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 36, height: 36)
-                .foregroundColor(wearableDeviceManager.isDeviceConnected ? .orange : .black)
+                .frame(width: 28, height: 28)
+                .foregroundColor(.themeStyle.theme.secondaryTextColor)
                 .onTapGesture {
                     viewModel.isWearableDeviceSelectorPresented.toggle()
                 }
@@ -191,7 +192,7 @@ struct RecordPanelView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
                 .frame(maxHeight: 60)
                 .font(.title)
-                .fontWeight(.semibold)
+                .fontWeight(.bold)
                 .foregroundColor(.themeStyle.theme.primary)
 
         }
@@ -206,29 +207,31 @@ struct RecordPanelView: View {
                 Text(String(format: "%.1f", activitySessionManager.totalDistance))
                     .font(.title3)
                     .fontWeight(.semibold)
-                    .foregroundColor(.themeStyle.theme.green)
+                    .foregroundColor(.themeStyle.theme.secondaryTextColor)
                 Text("Distance")
                     .font(.caption)
                     .foregroundColor(.themeStyle.theme.secondaryTextColor)
             }
             .frame(maxWidth: .infinity)
 
-            VStack {
-                Text(String(format: "%.1f", viewModel.heartRate))
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.themeStyle.theme.green)
-                Text("Heart Rate")
-                    .font(.caption)
-                    .foregroundColor(.themeStyle.theme.secondaryTextColor)
+            if wearableDeviceManager.isDeviceConnected {
+                VStack {
+                    Text(String(format: "%.1f", viewModel.heartRate))
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.themeStyle.theme.secondaryTextColor)
+                    Text("Heart Rate")
+                        .font(.caption)
+                        .foregroundColor(.themeStyle.theme.secondaryTextColor)
+                }
+                .frame(maxWidth: .infinity)
             }
-            .frame(maxWidth: .infinity)
 
             VStack {
                 Text(String(format: "%1.f", activitySessionManager.currentSpeed))
                     .font(.title3)
                     .fontWeight(.semibold)
-                    .foregroundColor(.themeStyle.theme.green)
+                    .foregroundColor(.themeStyle.theme.secondaryTextColor)
                 Text("Speed")
                     .font(.caption)
                     .foregroundColor(.themeStyle.theme.secondaryTextColor)
@@ -251,11 +254,9 @@ struct RecordPanelView: View {
                         .frame(maxWidth: .infinity)
                 }
                 .frame(maxWidth: .infinity)
-                .frame(maxHeight: 60)
-                .background(activitySessionManager.isRecording
-                            ? Color.themeStyle.theme.red
-                            : Color.themeStyle.theme.green)
-                .foregroundColor(.themeStyle.theme.black)
+                .frame(maxHeight: 54)
+                .background(Color.themeStyle.theme.accent)
+                .foregroundColor(.themeStyle.theme.white)
                 .cornerRadius(8)
                 .padding()
             } else {
@@ -271,9 +272,9 @@ struct RecordPanelView: View {
                         .frame(maxWidth: .infinity)
                 }
                 .frame(maxWidth: .infinity)
-                .frame(maxHeight: 60)
-                .background(Color.themeStyle.theme.green)
-                .foregroundColor(.themeStyle.theme.black)
+                .frame(maxHeight: 54)
+                .background(Color.themeStyle.theme.accent)
+                .foregroundColor(.themeStyle.theme.white)
                 .cornerRadius(8)
                 .padding(.vertical)
                 .padding(.leading)
@@ -288,9 +289,9 @@ struct RecordPanelView: View {
                         .frame(maxWidth: .infinity)
                 }
                 .frame(maxWidth: .infinity)
-                .frame(maxHeight: 60)
-                .background(Color.themeStyle.theme.green)
-                .foregroundColor(.themeStyle.theme.black)
+                .frame(maxHeight: 54)
+                .background(Color.themeStyle.theme.accent)
+                .foregroundColor(.themeStyle.theme.white)
                 .cornerRadius(8)
                 .padding(.vertical)
                 .padding(.trailing)

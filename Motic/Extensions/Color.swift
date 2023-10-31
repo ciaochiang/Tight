@@ -23,15 +23,17 @@ enum ColorThemeStyle {
 }
 
 struct ColorTheme {
-  let primary = Color("PrimaryColor")
-  let inversePrimary = Color("InversePrimaryColor")
-  let white = Color.white
-  let black = Color.black
-  let accent = Color("AccentColor")
-  let background = Color("BackgroundColor")
-  let secondaryBackground = Color("SecondaryBackgroundColor")
-  let green = Color("GreenColor")
-  let red = Color("RedColor")
-  let blue = Color("BlueColor")
-  let secondaryTextColor = Color("SecondaryTextColor")
+    let primary = Color("PrimaryColor")
+    let inversePrimary = Color("InversePrimaryColor")
+    let white = Color.white
+    let black = Color.black
+    let accent = Color("AccentColor")
+    let background = Color("BackgroundColor")
+    let secondaryBackground = Color("SecondaryBackgroundColor")
+    let green = Color("GreenColor")
+    let red = Color("RedColor")
+    let blue = Color("BlueColor")
+    let secondaryTextColor = Color("SecondaryTextColor")
+    let purple = Color("PurpleColor")
+    let yellow = Color("YellowColor")
 }
