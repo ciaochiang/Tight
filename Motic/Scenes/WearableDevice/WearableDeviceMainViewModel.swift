@@ -37,17 +37,17 @@ class WearableDeviceMainViewModel: ObservableObject {
         self.dependency = dependency
         _wearableDeviceManager = ObservedObject(wrappedValue: dependency.wearableDeviceManager)
         
-        wearableDeviceManager.$isDeviceConnected.sink { isConnected in
-            self.isDeviceConneted = isConnected
-        }.store(in: &cancellables)
-        
-        wearableDeviceManager.$registeredDevices.sink { devices in
-            self.registeredDevices = devices
-        }
-        .store(in: &cancellables)
-        
-        wearableDeviceManager.$connectedDevice.sink { device in
-            self.connectedDevice = device
-        }.store(in: &cancellables)
+//        wearableDeviceManager.$isDeviceConnected.sink { isConnected in
+//            self.isDeviceConneted = isConnected
+//        }.store(in: &cancellables)
+//        
+//        wearableDeviceManager.$registeredDevices.sink { devices in
+//            self.registeredDevices = devices
+//        }
+//        .store(in: &cancellables)
+//        
+//        wearableDeviceManager.$connectedDevice.sink { device in
+//            self.connectedDevice = device
+//        }.store(in: &cancellables)
     }
 }

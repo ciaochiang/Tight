@@ -9,7 +9,6 @@ import SwiftUI
 
 struct WearableDeviceMainView: View {
     @StateObject var viewModel: WearableDeviceMainViewModel
-    @Binding var isPresented: Bool
     
     var body: some View {
         VStack {
@@ -56,6 +55,6 @@ struct WearableDeviceMainView_Previews: PreviewProvider {
         let wearableDeviceManager = WearableDeviceManager(logger: logger)
         let dependency = WearableDeviceMainViewModelDependencyImp(logger: logger, wearableDeviceManager: wearableDeviceManager)
         let viewModel = WearableDeviceMainViewModel(dependency: dependency)
-        WearableDeviceMainView(viewModel: viewModel, isPresented: .constant(false))
+        WearableDeviceMainView(viewModel: viewModel)
     }
 }

@@ -91,7 +91,7 @@ struct RecordView: View {
                     logger: viewModel.dependency.logger,
                     wearableDeviceManager: wearableDeviceManager)
                 let viewModel = WearableDeviceMainViewModel(dependency: dependency)
-                WearableDeviceMainView(viewModel: viewModel, isPresented: $viewModel.isWearableDeviceSelectorPresented)
+                WearableDeviceMainView(viewModel: viewModel)
             }
         }
         .onAppear {
@@ -179,7 +179,7 @@ struct RecordPanelView: View {
                 .frame(width: 28, height: 28)
                 .foregroundColor(.themeStyle.theme.secondaryTextColor)
                 .onTapGesture {
-                    viewModel.isWearableDeviceSelectorPresented.toggle()
+                    viewModel.isWearableDeviceSelectorPresented = true
                 }
 
         }

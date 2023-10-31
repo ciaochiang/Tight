@@ -69,9 +69,12 @@ struct AppTabBarView: View {
         CustomTabBarContainerView(selection: $tabSelection) {
             mainView.tabBarItem(type: .home, selection: $tabSelection)
 
-            Color.clear.tabBarItem(type: .record, selection: $tabSelection, disableContent: true) {
+            Color.clear.tabBarItem(type: .record,
+                                   selection: $tabSelection,
+                                   disableContent: true) {
                 isRecordViewPresented.toggle()
             }
+            
             Color.green.tabBarItem(type: .preference, selection: $tabSelection)
         }
         .sheet(isPresented: $isRecordViewPresented) {
