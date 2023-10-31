@@ -32,19 +32,6 @@ struct MainView: View {
                   }
                   .padding()
               }
-              .toolbar {
-                  ToolbarItem(placement: .navigationBarTrailing) {
-                      Button(action: {
-                          isProfileViewPresented = true
-                      }) {
-                        Image(systemName: "person")
-                          .frame(width: 36, height: 36)
-                          .foregroundColor(.black)
-                          .background(Color.white)
-                          .cornerRadius(18)
-                      }
-                  }
-              }
               .background(Color.themeStyle.theme.background)
           }
           .sheet(isPresented: $isProfileViewPresented) {
@@ -72,23 +59,25 @@ struct MainView_Previews: PreviewProvider {
 // MARK: Sections
 extension MainView {
   var topSeciton: some View {
-    HStack {
-        VStack(alignment: .leading, spacing: 8) {
-//          Text("Welcome Back")
-//            .font(.subheadline)
-//            .foregroundColor(.themeStyle.theme.primary)
-          Text(viewModel.user?.firstName ?? "Ciao Chiang")
-            .font(.largeTitle)
-            .fontWeight(.semibold)
-            .foregroundColor(.themeStyle.theme.primary)
-            Text("You haven't have a workout today! Don't give it up!")
-                .font(.subheadline)
-                .foregroundColor(.themeStyle.theme.secondaryTextColor)
-                .frame(maxWidth: 240)
-        }
-        Spacer()
-    }
-    .padding(.bottom, 48)
+      HStack(spacing: 8) {
+        Text(viewModel.user?.firstName ?? "Ciao Chiang")
+          .font(.largeTitle)
+          .fontWeight(.semibold)
+          .foregroundColor(.themeStyle.theme.primary)
+          
+          Spacer()
+          
+          Button(action: {
+              isProfileViewPresented = true
+          }) {
+            Image(systemName: "person")
+              .frame(width: 48, height: 48)
+              .foregroundColor(.black)
+              .background(Color.white)
+              .cornerRadius(16)
+          }
+      }
+      .padding(.vertical)
   }
   
   var currentActivitySection: some View {
@@ -119,18 +108,19 @@ extension MainView {
   
   var sumamrySection: some View {
       VStack {
-        MainViewSectionHeader(sectionTitle: "This month")
-              .padding(.horizontal)
-              .padding(.top)
+          MainViewSectionHeader(sectionTitle: "This month")
           
-        HStack(spacing: 8) {
-            totalDistanceCard
-            totalDurationCard
-            avgSpeedCard
-        }
+          VStack {
+              HStack(spacing: 8) {
+                  totalDistanceCard
+                  totalDurationCard
+                  avgSpeedCard
+              }
+              .padding()
+          }
+          .background(Color.themeStyle.theme.secondaryBackground)
+          .cornerRadius(16)
       }
-      .background(Color.themeStyle.theme.secondaryBackground)
-      .cornerRadius(16)
   }
   
   var activitiesSeciton: some View {
@@ -197,68 +187,56 @@ extension MainView {
   // MARK: Summary Seciton
     var totalDistanceCard: some View {
         VStack(spacing: 4) {
-            HStack {
-                Text("Distance")
-                  .foregroundColor(.themeStyle.theme.secondaryTextColor)
-                  .font(.caption2)
-            }
-            .padding(.horizontal)
-            
             HStack(spacing: 4) {
                 Text("\(String(format: "%.1f", viewModel.totalDistanceKilometers))")
                 .font(.title2)
                 .fontWeight(.semibold)
-                .foregroundColor(.themeStyle.theme.green)
+                .foregroundColor(.themeStyle.theme.accent)
                 Text("km")
                   .foregroundColor(.themeStyle.theme.secondaryTextColor)
                   .font(.caption)
             }
             .frame(maxWidth: .infinity)
+            
+            Text("Distance")
+              .foregroundColor(.themeStyle.theme.secondaryTextColor)
+              .font(.caption2)
         }
-        .padding(.bottom)
     }
     
     var totalDurationCard: some View {
         VStack(spacing: 4) {
-            HStack {
-                Text("Time")
-                  .foregroundColor(.themeStyle.theme.secondaryTextColor)
-                  .font(.caption2)
-            }
-            .padding(.horizontal)
-            
             HStack(spacing: 4) {
                 Text(viewModel.totalDuration.shorterFormatInterval)
                 .font(.title2)
                 .fontWeight(.semibold)
-                .foregroundColor(.themeStyle.theme.green)
+                .foregroundColor(.themeStyle.theme.accent)
             }
             .frame(maxWidth: .infinity)
+            
+            Text("Elapsed Time")
+              .foregroundColor(.themeStyle.theme.secondaryTextColor)
+              .font(.caption2)
         }
-        .padding(.bottom)
     }
   
     var avgSpeedCard: some View {
         VStack(spacing: 4) {
-            HStack {
-                Text("Speed")
-                  .foregroundColor(.themeStyle.theme.secondaryTextColor)
-                  .font(.caption2)
-            }
-            .padding(.horizontal)
-            
             HStack(spacing: 4) {
                 Text(viewModel.avgSpeed.formatAvgSpeedTimeInterval)
                 .font(.title2)
                 .fontWeight(.semibold)
-                .foregroundColor(.themeStyle.theme.green)
+                .foregroundColor(.themeStyle.theme.accent)
                 Text("/ km")
                   .foregroundColor(.themeStyle.theme.secondaryTextColor)
                   .font(.caption)
             }
             .frame(maxWidth: .infinity)
+            
+            Text("Speed")
+              .foregroundColor(.themeStyle.theme.secondaryTextColor)
+              .font(.caption2)
         }
-        .padding(.bottom)
     }
 }
 

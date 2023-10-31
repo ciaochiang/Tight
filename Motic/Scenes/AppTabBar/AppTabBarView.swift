@@ -18,33 +18,6 @@ class AppTabBarViewModel: ObservableObject {
         self.logger = logger
         self.activitySessionManager = activitySessionManager
         self.wearableDeviceManager = wearableDeviceManager
-        self.wearableDeviceManager.delegate = self
-        
-        // Sync session status
-        fetchWatchSessionStatus()
-    }
-    
-    /**
-     Get session status from Apple Watch
-     */
-    func fetchWatchSessionStatus() {
-//        wearableDeviceManager.send(message: ["request": "currentStatus"]) { response in
-//
-//        }
-    }
-}
-
-extension AppTabBarViewModel: WearableDeviceManagerDelegate {
-    func didReceived(status: SessionStatus) {
-        activitySessionManager.setSessionStatus(with: status)
-    }
-    
-    func didReceived(heartRate: Double) {
-        activitySessionManager.setHeartRate(with: heartRate)
-    }
-    
-    func currentSessionStatus() -> SessionStatus {
-        return activitySessionManager.sessionStatus
     }
 }
 

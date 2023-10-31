@@ -19,16 +19,16 @@ struct ProfileView: View {
   var body: some View {
     VStack(spacing: 32) {
       HStack(spacing: 16) {
-        Text(viewModel.profile.fullName)
-          .font(.title)
-          .fontWeight(.bold)
-          .foregroundColor(.themeStyle.theme.primary)
-        Spacer()
-        Image(systemName: "person")
-          .frame(width: 48, height: 48)
-          .foregroundColor(.themeStyle.theme.inversePrimary)
-          .background(Color.themeStyle.theme.primary)
-          .cornerRadius(30)
+          Text(viewModel.profile.fullName)
+              .font(.title)
+              .fontWeight(.bold)
+              .foregroundColor(.themeStyle.theme.primary)
+          Spacer()
+          Image(systemName: "person")
+              .frame(width: 48, height: 48)
+              .foregroundColor(.themeStyle.theme.inversePrimary)
+              .background(Color.themeStyle.theme.primary)
+              .cornerRadius(16)
       }
       .preferredColorScheme(preferenceManager.colorScheme)
       .frame(maxWidth: .infinity)
@@ -75,21 +75,21 @@ struct ProfileView: View {
       Spacer()
       
       Button {
-        print("Log out")
         viewModel.logout()
       } label: {
-        Text("Log Out")
-          .frame(maxWidth: .infinity)
-          .frame(maxHeight: .infinity)
+        Text("SIGN OUT")
+              .font(.headline)
+              .frame(maxWidth: .infinity)
+              .frame(maxHeight: .infinity)
       }
-      .frame(height: 60)
+      .frame(height: 54)
       .frame(maxWidth: .infinity)
       .preferredColorScheme(preferenceManager.colorScheme)
       .foregroundColor(.themeStyle.theme.white)
-      .background(Color.themeStyle.theme.black)
+      .background(Color.themeStyle.theme.accent)
       .cornerRadius(16)
     }
-    .padding(30)
+    .padding()
     .frame(maxHeight: .infinity)
     .preferredColorScheme(preferenceManager.colorScheme)
     .background(Color.themeStyle.theme.background)
