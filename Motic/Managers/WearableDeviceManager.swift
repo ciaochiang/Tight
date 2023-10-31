@@ -53,7 +53,7 @@ class WearableDeviceManager: NSObject, ObservableObject {
         super.init()
         
         // Retreieve registered devices
-        registeredDevices = registeredDevices
+        registeredDevices = retrieveRegisteredDevices()
         
         isDeviceConnected = activateDeviceIfApplicable()
     }
@@ -116,9 +116,7 @@ extension WearableDeviceManager: WCSessionDelegate {
         }
     }
     
-    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
-        print("Message: \(message)")
-        
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {        
         if let request = message["request"] as? String, request == "fetchSports" {
             // reply all sports
             let sports = SportType.allCases.map { ["id": $0.rawValue, "description": $0.description] as [String : Any] }

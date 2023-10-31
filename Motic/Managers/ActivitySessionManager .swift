@@ -13,25 +13,35 @@ import Combine
 class ActivitySessionManager: NSObject, ObservableObject {
     private var locationManager = CLLocationManager()
     private var logger: CustomLogger
-    private var storeManager: CoreDataManager
+    private var coreDataManager: CoreDataManager
     private var wearableDeviceManager: WearableDeviceManager
     
+    // Session
     @Published var sessionStatus: SessionStatus = .stop
-    @Published var isRecording: Bool = false
-    @Published var workoutType: SportType = .others
     @Published var session: ActivitySession?
-    @Published var acitveElapsedSeconds: TimeInterval = 0.0
+    var isRecording: Bool {
+        return sessionStatus == .start || sessionStatus == .resume
+    }
+    
+    // Sport
+    @Published var sportType: SportType = .others
+    
+    // Time
+    @Published var elapsedSeconds: TimeInterval = 0.0
     @Published var restElapsedSeconds: TimeInterval = 0.0
     @Published var coolElapsedSeconds: TimeInterval = 0.0
+    @Published var lastPausedTimestamp: Date?
+    var timer = Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()
+
+    // Location
+    @Published var receivedLocations: [Location] = []
     @Published var currentSpeed: Double = 0.0
-    @Published var cachedLocations: [Location] = []
     @Published var totalDistance: Double = 0.0
     @Published var distances: [Distance] = []
-    @Published var heartRates: [HeartRate] = []
-    @Published var lastPausedTimestamp: Date?
+
+    // Heart Rate
+    @Published var receivedHeartRates: [HeartRate] = []
     @Published var currentHeartRate: Double = 0.0
-    var timer = Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()
-    
     
     // Location
     @Published var locationAuthorizationStatus: CLAuthorizationStatus = .notDetermined
@@ -42,29 +52,15 @@ class ActivitySessionManager: NSObject, ObservableObject {
     )
     
     init(logger: CustomLogger,
-         storeManager: CoreDataManager,
+         coreDataManager: CoreDataManager,
          wearableDeviceManager: WearableDeviceManager) {
         self.logger = logger
-        self.storeManager = storeManager
+        self.coreDataManager = coreDataManager
         self.wearableDeviceManager = wearableDeviceManager
         super.init()
         
         self.locationManager.delegate = self
-        
-        // Try getting session status from Apple Watch
-        
     }
-    
-//    override init() {
-//        logger = CustomLogger()
-//
-//        let dependency = CoreDataManagerDependencyImp(logger: logger)
-//        storeManager = CoreDataManager(dependency: dependency)
-//        super.init()
-//
-//        self.locationManager.delegate = self
-//        logger.log("ActivitySessionManager is inititated", level: .info)
-//    }
     
     func requestLocationPermission() {
         locationManager.requestAlwaysAuthorization()
@@ -109,20 +105,19 @@ class ActivitySessionManager: NSObject, ObservableObject {
     /**
      Invoke this function when user clicked "start" button on record view
      */
-    func startSession(with workoutType: SportType = .cycling) {
+    func startSession(with sportType: SportType = .cycling) {
         guard sessionStatus == .stop else { return }
                 
         // Init timer
         timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
         
-        self.workoutType = workoutType
-        createSessionIfNeeded(workoutType: workoutType)
+        self.sportType = sportType
+        createSessionIfNeeded(workoutType: sportType)
         
         // Enable location background mode
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.pausesLocationUpdatesAutomatically = false
         
-        isRecording = true
         sessionStatus = .start
         
         // Add active timestamp to timeline
@@ -137,7 +132,6 @@ class ActivitySessionManager: NSObject, ObservableObject {
     func resumeSession() {
         guard sessionStatus == .pause else { return }
         
-        isRecording = true
         sessionStatus = .start
         
         // Add active timestamp to timeline
@@ -148,11 +142,10 @@ class ActivitySessionManager: NSObject, ObservableObject {
      Invoke this function to pause recording
      */
     func pauseSession() {
-        guard sessionStatus == .start, session != nil else { return }
+        guard session != nil, isRecording else { return }
         
         lastPausedTimestamp = Date()
         
-        isRecording = false
         sessionStatus = .pause
         
         // Add rest timestamp to timeline
@@ -165,14 +158,13 @@ class ActivitySessionManager: NSObject, ObservableObject {
     func stopSession() {
         logger.log("Session is ended", level: .info)
 
-        guard sessionStatus == .start || sessionStatus == .pause else { return }
+        guard isRecording || sessionStatus == .pause else { return }
         
         timer.upstream.connect().cancel()
         
         /**
          Update states
          */
-        isRecording = false
         sessionStatus = .stop
         session?.endTime = Date()
         
@@ -181,10 +173,10 @@ class ActivitySessionManager: NSObject, ObservableObject {
          */
         if let session = session {
             // Save activity
-            storeManager.saveActivity(with: session)
+            coreDataManager.saveActivity(with: session)
             
             // Save locations
-            storeManager.saveLocations(with: cachedLocations, session: session)
+            coreDataManager.saveLocations(with: receivedLocations, session: session)
             
             logger.log("Data is saved", level: .info)
         }
@@ -194,12 +186,12 @@ class ActivitySessionManager: NSObject, ObservableObject {
          */
         session = nil
         currentLocation = nil
-        acitveElapsedSeconds = 0.0
+        elapsedSeconds = 0.0
         currentSpeed = 0.0
         totalDistance = 0.0
-        cachedLocations = []
+        receivedLocations = []
         distances = []
-        heartRates = []
+        receivedHeartRates = []
         
         // Disable location background mode
         locationManager.allowsBackgroundLocationUpdates = false
@@ -213,8 +205,8 @@ class ActivitySessionManager: NSObject, ObservableObject {
 extension ActivitySessionManager {
     func handleTimerAction() {
         if sessionStatus == .start {
-            acitveElapsedSeconds += 1
-            session?.activeElapsedSeconds = acitveElapsedSeconds
+            elapsedSeconds += 1
+            session?.activeElapsedSeconds = elapsedSeconds
         }
         else if sessionStatus == .pause {
             restElapsedSeconds += 1
@@ -250,7 +242,7 @@ extension ActivitySessionManager {
         guard isRecording == true, let session = session else { return }
         
         // Calculate and store distance
-        if let lastCachedLocation = cachedLocations.last,
+        if let lastCachedLocation = receivedLocations.last,
             lastLocation.horizontalAccuracy > 0,
             lastLocation.verticalAccuracy > 0,
             lastLocation.speed >= 0 {
@@ -264,7 +256,7 @@ extension ActivitySessionManager {
 
         // Append lcation to cachedLocations only if session is valid
         let location = Location(activityId: session.id, location: lastLocation)
-        cachedLocations.append(location)
+        receivedLocations.append(location)
     }
     
     private func calcualteDistance(from lastLocation: Location?, to newLocation: CLLocation) -> Double {

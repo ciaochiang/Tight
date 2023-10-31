@@ -104,10 +104,10 @@ struct RecordView_Previews: PreviewProvider {
     static var previews: some View {
         let logger = CustomLogger()
         let wearableDeviceManager = WearableDeviceManager(logger: logger)
-        let storeManagerDependency = CoreDataManagerDependencyImp(logger: logger)
-        let storeManager = CoreDataManager(dependency: storeManagerDependency)
+        let coreDataManagerDependency = CoreDataManagerDependencyImp(logger: logger)
+        let coreDataManager = CoreDataManager(dependency: coreDataManagerDependency)
         let activitySessionManager = ActivitySessionManager(logger: logger,
-                                                            storeManager: storeManager,
+                                                            coreDataManager: coreDataManager,
                                                             wearableDeviceManager: wearableDeviceManager)
         let dependency = RecordViewModelDependencyImp(logger: logger,
                                                       activitySessionManager: activitySessionManager,
@@ -145,7 +145,7 @@ struct RecordPanelView: View {
         VStack {
             HStack(alignment: .center, spacing: 16) {
                 sportSelection
-                activeTimeCounter
+                elapsedTimeCounter
                 wearableDeviceSelection
             }
             .padding()
@@ -185,11 +185,9 @@ struct RecordPanelView: View {
         .padding(.trailing)
     }
     
-    var activeTimeCounter: some View {
+    var elapsedTimeCounter: some View {
         VStack {
-            Text(activitySessionManager.sessionStatus == .pause
-                 ? "\(activitySessionManager.restElapsedSeconds.formatTimeInterval)"
-                 : "\(activitySessionManager.acitveElapsedSeconds.formatTimeInterval)")
+            Text("\(activitySessionManager.elapsedSeconds.formatTimeInterval)")
                 .frame(maxWidth: .infinity, alignment: .center)
                 .frame(maxHeight: 60)
                 .font(.title)

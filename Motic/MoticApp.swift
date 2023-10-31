@@ -35,10 +35,10 @@ struct MoticApp: App {
     var body: some Scene {
         WindowGroup {
             if isOnboardingCompleted {
-                let storeManagerDependency = CoreDataManagerDependencyImp(logger: logger)
-                let storeManager = CoreDataManager(dependency: storeManagerDependency)
+                let coreDataManagerDependency = CoreDataManagerDependencyImp(logger: logger)
+                let coreDataManager = CoreDataManager(dependency: coreDataManagerDependency)
                 let activitySessionManager = ActivitySessionManager(logger: logger,
-                                                                    storeManager: storeManager,
+                                                                    coreDataManager: coreDataManager,
                                                                     wearableDeviceManager: wearableDeviceManager)
                 let viewModel = AppTabBarViewModel(logger: logger,
                                                    activitySessionManager: activitySessionManager,
@@ -72,7 +72,7 @@ extension Mocks {
     
     static var activitySessionManager: ActivitySessionManager {
         return ActivitySessionManager(logger: CustomLogger(),
-                                      storeManager: Mocks.coreDataManager,
+                                      coreDataManager: Mocks.coreDataManager,
                                       wearableDeviceManager: Mocks.wearableDeviceManager)
     }
 }
