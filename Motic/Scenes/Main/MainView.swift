@@ -60,7 +60,7 @@ struct MainView_Previews: PreviewProvider {
 extension MainView {
   var topSeciton: some View {
       HStack(spacing: 8) {
-        Text(viewModel.user?.firstName ?? "Ciao Chiang")
+        Text(viewModel.name)
           .font(.largeTitle)
           .fontWeight(.semibold)
           .foregroundColor(.themeStyle.theme.primary)
@@ -108,7 +108,7 @@ extension MainView {
   
   var sumamrySection: some View {
       VStack {
-          MainViewSectionHeader(sectionTitle: "This month")
+          MainViewSectionHeader(sectionTitle: "This month".uppercased())
           
           VStack {
               HStack(spacing: 8) {
@@ -125,28 +125,28 @@ extension MainView {
   
   var activitiesSeciton: some View {
     VStack(spacing: 8) {
-      MainViewSectionHeader(sectionTitle: "Activites")
+        MainViewSectionHeader(sectionTitle: "Activites".uppercased())
       
-      VStack(spacing: 16) {
-        ForEach(viewModel.activities) { activity in
-          Button {
-            viewModel.selectedActivity = activity
-            isActivityViewPresented.toggle()
-          } label: {
-            MainViewActivityCard(activity: activity)
-          }
+        VStack(spacing: 16) {
+            ForEach(viewModel.activities) { activity in
+                Button {
+                    viewModel.selectedActivity = activity
+                    isActivityViewPresented.toggle()
+                } label: {
+                    MainViewActivityCard(activity: activity)
+                }
+            }
+        }
+        .sheet(isPresented: $isActivityViewPresented) {
+            if let selectedWorkout = viewModel.selectedActivity  {
+                let dependency = CyclingActivityViewModelDependencyImp(logger: viewModel.dependency.logger)
+                let viewModel = CyclingActivityViewModel(dependency: dependency,
+                                                         healthStoreManager: viewModel.healthStoreManager,
+                                                         activity: selectedWorkout)
+                CyclingActivityView(viewModel: viewModel).presentationDetents([.large])
+            }
         }
       }
-      .sheet(isPresented: $isActivityViewPresented) {
-        if let selectedWorkout = viewModel.selectedActivity  {
-          let dependency = CyclingActivityViewModelDependencyImp(logger: viewModel.dependency.logger)
-          let viewModel = CyclingActivityViewModel(dependency: dependency,
-                                                   healthStoreManager: viewModel.healthStoreManager,
-                                                   activity: selectedWorkout)
-          CyclingActivityView(viewModel: viewModel).presentationDetents([.large])
-        }
-      }
-    }
   }
   
   var footerSection: some View {
@@ -172,8 +172,8 @@ struct MainViewSectionHeader: View {
     var body: some View {
       HStack {
           Text(sectionTitle)
-              .font(.title2)
-              .fontWeight(.semibold)
+              .font(.title3)
+              .fontWeight(.bold)
               .foregroundColor(.themeStyle.theme.primary)
           Spacer()
       }
@@ -267,29 +267,27 @@ struct MainViewActivityCard: View {
   
     var body: some View {
         HStack(spacing: 16) {
-            Image(systemName: activityType.systemIconName)
-              .resizable()
-              .scaledToFit()
-              .foregroundColor(Color(UIColor.systemPink))
-              .frame(maxWidth: 24)
-              .frame(maxHeight: 24)
+//            Image(systemName: activityType.systemIconName)
+//                .resizable()
+//                .scaledToFit()
+//                .frame(maxWidth: 24)
+//                .frame(maxHeight: 24)
             VStack(alignment: .leading, spacing: 4) {
-              Text(activityType.description)
-                .font(.caption)
-                .foregroundColor(.themeStyle.theme.secondaryTextColor)
-              Text("\(String(format: "%.1f", totalEnergyBurned)) Kcal")
-                .fontWeight(.semibold)
-                .foregroundColor(.themeStyle.theme.primary)
-              Text("\(Int(activity.duration / 60)) mins")
-                .fontWeight(.semibold)
-                .foregroundColor(.themeStyle.theme.primary)
+                Text(activityType.description)
+                    .font(.caption)
+                    .foregroundColor(.themeStyle.theme.secondaryTextColor)
+                Text("\(String(format: "%.1f", totalEnergyBurned)) Kcal")
+                    .fontWeight(.semibold)
+                    .foregroundColor(.themeStyle.theme.primary)
+                Text("\(Int(activity.duration / 60)) mins")
+                    .fontWeight(.semibold)
+                    .foregroundColor(.themeStyle.theme.primary)
             }
-            
             Spacer()
             VStack {
-              Text(formmatedStartDate)
-                .font(.caption)
-                .foregroundColor(.themeStyle.theme.secondaryTextColor)
+                Text(formmatedStartDate)
+                    .font(.caption)
+                    .foregroundColor(.themeStyle.theme.secondaryTextColor)
             }
         }
         .padding(16)

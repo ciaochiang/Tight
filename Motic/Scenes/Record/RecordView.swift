@@ -152,7 +152,7 @@ struct RecordPanelView: View {
             metricSection
             startButton
         }
-        .background(Color.themeStyle.theme.secondaryBackground.opacity(0.9))
+        .background(Color.themeStyle.theme.secondaryBackground)
         .cornerRadius(16)
     }
     

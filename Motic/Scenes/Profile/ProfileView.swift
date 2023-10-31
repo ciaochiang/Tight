@@ -26,8 +26,8 @@ struct ProfileView: View {
           Spacer()
           Image(systemName: "person")
               .frame(width: 48, height: 48)
-              .foregroundColor(.themeStyle.theme.inversePrimary)
-              .background(Color.themeStyle.theme.primary)
+              .foregroundColor(.themeStyle.theme.primary)
+              .background(Color.themeStyle.theme.white)
               .cornerRadius(16)
       }
       .preferredColorScheme(preferenceManager.colorScheme)

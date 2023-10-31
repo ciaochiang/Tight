@@ -18,13 +18,12 @@ struct SportSelectorView: View {
             NavigationView {
                 List {
                     // Favorite Section
-                    Section("Favorite") {
+                    Section("Favorites") {
                         ForEach(viewModel.favorites, id: \.self) { sport in
                             HStack {
-                                Image(systemName: "checkmark")
-                                    .opacity(viewModel.selectedSport == sport ? 1.0 : 0.0)
                                 Text(sport.description.capitalized)
                                     .fontWeight(viewModel.selectedSport == sport ? .semibold : .none)
+                                    .foregroundColor(viewModel.selectedSport == sport ? .themeStyle.theme.accent : .themeStyle.theme.primary)
                                     .onTapGesture {
                                         viewModel.selectSport(sport: sport)
                                         
@@ -41,10 +40,10 @@ struct SportSelectorView: View {
                     Section("Sports") {
                         ForEach(viewModel.sports, id: \.self) { sport in
                             HStack {
-                                Image(systemName: "checkmark")
-                                    .opacity(viewModel.selectedSport == sport ? 1.0 : 0.0)
+
                                 Text(sport.description.capitalized)
                                     .fontWeight(viewModel.selectedSport == sport ? .semibold : .none)
+                                    .foregroundColor(viewModel.selectedSport == sport ? .themeStyle.theme.accent : .themeStyle.theme.primary)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .onTapGesture {
                                         viewModel.selectSport(sport: sport)
@@ -55,7 +54,7 @@ struct SportSelectorView: View {
                                     }
                                 Spacer()
                                 Image(systemName: viewModel.favorites.contains(sport) ? "heart.fill" : "heart")
-                                    .foregroundColor(.themeStyle.theme.primary)
+                                    .foregroundColor(viewModel.favorites.contains(sport) ? .themeStyle.theme.accent : .themeStyle.theme.primary)
                                     .frame(width: 40, height: 40)
                                     .onTapGesture {
                                         viewModel.handleFavoriteAction(sport: sport)

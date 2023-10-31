@@ -36,6 +36,12 @@ class MainViewModel: ObservableObject {
     @Published var totalDuration: TimeInterval = 0.0
     @Published var totalDistanceKilometers: Double = 0.0
     @Published var avgSpeed: TimeInterval = 0.0
+    
+    var name: String {
+        let firstName = user?.firstName ?? ""
+        let lastName = user?.lastName ?? ""
+        return "\(firstName) \(lastName)"
+    }
   
     init(dependency: MainViewModelDependency) {
         self.dependency = dependency

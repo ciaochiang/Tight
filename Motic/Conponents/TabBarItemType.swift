@@ -37,7 +37,7 @@ enum TabBarItemType: Hashable {
     }
     
     var accentColor: Color {
-        return Color.themeStyle.theme.blue
+        return Color.themeStyle.theme.accent
     }
     
     var backgroundColor: Color {
