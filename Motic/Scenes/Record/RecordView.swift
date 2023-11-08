@@ -41,61 +41,63 @@ struct RecordView: View {
     }
     
     var body: some View {
-        VStack {
-            NavigationView {
-                ZStack(alignment: .bottom) {
-                    MapView(region: $activitySessionManager.region).ignoresSafeArea(edges: .bottom)
-                    RecordPanelView()
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                }
-                .navigationTitle("Record")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button {
-                            isPresented.toggle()
-                        } label: {
-                            Image(systemName: activitySessionManager.isRecording
-                                  ? "chevron.down"
-                                  : "xmark")
-                                .foregroundColor(.themeStyle.theme.primary)
+        NavigationStack {
+            VStack {
+                NavigationView {
+                    ZStack(alignment: .bottom) {
+                        MapView(position: $activitySessionManager.position).ignoresSafeArea(edges: .bottom)
+                        RecordPanelView()
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                    }
+                    .navigationTitle("Record")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button {
+                                isPresented.toggle()
+                            } label: {
+                                Image(systemName: activitySessionManager.isRecording
+                                      ? "chevron.down"
+                                      : "xmark")
+                                    .foregroundColor(.themeStyle.theme.primary)
+                            }
                         }
                     }
                 }
-            }
-            .environmentObject(viewModel)
-            .environmentObject(activitySessionManager)
-            .environmentObject(wearableDeviceManager)
-            .sheet(isPresented: $viewModel.isLocationBottomSheetPresented) {
-                LocationPermissionDialogView {
-                    if let url = URL(string: UIApplication.openSettingsURLString) {
-                        UIApplication.shared.open(url)
-                    }
-                    
-                    DispatchQueue.main.async {
-                        self.viewModel.isLocationBottomSheetPresented.toggle()
+                .environmentObject(viewModel)
+                .environmentObject(activitySessionManager)
+                .environmentObject(wearableDeviceManager)
+                .sheet(isPresented: $viewModel.isLocationBottomSheetPresented) {
+                    LocationPermissionDialogView {
+                        if let url = URL(string: UIApplication.openSettingsURLString) {
+                            UIApplication.shared.open(url)
+                        }
+                        
+                        DispatchQueue.main.async {
+                            self.viewModel.isLocationBottomSheetPresented.toggle()
+                        }
                     }
                 }
-            }
-            .sheet(isPresented: $viewModel.isSportSelectorPresented) {
-                let depdendency = SportSelectorViewModelDependencyImp(logger: viewModel.dependency.logger)
-                let sportSelectorViewModel = SportSelectorViewModel(dependency: depdendency)
-                SportSelectorView(viewModel: sportSelectorViewModel,
-                                  isPresented: $viewModel.isSportSelectorPresented) { sport in
-                    viewModel.selectedSport = sport
+                .sheet(isPresented: $viewModel.isSportSelectorPresented) {
+                    let depdendency = SportSelectorViewModelDependencyImp(logger: viewModel.dependency.logger)
+                    let sportSelectorViewModel = SportSelectorViewModel(dependency: depdendency)
+                    SportSelectorView(viewModel: sportSelectorViewModel,
+                                      isPresented: $viewModel.isSportSelectorPresented) { sport in
+                        viewModel.selectedSport = sport
+                    }
+                }
+                .sheet(isPresented: $viewModel.isWearableDeviceSelectorPresented) {
+                    let dependency = WearableDeviceMainViewModelDependencyImp(
+                        logger: viewModel.dependency.logger,
+                        wearableDeviceManager: wearableDeviceManager)
+                    let viewModel = WearableDeviceMainViewModel(dependency: dependency)
+                    WearableDeviceMainView(viewModel: viewModel)
                 }
             }
-            .sheet(isPresented: $viewModel.isWearableDeviceSelectorPresented) {
-                let dependency = WearableDeviceMainViewModelDependencyImp(
-                    logger: viewModel.dependency.logger,
-                    wearableDeviceManager: wearableDeviceManager)
-                let viewModel = WearableDeviceMainViewModel(dependency: dependency)
-                WearableDeviceMainView(viewModel: viewModel)
+            .onAppear {
+                viewModel.validateLocationAuthorization()
             }
-        }
-        .onAppear {
-            viewModel.validateLocationAuthorization()
         }
     }
 }
@@ -121,18 +123,29 @@ struct RecordView_Previews: PreviewProvider {
 }
 
 struct MapView: View {
-    @Binding private var region: MKCoordinateRegion
+    @Binding private var position: MapCameraPosition
     @EnvironmentObject var activitySessionManager: ActivitySessionManager
     
-    init(region: Binding<MKCoordinateRegion>) {
-        _region = region
+    init(position: Binding<MapCameraPosition>) {
+        _position = position
     }
     
     var body: some View {
-        Map(coordinateRegion: $region, showsUserLocation: true)
-            .onAppear {
-                activitySessionManager.startUpdatingLocation()
-            }
+        Map(position: $position) {            
+            // Draw route
+            MapPolyline(coordinates: activitySessionManager.receivedCoordinates)
+                .stroke(Color.themeStyle.theme.accent, lineWidth: 10)
+        }
+        .mapStyle(.standard)
+        .mapControls {
+            MapUserLocationButton()
+            MapCompass()
+            MapScaleView()
+        }
+        .onAppear {
+            activitySessionManager.startUpdatingLocation()
+
+        }
     }
 }
 

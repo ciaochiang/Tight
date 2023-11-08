@@ -10,6 +10,8 @@ import SwiftUI
 import MapKit
 import Combine
 
+
+
 class ActivitySessionManager: NSObject, ObservableObject {
     private var locationManager = CLLocationManager()
     private var logger: CustomLogger
@@ -35,6 +37,7 @@ class ActivitySessionManager: NSObject, ObservableObject {
 
     // Location
     @Published var receivedLocations: [Location] = []
+    @Published var receivedCoordinates: [CLLocationCoordinate2D] = []
     @Published var currentSpeed: Double = 0.0
     @Published var totalDistance: Double = 0.0
     @Published var distances: [Distance] = []
@@ -46,10 +49,7 @@ class ActivitySessionManager: NSObject, ObservableObject {
     // Location
     @Published var locationAuthorizationStatus: CLAuthorizationStatus = .notDetermined
     @Published var currentLocation: CLLocation?
-    @Published var region: MKCoordinateRegion =  MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194), // default to San Francisco
-        span: MKCoordinateSpan(latitudeDelta: 0.003, longitudeDelta: 0.003)
-    )
+    @Published var position: MapCameraPosition = .region(.test)
     
     init(logger: CustomLogger,
          coreDataManager: CoreDataManager,
@@ -124,6 +124,21 @@ class ActivitySessionManager: NSObject, ObservableObject {
         session?.addElapasedTime(status: .active, timestamp: session?.startTime ?? Date())
         
         logger.log("Session is started", level: .info)
+        
+        /// For Testing:
+//        receivedLocations = createMockLocations(activityId: session?.id ?? "")
+//        Task {
+//            let coordinates: [CLLocationCoordinate2D] = receivedLocations.map { location in
+//                CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+//            }
+//            
+//            for index in 0..<coordinates.count {
+//                DispatchQueue.main.asyncAfter(deadline: .now() + CGFloat(index)) {
+//                    let coordinate = coordinates[index]
+//                    self.receivedCoordinates.append(coordinate)
+//                }
+//            }
+//        }
     }
     
     /**
@@ -192,6 +207,7 @@ class ActivitySessionManager: NSObject, ObservableObject {
         receivedLocations = []
         distances = []
         receivedHeartRates = []
+        receivedCoordinates = []
         
         // Disable location background mode
         locationManager.allowsBackgroundLocationUpdates = false
@@ -213,6 +229,25 @@ extension ActivitySessionManager {
             session?.restElapsedSeconds = restElapsedSeconds
         }
     }
+    
+    func createMockLocations(activityId: String) -> [Location] {
+        let clLocations: [CLLocation] = [
+            CLLocation(latitude: 37.7802, longitude: -122.4848),
+            CLLocation(latitude: 37.7804, longitude: -122.4851),
+            CLLocation(latitude: 37.7808, longitude: -122.4847),
+            CLLocation(latitude: 37.7812, longitude: -122.4843),
+            CLLocation(latitude: 37.7815, longitude: -122.4839),
+            CLLocation(latitude: 37.7810, longitude: -122.4833),
+            CLLocation(latitude: 37.7806, longitude: -122.4837),
+            CLLocation(latitude: 37.7802, longitude: -122.4841),
+            CLLocation(latitude: 37.7802, longitude: -122.4848)
+        ]
+        
+        let locations: [Location] = clLocations.map { clLocation in
+            Location(activityId: activityId, location: clLocation)
+        }
+        return locations
+    }
 }
 
 // MARK: Private fucntions
@@ -231,7 +266,7 @@ extension ActivitySessionManager {
         Task {
             await MainActor.run(body: {
                 self.currentLocation = lastLocation
-                self.region.center = lastLocation.coordinate
+                self.position = .region(MKCoordinateRegion(center: lastLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.003, longitudeDelta: 0.003)))
             })
         }
 
@@ -257,6 +292,7 @@ extension ActivitySessionManager {
         // Append lcation to cachedLocations only if session is valid
         let location = Location(activityId: session.id, location: lastLocation)
         receivedLocations.append(location)
+        receivedCoordinates.append(lastLocation.coordinate)
     }
     
     private func calcualteDistance(from lastLocation: Location?, to newLocation: CLLocation) -> Double {
@@ -343,4 +379,22 @@ struct Distance: Identifiable {
     let id: String = UUID().uuidString
     let distanceInMeter: Double
     let timestamp: Date
+}
+
+
+/// Mock Regions
+extension MKCoordinateRegion {
+    static let sanfancisco = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194), // default to San Francisco
+        span: MKCoordinateSpan(latitudeDelta: 0.003, longitudeDelta: 0.003)
+    )
+    
+    static let home = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 24.9766591, longitude: 121.5435001), // Home
+        span: MKCoordinateSpan(latitudeDelta: 0.003, longitudeDelta: 0.003)
+    )
+    
+    static let test = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 37.7802, longitude: -122.4848),
+        span: MKCoordinateSpan(latitudeDelta: 0.003, longitudeDelta: 0.003))
 }
