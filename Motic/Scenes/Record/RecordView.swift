@@ -124,23 +124,35 @@ struct RecordView_Previews: PreviewProvider {
 
 struct MapView: View {
     @Binding private var position: MapCameraPosition
+    @State private var cameraBounds: MapCameraBounds
     @EnvironmentObject var activitySessionManager: ActivitySessionManager
     
     init(position: Binding<MapCameraPosition>) {
         _position = position
+        
+        let bounds = MapCameraBounds(minimumDistance: 400, maximumDistance: 900)
+        _cameraBounds = State(wrappedValue: bounds)
     }
     
     var body: some View {
-        Map(position: $position) {            
+        Map(position: $position, bounds: cameraBounds) {
             // Draw route
-            MapPolyline(coordinates: activitySessionManager.receivedCoordinates)
-                .stroke(Color.themeStyle.theme.accent, lineWidth: 10)
+            if activitySessionManager.receivedCoordinates.isEmpty == false {
+                MapPolyline(coordinates: activitySessionManager.receivedCoordinates)
+                    .stroke(Color.themeStyle.theme.accent, lineWidth: 10)
+            }
+
+            // Show user current location
+            UserAnnotation()
         }
         .mapStyle(.standard)
         .mapControls {
             MapUserLocationButton()
             MapCompass()
             MapScaleView()
+        }
+        .onMapCameraChange { context in
+            print("Heading: \(context.camera.heading) Distance: \(context.camera.distance) Pitch: \(context.camera.pitch)")
         }
         .onAppear {
             activitySessionManager.startUpdatingLocation()

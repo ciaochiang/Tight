@@ -10,8 +10,6 @@ import SwiftUI
 import MapKit
 import Combine
 
-
-
 class ActivitySessionManager: NSObject, ObservableObject {
     private var locationManager = CLLocationManager()
     private var logger: CustomLogger
@@ -49,7 +47,7 @@ class ActivitySessionManager: NSObject, ObservableObject {
     // Location
     @Published var locationAuthorizationStatus: CLAuthorizationStatus = .notDetermined
     @Published var currentLocation: CLLocation?
-    @Published var position: MapCameraPosition = .region(.test)
+    @Published var position: MapCameraPosition = .userLocation(fallback: .automatic)
     
     init(logger: CustomLogger,
          coreDataManager: CoreDataManager,
@@ -266,7 +264,7 @@ extension ActivitySessionManager {
         Task {
             await MainActor.run(body: {
                 self.currentLocation = lastLocation
-                self.position = .region(MKCoordinateRegion(center: lastLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.003, longitudeDelta: 0.003)))
+//                self.position = .region(MKCoordinateRegion(center: lastLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)))
             })
         }
 
@@ -384,7 +382,7 @@ struct Distance: Identifiable {
 
 /// Mock Regions
 extension MKCoordinateRegion {
-    static let sanfancisco = MKCoordinateRegion(
+    static let sanfrancisco = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194), // default to San Francisco
         span: MKCoordinateSpan(latitudeDelta: 0.003, longitudeDelta: 0.003)
     )
@@ -397,4 +395,8 @@ extension MKCoordinateRegion {
     static let test = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 37.7802, longitude: -122.4848),
         span: MKCoordinateSpan(latitudeDelta: 0.003, longitudeDelta: 0.003))
+}
+
+extension CLLocationCoordinate2D {
+    static let sanfrancisco = CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194)
 }
