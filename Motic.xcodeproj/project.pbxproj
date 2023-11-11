@@ -72,6 +72,7 @@
 		E5AB33F72AC5A939004B8973 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AB33F62AC5A939004B8973 /* RecordView.swift */; };
 		E5AB33F92AC5A946004B8973 /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AB33F82AC5A946004B8973 /* RecordViewModel.swift */; };
 		E5AB33FC2AC9591D004B8973 /* MoticModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E5AB33FA2AC9591D004B8973 /* MoticModel.xcdatamodeld */; };
+		E5B0DF762AFE786200EC9871 /* SportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B0DF752AFE786200EC9871 /* SportType.swift */; };
 		E5E3872F2AD542E3008A7353 /* SportSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E3872E2AD542E3008A7353 /* SportSelectorView.swift */; };
 		E5E387312AD542F0008A7353 /* SportSelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E387302AD542F0008A7353 /* SportSelectorViewModel.swift */; };
 		E5E387352AD6E016008A7353 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E387342AD6E016008A7353 /* CoreDataManager.swift */; };
@@ -208,6 +209,7 @@
 		E5AB33F62AC5A939004B8973 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		E5AB33F82AC5A946004B8973 /* RecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
 		E5AB33FB2AC9591D004B8973 /* MoticModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MoticModel.xcdatamodel; sourceTree = "<group>"; };
+		E5B0DF752AFE786200EC9871 /* SportType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportType.swift; sourceTree = "<group>"; };
 		E5E3872E2AD542E3008A7353 /* SportSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportSelectorView.swift; sourceTree = "<group>"; };
 		E5E387302AD542F0008A7353 /* SportSelectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportSelectorViewModel.swift; sourceTree = "<group>"; };
 		E5E387342AD6E016008A7353 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -610,6 +612,7 @@
 			isa = PBXGroup;
 			children = (
 				E5E387372AD6E57D008A7353 /* Location.swift */,
+				E5B0DF752AFE786200EC9871 /* SportType.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -908,6 +911,7 @@
 				E51DE2142AC1C6F400957395 /* Date.swift in Sources */,
 				E51DE2022ABCA03C00957395 /* Mocks.swift in Sources */,
 				E5AB33F32AC48360004B8973 /* TabBarItemType.swift in Sources */,
+				E5B0DF762AFE786200EC9871 /* SportType.swift in Sources */,
 				E5AB33F12AC47FF9004B8973 /* TabBarItemPreferenceKey.swift in Sources */,
 				E521001C2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift in Sources */,
 				E53CA8A62ADA550A0009D572 /* WearableDeviceManager.swift in Sources */,

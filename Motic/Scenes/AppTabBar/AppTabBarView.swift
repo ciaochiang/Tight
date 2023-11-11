@@ -11,6 +11,7 @@ class AppTabBarViewModel: ObservableObject {
     var logger: CustomLogger
     var activitySessionManager: ActivitySessionManager
     var wearableDeviceManager: WearableDeviceManager
+    @Published var isRecordViewPresented: Bool
     
     init(logger: CustomLogger,
          activitySessionManager: ActivitySessionManager,
@@ -18,44 +19,45 @@ class AppTabBarViewModel: ObservableObject {
         self.logger = logger
         self.activitySessionManager = activitySessionManager
         self.wearableDeviceManager = wearableDeviceManager
+        _isRecordViewPresented = Published(wrappedValue: false)
     }
 }
 
 struct AppTabBarView: View {
     @StateObject private var viewModel: AppTabBarViewModel
     @State private var tabSelection: TabBarItemType = .home
-    @State var isRecordViewPresented: Bool = false
     private var logger: CustomLogger
-    private var mainView: MainView
     
     init(viewModel: AppTabBarViewModel, logger: CustomLogger) {
         _viewModel = StateObject(wrappedValue: viewModel)
         self.logger = logger
-        
-        let dependency = MainViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
-                                                    logger: logger)
-        let viewModel = MainViewModel(dependency: dependency)
-        mainView = MainView(viewModel: viewModel)
     }
     
     var body: some View {
         CustomTabBarContainerView(selection: $tabSelection) {
-            mainView.tabBarItem(type: .home, selection: $tabSelection)
+            
+            /// Create MainView
+            let dependency = MainViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
+                                                        activtiySessionManager: viewModel.activitySessionManager,
+                                                        logger: logger)
+            let mainViewModel = MainViewModel(dependency: dependency,
+                                              isRecordViewPresented: $viewModel.isRecordViewPresented)
+            MainView(viewModel: mainViewModel).tabBarItem(type: .home, selection: $tabSelection)
 
             Color.clear.tabBarItem(type: .record,
                                    selection: $tabSelection,
                                    disableContent: true) {
-                isRecordViewPresented.toggle()
+                viewModel.isRecordViewPresented.toggle()
             }
             
             Color.green.tabBarItem(type: .preference, selection: $tabSelection)
         }
-        .sheet(isPresented: $isRecordViewPresented) {
+        .sheet(isPresented: $viewModel.isRecordViewPresented) {
             let dependency = RecordViewModelDependencyImp(logger: logger,
                                                           activitySessionManager: viewModel.activitySessionManager,
                                                           wearableDeviceManager: viewModel.wearableDeviceManager)
             let viewModel = RecordViewModel(dependency: dependency)
-            RecordView(viewModel: viewModel, isPresented: $isRecordViewPresented)
+            RecordView(viewModel: viewModel, isPresented: $viewModel.isRecordViewPresented)
                 .presentationDetents([.large])
         }
     }

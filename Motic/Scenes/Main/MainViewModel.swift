@@ -12,16 +12,20 @@ import Combine
 
 protocol MainViewModelDependency {
     var preferenceManager: PreferenceManager { get }
+    var activitySessionManager: ActivitySessionManager { get }
     var logger: CustomLogger { get }
 }
 
 class MainViewModelDependencyImp: MainViewModelDependency {
     var preferenceManager: PreferenceManager
+    var activitySessionManager: ActivitySessionManager
     var logger: CustomLogger
   
     init(preferenceManager: PreferenceManager,
+         activtiySessionManager: ActivitySessionManager,
          logger: CustomLogger) {
         self.preferenceManager = preferenceManager
+        self.activitySessionManager = activtiySessionManager
         self.logger = logger
     }
 }
@@ -33,9 +37,11 @@ class MainViewModel: ObservableObject {
     @Published var activities: [Activity] = []
     @Published var lastestActivites: [Activity] = []
     @Published var selectedActivity: Activity?
-    @Published var totalDuration: TimeInterval = 0.0
-    @Published var totalDistanceKilometers: Double = 0.0
-    @Published var avgSpeed: TimeInterval = 0.0
+    @Published var weeklySummary: WeeklySummary = WeeklySummary(totalElapsedTime: 0, totalDistanceKilometers: 0, averageSpeed: 0)
+    @Published var isSessionRunning: Bool = false
+    @Binding var isRecordViewPresented: Bool
+    
+    @State private var cancellables: Set<AnyCancellable> = []
     
     var name: String {
         let firstName = user?.firstName ?? ""
@@ -43,8 +49,9 @@ class MainViewModel: ObservableObject {
         return "\(firstName) \(lastName)"
     }
   
-    init(dependency: MainViewModelDependency) {
+    init(dependency: MainViewModelDependency, isRecordViewPresented: Binding<Bool>) {
         self.dependency = dependency
+        _isRecordViewPresented = isRecordViewPresented
         
         let storeDependency = HealthStoreManagerDependencyImp(logger: dependency.logger)
         healthStoreManager = HealthStoreManager(dependency: storeDependency)
@@ -52,19 +59,20 @@ class MainViewModel: ObservableObject {
         let thisMonth = Date.thisMonth()
         Task {
             do {
+                // g
                 let activities = try await healthStoreManager.getActivties(from: thisMonth.from, to: thisMonth.end)
                 let workouts = activities.map { $0.workout }
 
                 let totalDistanceKilometers = healthStoreManager.getTotalDistance(from: workouts)
-                let totalDuration = healthStoreManager.getTotalDuration(from: workouts)
-                let avgSpeed = healthStoreManager.getAvgSpeed(totalDistance: totalDistanceKilometers, totalDuration: totalDuration)
+                let totalElapsedTime = healthStoreManager.getTotalDuration(from: workouts)
+                let averageSpeed = healthStoreManager.getAvgSpeed(totalDistance: totalDistanceKilometers, totalDuration: totalElapsedTime)
 
                 await MainActor.run(body: {
                     self.activities = activities
                     self.lastestActivites = Array(activities.prefix(3))
-                    self.totalDistanceKilometers = totalDistanceKilometers
-                    self.totalDuration = totalDuration
-                    self.avgSpeed = avgSpeed
+                    self.weeklySummary = WeeklySummary(totalElapsedTime: totalElapsedTime,
+                                                       totalDistanceKilometers: totalDistanceKilometers,
+                                                       averageSpeed: averageSpeed)
                 })
             }
             catch let error {
@@ -79,4 +87,10 @@ class MainViewModel: ObservableObject {
         // Temp
         user?.age = 36
     }
+}
+
+struct WeeklySummary {
+    var totalElapsedTime: TimeInterval
+    var totalDistanceKilometers: Double
+    var averageSpeed: TimeInterval
 }

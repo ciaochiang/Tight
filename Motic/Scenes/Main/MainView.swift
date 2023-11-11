@@ -10,48 +10,56 @@ import HealthKit
 import Charts
 
 struct MainView: View {
-  @StateObject var viewModel: MainViewModel
-  @StateObject var preferenceManager: PreferenceManager
-  @State var isProfileViewPresented: Bool = false
-  @State var isActivityViewPresented: Bool = false
+    @StateObject var viewModel: MainViewModel
+    @StateObject var preferenceManager: PreferenceManager
+    @StateObject var activitySessionManager: ActivitySessionManager
+    @State var isProfileViewPresented: Bool = false
+    @State var isActivityViewPresented: Bool = false
   
-  init(viewModel: MainViewModel) {
-      _viewModel = StateObject(wrappedValue: viewModel)
-      _preferenceManager = StateObject(wrappedValue: viewModel.dependency.preferenceManager)
-  }
+    init(viewModel: MainViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+        _preferenceManager = StateObject(wrappedValue: viewModel.dependency.preferenceManager)
+        _activitySessionManager = StateObject(wrappedValue: viewModel.dependency.activitySessionManager)
+    }
   
-  var body: some View {
-      ZStack {
-          NavigationView {
-              ScrollView(showsIndicators: false) {
-                  VStack(spacing: 16) {
-                      topSeciton
-                      sumamrySection
-                      activitiesSeciton
-                      Spacer()
-                  }
-                  .padding()
-              }
-              .background(Color.themeStyle.theme.background)
-          }
-          .sheet(isPresented: $isProfileViewPresented) {
-              let dependency = ProfileViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
-                                                             logger: viewModel.dependency.logger,
-                                                             currentUser: AccountManager.shared.currentUser)
-              let viewModel = ProfileViewModel(dependency: dependency)
-              ProfileView(viewModel: viewModel)
-                .presentationDetents([.medium])
-          }
-      }
-      .preferredColorScheme(preferenceManager.colorScheme)
-  }
+    var body: some View {
+        ZStack {
+            NavigationView {
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 16) {
+                        topSeciton
+                        
+                        if activitySessionManager.isRecording {
+                            currentActivitySection
+                        }
+                        
+                        weeklySummarySection
+                        activitiesSeciton
+                        Spacer()
+                    }
+                    .padding()
+                }
+                .background(Color.themeStyle.theme.background)
+            }
+            .sheet(isPresented: $isProfileViewPresented) {
+                let dependency = ProfileViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
+                                                               logger: viewModel.dependency.logger,
+                                                               currentUser: AccountManager.shared.currentUser)
+                let viewModel = ProfileViewModel(dependency: dependency)
+                ProfileView(viewModel: viewModel)
+                  .presentationDetents([.medium])
+            }
+        }
+        .preferredColorScheme(preferenceManager.colorScheme)
+    }
 }
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         let dependency = MainViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
+                                                    activtiySessionManager: Mocks.activitySessionManager,
                                                     logger: Mocks.logger)
-        let viewModel = MainViewModel(dependency: dependency)
+        let viewModel = MainViewModel(dependency: dependency, isRecordViewPresented: .constant(false))
         MainView(viewModel: viewModel)
     }
 }
@@ -104,16 +112,20 @@ extension MainView {
     .frame(maxWidth: .infinity)
     .background(Color.themeStyle.theme.black)
     .cornerRadius(16)
+    .onTapGesture {
+        viewModel.isRecordViewPresented.toggle()
+//        isRecordViewPresented?.toggle()
+    }
   }
   
-  var sumamrySection: some View {
+  var weeklySummarySection: some View {
       VStack {
-          MainViewSectionHeader(sectionTitle: "This month".uppercased())
+          MainViewSectionHeader(sectionTitle: "This month".capitalized)
           
           VStack {
               HStack(spacing: 8) {
+                  totalElapsedTimeCard
                   totalDistanceCard
-                  totalDurationCard
                   avgSpeedCard
               }
               .padding()
@@ -125,7 +137,7 @@ extension MainView {
   
   var activitiesSeciton: some View {
     VStack(spacing: 8) {
-        MainViewSectionHeader(sectionTitle: "Activites".uppercased())
+        MainViewSectionHeader(sectionTitle: "Activites".capitalized)
       
         VStack(spacing: 16) {
             ForEach(viewModel.activities) { activity in
@@ -188,7 +200,7 @@ extension MainView {
     var totalDistanceCard: some View {
         VStack(spacing: 4) {
             HStack(spacing: 4) {
-                Text("\(String(format: "%.1f", viewModel.totalDistanceKilometers))")
+                Text("\(String(format: "%.1f", viewModel.weeklySummary.totalDistanceKilometers))")
                 .font(.title2)
                 .fontWeight(.semibold)
                 .foregroundColor(.themeStyle.theme.accent)
@@ -204,10 +216,10 @@ extension MainView {
         }
     }
     
-    var totalDurationCard: some View {
+    var totalElapsedTimeCard: some View {
         VStack(spacing: 4) {
             HStack(spacing: 4) {
-                Text(viewModel.totalDuration.shorterFormatInterval)
+                Text(viewModel.weeklySummary.totalElapsedTime.shorterFormatInterval)
                 .font(.title2)
                 .fontWeight(.semibold)
                 .foregroundColor(.themeStyle.theme.accent)
@@ -223,7 +235,7 @@ extension MainView {
     var avgSpeedCard: some View {
         VStack(spacing: 4) {
             HStack(spacing: 4) {
-                Text(viewModel.avgSpeed.formatAvgSpeedTimeInterval)
+                Text(viewModel.weeklySummary.averageSpeed.formatAvgSpeedTimeInterval)
                 .font(.title2)
                 .fontWeight(.semibold)
                 .foregroundColor(.themeStyle.theme.accent)

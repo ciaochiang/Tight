@@ -7,6 +7,7 @@
 
 import Foundation
 import HealthKit
+import CoreLocation
 
 class Mocks {
     static var logger: CustomLogger {
@@ -55,5 +56,25 @@ class Mocks {
         ]
         
         return data
+    }
+    
+    
+    static func createMockLocations(activityId: String) -> [Location] {
+        let clLocations: [CLLocation] = [
+            CLLocation(latitude: 37.7802, longitude: -122.4848),
+            CLLocation(latitude: 37.7804, longitude: -122.4851),
+            CLLocation(latitude: 37.7808, longitude: -122.4847),
+            CLLocation(latitude: 37.7812, longitude: -122.4843),
+            CLLocation(latitude: 37.7815, longitude: -122.4839),
+            CLLocation(latitude: 37.7810, longitude: -122.4833),
+            CLLocation(latitude: 37.7806, longitude: -122.4837),
+            CLLocation(latitude: 37.7802, longitude: -122.4841),
+            CLLocation(latitude: 37.7802, longitude: -122.4848)
+        ]
+        
+        let locations: [Location] = clLocations.map { clLocation in
+            Location(activityId: activityId, location: clLocation)
+        }
+        return locations
     }
 }

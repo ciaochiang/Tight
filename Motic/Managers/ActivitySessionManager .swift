@@ -11,17 +11,15 @@ import MapKit
 import Combine
 
 class ActivitySessionManager: NSObject, ObservableObject {
-    private var locationManager = CLLocationManager()
-    private var logger: CustomLogger
-    private var coreDataManager: CoreDataManager
-    private var wearableDeviceManager: WearableDeviceManager
+    private let locationManager = CLLocationManager()
+    private let logger: CustomLogger
+    private let coreDataManager: CoreDataManager
+    private let wearableDeviceManager: WearableDeviceManager
     
     // Session
     @Published var sessionStatus: SessionStatus = .stop
     @Published var session: ActivitySession?
-    var isRecording: Bool {
-        return sessionStatus == .start || sessionStatus == .resume
-    }
+    @Published var isRecording: Bool = false
     
     // Sport
     @Published var sportType: SportType = .others
@@ -46,12 +44,12 @@ class ActivitySessionManager: NSObject, ObservableObject {
     
     // Location
     @Published var locationAuthorizationStatus: CLAuthorizationStatus = .notDetermined
-    @Published var currentLocation: CLLocation?
     @Published var position: MapCameraPosition = .userLocation(fallback: .automatic)
-    
+        
     init(logger: CustomLogger,
          coreDataManager: CoreDataManager,
          wearableDeviceManager: WearableDeviceManager) {
+        
         self.logger = logger
         self.coreDataManager = coreDataManager
         self.wearableDeviceManager = wearableDeviceManager
@@ -64,16 +62,12 @@ class ActivitySessionManager: NSObject, ObservableObject {
         locationManager.requestAlwaysAuthorization()
     }
     
-    /**
-     Set SessionStatus
-     */
+    /// Set SessionStatus
     func setSessionStatus(with sessionStatus: SessionStatus) {
         self.sessionStatus = sessionStatus
     }
     
-    /**
-     Set heart rate
-     */
+    /// Set heart rate
     func setHeartRate(with heartRate: Double) {
         self.currentHeartRate = heartRate
     }
@@ -117,26 +111,12 @@ class ActivitySessionManager: NSObject, ObservableObject {
         locationManager.pausesLocationUpdatesAutomatically = false
         
         sessionStatus = .start
+        isRecording = true
         
         // Add active timestamp to timeline
         session?.addElapasedTime(status: .active, timestamp: session?.startTime ?? Date())
         
         logger.log("Session is started", level: .info)
-        
-        /// For Testing:
-//        receivedLocations = createMockLocations(activityId: session?.id ?? "")
-//        Task {
-//            let coordinates: [CLLocationCoordinate2D] = receivedLocations.map { location in
-//                CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
-//            }
-//            
-//            for index in 0..<coordinates.count {
-//                DispatchQueue.main.asyncAfter(deadline: .now() + CGFloat(index)) {
-//                    let coordinate = coordinates[index]
-//                    self.receivedCoordinates.append(coordinate)
-//                }
-//            }
-//        }
     }
     
     /**
@@ -146,6 +126,7 @@ class ActivitySessionManager: NSObject, ObservableObject {
         guard sessionStatus == .pause else { return }
         
         sessionStatus = .start
+        isRecording = true
         
         // Add active timestamp to timeline
         session?.addElapasedTime(status: .active, timestamp: Date())
@@ -160,6 +141,7 @@ class ActivitySessionManager: NSObject, ObservableObject {
         lastPausedTimestamp = Date()
         
         sessionStatus = .pause
+        isRecording = false
         
         // Add rest timestamp to timeline
         session?.addElapasedTime(status: .rest, timestamp: Date())
@@ -180,6 +162,7 @@ class ActivitySessionManager: NSObject, ObservableObject {
          */
         sessionStatus = .stop
         session?.endTime = Date()
+        isRecording = false
         
         /**
          Save to core data
@@ -198,7 +181,6 @@ class ActivitySessionManager: NSObject, ObservableObject {
         Clean up
          */
         session = nil
-        currentLocation = nil
         elapsedSeconds = 0.0
         currentSpeed = 0.0
         totalDistance = 0.0
@@ -227,25 +209,6 @@ extension ActivitySessionManager {
             session?.restElapsedSeconds = restElapsedSeconds
         }
     }
-    
-    func createMockLocations(activityId: String) -> [Location] {
-        let clLocations: [CLLocation] = [
-            CLLocation(latitude: 37.7802, longitude: -122.4848),
-            CLLocation(latitude: 37.7804, longitude: -122.4851),
-            CLLocation(latitude: 37.7808, longitude: -122.4847),
-            CLLocation(latitude: 37.7812, longitude: -122.4843),
-            CLLocation(latitude: 37.7815, longitude: -122.4839),
-            CLLocation(latitude: 37.7810, longitude: -122.4833),
-            CLLocation(latitude: 37.7806, longitude: -122.4837),
-            CLLocation(latitude: 37.7802, longitude: -122.4841),
-            CLLocation(latitude: 37.7802, longitude: -122.4848)
-        ]
-        
-        let locations: [Location] = clLocations.map { clLocation in
-            Location(activityId: activityId, location: clLocation)
-        }
-        return locations
-    }
 }
 
 // MARK: Private fucntions
@@ -260,13 +223,6 @@ extension ActivitySessionManager {
     
     private func handleLocations(session: ActivitySession?, locations: [CLLocation]) {
         guard let lastLocation = locations.last else { return }
-        // Update latest location
-        Task {
-            await MainActor.run(body: {
-                self.currentLocation = lastLocation
-//                self.position = .region(MKCoordinateRegion(center: lastLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)))
-            })
-        }
 
         /*
          Below required 'isRecording' is true
