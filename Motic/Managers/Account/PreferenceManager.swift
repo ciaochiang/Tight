@@ -25,8 +25,10 @@ class PreferenceManager: ObservableObject {
   }
   
   func toggleDarkMode(isOn: Bool) {
-    colorScheme = isOn ? .dark : .light
+      DispatchQueue.main.async {
+          self.colorScheme = isOn ? .dark : .light
+      }
     
-    UserDefaults.standard.setValue(isOn, forKey: "PERF_IS_DARK_MODE_ON")
+      UserDefaults.standard.setValue(isOn, forKey: "PERF_IS_DARK_MODE_ON")
   }
 }

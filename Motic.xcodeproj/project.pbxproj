@@ -73,6 +73,12 @@
 		E5AB33F92AC5A946004B8973 /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AB33F82AC5A946004B8973 /* RecordViewModel.swift */; };
 		E5AB33FC2AC9591D004B8973 /* MoticModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E5AB33FA2AC9591D004B8973 /* MoticModel.xcdatamodeld */; };
 		E5B0DF762AFE786200EC9871 /* SportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B0DF752AFE786200EC9871 /* SportType.swift */; };
+		E5B0DF782B00828300EC9871 /* HeartRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B0DF772B00828300EC9871 /* HeartRate.swift */; };
+		E5B0DF7A2B0082A600EC9871 /* Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B0DF792B0082A600EC9871 /* Distance.swift */; };
+		E5B0DF7C2B0082C900EC9871 /* ActivitySession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B0DF7B2B0082C900EC9871 /* ActivitySession.swift */; };
+		E5B0DF7E2B00831C00EC9871 /* ElaspsedTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B0DF7D2B00831C00EC9871 /* ElaspsedTime.swift */; };
+		E5B0DF802B00837900EC9871 /* MockLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B0DF7F2B00837900EC9871 /* MockLocations.swift */; };
+		E5B0DF822B0083BE00EC9871 /* ElapsedTimeStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B0DF812B0083BE00EC9871 /* ElapsedTimeStatus.swift */; };
 		E5E3872F2AD542E3008A7353 /* SportSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E3872E2AD542E3008A7353 /* SportSelectorView.swift */; };
 		E5E387312AD542F0008A7353 /* SportSelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E387302AD542F0008A7353 /* SportSelectorViewModel.swift */; };
 		E5E387352AD6E016008A7353 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E387342AD6E016008A7353 /* CoreDataManager.swift */; };
@@ -210,6 +216,12 @@
 		E5AB33F82AC5A946004B8973 /* RecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
 		E5AB33FB2AC9591D004B8973 /* MoticModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MoticModel.xcdatamodel; sourceTree = "<group>"; };
 		E5B0DF752AFE786200EC9871 /* SportType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportType.swift; sourceTree = "<group>"; };
+		E5B0DF772B00828300EC9871 /* HeartRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRate.swift; sourceTree = "<group>"; };
+		E5B0DF792B0082A600EC9871 /* Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Distance.swift; sourceTree = "<group>"; };
+		E5B0DF7B2B0082C900EC9871 /* ActivitySession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySession.swift; sourceTree = "<group>"; };
+		E5B0DF7D2B00831C00EC9871 /* ElaspsedTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElaspsedTime.swift; sourceTree = "<group>"; };
+		E5B0DF7F2B00837900EC9871 /* MockLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLocations.swift; sourceTree = "<group>"; };
+		E5B0DF812B0083BE00EC9871 /* ElapsedTimeStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElapsedTimeStatus.swift; sourceTree = "<group>"; };
 		E5E3872E2AD542E3008A7353 /* SportSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportSelectorView.swift; sourceTree = "<group>"; };
 		E5E387302AD542F0008A7353 /* SportSelectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportSelectorViewModel.swift; sourceTree = "<group>"; };
 		E5E387342AD6E016008A7353 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -333,6 +345,7 @@
 			children = (
 				E51DE2012ABCA03C00957395 /* Mocks.swift */,
 				E51DE22F2AC2BB3200957395 /* Error.swift */,
+				E5B0DF7F2B00837900EC9871 /* MockLocations.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -613,6 +626,11 @@
 			children = (
 				E5E387372AD6E57D008A7353 /* Location.swift */,
 				E5B0DF752AFE786200EC9871 /* SportType.swift */,
+				E5B0DF772B00828300EC9871 /* HeartRate.swift */,
+				E5B0DF792B0082A600EC9871 /* Distance.swift */,
+				E5B0DF7B2B0082C900EC9871 /* ActivitySession.swift */,
+				E5B0DF7D2B00831C00EC9871 /* ElaspsedTime.swift */,
+				E5B0DF812B0083BE00EC9871 /* ElapsedTimeStatus.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -907,6 +925,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5B0DF802B00837900EC9871 /* MockLocations.swift in Sources */,
 				E51DE2042ABDF26900957395 /* HealthStoreManager+Distance.swift in Sources */,
 				E51DE2142AC1C6F400957395 /* Date.swift in Sources */,
 				E51DE2022ABCA03C00957395 /* Mocks.swift in Sources */,
@@ -914,9 +933,11 @@
 				E5B0DF762AFE786200EC9871 /* SportType.swift in Sources */,
 				E5AB33F12AC47FF9004B8973 /* TabBarItemPreferenceKey.swift in Sources */,
 				E521001C2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift in Sources */,
+				E5B0DF7C2B0082C900EC9871 /* ActivitySession.swift in Sources */,
 				E53CA8A62ADA550A0009D572 /* WearableDeviceManager.swift in Sources */,
 				E51DE2002ABB303100957395 /* CyclingActivityViewModel.swift in Sources */,
 				E58D15BB2ACAC7F3000D1918 /* ActivitySessionManager .swift in Sources */,
+				E5B0DF782B00828300EC9871 /* HeartRate.swift in Sources */,
 				E5E387312AD542F0008A7353 /* SportSelectorViewModel.swift in Sources */,
 				E5E3872F2AD542E3008A7353 /* SportSelectorView.swift in Sources */,
 				E59EB84A2AB5934E0057F630 /* OnboardingViewModel.swift in Sources */,
@@ -934,6 +955,7 @@
 				E5E387352AD6E016008A7353 /* CoreDataManager.swift in Sources */,
 				E59EB8482AB58BF20057F630 /* OnboardingView.swift in Sources */,
 				E59EB8532AB5EE650057F630 /* NotificationManager.swift in Sources */,
+				E5B0DF7E2B00831C00EC9871 /* ElaspsedTime.swift in Sources */,
 				E52100182AB7204A000CF3AD /* BaseSample.swift in Sources */,
 				E5AB33ED2AC478B0004B8973 /* CustomTabBarView.swift in Sources */,
 				E51DE1F12AB9553300957395 /* BaseUser.swift in Sources */,
@@ -943,10 +965,12 @@
 				E5AB33F72AC5A939004B8973 /* RecordView.swift in Sources */,
 				E56A55C92AB2BC7100A35BF3 /* MoticApp.swift in Sources */,
 				E59EB85A2AB6A9530057F630 /* HeartRateZones.swift in Sources */,
+				E5B0DF7A2B0082A600EC9871 /* Distance.swift in Sources */,
 				E5E387382AD6E57D008A7353 /* Location.swift in Sources */,
 				E51DE20C2ABEF13F00957395 /* TimeInterval.swift in Sources */,
 				E51DE1FE2ABB2E0300957395 /* CyclingActivityView.swift in Sources */,
 				E51DE1F82AB96CEF00957395 /* ProfileView.swift in Sources */,
+				E5B0DF822B0083BE00EC9871 /* ElapsedTimeStatus.swift in Sources */,
 				E59EB8572AB5F76A0057F630 /* MainViewModel.swift in Sources */,
 				E51DE20A2ABDFDD100957395 /* HealthStoreManager+Metadata.swift in Sources */,
 				E5AB33FC2AC9591D004B8973 /* MoticModel.xcdatamodeld in Sources */,
