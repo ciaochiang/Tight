@@ -21,6 +21,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct MoticApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var accountManager: AccountManager = AccountManager.shared
+    
     @AppStorage("IS_ONBOARDING_COMPLETED") var isOnboardingCompleted: Bool = false
     private var logger: CustomLogger
     private var wearableDeviceManager: WearableDeviceManager
@@ -51,7 +52,7 @@ struct MoticApp: App {
                 OnboardingView(viewModel: viewModel)
             }
         }
-        .onChange(of: isOnboardingCompleted, perform: { newValue in
+        .onChange(of: isOnboardingCompleted, { _, newValue in
             guard newValue == true else { return }
             
             // Store to user defaults

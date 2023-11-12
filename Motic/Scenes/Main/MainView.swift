@@ -102,7 +102,7 @@ extension MainView {
       }
       Spacer()
       VStack(alignment: .center) {
-        Text("1:30:20")
+        Text("\(activitySessionManager.elapsedSeconds.formatTimeInterval)")
           .font(.title)
           .fontWeight(.bold)
           .foregroundColor(.themeStyle.theme.accent)

@@ -32,7 +32,6 @@ class RecordViewModelDependencyImp: RecordViewModelDependency {
 
 class RecordViewModel: ObservableObject {
     var dependency: RecordViewModelDependency
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @ObservedObject var activitySessionManager: ActivitySessionManager
     @Published var isLocationBottomSheetPresented: Bool = false
     @Published var isSportSelectorPresented: Bool = false

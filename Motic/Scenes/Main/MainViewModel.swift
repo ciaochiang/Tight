@@ -74,7 +74,6 @@ class MainViewModel: ObservableObject {
     
     func getWeeklySummary() async throws -> WeeklySummary {
         let period = Date.thisWeek
-        dependency.logger.log("\(period)", level: .info)
         
         let activities = try await healthStoreManager.getActivties(from: period.start, to: period.end)
         let workouts = activities.map { $0.workout }
