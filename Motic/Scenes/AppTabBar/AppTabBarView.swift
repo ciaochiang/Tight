@@ -44,13 +44,15 @@ struct AppTabBarView: View {
                                               isRecordViewPresented: $viewModel.isRecordViewPresented)
             MainView(viewModel: mainViewModel).tabBarItem(type: .home, selection: $tabSelection)
 
+            /// Craeat RecordView
             Color.clear.tabBarItem(type: .record,
                                    selection: $tabSelection,
                                    disableContent: true) {
                 viewModel.isRecordViewPresented.toggle()
             }
             
-            Color.green.tabBarItem(type: .preference, selection: $tabSelection)
+            /// Create ProfileView
+            Color.clear.tabBarItem(type: .preference, selection: $tabSelection)
         }
         .sheet(isPresented: $viewModel.isRecordViewPresented) {
             let dependency = RecordViewModelDependencyImp(logger: logger,

@@ -55,4 +55,36 @@ extension Date {
             return (Date(), Date())
         }
     }
+    
+    static var thisWeek: (start: Date, end: Date) {
+        let currentDate = Date()
+        var calendar = Calendar.current
+        calendar.firstWeekday = 2   // Start from Monday
+
+        // Get the start date of the current week
+        let dateComponent = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: currentDate)
+        print(calendar.date(from: dateComponent))
+        guard let startDateOfWeek = calendar.date(from: dateComponent),
+                let endDateOfWeek = calendar.date(byAdding: .day, value: 6, to: startDateOfWeek) else {
+            return (start: Date(), end: Date())
+        }
+        
+        var fromDateComponent = calendar.dateComponents([.hour, .minute, .second], from: startDateOfWeek)
+        var endDateComponent = calendar.dateComponents([.hour, .minute, .second], from: endDateOfWeek)
+        
+        fromDateComponent.hour = 0
+        fromDateComponent.minute = 0
+        fromDateComponent.second = 0
+        
+        endDateComponent.hour = 23
+        endDateComponent.minute = 59
+        endDateComponent.second = 59
+        
+        guard let startDate = calendar.date(from: dateComponent),
+                let endDate = calendar.date(byAdding: .day, value: 6, to: startDate) else {
+            return (start: startDateOfWeek, end: endDateOfWeek)
+        }
+        
+        return (start: startDate, end: endDate)
+    }
 }

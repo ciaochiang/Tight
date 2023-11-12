@@ -114,13 +114,12 @@ extension MainView {
     .cornerRadius(16)
     .onTapGesture {
         viewModel.isRecordViewPresented.toggle()
-//        isRecordViewPresented?.toggle()
     }
   }
   
   var weeklySummarySection: some View {
       VStack {
-          MainViewSectionHeader(sectionTitle: "This month".capitalized)
+          MainViewSectionHeader(sectionTitle: "This week".capitalized)
           
           VStack {
               HStack(spacing: 8) {

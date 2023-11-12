@@ -37,7 +37,7 @@ class MainViewModel: ObservableObject {
     @Published var activities: [Activity] = []
     @Published var lastestActivites: [Activity] = []
     @Published var selectedActivity: Activity?
-    @Published var weeklySummary: WeeklySummary = WeeklySummary(totalElapsedTime: 0, totalDistanceKilometers: 0, averageSpeed: 0)
+    @Published var weeklySummary: WeeklySummary = WeeklySummary(totalElapsedTime: 0, totalDistanceKilometers: 0, averageSpeed: 0, activities: [])
     @Published var isSessionRunning: Bool = false
     @Binding var isRecordViewPresented: Bool
     
@@ -56,26 +56,10 @@ class MainViewModel: ObservableObject {
         let storeDependency = HealthStoreManagerDependencyImp(logger: dependency.logger)
         healthStoreManager = HealthStoreManager(dependency: storeDependency)
         
-        let thisMonth = Date.thisMonth()
         Task {
             do {
-                // g
-                let activities = try await healthStoreManager.getActivties(from: thisMonth.from, to: thisMonth.end)
-                let workouts = activities.map { $0.workout }
-
-                let totalDistanceKilometers = healthStoreManager.getTotalDistance(from: workouts)
-                let totalElapsedTime = healthStoreManager.getTotalDuration(from: workouts)
-                let averageSpeed = healthStoreManager.getAvgSpeed(totalDistance: totalDistanceKilometers, totalDuration: totalElapsedTime)
-
-                await MainActor.run(body: {
-                    self.activities = activities
-                    self.lastestActivites = Array(activities.prefix(3))
-                    self.weeklySummary = WeeklySummary(totalElapsedTime: totalElapsedTime,
-                                                       totalDistanceKilometers: totalDistanceKilometers,
-                                                       averageSpeed: averageSpeed)
-                })
-            }
-            catch let error {
+                self.weeklySummary = try await getWeeklySummary()
+            } catch {
                 dependency.logger.log(error.localizedDescription, level: .error)
             }
         }
@@ -87,10 +71,37 @@ class MainViewModel: ObservableObject {
         // Temp
         user?.age = 36
     }
+    
+    func getWeeklySummary() async throws -> WeeklySummary {
+        let period = Date.thisWeek
+        dependency.logger.log("\(period)", level: .info)
+        
+        let activities = try await healthStoreManager.getActivties(from: period.start, to: period.end)
+        let workouts = activities.map { $0.workout }
+
+        let totalDistanceKilometers = healthStoreManager.getTotalDistance(from: workouts)
+        let totalElapsedTime = healthStoreManager.getTotalDuration(from: workouts)
+        let averageSpeed = healthStoreManager.getAvgSpeed(totalDistance: totalDistanceKilometers, totalDuration: totalElapsedTime)
+        
+        return WeeklySummary(totalElapsedTime: totalElapsedTime,
+                             totalDistanceKilometers: totalDistanceKilometers,
+                             averageSpeed: averageSpeed, 
+                             activities: activities)
+    }
 }
 
 struct WeeklySummary {
     var totalElapsedTime: TimeInterval
     var totalDistanceKilometers: Double
     var averageSpeed: TimeInterval
+    var activities: [Activity]
+    var latestActivites: [Activity]
+    
+    init(totalElapsedTime: TimeInterval, totalDistanceKilometers: Double, averageSpeed: TimeInterval, activities: [Activity]) {
+        self.totalElapsedTime = totalElapsedTime
+        self.totalDistanceKilometers = totalDistanceKilometers
+        self.averageSpeed = averageSpeed
+        self.activities = activities
+        self.latestActivites = Array(activities.prefix(3))
+    }
 }
