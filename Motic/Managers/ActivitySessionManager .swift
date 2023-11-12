@@ -11,10 +11,11 @@ import MapKit
 import Combine
 
 class ActivitySessionManager: NSObject, ObservableObject {
+    static let shared = ActivitySessionManager()
+    
     private let locationManager = CLLocationManager()
     private let logger: CustomLogger
     private let coreDataManager: CoreDataManager
-    private let wearableDeviceManager: WearableDeviceManager
     
     // Session
     @Published var sessionStatus: SessionStatus = .stop
@@ -29,7 +30,7 @@ class ActivitySessionManager: NSObject, ObservableObject {
     @Published var restElapsedSeconds: TimeInterval = 0.0
     @Published var coolElapsedSeconds: TimeInterval = 0.0
     @Published var lastPausedTimestamp: Date?
-    var timer = Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()
+    private var timer: Timer?
 
     // Location
     @Published var receivedLocations: [Location] = []
@@ -46,13 +47,10 @@ class ActivitySessionManager: NSObject, ObservableObject {
     @Published var locationAuthorizationStatus: CLAuthorizationStatus = .notDetermined
     @Published var position: MapCameraPosition = .userLocation(fallback: .automatic)
         
-    init(logger: CustomLogger,
-         coreDataManager: CoreDataManager,
-         wearableDeviceManager: WearableDeviceManager) {
-        
-        self.logger = logger
-        self.coreDataManager = coreDataManager
-        self.wearableDeviceManager = wearableDeviceManager
+    private override init() {
+        self.logger = CustomLogger()
+        let coreDataDependency = CoreDataManagerDependencyImp(logger: logger)
+        self.coreDataManager = CoreDataManager(dependency: coreDataDependency)
         super.init()
         
         self.locationManager.delegate = self
@@ -101,7 +99,9 @@ class ActivitySessionManager: NSObject, ObservableObject {
         guard sessionStatus == .stop else { return }
                 
         // Init timer
-        timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] _ in
+            self?.handleTimerAction()
+        })
         
         self.sportType = sportType
         createSessionIfNeeded(workoutType: sportType)
@@ -155,7 +155,7 @@ class ActivitySessionManager: NSObject, ObservableObject {
 
         guard isRecording || sessionStatus == .pause else { return }
         
-        timer.upstream.connect().cancel()
+        timer?.invalidate()
         
         /**
          Update states

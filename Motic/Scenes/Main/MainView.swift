@@ -19,7 +19,7 @@ struct MainView: View {
     init(viewModel: MainViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
         _preferenceManager = StateObject(wrappedValue: viewModel.dependency.preferenceManager)
-        _activitySessionManager = StateObject(wrappedValue: viewModel.dependency.activitySessionManager)
+        _activitySessionManager = StateObject(wrappedValue: ActivitySessionManager.shared)
     }
   
     var body: some View {

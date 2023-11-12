@@ -106,13 +106,9 @@ struct RecordView_Previews: PreviewProvider {
     static var previews: some View {
         let logger = CustomLogger()
         let wearableDeviceManager = WearableDeviceManager(logger: logger)
-        let coreDataManagerDependency = CoreDataManagerDependencyImp(logger: logger)
-        let coreDataManager = CoreDataManager(dependency: coreDataManagerDependency)
-        let activitySessionManager = ActivitySessionManager(logger: logger,
-                                                            coreDataManager: coreDataManager,
-                                                            wearableDeviceManager: wearableDeviceManager)
+
         let dependency = RecordViewModelDependencyImp(logger: logger,
-                                                      activitySessionManager: activitySessionManager,
+                                                      activitySessionManager: ActivitySessionManager.shared,
                                                       wearableDeviceManager: wearableDeviceManager)
         let viewModel = RecordViewModel(dependency: dependency)
         
@@ -220,9 +216,6 @@ struct RecordPanelView: View {
                 .fontWeight(.bold)
                 .foregroundColor(.themeStyle.theme.primary)
 
-        }
-        .onReceive(activitySessionManager.timer) { _ in
-            activitySessionManager.handleTimerAction()
         }
     }
     

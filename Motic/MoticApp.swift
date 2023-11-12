@@ -38,11 +38,8 @@ struct MoticApp: App {
             if isOnboardingCompleted {
                 let coreDataManagerDependency = CoreDataManagerDependencyImp(logger: logger)
                 let coreDataManager = CoreDataManager(dependency: coreDataManagerDependency)
-                let activitySessionManager = ActivitySessionManager(logger: logger,
-                                                                    coreDataManager: coreDataManager,
-                                                                    wearableDeviceManager: wearableDeviceManager)
                 let viewModel = AppTabBarViewModel(logger: logger,
-                                                   activitySessionManager: activitySessionManager,
+                                                   activitySessionManager: ActivitySessionManager.shared,
                                                    wearableDeviceManager: wearableDeviceManager)
                 // Navigate to AppTabBar view
                 AppTabBarView(viewModel: viewModel, logger: logger)
@@ -72,8 +69,6 @@ extension Mocks {
     }
     
     static var activitySessionManager: ActivitySessionManager {
-        return ActivitySessionManager(logger: CustomLogger(),
-                                      coreDataManager: Mocks.coreDataManager,
-                                      wearableDeviceManager: Mocks.wearableDeviceManager)
+        return ActivitySessionManager.shared
     }
 }
