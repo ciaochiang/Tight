@@ -79,6 +79,8 @@
 		E5B0DF7E2B00831C00EC9871 /* ElaspsedTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B0DF7D2B00831C00EC9871 /* ElaspsedTime.swift */; };
 		E5B0DF802B00837900EC9871 /* MockLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B0DF7F2B00837900EC9871 /* MockLocations.swift */; };
 		E5B0DF822B0083BE00EC9871 /* ElapsedTimeStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B0DF812B0083BE00EC9871 /* ElapsedTimeStatus.swift */; };
+		E5B0DF852B06500300EC9871 /* GrowthBook-IOS in Frameworks */ = {isa = PBXBuildFile; productRef = E5B0DF842B06500300EC9871 /* GrowthBook-IOS */; };
+		E5B0DF872B06502900EC9871 /* ExperiementsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B0DF862B06502900EC9871 /* ExperiementsProvider.swift */; };
 		E5E3872F2AD542E3008A7353 /* SportSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E3872E2AD542E3008A7353 /* SportSelectorView.swift */; };
 		E5E387312AD542F0008A7353 /* SportSelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E387302AD542F0008A7353 /* SportSelectorViewModel.swift */; };
 		E5E387352AD6E016008A7353 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E387342AD6E016008A7353 /* CoreDataManager.swift */; };
@@ -222,6 +224,7 @@
 		E5B0DF7D2B00831C00EC9871 /* ElaspsedTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElaspsedTime.swift; sourceTree = "<group>"; };
 		E5B0DF7F2B00837900EC9871 /* MockLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLocations.swift; sourceTree = "<group>"; };
 		E5B0DF812B0083BE00EC9871 /* ElapsedTimeStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElapsedTimeStatus.swift; sourceTree = "<group>"; };
+		E5B0DF862B06502900EC9871 /* ExperiementsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperiementsProvider.swift; sourceTree = "<group>"; };
 		E5E3872E2AD542E3008A7353 /* SportSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportSelectorView.swift; sourceTree = "<group>"; };
 		E5E387302AD542F0008A7353 /* SportSelectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportSelectorViewModel.swift; sourceTree = "<group>"; };
 		E5E387342AD6E016008A7353 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -255,6 +258,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5B0DF852B06500300EC9871 /* GrowthBook-IOS in Frameworks */,
 				E51DE1E72AB8607200957395 /* FirebaseCrashlytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -507,6 +511,7 @@
 				E56A55CE2AB2BC7300A35BF3 /* Preview Content */,
 				E51DE1E92AB861DE00957395 /* GoogleService-Info.plist */,
 				E5AB33FA2AC9591D004B8973 /* MoticModel.xcdatamodeld */,
+				E5B0DF862B06502900EC9871 /* ExperiementsProvider.swift */,
 			);
 			path = Motic;
 			sourceTree = "<group>";
@@ -709,6 +714,7 @@
 			name = Motic;
 			packageProductDependencies = (
 				E51DE1E62AB8607200957395 /* FirebaseCrashlytics */,
+				E5B0DF842B06500300EC9871 /* GrowthBook-IOS */,
 			);
 			productName = Motic;
 			productReference = E56A55C52AB2BC7100A35BF3 /* Motic.app */;
@@ -795,6 +801,7 @@
 			mainGroup = E56A55BC2AB2BC7100A35BF3;
 			packageReferences = (
 				E51DE1E52AB8607200957395 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				E5B0DF832B06500300EC9871 /* XCRemoteSwiftPackageReference "growthbook-swift" */,
 			);
 			productRefGroup = E56A55C62AB2BC7100A35BF3 /* Products */;
 			projectDirPath = "";
@@ -977,6 +984,7 @@
 				E521001A2AB72069000CF3AD /* HeartRateSample.swift in Sources */,
 				E53CA8AD2ADBD02A0009D572 /* WearableDeviceMainViewModel.swift in Sources */,
 				E51DE2062ABDF6B000957395 /* HealthStoreManager+Energy.swift in Sources */,
+				E5B0DF872B06502900EC9871 /* ExperiementsProvider.swift in Sources */,
 				E5AB33EF2AC47CC7004B8973 /* CustomTabBarContainerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1524,6 +1532,14 @@
 				minimumVersion = 10.0.0;
 			};
 		};
+		E5B0DF832B06500300EC9871 /* XCRemoteSwiftPackageReference "growthbook-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/growthbook/growthbook-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.44;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1531,6 +1547,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E51DE1E52AB8607200957395 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
+		};
+		E5B0DF842B06500300EC9871 /* GrowthBook-IOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E5B0DF832B06500300EC9871 /* XCRemoteSwiftPackageReference "growthbook-swift" */;
+			productName = "GrowthBook-IOS";
 		};
 /* End XCSwiftPackageProductDependency section */
 

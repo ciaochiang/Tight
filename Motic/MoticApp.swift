@@ -21,16 +21,17 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct MoticApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var accountManager: AccountManager = AccountManager.shared
-    
     @AppStorage("IS_ONBOARDING_COMPLETED") var isOnboardingCompleted: Bool = false
     private var logger: CustomLogger
     private var wearableDeviceManager: WearableDeviceManager
+    private var experiementsProvider: ExperiementsProvider
     
     init() {
         self.logger = CustomLogger()
         
         let wearableDeviceManager = WearableDeviceManager(logger: logger)
         self.wearableDeviceManager = wearableDeviceManager
+        self.experiementsProvider = ExperiementsProvider()
     }
 
     var body: some Scene {
@@ -40,7 +41,8 @@ struct MoticApp: App {
                 let coreDataManager = CoreDataManager(dependency: coreDataManagerDependency)
                 let viewModel = AppTabBarViewModel(logger: logger,
                                                    activitySessionManager: ActivitySessionManager.shared,
-                                                   wearableDeviceManager: wearableDeviceManager)
+                                                   wearableDeviceManager: wearableDeviceManager,
+                                                   experimentsProvider: experiementsProvider)
                 // Navigate to AppTabBar view
                 AppTabBarView(viewModel: viewModel, logger: logger)
                     
@@ -70,5 +72,9 @@ extension Mocks {
     
     static var activitySessionManager: ActivitySessionManager {
         return ActivitySessionManager.shared
+    }
+    
+    static var experimentProvider: ExperiementsProvider {
+        return ExperiementsProvider()
     }
 }

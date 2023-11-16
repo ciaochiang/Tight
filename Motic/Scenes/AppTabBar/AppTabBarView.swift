@@ -11,14 +11,17 @@ class AppTabBarViewModel: ObservableObject {
     var logger: CustomLogger
     var activitySessionManager: ActivitySessionManager
     var wearableDeviceManager: WearableDeviceManager
+    var experimentsProvider: ExperiementsProvider
     @Published var isRecordViewPresented: Bool
     
     init(logger: CustomLogger,
          activitySessionManager: ActivitySessionManager,
-         wearableDeviceManager: WearableDeviceManager) {
+         wearableDeviceManager: WearableDeviceManager,
+         experimentsProvider: ExperiementsProvider) {
         self.logger = logger
         self.activitySessionManager = activitySessionManager
         self.wearableDeviceManager = wearableDeviceManager
+        self.experimentsProvider = experimentsProvider
         _isRecordViewPresented = Published(wrappedValue: false)
     }
 }
@@ -45,10 +48,12 @@ struct AppTabBarView: View {
             MainView(viewModel: mainViewModel).tabBarItem(type: .home, selection: $tabSelection)
 
             /// Craeat RecordView
-            Color.clear.tabBarItem(type: .record,
-                                   selection: $tabSelection,
-                                   disableContent: true) {
-                viewModel.isRecordViewPresented.toggle()
+            if viewModel.experimentsProvider.isRecordingEnabled {
+                Color.clear.tabBarItem(type: .record,
+                                       selection: $tabSelection,
+                                       disableContent: true) {
+                    viewModel.isRecordViewPresented.toggle()
+                }
             }
             
             /// Create ProfileView
@@ -69,7 +74,8 @@ struct AppTabBarView_Previews: PreviewProvider {
     static var previews: some View {
         let viewModel = AppTabBarViewModel(logger: Mocks.logger,
                                            activitySessionManager: Mocks.activitySessionManager,
-                                           wearableDeviceManager: Mocks.wearableDeviceManager)
+                                           wearableDeviceManager: Mocks.wearableDeviceManager,
+                                           experimentsProvider: Mocks.experimentProvider)
         AppTabBarView(viewModel: viewModel, logger: Mocks.logger)
     }
 }
