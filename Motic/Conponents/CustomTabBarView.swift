@@ -19,7 +19,7 @@ struct CustomTabBarView: View {
 struct CustomTabBarView_Previews: PreviewProvider {
     static let tabs: [TabBarItem] = [
         TabBarItem(type: .home, disabledContent: false, completion: nil),
-        TabBarItem(type: .record, disabledContent: true, completion: nil),
+        // TabBarItem(type: .record, disabledContent: true, completion: nil),
         TabBarItem(type: .preference, disabledContent: false, completion: nil)
     ]
     

@@ -32,7 +32,7 @@ struct CustomTabBarContainerView<Content: View>: View {
 
 struct CustomTabBarContainerView_Previews: PreviewProvider {
     static let tabs: [TabBarItemType] = [
-        .home, .record, .preference
+        .home, .preference
     ]
     
     static var previews: some View {

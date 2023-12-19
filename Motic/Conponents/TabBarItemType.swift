@@ -9,13 +9,13 @@ import SwiftUI
 
 enum TabBarItemType: Hashable {
     case home
-    case record
+    // case record
     case preference
     
     var iconName: String {
         switch self {
         case .home: return "house"
-        case .record: return "record.circle"
+        // case .record: return "record.circle"
         case .preference: return "slider.horizontal.below.square.filled.and.square"
         }
     }
@@ -23,7 +23,7 @@ enum TabBarItemType: Hashable {
     var selectedIconName: String {
         switch self {
         case .home: return "house.fill"
-        case .record: return "record.circle"
+        // case .record: return "record.circle"
         case .preference: return "slider.horizontal.below.square.and.square.filled"
         }
     }
@@ -31,7 +31,7 @@ enum TabBarItemType: Hashable {
     var title: String {
         switch self {
         case .home: return "Home"
-        case .record: return "Record"
+        // case .record: return "Record"
         case .preference: return "Preference"
         }
     }

@@ -48,6 +48,7 @@ struct AppTabBarView: View {
             MainView(viewModel: mainViewModel).tabBarItem(type: .home, selection: $tabSelection)
 
             /// Craeat RecordView
+            /*
             if viewModel.experimentsProvider.isRecordingEnabled {
                 Color.clear.tabBarItem(type: .record,
                                        selection: $tabSelection,
@@ -55,10 +56,14 @@ struct AppTabBarView: View {
                     viewModel.isRecordViewPresented.toggle()
                 }
             }
+            */
             
             /// Create ProfileView
             Color.clear.tabBarItem(type: .preference, selection: $tabSelection)
         }
+        
+        /// NOTE:  Pivot to focus on strength training
+        /*
         .sheet(isPresented: $viewModel.isRecordViewPresented) {
             let dependency = RecordViewModelDependencyImp(logger: logger,
                                                           activitySessionManager: viewModel.activitySessionManager,
@@ -67,6 +72,7 @@ struct AppTabBarView: View {
             RecordView(viewModel: viewModel, isPresented: $viewModel.isRecordViewPresented)
                 .presentationDetents([.large])
         }
+         */
     }
 }
 
