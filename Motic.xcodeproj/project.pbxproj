@@ -22,7 +22,7 @@
 		E50163FC2AB4638100C87D67 /* WorkoutSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50163FB2AB4638100C87D67 /* WorkoutSessionManager.swift */; };
 		E51DE1E72AB8607200957395 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = E51DE1E62AB8607200957395 /* FirebaseCrashlytics */; };
 		E51DE1EA2AB861DE00957395 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E51DE1E92AB861DE00957395 /* GoogleService-Info.plist */; };
-		E51DE1EE2AB8998E00957395 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE1ED2AB8998E00957395 /* Color.swift */; };
+		E51DE1EE2AB8998E00957395 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE1ED2AB8998E00957395 /* Color+Extension.swift */; };
 		E51DE1F12AB9553300957395 /* BaseUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE1F02AB9553300957395 /* BaseUser.swift */; };
 		E51DE1F32AB9555A00957395 /* AppleUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE1F22AB9555A00957395 /* AppleUser.swift */; };
 		E51DE1F82AB96CEF00957395 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE1F72AB96CEF00957395 /* ProfileView.swift */; };
@@ -34,10 +34,10 @@
 		E51DE2062ABDF6B000957395 /* HealthStoreManager+Energy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE2052ABDF6B000957395 /* HealthStoreManager+Energy.swift */; };
 		E51DE2082ABDFB3A00957395 /* HealthStoreManager+Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE2072ABDFB3A00957395 /* HealthStoreManager+Weather.swift */; };
 		E51DE20A2ABDFDD100957395 /* HealthStoreManager+Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE2092ABDFDD100957395 /* HealthStoreManager+Metadata.swift */; };
-		E51DE20C2ABEF13F00957395 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE20B2ABEF13F00957395 /* TimeInterval.swift */; };
+		E51DE20C2ABEF13F00957395 /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE20B2ABEF13F00957395 /* TimeInterval+Extension.swift */; };
 		E51DE20E2AC0546700957395 /* PreferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE20D2AC0546700957395 /* PreferenceManager.swift */; };
 		E51DE2122AC076DD00957395 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E51DE2112AC076DD00957395 /* LaunchScreen.storyboard */; };
-		E51DE2142AC1C6F400957395 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE2132AC1C6F400957395 /* Date.swift */; };
+		E51DE2142AC1C6F400957395 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE2132AC1C6F400957395 /* Date+Extension.swift */; };
 		E51DE2302AC2BB3200957395 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE22F2AC2BB3200957395 /* Error.swift */; };
 		E51DE2322AC2ED6700957395 /* HealthStoreManager+Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51DE2312AC2ED6700957395 /* HealthStoreManager+Activity.swift */; };
 		E52100182AB7204A000CF3AD /* BaseSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52100172AB7204A000CF3AD /* BaseSample.swift */; };
@@ -170,7 +170,7 @@
 		E50163F72AB346BD00C87D67 /* WatchConnectivityProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityProvider.swift; sourceTree = "<group>"; };
 		E50163FB2AB4638100C87D67 /* WorkoutSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSessionManager.swift; sourceTree = "<group>"; };
 		E51DE1E92AB861DE00957395 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		E51DE1ED2AB8998E00957395 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		E51DE1ED2AB8998E00957395 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		E51DE1F02AB9553300957395 /* BaseUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUser.swift; sourceTree = "<group>"; };
 		E51DE1F22AB9555A00957395 /* AppleUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleUser.swift; sourceTree = "<group>"; };
 		E51DE1F72AB96CEF00957395 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -182,10 +182,10 @@
 		E51DE2052ABDF6B000957395 /* HealthStoreManager+Energy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthStoreManager+Energy.swift"; sourceTree = "<group>"; };
 		E51DE2072ABDFB3A00957395 /* HealthStoreManager+Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthStoreManager+Weather.swift"; sourceTree = "<group>"; };
 		E51DE2092ABDFDD100957395 /* HealthStoreManager+Metadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthStoreManager+Metadata.swift"; sourceTree = "<group>"; };
-		E51DE20B2ABEF13F00957395 /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
+		E51DE20B2ABEF13F00957395 /* TimeInterval+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Extension.swift"; sourceTree = "<group>"; };
 		E51DE20D2AC0546700957395 /* PreferenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceManager.swift; sourceTree = "<group>"; };
 		E51DE2112AC076DD00957395 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		E51DE2132AC1C6F400957395 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		E51DE2132AC1C6F400957395 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		E51DE22F2AC2BB3200957395 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		E51DE2312AC2ED6700957395 /* HealthStoreManager+Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthStoreManager+Activity.swift"; sourceTree = "<group>"; };
 		E52100172AB7204A000CF3AD /* BaseSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSample.swift; sourceTree = "<group>"; };
@@ -374,9 +374,9 @@
 		E51DE1EC2AB8998100957395 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				E51DE1ED2AB8998E00957395 /* Color.swift */,
-				E51DE20B2ABEF13F00957395 /* TimeInterval.swift */,
-				E51DE2132AC1C6F400957395 /* Date.swift */,
+				E51DE1ED2AB8998E00957395 /* Color+Extension.swift */,
+				E51DE20B2ABEF13F00957395 /* TimeInterval+Extension.swift */,
+				E51DE2132AC1C6F400957395 /* Date+Extension.swift */,
 				E552B6582B330E7900AF9F20 /* View+Extension.swift */,
 			);
 			path = Extensions;
@@ -975,7 +975,7 @@
 				E5B0DF802B00837900EC9871 /* MockLocations.swift in Sources */,
 				E5C95E5E2B31771600518A0A /* ExercisePreferenceViewModel.swift in Sources */,
 				E51DE2042ABDF26900957395 /* HealthStoreManager+Distance.swift in Sources */,
-				E51DE2142AC1C6F400957395 /* Date.swift in Sources */,
+				E51DE2142AC1C6F400957395 /* Date+Extension.swift in Sources */,
 				E51DE2022ABCA03C00957395 /* Mocks.swift in Sources */,
 				E5AB33F32AC48360004B8973 /* TabBarItemType.swift in Sources */,
 				E5B0DF762AFE786200EC9871 /* SportType.swift in Sources */,
@@ -997,7 +997,7 @@
 				E59EB84D2AB5E29F0057F630 /* HealthStoreManager.swift in Sources */,
 				E552B6592B330E7900AF9F20 /* View+Extension.swift in Sources */,
 				E56A55CB2AB2BC7100A35BF3 /* MainView.swift in Sources */,
-				E51DE1EE2AB8998E00957395 /* Color.swift in Sources */,
+				E51DE1EE2AB8998E00957395 /* Color+Extension.swift in Sources */,
 				E552B6572B32CA7C00AF9F20 /* PivotMainView.swift in Sources */,
 				E521001F2AB74D13000CF3AD /* AccountManager.swift in Sources */,
 				E5AB33EB2AC47764004B8973 /* AppTabBarView.swift in Sources */,
@@ -1022,7 +1022,7 @@
 				E559BBEA2B329612003D1FEC /* PreferenceView.swift in Sources */,
 				E5B0DF7A2B0082A600EC9871 /* Distance.swift in Sources */,
 				E5E387382AD6E57D008A7353 /* Location.swift in Sources */,
-				E51DE20C2ABEF13F00957395 /* TimeInterval.swift in Sources */,
+				E51DE20C2ABEF13F00957395 /* TimeInterval+Extension.swift in Sources */,
 				E51DE1FE2ABB2E0300957395 /* CyclingActivityView.swift in Sources */,
 				E51DE1F82AB96CEF00957395 /* ProfileView.swift in Sources */,
 				E5B0DF822B0083BE00EC9871 /* ElapsedTimeStatus.swift in Sources */,
