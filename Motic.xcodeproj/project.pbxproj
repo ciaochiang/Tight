@@ -49,6 +49,7 @@
 		E53CA8A62ADA550A0009D572 /* WearableDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53CA8A52ADA550A0009D572 /* WearableDeviceManager.swift */; };
 		E53CA8AB2ADBD0180009D572 /* WearableDeviceMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53CA8AA2ADBD0180009D572 /* WearableDeviceMainView.swift */; };
 		E53CA8AD2ADBD02A0009D572 /* WearableDeviceMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53CA8AC2ADBD02A0009D572 /* WearableDeviceMainViewModel.swift */; };
+		E559BBEA2B329612003D1FEC /* PreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E559BBE92B329612003D1FEC /* PreferenceView.swift */; };
 		E56A55C92AB2BC7100A35BF3 /* MoticApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55C82AB2BC7100A35BF3 /* MoticApp.swift */; };
 		E56A55CB2AB2BC7100A35BF3 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55CA2AB2BC7100A35BF3 /* MainView.swift */; };
 		E56A55CD2AB2BC7300A35BF3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E56A55CC2AB2BC7300A35BF3 /* Assets.xcassets */; };
@@ -81,6 +82,9 @@
 		E5B0DF822B0083BE00EC9871 /* ElapsedTimeStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B0DF812B0083BE00EC9871 /* ElapsedTimeStatus.swift */; };
 		E5B0DF852B06500300EC9871 /* GrowthBook-IOS in Frameworks */ = {isa = PBXBuildFile; productRef = E5B0DF842B06500300EC9871 /* GrowthBook-IOS */; };
 		E5B0DF872B06502900EC9871 /* ExperiementsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B0DF862B06502900EC9871 /* ExperiementsProvider.swift */; };
+		E5C95E592B316CA500518A0A /* ExerciseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C95E582B316CA500518A0A /* ExerciseItem.swift */; };
+		E5C95E5C2B31767200518A0A /* ExericisePreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C95E5B2B31767200518A0A /* ExericisePreferenceView.swift */; };
+		E5C95E5E2B31771600518A0A /* ExercisePreferenceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C95E5D2B31771600518A0A /* ExercisePreferenceViewModel.swift */; };
 		E5E3872F2AD542E3008A7353 /* SportSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E3872E2AD542E3008A7353 /* SportSelectorView.swift */; };
 		E5E387312AD542F0008A7353 /* SportSelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E387302AD542F0008A7353 /* SportSelectorViewModel.swift */; };
 		E5E387352AD6E016008A7353 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E387342AD6E016008A7353 /* CoreDataManager.swift */; };
@@ -189,6 +193,7 @@
 		E53CA8A52ADA550A0009D572 /* WearableDeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WearableDeviceManager.swift; sourceTree = "<group>"; };
 		E53CA8AA2ADBD0180009D572 /* WearableDeviceMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WearableDeviceMainView.swift; sourceTree = "<group>"; };
 		E53CA8AC2ADBD02A0009D572 /* WearableDeviceMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WearableDeviceMainViewModel.swift; sourceTree = "<group>"; };
+		E559BBE92B329612003D1FEC /* PreferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceView.swift; sourceTree = "<group>"; };
 		E56A55C52AB2BC7100A35BF3 /* Motic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Motic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E56A55C82AB2BC7100A35BF3 /* MoticApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticApp.swift; sourceTree = "<group>"; };
 		E56A55CA2AB2BC7100A35BF3 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -225,6 +230,9 @@
 		E5B0DF7F2B00837900EC9871 /* MockLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLocations.swift; sourceTree = "<group>"; };
 		E5B0DF812B0083BE00EC9871 /* ElapsedTimeStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElapsedTimeStatus.swift; sourceTree = "<group>"; };
 		E5B0DF862B06502900EC9871 /* ExperiementsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperiementsProvider.swift; sourceTree = "<group>"; };
+		E5C95E582B316CA500518A0A /* ExerciseItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseItem.swift; sourceTree = "<group>"; };
+		E5C95E5B2B31767200518A0A /* ExericisePreferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExericisePreferenceView.swift; sourceTree = "<group>"; };
+		E5C95E5D2B31771600518A0A /* ExercisePreferenceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisePreferenceViewModel.swift; sourceTree = "<group>"; };
 		E5E3872E2AD542E3008A7353 /* SportSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportSelectorView.swift; sourceTree = "<group>"; };
 		E5E387302AD542F0008A7353 /* SportSelectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportSelectorViewModel.swift; sourceTree = "<group>"; };
 		E5E387342AD6E016008A7353 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -496,6 +504,8 @@
 		E56A55C72AB2BC7100A35BF3 /* Motic */ = {
 			isa = PBXGroup;
 			children = (
+				E5C95E5A2B31761100518A0A /* Preference */,
+				E5C95E572B316B4400518A0A /* Sport */,
 				E5E387362AD6E572008A7353 /* Entities */,
 				E56A55F22AB2C03000A35BF3 /* Motic.entitlements */,
 				E56A55C82AB2BC7100A35BF3 /* MoticApp.swift */,
@@ -616,6 +626,24 @@
 				E5E387302AD542F0008A7353 /* SportSelectorViewModel.swift */,
 			);
 			path = Record;
+			sourceTree = "<group>";
+		};
+		E5C95E572B316B4400518A0A /* Sport */ = {
+			isa = PBXGroup;
+			children = (
+				E5C95E582B316CA500518A0A /* ExerciseItem.swift */,
+			);
+			path = Sport;
+			sourceTree = "<group>";
+		};
+		E5C95E5A2B31761100518A0A /* Preference */ = {
+			isa = PBXGroup;
+			children = (
+				E5C95E5B2B31767200518A0A /* ExericisePreferenceView.swift */,
+				E5C95E5D2B31771600518A0A /* ExercisePreferenceViewModel.swift */,
+				E559BBE92B329612003D1FEC /* PreferenceView.swift */,
+			);
+			path = Preference;
 			sourceTree = "<group>";
 		};
 		E5E387332AD6E009008A7353 /* Database */ = {
@@ -933,6 +961,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5B0DF802B00837900EC9871 /* MockLocations.swift in Sources */,
+				E5C95E5E2B31771600518A0A /* ExercisePreferenceViewModel.swift in Sources */,
 				E51DE2042ABDF26900957395 /* HealthStoreManager+Distance.swift in Sources */,
 				E51DE2142AC1C6F400957395 /* Date.swift in Sources */,
 				E51DE2022ABCA03C00957395 /* Mocks.swift in Sources */,
@@ -949,7 +978,9 @@
 				E5E3872F2AD542E3008A7353 /* SportSelectorView.swift in Sources */,
 				E59EB84A2AB5934E0057F630 /* OnboardingViewModel.swift in Sources */,
 				E5AB33F92AC5A946004B8973 /* RecordViewModel.swift in Sources */,
+				E5C95E592B316CA500518A0A /* ExerciseItem.swift in Sources */,
 				E59EB85D2AB6B4150057F630 /* Logger.swift in Sources */,
+				E5C95E5C2B31767200518A0A /* ExericisePreferenceView.swift in Sources */,
 				E59EB84D2AB5E29F0057F630 /* HealthStoreManager.swift in Sources */,
 				E56A55CB2AB2BC7100A35BF3 /* MainView.swift in Sources */,
 				E51DE1EE2AB8998E00957395 /* Color.swift in Sources */,
@@ -972,6 +1003,7 @@
 				E5AB33F72AC5A939004B8973 /* RecordView.swift in Sources */,
 				E56A55C92AB2BC7100A35BF3 /* MoticApp.swift in Sources */,
 				E59EB85A2AB6A9530057F630 /* HeartRateZones.swift in Sources */,
+				E559BBEA2B329612003D1FEC /* PreferenceView.swift in Sources */,
 				E5B0DF7A2B0082A600EC9871 /* Distance.swift in Sources */,
 				E5E387382AD6E57D008A7353 /* Location.swift in Sources */,
 				E51DE20C2ABEF13F00957395 /* TimeInterval.swift in Sources */,

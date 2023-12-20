@@ -58,8 +58,9 @@ struct AppTabBarView: View {
             }
             */
             
-            /// Create ProfileView
-            Color.clear.tabBarItem(type: .preference, selection: $tabSelection)
+            /// Create PreferenceViews
+            let preferenceViewModel = PreferenceViewModel()
+            PreferenceView(viewModel: preferenceViewModel).tabBarItem(type: .preference, selection: $tabSelection)
         }
         
         /// NOTE:  Pivot to focus on strength training
