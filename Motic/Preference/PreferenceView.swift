@@ -13,6 +13,7 @@ class PreferenceViewModel: ObservableObject {
 
 struct PreferenceView: View {
     @StateObject var viewModel: PreferenceViewModel
+    @State var isExercisePreferenceViewPresented: Bool = false
     
     init(viewModel: PreferenceViewModel) {
         _viewModel = .init(wrappedValue: viewModel)
@@ -24,16 +25,27 @@ struct PreferenceView: View {
                 VStack(spacing: 16) {
                     ForEach(viewModel.sections, id: \.self) { section in
                         HStack {
-                          Text(section)
-                            .font(.headline)
-                            .foregroundColor(.themeStyle.theme.primary)
-                          Spacer()
+                            Button(action: {
+                                isExercisePreferenceViewPresented = true
+                            }) {
+                                Text(section)
+                                  .font(.headline)
+                                  .foregroundColor(.themeStyle.theme.primary)
+                                Spacer()
+                            }
                         }
                         .frame(height: 40)
+                        .background(Color.themeStyle.theme.green)
                     }
                     Spacer()
                 }
+                .navigationTitle("Preferences")
                 .padding()
+            }
+            .sheet(isPresented: $isExercisePreferenceViewPresented) {
+                let dependency = ExercisePreferenceViewModelDependencyImp(logger: Mocks.logger)
+                let viewModel = ExercisePreferenceViewModel(dependency: dependency)
+                ExericisePreferenceView(viewModel: viewModel).presentationDetents([.large])
             }
         }
     }

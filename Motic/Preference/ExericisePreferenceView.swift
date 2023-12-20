@@ -15,26 +15,18 @@ struct ExericisePreferenceView: View {
     }
     
     var body: some View {
-        VStack(spacing: 16) {
-            topSeciton
-            Spacer()
+        VStack {
+            List {
+                ForEach(viewModel.allExercises, id: \.self) { exercise in
+                    Text(exercise.name)
+                }
+            }
         }
-        .padding()
-    }
-    
-    
-    var topSeciton: some View {
-        HStack(spacing: 8) {
-            
-        }
-        .padding(.vertical)
     }
 }
 
 #Preview {
-    let dependency = ExercisePreferenceViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
-                                                              activtiySessionManager: Mocks.activitySessionManager,
-                                                              logger: Mocks.logger)
+    let dependency = ExercisePreferenceViewModelDependencyImp(logger: Mocks.logger)
     let viewModel = ExercisePreferenceViewModel(dependency: dependency)
     return ExericisePreferenceView(viewModel: viewModel)
 }

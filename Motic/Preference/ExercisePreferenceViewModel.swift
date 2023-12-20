@@ -9,28 +9,20 @@ import Foundation
 import SwiftUI
 
 protocol ExercisePreferenceViewModelDependency {
-    var preferenceManager: PreferenceManager { get }
-    var activitySessionManager: ActivitySessionManager { get }
     var logger: CustomLogger { get }
 }
 
-
 class ExercisePreferenceViewModelDependencyImp: ExercisePreferenceViewModelDependency {
-    var preferenceManager: PreferenceManager
-    var activitySessionManager: ActivitySessionManager
     var logger: CustomLogger
   
-    init(preferenceManager: PreferenceManager,
-         activtiySessionManager: ActivitySessionManager,
-         logger: CustomLogger) {
-        self.preferenceManager = preferenceManager
-        self.activitySessionManager = activtiySessionManager
+    init(logger: CustomLogger) {
         self.logger = logger
     }
 }
 
 class ExercisePreferenceViewModel: ObservableObject {
     var dependency: ExercisePreferenceViewModelDependency
+    @Published var allExercises: [ExerciseItem] = []
     
     init(dependency: ExercisePreferenceViewModelDependency) {
         self.dependency = dependency
