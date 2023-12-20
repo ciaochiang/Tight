@@ -17,10 +17,7 @@ struct ExercisePlan: Identifiable {
     var totalDuration: TimeInterval
 }
 
-struct ScheduledExerciseItem: Identifiable, Hashable {
-    var id: Int
-    var name: String
-}
+
 
 struct ExerciseItem: Identifiable, Hashable {
     var id: Int

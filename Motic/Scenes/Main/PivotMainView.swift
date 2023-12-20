@@ -28,12 +28,28 @@ struct PivotMainView: View {
             ScrollView(.vertical) {
                 VStack {
                     ///  Scheduled exercises
+                    ScheduleExercisesView()
                 }
                 .horizontalSpacing(.center)
                 .veriticalSpacing(.center)
+                
+                Spacer(minLength: 48)
             }
             .scrollIndicators(.hidden)
         }
+        .veriticalSpacing(.top)
+        .overlay(alignment: .bottomTrailing, content: {
+            Button(action: {}) {
+                Image(systemName: "plus")
+                    .fontWeight(.semibold)
+                    .foregroundColor(.white)
+                    .frame(width: 60, height: 60)
+                    .background(Color.themeStyle.theme.accent.shadow(.drop(color: .black.opacity(0.25), radius: 5, x: 5, y: 5)), in: .circle)
+                
+            }
+            .padding(16)
+            .offset(y: -48)
+        })
         .onAppear(perform: {
 
             if weekSlider.isEmpty {
@@ -179,36 +195,52 @@ struct PivotMainView: View {
         .cornerRadius(8)
     }
     
-    var scheduledExercises: some View {
-        VStack {
-            ForEach(viewModel.scheduledExercises) { exercise in
-                ScheduledExerciseCard(exercise: exercise)
+    /// Schedule Exercises View
+    @ViewBuilder
+    func ScheduleExercisesView() -> some View {
+        VStack(alignment: .leading, spacing: 36) {
+            ForEach($viewModel.scheduledExercises) { $exercise in
+                ScheduledExerciseCard(exercise: $exercise)
+                    .background(alignment: .leading) {
+                        if viewModel.scheduledExercises.last?.id != exercise.id {
+                            Rectangle()
+                                .frame(width: 1)
+                                .offset(x: 8)
+                                .padding(.bottom, -35)
+                        }
+                    }
             }
-            Spacer(minLength: 100)
         }
+        .padding([.vertical, .leading], 16)
+        .padding(.top, 16)
     }
 }
 
 struct ScheduledExerciseCard: View {
-    var exerise: ScheduledExerciseItem
-
-    init(exercise: ScheduledExerciseItem) {
-        self.exerise = exercise
-    }
+    @Binding var exercise: ScheduledExercise
   
     var body: some View {
-        HStack(spacing: 16) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(exerise.name)
-                    .font(.headline)
-                    .foregroundColor(.themeStyle.theme.secondaryTextColor)
+        HStack(alignment: .top, spacing: 16) {
+            Circle()
+                .fill(Color.themeStyle.theme.accent)
+                .frame(width: 10, height: 10)
+                .padding(4)
+                .background(.white.shadow(.drop(color: .black.opacity(0.1), radius: 3)) , in: .circle)
+            
+            VStack(alignment: .leading, spacing: 8) {
+                Text(exercise.name)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.black)
+                
+                Label(exercise.scheduledDate.format("hh:mm a"), systemImage: "clock")
+                    .font(.caption)
+                    .foregroundColor(.black)
             }
-            Spacer()
+            .padding(16)
+            .horizontalSpacing(.leading)
+            .background(Color.themeStyle.theme.background, in: .rect(topLeadingRadius: 16, bottomLeadingRadius: 16))
+            .offset(y: -8)
         }
-        .padding(16)
-        .frame(maxWidth: .infinity)
-        .background(Color.themeStyle.theme.secondaryBackground)
-        .cornerRadius(8)
     }
 }
 

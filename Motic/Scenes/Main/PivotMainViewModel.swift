@@ -9,26 +9,31 @@ import Foundation
 import SwiftUI
 
 class PivotMainViewModel: ObservableObject {
-    @Published var scheduledExercises: [ScheduledExerciseItem] = []
+    @Published var scheduledExercises: [ScheduledExercise] = []
     
     init() {
         scheduledExercises = [
-            .init(id: 0, name: "test 1"),
-            .init(id: 0, name: "test 1"),
-            .init(id: 0, name: "test 1"),
-            .init(id: 0, name: "test 1"),
-            .init(id: 0, name: "test 1"),
-            .init(id: 0, name: "test 1"),
-            .init(id: 0, name: "test 1"),
-            .init(id: 0, name: "test 1"),
-            .init(id: 0, name: "test 1"),
-            .init(id: 0, name: "test 1"),
-            .init(id: 0, name: "test 1"),
-            .init(id: 0, name: "test 1"),
-            .init(id: 0, name: "test 1"),
-            .init(id: 0, name: "test 1")
+            .init(name: "test 1", scheduledDate: .init()),
+            .init(name: "test 1", scheduledDate: .init()),
+            .init(name: "test 1", scheduledDate: .init()),
+            .init(name: "test 1", scheduledDate: .init()),
+            .init(name: "test 1", scheduledDate: .init()),
+            .init(name: "test 1", scheduledDate: .init()),
+            .init(name: "test 1", scheduledDate: .init()),
+            .init(name: "test 1", scheduledDate: .init()),
+            .init(name: "test 1", scheduledDate: .init()),
+            .init(name: "test 1", scheduledDate: .init()),
+            .init(name: "test 1", scheduledDate: .init()),
+            .init(name: "test 1", scheduledDate: .init())
         ]
     }
+}
+
+struct ScheduledExercise: Identifiable {
+    var id: UUID = .init()
+    var name: String
+    var scheduledDate: Date
+    var isCompleted: Bool = false
 }
 
 
