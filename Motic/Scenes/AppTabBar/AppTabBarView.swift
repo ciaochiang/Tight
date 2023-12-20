@@ -40,12 +40,16 @@ struct AppTabBarView: View {
         CustomTabBarContainerView(selection: $tabSelection) {
             
             /// Create MainView
-            let dependency = MainViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
-                                                        activtiySessionManager: viewModel.activitySessionManager,
-                                                        logger: logger)
-            let mainViewModel = MainViewModel(dependency: dependency,
-                                              isRecordViewPresented: $viewModel.isRecordViewPresented)
-            MainView(viewModel: mainViewModel).tabBarItem(type: .home, selection: $tabSelection)
+//            let dependency = MainViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
+//                                                        activtiySessionManager: viewModel.activitySessionManager,
+//                                                        logger: logger)
+//            let mainViewModel = MainViewModel(dependency: dependency,
+//                                              isRecordViewPresented: $viewModel.isRecordViewPresented)
+//            MainView(viewModel: mainViewModel).tabBarItem(type: .home, selection: $tabSelection)
+            
+            /// Create pivot main view
+            let mainViewModel = PivotMainViewModel()
+            PivotMainView(viewModel: mainViewModel).tabBarItem(type: .home, selection: $tabSelection)
 
             /// Craeat RecordView
             /*

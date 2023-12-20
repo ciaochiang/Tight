@@ -278,11 +278,6 @@ struct MainViewActivityCard: View {
   
     var body: some View {
         HStack(spacing: 16) {
-//            Image(systemName: activityType.systemIconName)
-//                .resizable()
-//                .scaledToFit()
-//                .frame(maxWidth: 24)
-//                .frame(maxHeight: 24)
             VStack(alignment: .leading, spacing: 4) {
                 Text(activityType.description)
                     .font(.caption)

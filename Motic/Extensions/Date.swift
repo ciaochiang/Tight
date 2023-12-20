@@ -58,4 +58,63 @@ extension Date {
         
         return (start: startDate, end: endDate)
     }
+    
+    func format(_ format: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        
+        return dateFormatter.string(from: self)
+    }
+    
+    /// Checking whether the Date is Today
+    var isToday: Bool {
+        return Calendar.current.isDateInToday(self)
+    }
+    
+    /// Fetching Week Based  on given date
+    func fetchWeek(_ date: Date = .init()) -> [Weekday] {
+        let calendar = Calendar.current
+        let startOfDate = calendar.startOfDay(for: date)
+        
+        var week: [Weekday] = []
+        let weekForDate = calendar.dateInterval(of: .weekOfMonth, for: startOfDate)
+        guard let startOfWeek = weekForDate?.start else {
+            return []
+        }
+        
+        (0..<7).forEach { index in
+            if let weekDay = calendar.date(byAdding: .day, value: index, to: startOfWeek) {
+                week.append(.init(date: weekDay))
+            }
+        }
+        
+        return week
+    }
+    
+    /// Create next week, based on the last current week's date
+    func createNextWeek() -> [Weekday] {
+        let calendar = Calendar.current
+        let startOfLastDate = calendar.startOfDay(for: self)
+        guard let nextDate = calendar.date(byAdding: .day, value: 1, to: startOfLastDate) else {
+            return []
+        }
+        
+        return fetchWeek(nextDate)
+    }
+    
+    /// Create previous week, based on the last current week's date
+    func createPreviousWeek() -> [Weekday] {
+        let calendar = Calendar.current
+        let startOfFirstDate = calendar.startOfDay(for: self)
+        guard let previousDate = calendar.date(byAdding: .day, value: -1, to: startOfFirstDate) else {
+            return []
+        }
+        
+        return fetchWeek(previousDate)
+    }
+    
+    struct Weekday: Identifiable {
+        var id: UUID = .init()
+        var date: Date
+    }
 }
