@@ -10,21 +10,57 @@ import SwiftUI
 struct ScheduleExerciseView: View {
     /// View Properties
     @Environment(\.dismiss) private var dismiss
-    @State private var exerciseName: String = ""
+    @State private var selectedExercise: Exercise = .none
+    @State private var repetitions: Double = 10
+    @State private var sets: Double = 3
     @State private var isFocused: FocusState<Bool> = .init()
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
            
             VStack(alignment: .leading, spacing: 8) {
-                Text("Exercise Name")
+                Text("Exercise")
                     .font(.caption)
                     .foregroundStyle(.gray)
                 
-                TextField("Do something", text: $exerciseName)
-                    .padding(.vertical, 12)
-                    .padding(.horizontal, 16)
-                    .background(.white.shadow(.drop(color: .black.opacity(0.25), radius: 2)), in: .rect(cornerRadius: 10))
+                Text(selectedExercise.name)
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.black)
+            }
+            .horizontalSpacing(.leading)
+            
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Repetitions")
+                    .font(.caption)
+                    .foregroundStyle(.gray)
+                
+                HStack(alignment: .center, spacing: 8) {
+                    Text(String(format: "%.0f", repetitions))
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.black)
+                    
+                    Slider(value: $repetitions, in: 1...20, step: 1.0)
+                        .accentColor(Color.themeStyle.theme.accent)
+                }
+            }
+            .horizontalSpacing(.leading)
+            
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Sets")
+                    .font(.caption)
+                    .foregroundStyle(.gray)
+                
+                HStack(alignment: .center, spacing: 8) {
+                    Text(String(format: "%.0f", sets))
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.black)
+                    
+                    Slider(value: $sets, in: 1...6, step: 1.0)
+                        .accentColor(Color.themeStyle.theme.accent)
+                }
             }
             .horizontalSpacing(.leading)
             
@@ -38,8 +74,8 @@ struct ScheduleExerciseView: View {
                     .padding(.vertical, 12)
                     .background(Color.themeStyle.theme.accent, in: .rect(cornerRadius: 10))
             }
-            .disabled(exerciseName == "")
-            .opacity(exerciseName == "" ? 0.5 : 1)
+            .disabled(selectedExercise == .none)
+            .opacity(selectedExercise == .none ? 0.5 : 1)
         }
         .padding()
         .veriticalSpacing(.bottom)
@@ -52,4 +88,23 @@ struct ScheduleExerciseView: View {
 #Preview {
     ScheduleExerciseView()
         .veriticalSpacing(.bottom)
+}
+
+enum Exercise: Int {
+    case none = 0
+    
+    // Chest
+    case chestPress = 1
+    case chestFly = 2
+    case benchPress = 3
+    
+    
+    var name: String {
+        switch self {
+        case .none: return "None"
+        case .chestPress: return "Chest Press"
+        case .chestFly: return "Chest Fly"
+        case .benchPress: return "Bench Press"
+        }
+    }
 }

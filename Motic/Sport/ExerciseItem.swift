@@ -37,11 +37,3 @@ enum WeightUnit {
     case pound
     case kilogram
 }
-
-
-enum Exercise: Int {
-    // Chest
-    case chessPress = 0
-    case chestFly = 1
-    case benchPress = 2
-}

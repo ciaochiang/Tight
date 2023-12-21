@@ -71,7 +71,7 @@ struct PivotMainView: View {
         })
         .sheet(isPresented: $scheduleExercise, content: {
             ScheduleExerciseView()
-                .presentationDetents([.height(200)])
+                .presentationDetents([.height(300)])
                 .presentationCornerRadius(30)
 
         })
