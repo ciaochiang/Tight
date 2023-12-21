@@ -90,21 +90,3 @@ struct ScheduleExerciseView: View {
         .veriticalSpacing(.bottom)
 }
 
-enum Exercise: Int {
-    case none = 0
-    
-    // Chest
-    case chestPress = 1
-    case chestFly = 2
-    case benchPress = 3
-    
-    
-    var name: String {
-        switch self {
-        case .none: return "None"
-        case .chestPress: return "Chest Press"
-        case .chestFly: return "Chest Fly"
-        case .benchPress: return "Bench Press"
-        }
-    }
-}
