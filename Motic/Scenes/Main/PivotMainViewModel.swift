@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 
 class PivotMainViewModel: ObservableObject {
     @Published var scheduledExercises: [ScheduledExercise] = []

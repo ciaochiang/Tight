@@ -13,6 +13,7 @@ struct PivotMainView: View {
     @State private var weekSlider: [[Date.Weekday]] = []
     @State private var currentWeekIndex: Int = 1
     @State private var createWeek: Bool = false
+    @State private var scheduleExercise: Bool = false
     
     /// Animation  namespace
     @Namespace private var animation
@@ -39,7 +40,9 @@ struct PivotMainView: View {
         }
         .veriticalSpacing(.top)
         .overlay(alignment: .bottomTrailing, content: {
-            Button(action: {}) {
+            Button(action: {
+                scheduleExercise.toggle()
+            }) {
                 Image(systemName: "plus")
                     .fontWeight(.semibold)
                     .foregroundColor(.white)
@@ -65,6 +68,12 @@ struct PivotMainView: View {
                     weekSlider.append(lastDate.createNextWeek())
                 }
             }
+        })
+        .sheet(isPresented: $scheduleExercise, content: {
+            ScheduleExerciseView()
+                .presentationDetents([.height(200)])
+                .presentationCornerRadius(30)
+
         })
     }
     
