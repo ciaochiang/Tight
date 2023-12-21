@@ -95,6 +95,7 @@ class SportSelectorViewModel: ObservableObject {
 class UserPreference {
     private let SELECTED_SPORT_KEY: String = "SELECTED_SPORT"
     private let FAVORITE_SPORTS_KEY: String = "FAVORIATE_SPORTS"
+    private let FAVORITE_EXERCISES_KEY: String = "FAVORITE_EXERCISES"
     
     func saveSelectedSport(sport: SportType) {
         // save
@@ -120,10 +121,25 @@ class UserPreference {
             UserDefaults.standard.setValue(encodedData, forKey: FAVORITE_SPORTS_KEY)
         }
     }
+    
+    func saveFavorite(exercises: [Exercise]) {
+        if let encodedData = try? JSONEncoder().encode(exercises) {
+            UserDefaults.standard.setValue(encodedData, forKey: FAVORITE_EXERCISES_KEY)
+        }
+    }
         
     func retrieveFavoriteSports() -> [SportType] {
         guard let data = UserDefaults.standard.data(forKey: FAVORITE_SPORTS_KEY),
               let decodedItems = try? JSONDecoder().decode([SportType].self, from: data) else {
+            return []
+        }
+        
+        return decodedItems
+    }
+    
+    func retrieveFavoriteExercises() -> [Exercise] {
+        guard let data = UserDefaults.standard.data(forKey: FAVORITE_EXERCISES_KEY),
+              let decodedItems = try? JSONDecoder().decode([Exercise].self, from: data) else {
             return []
         }
         

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Exercise: Int, CaseIterable {
+enum Exercise: Int, CaseIterable, Hashable, Codable {
     case none = 0
     
     /// Upper Body Exercise
@@ -65,7 +65,7 @@ enum Exercise: Int, CaseIterable {
     case wallBall = 911
     case rowingMachine = 912
     
-    var upperBodyExercises: [Exercise] {
+    static var upperBodyExercises: [Exercise] {
         return [
             .benchPress,
             .pushUp,
@@ -85,7 +85,7 @@ enum Exercise: Int, CaseIterable {
         ]
     }
     
-    var lowerBodyExercises: [Exercise] {
+    static var lowerBodyExercises: [Exercise] {
         return [
             .squat,
             .deadlift,
@@ -102,7 +102,7 @@ enum Exercise: Int, CaseIterable {
         ]
     }
     
-    var coreExercises: [Exercise] {
+    static var coreExercises: [Exercise] {
         return [
             .plank,
             .russianTwist,
@@ -115,7 +115,7 @@ enum Exercise: Int, CaseIterable {
         ]
     }
     
-    var compoundExercises: [Exercise] {
+    static var compoundExercises: [Exercise] {
         return [
             .cleanAndJerk,
             .snatch,

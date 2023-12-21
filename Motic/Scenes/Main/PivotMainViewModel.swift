@@ -14,25 +14,21 @@ class PivotMainViewModel: ObservableObject {
     
     init() {
         scheduledExercises = [
-            .init(name: "test 1", scheduledDate: .init()),
-            .init(name: "test 1", scheduledDate: .init()),
-            .init(name: "test 1", scheduledDate: .init()),
-            .init(name: "test 1", scheduledDate: .init()),
-            .init(name: "test 1", scheduledDate: .init()),
-            .init(name: "test 1", scheduledDate: .init()),
-            .init(name: "test 1", scheduledDate: .init()),
-            .init(name: "test 1", scheduledDate: .init()),
-            .init(name: "test 1", scheduledDate: .init()),
-            .init(name: "test 1", scheduledDate: .init()),
-            .init(name: "test 1", scheduledDate: .init()),
-            .init(name: "test 1", scheduledDate: .init())
+            .init(exericse: .benchPress, scheduledDate: .init()),
+            .init(exericse: .benchPress, scheduledDate: .init()),
+            .init(exericse: .benchPress, scheduledDate: .init()),
+            .init(exericse: .benchPress, scheduledDate: .init()),
+            .init(exericse: .benchPress, scheduledDate: .init()),
+            .init(exericse: .benchPress, scheduledDate: .init()),
+            .init(exericse: .benchPress, scheduledDate: .init()),
+            .init(exericse: .benchPress, scheduledDate: .init())
         ]
     }
 }
 
 struct ScheduledExercise: Identifiable {
     var id: UUID = .init()
-    var name: String
+    var exericse: Exercise
     var scheduledDate: Date
     var isCompleted: Bool = false
 }

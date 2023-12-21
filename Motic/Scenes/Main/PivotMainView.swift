@@ -237,7 +237,7 @@ struct ScheduledExerciseCard: View {
                 .background(.white.shadow(.drop(color: .black.opacity(0.1), radius: 3)) , in: .circle)
             
             VStack(alignment: .leading, spacing: 8) {
-                Text(exercise.name)
+                Text(exercise.exericse.name)
                     .fontWeight(.semibold)
                     .foregroundStyle(.black)
                 
