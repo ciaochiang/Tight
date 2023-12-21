@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Firebase
+import SwiftData
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
@@ -25,6 +26,13 @@ struct MoticApp: App {
     private var logger: CustomLogger
     private var wearableDeviceManager: WearableDeviceManager
     private var experiementsProvider: ExperiementsProvider
+    
+    /// Swift data
+    let container: ModelContainer = {
+        let schema = Schema([ScheduledExercise.self])
+        let container = try! ModelContainer(for: schema, configurations: [])
+        return container
+    }()
     
     init() {
         self.logger = CustomLogger()
@@ -54,9 +62,12 @@ struct MoticApp: App {
         .onChange(of: isOnboardingCompleted, { _, newValue in
             guard newValue == true else { return }
             
-            // Store to user defaults
+            /// Store to user defaults
             UserDefaults.standard.setValue(newValue, forKey: "IS_ONBOARDING_COMPLETED")
         })
+        
+        /// Swift Data
+        .modelContainer(container)
     }
 }
 

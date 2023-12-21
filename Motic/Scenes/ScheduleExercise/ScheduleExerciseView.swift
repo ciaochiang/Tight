@@ -10,9 +10,11 @@ import SwiftUI
 struct ScheduleExerciseView: View {
     /// View Properties
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var context
     @State private var selectedExercise: Exercise = .none
     @State private var repetitions: Double = 10
     @State private var sets: Double = 3
+    @State private var restIntervals: TimeInterval = 60
     @State private var isExercisePickerViewPresented: Bool = false
     
     var body: some View {
@@ -21,6 +23,7 @@ struct ScheduleExerciseView: View {
                 ExerciseView().horizontalSpacing(.leading)
                 RepetitionView().horizontalSpacing(.leading)
                 SetsView().horizontalSpacing(.leading)
+                RestIntervalsView().horizontalSpacing(.leading)
                 AddButtonView()
             }
             .padding()
@@ -93,8 +96,32 @@ struct ScheduleExerciseView: View {
     }
     
     @ViewBuilder
+    func RestIntervalsView() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Rest Intervals")
+                .font(.caption)
+                .foregroundStyle(.gray)
+            
+            HStack(alignment: .center, spacing: 8) {
+                Text(formatIntervalToMinutesSeconds(interval: restIntervals))
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.black)
+                
+                Slider(value: $restIntervals, in: 0...180, step: 10.0)
+                    .accentColor(Color.themeStyle.theme.accent)
+            }
+        }
+    }
+    
+    @ViewBuilder
     func AddButtonView() -> some View {
-        Button(action: {}) {
+        Button(action: {
+            /// Save schedule exercise
+            let scheduledExercise = ScheduledExercise(exericse: selectedExercise, scheduledDate: .init(), repetitions: Int(repetitions), sets: Int(sets), restIntevals: restIntervals, isCompleted: false)
+            context.insert(scheduledExercise)
+            dismiss()
+        }) {
             Text("Add Exercise")
                 .font(.title3)
                 .fontWeight(.semibold)
@@ -106,6 +133,12 @@ struct ScheduleExerciseView: View {
         }
         .disabled(selectedExercise == .none)
         .opacity(selectedExercise == .none ? 0.5 : 1)
+    }
+    
+    func formatIntervalToMinutesSeconds(interval: TimeInterval) -> String {
+        let minutes = Int(interval) / 60
+        let seconds = Int(interval) % 60
+        return String(format: "%02d:%02d", minutes, seconds)
     }
 }
 

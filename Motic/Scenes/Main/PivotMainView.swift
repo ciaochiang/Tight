@@ -6,15 +6,17 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct PivotMainView: View {
+    @Environment(\.modelContext) var context
     @StateObject var viewModel: PivotMainViewModel
     @State private var currentDate: Date = .init()
     @State private var weekSlider: [[Date.Weekday]] = []
     @State private var currentWeekIndex: Int = 1
     @State private var createWeek: Bool = false
     @State private var scheduleExercise: Bool = false
-    
+        
     /// Animation  namespace
     @Namespace private var animation
     
@@ -68,13 +70,20 @@ struct PivotMainView: View {
                     weekSlider.append(lastDate.createNextWeek())
                 }
             }
+            
+            /// Load Scheduled Exercises
+            loadScheduledExercises(currentDate: currentDate)
         })
         .sheet(isPresented: $scheduleExercise, content: {
             ScheduleExerciseView()
-                .presentationDetents([.height(300)])
+                .presentationDetents([.height(400)])
                 .presentationCornerRadius(30)
 
         })
+        .onChange(of: currentDate) { oldValue, newValue in
+            /// Fetch scheduled exercise when date changed
+            loadScheduledExercises(currentDate: newValue)
+        }
     }
     
     @ViewBuilder
@@ -194,16 +203,6 @@ struct PivotMainView: View {
         }
     }
     
-    var startButton: some View {
-        Button("Start") {
-            // do something
-        }
-        .frame(maxWidth: .infinity)
-        .frame(height: 40)
-        .background(Color.themeStyle.theme.green)
-        .cornerRadius(8)
-    }
-    
     /// Schedule Exercises View
     @ViewBuilder
     func ScheduleExercisesView() -> some View {
@@ -222,6 +221,22 @@ struct PivotMainView: View {
         }
         .padding([.vertical, .leading], 16)
         .padding(.top, 16)
+    }
+    
+    
+    private func loadScheduledExercises(currentDate: Date) {
+        let calendar = Calendar.current
+        let startDate = calendar.startOfDay(for: currentDate)
+        guard let endDate = calendar.date(byAdding: .day, value: 1, to: startDate) else { return }
+        
+        let fetchDescriptor = FetchDescriptor<ScheduledExercise>(predicate: #Predicate<ScheduledExercise> { $0.scheduledDate > startDate && $0.scheduledDate < endDate })
+        
+        do {
+            viewModel.scheduledExercises = try context.fetch(fetchDescriptor)
+        }
+        catch {
+            print(error.localizedDescription)
+        }
     }
 }
 
