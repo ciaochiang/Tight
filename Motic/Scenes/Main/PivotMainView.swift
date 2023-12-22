@@ -75,7 +75,10 @@ struct PivotMainView: View {
             loadScheduledExercises(currentDate: currentDate)
         })
         .sheet(isPresented: $scheduleExercise, content: {
-            ScheduleExerciseView()
+            ScheduleExerciseView(completition: {
+                /// Refetch schedule  exercises
+                loadScheduledExercises(currentDate: currentDate)
+            })
                 .presentationDetents([.height(400)])
                 .presentationCornerRadius(30)
 
@@ -223,7 +226,7 @@ struct PivotMainView: View {
         .padding(.top, 16)
     }
     
-    
+    /// Load scheduled exercises from Swift Data
     private func loadScheduledExercises(currentDate: Date) {
         let calendar = Calendar.current
         let startDate = calendar.startOfDay(for: currentDate)
@@ -271,5 +274,7 @@ struct ScheduledExerciseCard: View {
 
 #Preview {
     let viewModel = PivotMainViewModel()
-    return PivotMainView(viewModel: viewModel)
+    let previewContainer = PreviewContainer([ScheduledExercise.self])
+    return PivotMainView(viewModel: viewModel).modelContainer(previewContainer.container)
+    
 }

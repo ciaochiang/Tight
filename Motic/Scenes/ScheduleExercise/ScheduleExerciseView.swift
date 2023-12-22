@@ -17,8 +17,10 @@ struct ScheduleExerciseView: View {
     @State private var restIntervals: TimeInterval = 60
     @State private var isExercisePickerViewPresented: Bool = false
     
+    let completition: () -> Void
+    
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(alignment: .leading, spacing: 16) {
                 ExerciseView().horizontalSpacing(.leading)
                 RepetitionView().horizontalSpacing(.leading)
@@ -120,6 +122,8 @@ struct ScheduleExerciseView: View {
             /// Save schedule exercise
             let scheduledExercise = ScheduledExercise(exericse: selectedExercise, scheduledDate: .init(), repetitions: Int(repetitions), sets: Int(sets), restIntevals: restIntervals, isCompleted: false)
             context.insert(scheduledExercise)
+            try? context.save()
+            completition()
             dismiss()
         }) {
             Text("Add Exercise")
@@ -143,7 +147,9 @@ struct ScheduleExerciseView: View {
 }
 
 #Preview {
-    ScheduleExerciseView()
+    ScheduleExerciseView(completition: {
+        
+    })
         .veriticalSpacing(.bottom)
 }
 

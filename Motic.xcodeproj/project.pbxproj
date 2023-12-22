@@ -55,6 +55,7 @@
 		E552B65B2B3316BC00AF9F20 /* OffsetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552B65A2B3316BC00AF9F20 /* OffsetKey.swift */; };
 		E552B65E2B3403F400AF9F20 /* ScheduleExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552B65D2B3403F400AF9F20 /* ScheduleExerciseView.swift */; };
 		E552B6602B34330B00AF9F20 /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552B65F2B34330B00AF9F20 /* Exercise.swift */; };
+		E552B6622B35526D00AF9F20 /* PreviewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552B6612B35526D00AF9F20 /* PreviewContainer.swift */; };
 		E559BBEA2B329612003D1FEC /* PreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E559BBE92B329612003D1FEC /* PreferenceView.swift */; };
 		E56A55C92AB2BC7100A35BF3 /* MoticApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55C82AB2BC7100A35BF3 /* MoticApp.swift */; };
 		E56A55CB2AB2BC7100A35BF3 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55CA2AB2BC7100A35BF3 /* MainView.swift */; };
@@ -205,6 +206,7 @@
 		E552B65A2B3316BC00AF9F20 /* OffsetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetKey.swift; sourceTree = "<group>"; };
 		E552B65D2B3403F400AF9F20 /* ScheduleExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleExerciseView.swift; sourceTree = "<group>"; };
 		E552B65F2B34330B00AF9F20 /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
+		E552B6612B35526D00AF9F20 /* PreviewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContainer.swift; sourceTree = "<group>"; };
 		E559BBE92B329612003D1FEC /* PreferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceView.swift; sourceTree = "<group>"; };
 		E56A55C52AB2BC7100A35BF3 /* Motic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Motic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E56A55C82AB2BC7100A35BF3 /* MoticApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticApp.swift; sourceTree = "<group>"; };
@@ -553,6 +555,7 @@
 			isa = PBXGroup;
 			children = (
 				E56A55CF2AB2BC7300A35BF3 /* Preview Assets.xcassets */,
+				E552B6612B35526D00AF9F20 /* PreviewContainer.swift */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -1030,6 +1033,7 @@
 				E51DE1F12AB9553300957395 /* BaseUser.swift in Sources */,
 				E53CA8AB2ADBD0180009D572 /* WearableDeviceMainView.swift in Sources */,
 				E51DE1FA2AB96D0A00957395 /* ProfileViewModel.swift in Sources */,
+				E552B6622B35526D00AF9F20 /* PreviewContainer.swift in Sources */,
 				E552B6552B32CA6C00AF9F20 /* PivotMainViewModel.swift in Sources */,
 				E51DE2322AC2ED6700957395 /* HealthStoreManager+Activity.swift in Sources */,
 				E5AB33F72AC5A939004B8973 /* RecordView.swift in Sources */,
