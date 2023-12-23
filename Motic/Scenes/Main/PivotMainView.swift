@@ -30,7 +30,7 @@ struct PivotMainView: View {
             HeaderView()
                         
             ScrollView(.vertical) {
-                VStack {
+                LazyVStack {
                     ///  Scheduled exercises
                     ScheduleExercisesView()
                 }
@@ -215,27 +215,31 @@ struct PivotMainView: View {
     /// Schedule Exercises View
     @ViewBuilder
     func ScheduleExercisesView() -> some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 0) {
             ForEach($viewModel.scheduledExercises) { $exercise in
                 ScheduledExerciseCard(exercise: $exercise, onTap: { exercise in
                     /// Edit
                     self.exerciseToEdit = exercise
                 }, onLongPress: { exercise in
                     /// Delete dialog
-                })
-                    .background(alignment: .leading) {
-                        Rectangle()
-                            .foregroundStyle(Color.themeStyle.theme.accent)
-                            .frame(width: 2)
-//                            .padding(.bottom, -35)
-//                        if viewModel.scheduledExercises.last?.id != exercise.id {
-//
-//                        }
+                }, onDelete: { exercise in
+                    /// Delete items
+                    ///
+                    withAnimation(.easeIn) {
+                        context.delete(exercise)
+                        
+                        /// Reload
+                        loadScheduledExercises(currentDate: currentDate)
                     }
+
+                })
+//                    .background(alignment: .leading) {
+//                        Rectangle()
+//                            .foregroundStyle(Color.themeStyle.theme.accent)
+//                            .frame(width: 2)
+//                    }
             }
         }
-        .scrollTargetLayout()
-        .padding([.vertical, .leading], 16)
         .padding(.top, 16)
     }
     
@@ -258,56 +262,131 @@ struct PivotMainView: View {
 
 struct ScheduledExerciseCard: View {
     @Binding var exercise: ScheduledExercise
+    @State var offset: Double = 0
+    @State var isSwiped: Bool = false
     
     /// Edit Action
     let onTap: (ScheduledExercise) -> Void
     
     /// Delete action
     let onLongPress: (ScheduledExercise) -> Void
+    
+    let onDelete: (ScheduledExercise) -> Void
   
     var body: some View {
-        HStack(alignment: .top) {
-//            Circle()
-//                .fill(Color.themeStyle.theme.accent)
-//                .frame(width: 10, height: 10)
-//                .padding(4)
-//                .background(.white.shadow(.drop(color: .black.opacity(0.1), radius: 3)) , in: .circle)
+        ZStack {
+            /// Swipe view
+            LinearGradient(gradient: .init(colors: [Color.themeStyle.theme.accent, Color.red]),
+                           startPoint: /*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/,
+                           endPoint: /*@START_MENU_TOKEN@*/.trailing/*@END_MENU_TOKEN@*/)
             
-            
-            VStack(alignment: .leading, spacing: 8) {
-                Text(exercise.exericse.name)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.black)
-                
-                HStack(alignment: .center, spacing: 16) {
-                    Label("\(Int(exercise.repetitions))", systemImage: "repeat")
-                        .font(.caption)
-                        .foregroundColor(.black)
-                    
-                    Label("\(Int(exercise.sets))", systemImage: "square.stack.3d.down.right")
-                        .font(.caption)
-                        .foregroundColor(.black)
-                    
-                    Label(exercise.restIntevals.formatIntervalToMinutesSeconds, systemImage: "clock")
-                        .font(.caption)
-                        .foregroundColor(.black)
-                    
+            /// Delete button
+            HStack {
+                Spacer()
+                Button(action: {
+                    onDelete(exercise)
+                }) {
+                    Image(systemName: "trash")
+                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                        .foregroundColor(.white)
+                        .frame(width: 90, height: 36)
+                        .veriticalSpacing(.center)
                 }
-                .horizontalSpacing(.leading)
-                
-
             }
-            .padding(16)
-            .horizontalSpacing(.leading)
-            .background(Color.themeStyle.theme.background, in: .rect(topLeadingRadius: 16, bottomLeadingRadius: 16))
-            .offset(x: 16)
-            .gesture(LongPressGesture(minimumDuration: 0.3).onEnded({ _ in
-                onLongPress(exercise)
-            }))
-            .highPriorityGesture(TapGesture().onEnded({ _ in
-                onTap(exercise)
-            }))
+            
+            
+            /// Content
+            HStack(alignment: .center) {
+                Rectangle()
+                    .foregroundStyle(Color.themeStyle.theme.accent)
+                    .frame(width: 1)
+
+                ExerciseView()
+            }
+            .frame(maxWidth: .infinity)
+            .contentShape(Rectangle())
+            .offset(x: offset)
+            .gesture(DragGesture().onChanged(onChanged(value:)).onEnded(onEnd(value:)))
         }
+    }
+    
+    @ViewBuilder
+    func ExerciseView() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            ExerciseNameView()
+            ExerciseDetailsView().horizontalSpacing(.leading)
+        }
+        .horizontalSpacing(.leading)
+        .padding()
+        .background(Color.themeStyle.theme.background)
+        .gesture(LongPressGesture(minimumDuration: 0.3).onEnded({ _ in
+            onLongPress(exercise)
+        }))
+        .highPriorityGesture(TapGesture().onEnded({ _ in
+            onTap(exercise)
+        }))
+    }
+    
+    @ViewBuilder
+    func ExerciseDetailsView() -> some View {
+        HStack(alignment: .center, spacing: 16) {
+            Label("\(Int(exercise.repetitions))", systemImage: "repeat")
+                .font(.caption)
+                .foregroundColor(.black)
+            
+            Label("\(Int(exercise.sets))", systemImage: "square.stack.3d.down.right")
+                .font(.caption)
+                .foregroundColor(.black)
+            
+            Label(exercise.restIntevals.formatIntervalToMinutesSeconds, systemImage: "clock")
+                .font(.caption)
+                .foregroundColor(.black)
+            
+        }
+    }
+    
+    @ViewBuilder
+    func ExerciseNameView() -> some View {
+        Text(exercise.exericse.name)
+            .fontWeight(.semibold)
+            .foregroundStyle(.black)
+    }
+    
+    func onChanged(value: DragGesture.Value) {
+        if value.translation.width < 0 {
+            if isSwiped {
+                offset = value.translation.width - 90
+            }
+            else {
+                offset = value.translation.width
+            }
+        }
+    }
+    
+    func onEnd(value: DragGesture.Value) {
+        withAnimation(.easeInOut) {
+            if value.translation.width < 0 {
+                
+                /// Checking
+                if -value.translation.width > UIScreen.main.bounds.width / 2 {
+                    offset = -1000
+                    onDelete(exercise)
+                }
+                else if -offset > 50 {
+                    isSwiped = true
+                    offset = -90
+                }
+                else {
+                    isSwiped = false
+                    offset = 0
+                }
+            }
+            else {
+                isSwiped = false
+                offset = 0
+            }
+        }
+        
     }
 }
 
