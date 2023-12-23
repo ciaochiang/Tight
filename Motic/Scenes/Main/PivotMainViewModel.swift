@@ -24,12 +24,12 @@ class PivotMainViewModel: ObservableObject {
 class ScheduledExercise: Identifiable {
     var exericse: Exercise
     var scheduledDate: Date
-    var repetitions: Int
-    var sets: Int
+    var repetitions: Double
+    var sets: Double
     var restIntevals: TimeInterval
     var isCompleted: Bool
     
-    init(exericse: Exercise, scheduledDate: Date, repetitions: Int, sets: Int, restIntevals: TimeInterval, isCompleted: Bool) {
+    init(exericse: Exercise, scheduledDate: Date, repetitions: Double, sets: Double, restIntevals: TimeInterval, isCompleted: Bool) {
         self.exericse = exericse
         self.scheduledDate = scheduledDate
         self.repetitions = repetitions

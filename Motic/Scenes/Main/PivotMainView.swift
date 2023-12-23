@@ -16,6 +16,7 @@ struct PivotMainView: View {
     @State private var currentWeekIndex: Int = 1
     @State private var createWeek: Bool = false
     @State private var scheduleExercise: Bool = false
+    @State private var exerciseToEdit: ScheduledExercise?
         
     /// Animation  namespace
     @Namespace private var animation
@@ -75,7 +76,7 @@ struct PivotMainView: View {
             loadScheduledExercises(currentDate: currentDate)
         })
         .sheet(isPresented: $scheduleExercise, content: {
-            ScheduleExerciseView(completition: {
+            ScheduleExerciseView(completion: {
                 /// Refetch schedule  exercises
                 loadScheduledExercises(currentDate: currentDate)
             })
@@ -83,6 +84,11 @@ struct PivotMainView: View {
                 .presentationCornerRadius(30)
 
         })
+        .sheet(item: $exerciseToEdit) { exercise in
+            EditScheduledExerciseView(scheduledExercise: exercise)
+                .presentationDetents([.height(300)])
+                .presentationCornerRadius(30)
+        }
         .onChange(of: currentDate) { oldValue, newValue in
             /// Fetch scheduled exercise when date changed
             loadScheduledExercises(currentDate: newValue)
@@ -209,19 +215,26 @@ struct PivotMainView: View {
     /// Schedule Exercises View
     @ViewBuilder
     func ScheduleExercisesView() -> some View {
-        VStack(alignment: .leading, spacing: 36) {
+        VStack(alignment: .leading, spacing: 16) {
             ForEach($viewModel.scheduledExercises) { $exercise in
-                ScheduledExerciseCard(exercise: $exercise)
+                ScheduledExerciseCard(exercise: $exercise, onTap: { exercise in
+                    /// Edit
+                    self.exerciseToEdit = exercise
+                }, onLongPress: { exercise in
+                    /// Delete dialog
+                })
                     .background(alignment: .leading) {
-                        if viewModel.scheduledExercises.last?.id != exercise.id {
-                            Rectangle()
-                                .frame(width: 1)
-                                .offset(x: 8)
-                                .padding(.bottom, -35)
-                        }
+                        Rectangle()
+                            .foregroundStyle(Color.themeStyle.theme.accent)
+                            .frame(width: 2)
+//                            .padding(.bottom, -35)
+//                        if viewModel.scheduledExercises.last?.id != exercise.id {
+//
+//                        }
                     }
             }
         }
+        .scrollTargetLayout()
         .padding([.vertical, .leading], 16)
         .padding(.top, 16)
     }
@@ -245,14 +258,21 @@ struct PivotMainView: View {
 
 struct ScheduledExerciseCard: View {
     @Binding var exercise: ScheduledExercise
+    
+    /// Edit Action
+    let onTap: (ScheduledExercise) -> Void
+    
+    /// Delete action
+    let onLongPress: (ScheduledExercise) -> Void
   
     var body: some View {
-        HStack(alignment: .top, spacing: 16) {
-            Circle()
-                .fill(Color.themeStyle.theme.accent)
-                .frame(width: 10, height: 10)
-                .padding(4)
-                .background(.white.shadow(.drop(color: .black.opacity(0.1), radius: 3)) , in: .circle)
+        HStack(alignment: .top) {
+//            Circle()
+//                .fill(Color.themeStyle.theme.accent)
+//                .frame(width: 10, height: 10)
+//                .padding(4)
+//                .background(.white.shadow(.drop(color: .black.opacity(0.1), radius: 3)) , in: .circle)
+            
             
             VStack(alignment: .leading, spacing: 8) {
                 Text(exercise.exericse.name)
@@ -260,11 +280,11 @@ struct ScheduledExerciseCard: View {
                     .foregroundStyle(.black)
                 
                 HStack(alignment: .center, spacing: 16) {
-                    Label("\(exercise.repetitions)", systemImage: "repeat")
+                    Label("\(Int(exercise.repetitions))", systemImage: "repeat")
                         .font(.caption)
                         .foregroundColor(.black)
                     
-                    Label("\(exercise.sets)", systemImage: "square.stack.3d.down.right")
+                    Label("\(Int(exercise.sets))", systemImage: "square.stack.3d.down.right")
                         .font(.caption)
                         .foregroundColor(.black)
                     
@@ -280,7 +300,13 @@ struct ScheduledExerciseCard: View {
             .padding(16)
             .horizontalSpacing(.leading)
             .background(Color.themeStyle.theme.background, in: .rect(topLeadingRadius: 16, bottomLeadingRadius: 16))
-            .offset(y: -8)
+            .offset(x: 16)
+            .gesture(LongPressGesture(minimumDuration: 0.3).onEnded({ _ in
+                onLongPress(exercise)
+            }))
+            .highPriorityGesture(TapGesture().onEnded({ _ in
+                onTap(exercise)
+            }))
         }
     }
 }
