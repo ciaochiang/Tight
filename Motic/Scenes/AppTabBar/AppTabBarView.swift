@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 class AppTabBarViewModel: ObservableObject {
     var logger: CustomLogger
@@ -87,6 +88,9 @@ struct AppTabBarView_Previews: PreviewProvider {
                                            activitySessionManager: Mocks.activitySessionManager,
                                            wearableDeviceManager: Mocks.wearableDeviceManager,
                                            experimentsProvider: Mocks.experimentProvider)
+        let previewContainer = PreviewContainer([ScheduledExercise.self])
         AppTabBarView(viewModel: viewModel, logger: Mocks.logger)
+            .modelContainer(previewContainer.container)
+        
     }
 }
