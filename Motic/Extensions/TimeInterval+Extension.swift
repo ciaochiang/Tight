@@ -43,4 +43,10 @@ extension TimeInterval {
           return String(format: "%02d\"", seconds)
         }
     }
+    
+    var formatIntervalToMinutesSeconds: String {
+        let minutes = Int(self) / 60
+        let seconds = Int(self) % 60
+        return String(format: "%02d:%02d", minutes, seconds)
+    }
 }

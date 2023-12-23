@@ -147,10 +147,11 @@ struct ScheduleExerciseView: View {
 }
 
 #Preview {
-    ScheduleExerciseView(completition: {
+    let previewContainer = PreviewContainer([ScheduledExercise.self])
+    return ScheduleExerciseView(completition: {
         
     })
-        .veriticalSpacing(.bottom)
+    .modelContainer(previewContainer.container)
 }
 
 struct ExercisePickerView: View {

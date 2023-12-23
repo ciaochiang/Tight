@@ -259,9 +259,23 @@ struct ScheduledExerciseCard: View {
                     .fontWeight(.semibold)
                     .foregroundStyle(.black)
                 
-                Label(exercise.scheduledDate.format("hh:mm a"), systemImage: "clock")
-                    .font(.caption)
-                    .foregroundColor(.black)
+                HStack(alignment: .center, spacing: 16) {
+                    Label("\(exercise.repetitions)", systemImage: "repeat")
+                        .font(.caption)
+                        .foregroundColor(.black)
+                    
+                    Label("\(exercise.sets)", systemImage: "square.stack.3d.down.right")
+                        .font(.caption)
+                        .foregroundColor(.black)
+                    
+                    Label(exercise.restIntevals.formatIntervalToMinutesSeconds, systemImage: "clock")
+                        .font(.caption)
+                        .foregroundColor(.black)
+                    
+                }
+                .horizontalSpacing(.leading)
+                
+
             }
             .padding(16)
             .horizontalSpacing(.leading)
@@ -272,7 +286,7 @@ struct ScheduledExerciseCard: View {
 }
 
 
-#Preview {
+#Preview("Main Screen") {
     let viewModel = PivotMainViewModel()
     let previewContainer = PreviewContainer([ScheduledExercise.self])
     return PivotMainView(viewModel: viewModel).modelContainer(previewContainer.container)
