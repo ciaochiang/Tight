@@ -139,7 +139,7 @@ struct PlanCard: View {
 class Plan {
     var name: String
     var tags: [String]
-    var exercises: [DesignedExercise] = []
+    var exercises: [DesignedExercise]
     var createdDate: Date
     
     init(name: String, tags: [String], exercises: [DesignedExercise], createdDate: Date) {
@@ -150,12 +150,21 @@ class Plan {
     }
 }
 
-struct DesignedExercise: Codable, Hashable {
+@Model
+class DesignedExercise: Identifiable {
     var exercise: Exercise
     var repetitions: Double
     var sets: Double
     var restIntevals: TimeInterval
     var order: Int
+    
+    init(exercise: Exercise, repetitions: Double, sets: Double, restIntevals: TimeInterval, order: Int) {
+        self.exercise = exercise
+        self.repetitions = repetitions
+        self.sets = sets
+        self.restIntevals = restIntevals
+        self.order = order
+    }
 }
 
 struct AddPlanView: View {

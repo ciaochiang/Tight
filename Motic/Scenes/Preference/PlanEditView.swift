@@ -21,10 +21,19 @@ struct PlanEditView: View {
         .veriticalSpacing(.top)
         .navigationTitle(plan.name)
         .sheet(isPresented: $isAdding, content: {
-            AddPlanView()
-                .presentationDetents([.height(200)])
+            ScheduleExerciseView(isPlanMode: true, selectedDate: .init(), incrementalOrderNumber: plan.exercises.count, completion: {
+                
+            }, callback: { exercise in
+                plan.exercises.append(exercise)
+            })
+                .presentationDetents([.height(400)])
                 .presentationCornerRadius(30)
         })
+        .sheet(item: $exerciseToEdit) { exercise in
+            EditDesignedExerciseView(designedExercise: exercise)
+                .presentationDetents([.height(300)])
+                .presentationCornerRadius(30)
+        }
         .toolbar {
             Button(action: {
                 isAdding.toggle()
@@ -37,8 +46,8 @@ struct PlanEditView: View {
     @ViewBuilder
     func PlannedExercisesView() -> some View {
         List {
-            ForEach(plan.exercises, id: \.self) { exercise in
-                PlanCard(plan: plan)
+            ForEach(plan.exercises.sorted(by: { $0.order < $1.order }), id: \.self) { exercise in
+                PlannedExerciseCard(exercise: exercise)
                     .veriticalSpacing(.center)
                     .listRowSeparator(.hidden)
                     .listRowInsets(EdgeInsets())
@@ -64,6 +73,7 @@ struct PlanEditView: View {
         .padding(.top, 16)
         .listStyle(PlainListStyle())
         .background(Color.themeStyle.theme.background)
+
     }
 }
 

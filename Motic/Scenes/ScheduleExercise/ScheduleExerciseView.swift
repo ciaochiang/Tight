@@ -8,6 +8,108 @@
 import SwiftUI
 import SwiftData
 
+struct EditDesignedExerciseView: View {
+    @Environment(\.dismiss) private var dismiss
+    @Bindable var designedExercise: DesignedExercise
+    @State private var isExercisePickerViewPresented: Bool = false
+    
+    var body: some View {
+        NavigationStack {
+            VStack(alignment: .leading, spacing: 16) {
+                ExerciseView().horizontalSpacing(.leading)
+                RepetitionView().horizontalSpacing(.leading)
+                SetsView().horizontalSpacing(.leading)
+                RestIntervalsView().horizontalSpacing(.leading)
+            }
+            .padding()
+            .veriticalSpacing(.bottom)
+            .sheet(isPresented: $isExercisePickerViewPresented, content: {
+                ExercisePickerView(title: "Pick Exercise", selectedExercise: designedExercise.exercise, callback: { exercise in
+                    designedExercise.exercise = exercise
+                    isExercisePickerViewPresented.toggle()
+                })
+                    .presentationDetents([.large])
+            })
+        }
+    }
+
+    @ViewBuilder
+    func ExerciseView() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Exercise")
+                .font(.caption)
+                .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
+            
+            Button(action: {
+                /// Display Exercise Picker View
+                isExercisePickerViewPresented.toggle()
+            }) {
+                Text(designedExercise.exercise.name)
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func RepetitionView() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Repetitions")
+                .font(.caption)
+                .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
+            
+            HStack(alignment: .center, spacing: 8) {
+                Text(String(format: "%.0f", designedExercise.repetitions))
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
+                
+                Slider(value: $designedExercise.repetitions, in: 1...20, step: 1.0)
+                    .accentColor(Color.themeStyle.theme.accent)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func SetsView() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Sets")
+                .font(.caption)
+                .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
+            
+            HStack(alignment: .center, spacing: 8) {
+                Text(String(format: "%.0f", designedExercise.sets))
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
+                
+                Slider(value: $designedExercise.sets, in: 1...6, step: 1.0)
+                    .accentColor(Color.themeStyle.theme.accent)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func RestIntervalsView() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Rest Intervals")
+                .font(.caption)
+                .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
+            
+            HStack(alignment: .center, spacing: 8) {
+                Text(designedExercise.restIntevals.formatIntervalToMinutesSeconds)
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
+                
+                Slider(value: $designedExercise.restIntevals, in: 0...180, step: 10.0)
+                    .accentColor(Color.themeStyle.theme.accent)
+            }
+        }
+    }
+}
+
 struct EditScheduledExerciseView: View {
     @Environment(\.dismiss) private var dismiss
     @Bindable var scheduledExercise: ScheduledExercise
@@ -114,6 +216,7 @@ struct ScheduleExerciseView: View {
     /// View Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var context
+    var isPlanMode: Bool = false
     var selectedDate: Date
     var incrementalOrderNumber: Int
     @State private var selectedExercise: Exercise = .none
@@ -123,6 +226,7 @@ struct ScheduleExerciseView: View {
     @State private var isExercisePickerViewPresented: Bool = false
     
     let completion: () -> Void
+    let callback: ((DesignedExercise) -> Void)?
     
     var body: some View {
         NavigationStack {
@@ -225,16 +329,29 @@ struct ScheduleExerciseView: View {
     func AddButtonView() -> some View {
         Button(action: {
             /// Save schedule exercise
-            let scheduledExercise = ScheduledExercise(exericse: selectedExercise, 
-                                                      scheduledDate: selectedDate,
+            if isPlanMode {
+                let designExericse = DesignedExercise(exercise: selectedExercise, 
                                                       repetitions: repetitions,
-                                                      sets: sets,
-                                                      restIntevals: restIntervals,
-                                                      isCompleted: false,
+                                                      sets: sets, 
+                                                      restIntevals:
+                                                        restIntervals,
                                                       order: incrementalOrderNumber)
-            context.insert(scheduledExercise)
-            try? context.save()
-            completion()
+                callback?(designExericse)
+                dismiss()
+            }
+            else {
+                let scheduledExercise = ScheduledExercise(exericse: selectedExercise,
+                                                          scheduledDate: selectedDate,
+                                                          repetitions: repetitions,
+                                                          sets: sets,
+                                                          restIntevals: restIntervals,
+                                                          isCompleted: false,
+                                                          order: incrementalOrderNumber)
+                context.insert(scheduledExercise)
+                try? context.save()
+                completion()
+            }
+
             dismiss()
         }) {
             Text("Add Exercise")
@@ -261,7 +378,7 @@ struct ScheduleExerciseView: View {
     let previewContainer = PreviewContainer([ScheduledExercise.self])
     return ScheduleExerciseView(selectedDate: .init(), incrementalOrderNumber: 0, completion: {
         
-    })
+    }, callback: nil)
     .modelContainer(previewContainer.container)
 }
 

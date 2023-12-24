@@ -72,7 +72,7 @@ struct PivotMainView: View {
                                  completion: {
                 /// Refetch schedule  exercises
                 loadScheduledExercises(selectedDate: viewModel.selectedDate)
-            })
+            }, callback: nil)
                 .presentationDetents([.height(400)])
                 .presentationCornerRadius(30)
 

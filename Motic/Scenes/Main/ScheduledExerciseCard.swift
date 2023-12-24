@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ScheduledExerciseCard: View {
     @Binding var exercise: ScheduledExercise
@@ -68,7 +69,7 @@ struct ScheduledExerciseCard: View {
 
 
 struct PlannedExerciseCard: View {
-    @Binding var exercise: DesignedExercise
+    @Bindable var exercise: DesignedExercise
   
     var body: some View {
         /// Content
