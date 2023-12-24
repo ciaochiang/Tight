@@ -115,6 +115,7 @@ struct ScheduleExerciseView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var context
     var selectedDate: Date
+    var incrementalOrderNumber: Int
     @State private var selectedExercise: Exercise = .none
     @State private var repetitions: Double = 10
     @State private var sets: Double = 3
@@ -229,7 +230,8 @@ struct ScheduleExerciseView: View {
                                                       repetitions: repetitions,
                                                       sets: sets,
                                                       restIntevals: restIntervals,
-                                                      isCompleted: false)
+                                                      isCompleted: false,
+                                                      order: incrementalOrderNumber)
             context.insert(scheduledExercise)
             try? context.save()
             completion()
@@ -257,7 +259,7 @@ struct ScheduleExerciseView: View {
 
 #Preview {
     let previewContainer = PreviewContainer([ScheduledExercise.self])
-    return ScheduleExerciseView(selectedDate: .init(), completion: {
+    return ScheduleExerciseView(selectedDate: .init(), incrementalOrderNumber: 0, completion: {
         
     })
     .modelContainer(previewContainer.container)

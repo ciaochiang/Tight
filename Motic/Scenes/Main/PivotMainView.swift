@@ -66,7 +66,9 @@ struct PivotMainView: View {
             loadScheduledExercises(selectedDate: viewModel.selectedDate)
         })
         .sheet(isPresented: $scheduleExercise, content: {
-            ScheduleExerciseView(selectedDate: viewModel.selectedDate, completion: {
+            ScheduleExerciseView(selectedDate: viewModel.selectedDate,
+                                 incrementalOrderNumber: viewModel.incrementOrderNumber(),
+                                 completion: {
                 /// Refetch schedule  exercises
                 loadScheduledExercises(selectedDate: viewModel.selectedDate)
             })
@@ -233,6 +235,9 @@ struct PivotMainView: View {
             }
             .onMove(perform: { indexSet, newOffset in
                 viewModel.scheduledExercises.move(fromOffsets: indexSet, toOffset: newOffset)
+                
+                /// Update all order number
+                viewModel.updateOrderNumbers()
             })
             
             Spacer(minLength: 48)
@@ -249,7 +254,7 @@ struct PivotMainView: View {
         let startDate = calendar.startOfDay(for: selectedDate)
         guard let endDate = calendar.date(byAdding: .day, value: 1, to: startDate) else { return }
         
-        let fetchDescriptor = FetchDescriptor<ScheduledExercise>(predicate: #Predicate<ScheduledExercise> { $0.scheduledDate >= startDate && $0.scheduledDate <= endDate })
+        let fetchDescriptor = FetchDescriptor<ScheduledExercise>(predicate: #Predicate<ScheduledExercise> { $0.scheduledDate >= startDate && $0.scheduledDate <= endDate }, sortBy: [SortDescriptor(\.order)])
         
         do {
             viewModel.scheduledExercises = try context.fetch(fetchDescriptor)
