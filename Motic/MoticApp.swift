@@ -48,8 +48,6 @@ struct MoticApp: App {
                 let coreDataManagerDependency = CoreDataManagerDependencyImp(logger: logger)
                 let coreDataManager = CoreDataManager(dependency: coreDataManagerDependency)
                 let viewModel = AppTabBarViewModel(logger: logger,
-                                                   activitySessionManager: ActivitySessionManager.shared,
-                                                   wearableDeviceManager: wearableDeviceManager,
                                                    experimentsProvider: experiementsProvider)
                 // Navigate to AppTabBar view
                 AppTabBarView(viewModel: viewModel, logger: logger)

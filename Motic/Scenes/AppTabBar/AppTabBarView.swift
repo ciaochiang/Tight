@@ -10,20 +10,13 @@ import SwiftData
 
 class AppTabBarViewModel: ObservableObject {
     var logger: CustomLogger
-    var activitySessionManager: ActivitySessionManager
-    var wearableDeviceManager: WearableDeviceManager
     var experimentsProvider: ExperiementsProvider
-    @Published var isRecordViewPresented: Bool
     
     init(logger: CustomLogger,
-         activitySessionManager: ActivitySessionManager,
-         wearableDeviceManager: WearableDeviceManager,
          experimentsProvider: ExperiementsProvider) {
         self.logger = logger
-        self.activitySessionManager = activitySessionManager
-        self.wearableDeviceManager = wearableDeviceManager
         self.experimentsProvider = experimentsProvider
-        _isRecordViewPresented = Published(wrappedValue: false)
+
     }
 }
 
@@ -40,55 +33,25 @@ struct AppTabBarView: View {
     }
     
     var body: some View {
-        CustomTabBarContainerView(selection: $tabSelection) {
-            
-            /// Create MainView
-//            let dependency = MainViewModelDependencyImp(preferenceManager: PreferenceManager.shared,
-//                                                        activtiySessionManager: viewModel.activitySessionManager,
-//                                                        logger: logger)
-//            let mainViewModel = MainViewModel(dependency: dependency,
-//                                              isRecordViewPresented: $viewModel.isRecordViewPresented)
-//            MainView(viewModel: mainViewModel).tabBarItem(type: .home, selection: $tabSelection)
-            
+        TabView {
             /// Create pivot main view
             let mainViewModel = PivotMainViewModel()
-            PivotMainView(viewModel: mainViewModel).tabBarItem(type: .home, selection: $tabSelection)
-
-            /// Craeat RecordView
-            /*
-            if viewModel.experimentsProvider.isRecordingEnabled {
-                Color.clear.tabBarItem(type: .record,
-                                       selection: $tabSelection,
-                                       disableContent: true) {
-                    viewModel.isRecordViewPresented.toggle()
-                }
+            PivotMainView(viewModel: mainViewModel).tabItem {
+                Label("Home", systemImage: TabBarItemType.home.iconName)
             }
-            */
             
             /// Create PreferenceViews
             let preferenceViewModel = PreferenceViewModel()
-            PreferenceView(viewModel: preferenceViewModel).tabBarItem(type: .preference, selection: $tabSelection)
+            PreferenceView(viewModel: preferenceViewModel).tabItem {
+                Label("Preferences", systemImage: TabBarItemType.preference.iconName)
+            }
         }
-        
-        /// NOTE:  Pivot to focus on strength training
-        /*
-        .sheet(isPresented: $viewModel.isRecordViewPresented) {
-            let dependency = RecordViewModelDependencyImp(logger: logger,
-                                                          activitySessionManager: viewModel.activitySessionManager,
-                                                          wearableDeviceManager: viewModel.wearableDeviceManager)
-            let viewModel = RecordViewModel(dependency: dependency)
-            RecordView(viewModel: viewModel, isPresented: $viewModel.isRecordViewPresented)
-                .presentationDetents([.large])
-        }
-         */
     }
 }
 
 struct AppTabBarView_Previews: PreviewProvider {
     static var previews: some View {
         let viewModel = AppTabBarViewModel(logger: Mocks.logger,
-                                           activitySessionManager: Mocks.activitySessionManager,
-                                           wearableDeviceManager: Mocks.wearableDeviceManager,
                                            experimentsProvider: Mocks.experimentProvider)
         let previewContainer = PreviewContainer([ScheduledExercise.self])
         AppTabBarView(viewModel: viewModel, logger: Mocks.logger)
