@@ -215,7 +215,7 @@ struct PivotMainView: View {
                     .veriticalSpacing(.center)
                     .listRowSeparator(.hidden)
                     .listRowInsets(EdgeInsets())
-                    .swipeActions {
+                    .swipeActions(edge: .trailing) {
                         Button(action: {
                             /// Delete items
                             withAnimation {
@@ -229,6 +229,16 @@ struct PivotMainView: View {
                                 .symbolVariant(/*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
                         }
                         .tint(Color.themeStyle.theme.accent)
+                    }
+                    .swipeActions(edge: .leading) {
+                        Button(action: {
+                            /// Delete items
+                            exercise.isCompleted.toggle()
+                        }) {
+                            Label("Completed", systemImage: "checkmark")
+                                .symbolVariant(/*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
+                        }
+                        .tint(Color.themeStyle.theme.green)
                     }
                     .onTapGesture {
                         exerciseToEdit = exercise
@@ -262,60 +272,6 @@ struct PivotMainView: View {
         }
     }
 }
-
-struct ScheduledExerciseCard: View {
-    @Binding var exercise: ScheduledExercise
-  
-    var body: some View {
-        /// Content
-        HStack(spacing: 8) {
-            Rectangle()
-                .foregroundStyle(Color.themeStyle.theme.accent)
-                .frame(width: 1)
-            
-            ExerciseView()
-                .frame(maxHeight: .infinity)
-        }
-        .horizontalSpacing(.leading)
-        .background(Color.themeStyle.theme.background)
-    }
-    
-    @ViewBuilder
-    func ExerciseView() -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            ExerciseNameView()
-            ExerciseDetailsView().horizontalSpacing(.leading)
-        }
-        .horizontalSpacing(.leading)
-        .padding()
-//        .background(Color.themeStyle.theme.background, in: .rect(topLeadingRadius: 16, bottomLeadingRadius: 16))
-    }
-    
-    @ViewBuilder
-    func ExerciseDetailsView() -> some View {
-        HStack(alignment: .center, spacing: 16) {
-            Label("\(Int(exercise.repetitions))", systemImage: "repeat")
-                .font(.caption)
-                .foregroundColor(Color.themeStyle.theme.primaryTextColor)
-            
-            Label("\(Int(exercise.sets))", systemImage: "square.stack.3d.down.right")
-                .font(.caption)
-                .foregroundColor(Color.themeStyle.theme.primaryTextColor)
-            
-            Label(exercise.restIntevals.formatIntervalToMinutesSeconds, systemImage: "clock")
-                .font(.caption)
-                .foregroundColor(Color.themeStyle.theme.primaryTextColor)
-        }
-    }
-    
-    @ViewBuilder
-    func ExerciseNameView() -> some View {
-        Text(exercise.exericse.name)
-            .fontWeight(.semibold)
-            .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
-    }
-}
-
 
 #Preview("Main Screen") {
     let viewModel = PivotMainViewModel()

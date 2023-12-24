@@ -44,6 +44,7 @@
 		E521001A2AB72069000CF3AD /* HeartRateSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52100192AB72069000CF3AD /* HeartRateSample.swift */; };
 		E521001C2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E521001B2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift */; };
 		E521001F2AB74D13000CF3AD /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E521001E2AB74D13000CF3AD /* AccountManager.swift */; };
+		E5215E342B384B530011E4FF /* ScheduledExerciseCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5215E332B384B530011E4FF /* ScheduledExerciseCard.swift */; };
 		E5349D232AE169D2003B4808 /* SportProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5349D222AE169D2003B4808 /* SportProvider.swift */; };
 		E5349D272AE56430003B4808 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5349D262AE56430003B4808 /* MainViewModel.swift */; };
 		E53CA8A62ADA550A0009D572 /* WearableDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53CA8A52ADA550A0009D572 /* WearableDeviceManager.swift */; };
@@ -195,6 +196,7 @@
 		E52100192AB72069000CF3AD /* HeartRateSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateSample.swift; sourceTree = "<group>"; };
 		E521001B2AB7299E000CF3AD /* HealthStoreManager+HeartRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthStoreManager+HeartRate.swift"; sourceTree = "<group>"; };
 		E521001E2AB74D13000CF3AD /* AccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
+		E5215E332B384B530011E4FF /* ScheduledExerciseCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledExerciseCard.swift; sourceTree = "<group>"; };
 		E5349D222AE169D2003B4808 /* SportProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportProvider.swift; sourceTree = "<group>"; };
 		E5349D262AE56430003B4808 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		E53CA8A52ADA550A0009D572 /* WearableDeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WearableDeviceManager.swift; sourceTree = "<group>"; };
@@ -606,6 +608,7 @@
 				E59EB8562AB5F76A0057F630 /* MainViewModel.swift */,
 				E552B6542B32CA6C00AF9F20 /* PivotMainViewModel.swift */,
 				E552B6562B32CA7C00AF9F20 /* PivotMainView.swift */,
+				E5215E332B384B530011E4FF /* ScheduledExerciseCard.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -1044,6 +1047,7 @@
 				E5E387382AD6E57D008A7353 /* Location.swift in Sources */,
 				E51DE20C2ABEF13F00957395 /* TimeInterval+Extension.swift in Sources */,
 				E51DE1FE2ABB2E0300957395 /* CyclingActivityView.swift in Sources */,
+				E5215E342B384B530011E4FF /* ScheduledExerciseCard.swift in Sources */,
 				E51DE1F82AB96CEF00957395 /* ProfileView.swift in Sources */,
 				E5B0DF822B0083BE00EC9871 /* ElapsedTimeStatus.swift in Sources */,
 				E59EB8572AB5F76A0057F630 /* MainViewModel.swift in Sources */,
