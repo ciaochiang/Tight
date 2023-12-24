@@ -12,12 +12,6 @@ import SwiftData
 class PivotMainViewModel: ObservableObject {
     @Published var selectedDate: Date = .init()
     @Published var scheduledExercises: [ScheduledExercise] = []
-    
-    init() {
-        scheduledExercises = [
-
-        ]
-    }
 }
 
 @Model

@@ -114,6 +114,7 @@ struct ScheduleExerciseView: View {
     /// View Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var context
+    var selectedDate: Date
     @State private var selectedExercise: Exercise = .none
     @State private var repetitions: Double = 10
     @State private var sets: Double = 3
@@ -223,7 +224,12 @@ struct ScheduleExerciseView: View {
     func AddButtonView() -> some View {
         Button(action: {
             /// Save schedule exercise
-            let scheduledExercise = ScheduledExercise(exericse: selectedExercise, scheduledDate: .init(), repetitions: repetitions, sets: sets, restIntevals: restIntervals, isCompleted: false)
+            let scheduledExercise = ScheduledExercise(exericse: selectedExercise, 
+                                                      scheduledDate: selectedDate,
+                                                      repetitions: repetitions,
+                                                      sets: sets,
+                                                      restIntevals: restIntervals,
+                                                      isCompleted: false)
             context.insert(scheduledExercise)
             try? context.save()
             completion()
@@ -251,7 +257,7 @@ struct ScheduleExerciseView: View {
 
 #Preview {
     let previewContainer = PreviewContainer([ScheduledExercise.self])
-    return ScheduleExerciseView(completion: {
+    return ScheduleExerciseView(selectedDate: .init(), completion: {
         
     })
     .modelContainer(previewContainer.container)

@@ -28,8 +28,10 @@ class AppTabBarViewModel: ObservableObject {
 }
 
 struct AppTabBarView: View {
+    @Environment(\.modelContext) var context
     @StateObject private var viewModel: AppTabBarViewModel
     @State private var tabSelection: TabBarItemType = .home
+    
     private var logger: CustomLogger
     
     init(viewModel: AppTabBarViewModel, logger: CustomLogger) {

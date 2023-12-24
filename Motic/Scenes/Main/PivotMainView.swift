@@ -11,7 +11,6 @@ import SwiftData
 struct PivotMainView: View {
     @Environment(\.modelContext) var context
     @StateObject var viewModel: PivotMainViewModel
-    @State private var currentDate: Date = .init()
     @State private var weekSlider: [[Date.Weekday]] = []
     @State private var currentWeekIndex: Int = 1
     @State private var createWeek: Bool = false
@@ -64,12 +63,12 @@ struct PivotMainView: View {
             }
             
             /// Load Scheduled Exercises
-            loadScheduledExercises(currentDate: currentDate)
+            loadScheduledExercises(selectedDate: viewModel.selectedDate)
         })
         .sheet(isPresented: $scheduleExercise, content: {
-            ScheduleExerciseView(completion: {
+            ScheduleExerciseView(selectedDate: viewModel.selectedDate, completion: {
                 /// Refetch schedule  exercises
-                loadScheduledExercises(currentDate: currentDate)
+                loadScheduledExercises(selectedDate: viewModel.selectedDate)
             })
                 .presentationDetents([.height(400)])
                 .presentationCornerRadius(30)
@@ -80,9 +79,10 @@ struct PivotMainView: View {
                 .presentationDetents([.height(300)])
                 .presentationCornerRadius(30)
         }
-        .onChange(of: currentDate) { oldValue, newValue in
+        .onChange(of: viewModel.selectedDate) { oldValue, newValue in
             /// Fetch scheduled exercise when date changed
-            loadScheduledExercises(currentDate: newValue)
+            viewModel.selectedDate = newValue
+            loadScheduledExercises(selectedDate: viewModel.selectedDate)
         }
     }
     
@@ -101,10 +101,10 @@ struct PivotMainView: View {
                         .font(.callout)
                         .fontWeight(.medium)
                         .textScale(.secondary)
-                        .foregroundStyle(isSameDate(day.date, currentDate) ? .white : .gray)
+                        .foregroundStyle(isSameDate(day.date, viewModel.selectedDate) ? .white : .gray)
                         .frame(width: 35, height: 35)
                         .background(content: {
-                            if isSameDate(day.date, currentDate) {
+                            if isSameDate(day.date, viewModel.selectedDate) {
                                 Circle()
                                     .fill(Color.themeStyle.theme.accent)
                                     .matchedGeometryEffect(id: "TABINDICATOR", in: animation)
@@ -126,7 +126,7 @@ struct PivotMainView: View {
                 .onTapGesture {
                     /// Updating current date
                     withAnimation(.snappy) {
-                        currentDate = day.date
+                        viewModel.selectedDate = day.date
                     }
                 }
             }
@@ -169,12 +169,12 @@ struct PivotMainView: View {
     func HeaderView() -> some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 5) {
-                Text(currentDate.format("MMMM")).foregroundStyle(Color.themeStyle.theme.accent)
-                Text(currentDate.format("YYYY")).foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
+                Text(viewModel.selectedDate.format("MMMM")).foregroundStyle(Color.themeStyle.theme.accent)
+                Text(viewModel.selectedDate.format("YYYY")).foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
             }
             .font(.title.bold())
             
-            Text(currentDate.formatted(date: .complete, time: .omitted))
+            Text(viewModel.selectedDate.formatted(date: .complete, time: .omitted))
                 .font(.callout)
                 .fontWeight(.semibold)
                 .textScale(.secondary)
@@ -219,7 +219,7 @@ struct PivotMainView: View {
                                 context.delete(exercise)
                                 
                                 /// Reload
-                                loadScheduledExercises(currentDate: currentDate)
+                                loadScheduledExercises(selectedDate: viewModel.selectedDate)
                             }
                         }) {
                             Label("Delete", systemImage: "trash")
@@ -244,12 +244,12 @@ struct PivotMainView: View {
     }
     
     /// Load scheduled exercises from Swift Data
-    private func loadScheduledExercises(currentDate: Date) {
+    private func loadScheduledExercises(selectedDate: Date) {
         let calendar = Calendar.current
-        let startDate = calendar.startOfDay(for: currentDate)
+        let startDate = calendar.startOfDay(for: selectedDate)
         guard let endDate = calendar.date(byAdding: .day, value: 1, to: startDate) else { return }
         
-        let fetchDescriptor = FetchDescriptor<ScheduledExercise>(predicate: #Predicate<ScheduledExercise> { $0.scheduledDate > startDate && $0.scheduledDate < endDate })
+        let fetchDescriptor = FetchDescriptor<ScheduledExercise>(predicate: #Predicate<ScheduledExercise> { $0.scheduledDate >= startDate && $0.scheduledDate <= endDate })
         
         do {
             viewModel.scheduledExercises = try context.fetch(fetchDescriptor)
