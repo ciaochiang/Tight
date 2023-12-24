@@ -224,13 +224,16 @@ struct PivotMainView: View {
                         }) {
                             Label("Delete", systemImage: "trash")
                                 .symbolVariant(/*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
-                                .background(Color.red)
                         }
+                        .tint(Color.themeStyle.theme.accent)
                     }
                     .onTapGesture {
                         exerciseToEdit = exercise
                     }
             }
+            .onMove(perform: { indexSet, newOffset in
+                viewModel.scheduledExercises.move(fromOffsets: indexSet, toOffset: newOffset)
+            })
             
             Spacer(minLength: 48)
                 .listRowSeparator(.hidden)
@@ -281,7 +284,7 @@ struct ScheduledExerciseCard: View {
         }
         .horizontalSpacing(.leading)
         .padding()
-        .background(Color.themeStyle.theme.background, in: .rect(topLeadingRadius: 16, bottomLeadingRadius: 16))
+//        .background(Color.themeStyle.theme.background, in: .rect(topLeadingRadius: 16, bottomLeadingRadius: 16))
     }
     
     @ViewBuilder
