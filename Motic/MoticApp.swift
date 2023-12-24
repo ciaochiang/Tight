@@ -29,7 +29,7 @@ struct MoticApp: App {
     
     /// Swift data
     let container: ModelContainer = {
-        let schema = Schema([ScheduledExercise.self])
+        let schema = Schema([ScheduledExercise.self, Plan.self])
         let container = try! ModelContainer(for: schema, configurations: [])
         return container
     }()
