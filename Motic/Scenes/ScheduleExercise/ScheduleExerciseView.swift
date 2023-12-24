@@ -24,7 +24,7 @@ struct EditScheduledExerciseView: View {
             .padding()
             .veriticalSpacing(.bottom)
             .sheet(isPresented: $isExercisePickerViewPresented, content: {
-                ExercisePickerView(selectedExercise: scheduledExercise.exericse, callback: { exercise in
+                ExercisePickerView(title: "Pick Exercise", selectedExercise: scheduledExercise.exericse, callback: { exercise in
                     scheduledExercise.exericse = exercise
                     isExercisePickerViewPresented.toggle()
                 })
@@ -136,7 +136,7 @@ struct ScheduleExerciseView: View {
             .padding()
             .veriticalSpacing(.bottom)
             .sheet(isPresented: $isExercisePickerViewPresented, content: {
-                ExercisePickerView(selectedExercise: selectedExercise, callback: { []exercise in
+                ExercisePickerView(title: "Pick Exercise", selectedExercise: selectedExercise, callback: { exercise in
                     selectedExercise = exercise
                     isExercisePickerViewPresented.toggle()
                 })
@@ -266,6 +266,8 @@ struct ScheduleExerciseView: View {
 }
 
 struct ExercisePickerView: View {
+    let title: String
+
     @State var selectedExercise: Exercise = .none
     @State private var exercises: [Exercise] = Exercise.allCases
     @State private var upperBodyExercises: [Exercise] = Exercise.upperBodyExercises
@@ -275,10 +277,10 @@ struct ExercisePickerView: View {
     @State private var favorites: [Exercise] = []
     var preference: UserPreference = UserPreference()
     
-    let callback: (Exercise) -> Void
+    let callback: ((Exercise) -> Void)?
     
     var body: some View {
-        NavigationView {
+        VStack {
             List {
                 // Favorite Section
                 FavoriteExercisesView()
@@ -287,12 +289,14 @@ struct ExercisePickerView: View {
                 CoreExercisesView()
                 CompoundExercisesView()
             }
-            .listStyle(GroupedListStyle())
-            .navigationTitle("Choose Exercise")
+            .listStyle(DefaultListStyle())
+            .scrollContentBackground(.hidden)
+            .navigationTitle(title)
             .onAppear(perform: {
                 favorites = preference.retrieveFavoriteExercises()
             })
         }
+        .background(Color.themeStyle.theme.background)
     }
     
     @ViewBuilder
@@ -305,7 +309,7 @@ struct ExercisePickerView: View {
                         .foregroundColor(selectedExercise == exercise ? .themeStyle.theme.accent : .themeStyle.theme.primary)
                         .onTapGesture {
                             selectedExercise = exercise
-                            callback(exercise)
+                            callback?(exercise)
                         }
                 }
             }
@@ -324,7 +328,7 @@ struct ExercisePickerView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .onTapGesture {
                             selectedExercise = exercise
-                            callback(exercise)
+                            callback?(exercise)
                         }
                     Spacer()
                     Image(systemName: favorites.contains(exercise) ? "heart.fill" : "heart")
@@ -349,7 +353,7 @@ struct ExercisePickerView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .onTapGesture {
                             selectedExercise = exercise
-                            callback(exercise)
+                            callback?(exercise)
                         }
                     Spacer()
                     Image(systemName: favorites.contains(exercise) ? "heart.fill" : "heart")
@@ -374,7 +378,7 @@ struct ExercisePickerView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .onTapGesture {
                             selectedExercise = exercise
-                            callback(exercise)
+                            callback?(exercise)
                         }
                     Spacer()
                     Image(systemName: favorites.contains(exercise) ? "heart.fill" : "heart")
@@ -399,7 +403,7 @@ struct ExercisePickerView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .onTapGesture {
                             selectedExercise = exercise
-                            callback(exercise)
+                            callback?(exercise)
                         }
                     Spacer()
                     Image(systemName: favorites.contains(exercise) ? "heart.fill" : "heart")

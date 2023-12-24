@@ -23,7 +23,7 @@ class AppTabBarViewModel: ObservableObject {
 struct AppTabBarView: View {
     @Environment(\.modelContext) var context
     @StateObject private var viewModel: AppTabBarViewModel
-    @State private var tabSelection: TabBarItemType = .home
+    @State private var tabSelection: TabBarItemType = .plan
     
     private var logger: CustomLogger
     
@@ -37,13 +37,13 @@ struct AppTabBarView: View {
             /// Create pivot main view
             let mainViewModel = PivotMainViewModel()
             PivotMainView(viewModel: mainViewModel).tabItem {
-                Label("Home", systemImage: TabBarItemType.home.iconName)
+                Label("Plan", systemImage: TabBarItemType.plan.iconName)
             }
             
             /// Create PreferenceViews
             let preferenceViewModel = PreferenceViewModel()
             PreferenceView(viewModel: preferenceViewModel).tabItem {
-                Label("Preferences", systemImage: TabBarItemType.preference.iconName)
+                Label("Settings", systemImage: TabBarItemType.more.iconName)
             }
         }
     }

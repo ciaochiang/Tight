@@ -15,25 +15,23 @@ struct PlanManagementView: View {
     @State private var planToEdit: Plan?
     
     var body: some View {
-        NavigationView {
-            VStack(alignment: .leading, spacing: 8) {
-                PlansListView()
-            }
-            .background(Color.themeStyle.theme.background)
-            .veriticalSpacing(.top)
-            .navigationTitle("Plans")
-            .sheet(isPresented: $isAdding, content: {
-                AddPlanView()
-                    .presentationDetents([.height(180)])
-                    .presentationCornerRadius(30)
+        VStack(alignment: .leading, spacing: 8) {
+            PlansListView()
+        }
+        .background(Color.themeStyle.theme.background)
+        .veriticalSpacing(.top)
+        .navigationTitle("Plans")
+        .sheet(isPresented: $isAdding, content: {
+            AddPlanView()
+                .presentationDetents([.height(200)])
+                .presentationCornerRadius(30)
 
-            })
-            .toolbar {
-                Button(action: {
-                    isAdding.toggle()
-                }) {
-                    Label("Add", systemImage: "plus")
-                }
+        })
+        .toolbar {
+            Button(action: {
+                isAdding.toggle()
+            }) {
+                Label("Add", systemImage: "plus")
             }
         }
     }
@@ -100,6 +98,10 @@ struct PlanCard: View {
             
             PlanView()
                 .frame(maxHeight: .infinity)
+            Spacer()
+            PlanDetailsView()
+                .padding(.trailing, 16)
+                .horizontalSpacing(.trailing)
         }
         .horizontalSpacing(.leading)
         .background(Color.themeStyle.theme.background)
@@ -110,7 +112,6 @@ struct PlanCard: View {
     func PlanView() -> some View {
         VStack(alignment: .leading, spacing: 8) {
             PlanNameView()
-            PlanDetailsView().horizontalSpacing(.leading)
         }
         .horizontalSpacing(.leading)
         .padding()
@@ -126,9 +127,9 @@ struct PlanCard: View {
     @ViewBuilder
     func PlanDetailsView() -> some View {
         HStack(alignment: .center, spacing: 16) {
-//            Label("\(Int(plan.exercises.count))", systemImage: "checklist.unchecked")
-//                .font(.caption)
-//                .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+            Label("\(Int(plan.exercises.count))", systemImage: "list.dash")
+                .font(.caption)
+                .foregroundColor(Color.themeStyle.theme.primaryTextColor)
         }
     }
 }

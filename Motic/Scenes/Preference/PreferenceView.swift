@@ -15,8 +15,6 @@ class PreferenceViewModel: ObservableObject {
 
 struct PreferenceView: View {
     @StateObject var viewModel: PreferenceViewModel
-    @State var isExercisePreferenceViewPresented: Bool = false
-    @State var isPlanManagementViewPresented: Bool = false
     
     init(viewModel: PreferenceViewModel) {
         _viewModel = .init(wrappedValue: viewModel)
@@ -26,45 +24,32 @@ struct PreferenceView: View {
         NavigationView {
             VStack {
                 List {
-                    Section("Exercise") {
+                    Section("Exercise Preferences") {
                         ExerciseItemView()
                         PlanManagementItem()
                     }
                 }
-                .sheet(isPresented: $isExercisePreferenceViewPresented) {
-                    ExercisePickerView { selectedExercise in
-                        
-                    }
-                    .presentationDetents([.large])
-                }
-                .sheet(isPresented: $isPlanManagementViewPresented) {
-                    PlanManagementView()
-                        .presentationDetents([.large])
-                }
-                .listStyle(PlainListStyle())
+                .listStyle(DefaultListStyle())
+                .scrollContentBackground(.hidden)
             }
-            .background(Color.themeStyle.theme.background)
             .veriticalSpacing(.top)
-            .navigationTitle("Preferences")
+            .navigationTitle("Settings")
+            .background(Color.themeStyle.theme.background)
         }
     }
     
     @ViewBuilder
     func ExerciseItemView() -> some View {
-        Text("Predefined Exercises")
-            .horizontalSpacing(.leading)
-            .onTapGesture {
-                isExercisePreferenceViewPresented.toggle()
-            }
+        HStack {
+            NavigationLink("Favorites", destination: ExercisePickerView(title: "Favorites", callback: nil))
+        }
     }
     
     @ViewBuilder
     func PlanManagementItem() -> some View {
-        Text("Plans")
-            .horizontalSpacing(.leading)
-            .onTapGesture {
-                isPlanManagementViewPresented.toggle()
-            }
+        HStack {
+            NavigationLink("Plans", destination: PlanManagementView())
+        }
     }
 }
 
