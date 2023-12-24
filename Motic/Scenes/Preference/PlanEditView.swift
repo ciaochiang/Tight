@@ -11,7 +11,13 @@ import SwiftData
 struct PlanEditView: View {
     @Bindable var plan: Plan
     @State private var isAdding: Bool = false
+    @State private var exercises: [DesignedExercise]
     @State private var exerciseToEdit: DesignedExercise?
+    
+    init(plan: Plan) {
+        self.plan = plan
+        _exercises = .init(wrappedValue: plan.exercises.sorted { $0.order < $1.order })
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -46,7 +52,7 @@ struct PlanEditView: View {
     @ViewBuilder
     func PlannedExercisesView() -> some View {
         List {
-            ForEach(plan.exercises.sorted(by: { $0.order < $1.order }), id: \.self) { exercise in
+            ForEach(exercises, id: \.self) { exercise in
                 PlannedExerciseCard(exercise: exercise)
                     .veriticalSpacing(.center)
                     .listRowSeparator(.hidden)
@@ -58,6 +64,7 @@ struct PlanEditView: View {
                                 if let index = plan.exercises.firstIndex(where: { $0 == exercise }) {
                                     plan.exercises.remove(at: index)
                                 }
+                                exercises = plan.exercises.sorted { $0.order < $1.order }
                             }
                         }) {
                             Label("Delete", systemImage: "trash")
@@ -69,11 +76,26 @@ struct PlanEditView: View {
                         exerciseToEdit = exercise
                     }
             }
+            .onMove(perform: { indexSet, newOffset in
+                exercises.move(fromOffsets: indexSet, toOffset: newOffset)
+                
+                /// Update all order number
+                updateOrderNumbers()
+            })
         }
         .padding(.top, 16)
         .listStyle(PlainListStyle())
         .background(Color.themeStyle.theme.background)
 
+    }
+    
+    func updateOrderNumbers() {
+        for i in 0..<exercises.count {
+            let exercise = exercises[i]
+            exercise.order = i
+        }
+        
+        plan.exercises = exercises
     }
 }
 
