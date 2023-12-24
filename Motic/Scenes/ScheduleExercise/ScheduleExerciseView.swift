@@ -150,7 +150,7 @@ struct ScheduleExerciseView: View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Exercise")
                 .font(.caption)
-                .foregroundStyle(.gray)
+                .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
             
             Button(action: {
                 /// Display Exercise Picker View
@@ -159,7 +159,7 @@ struct ScheduleExerciseView: View {
                 Text(selectedExercise.name)
                     .font(.subheadline)
                     .fontWeight(.semibold)
-                    .foregroundStyle(.black)
+                    .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
             }
         }
     }
@@ -169,13 +169,13 @@ struct ScheduleExerciseView: View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Repetitions")
                 .font(.caption)
-                .foregroundStyle(.gray)
+                .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
             
             HStack(alignment: .center, spacing: 8) {
                 Text(String(format: "%.0f", repetitions))
                     .font(.subheadline)
                     .fontWeight(.semibold)
-                    .foregroundStyle(.black)
+                    .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
                 
                 Slider(value: $repetitions, in: 1...20, step: 1.0)
                     .accentColor(Color.themeStyle.theme.accent)
@@ -188,13 +188,13 @@ struct ScheduleExerciseView: View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Sets")
                 .font(.caption)
-                .foregroundStyle(.gray)
+                .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
             
             HStack(alignment: .center, spacing: 8) {
                 Text(String(format: "%.0f", sets))
                     .font(.subheadline)
                     .fontWeight(.semibold)
-                    .foregroundStyle(.black)
+                    .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
                 
                 Slider(value: $sets, in: 1...6, step: 1.0)
                     .accentColor(Color.themeStyle.theme.accent)
@@ -207,13 +207,13 @@ struct ScheduleExerciseView: View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Rest Intervals")
                 .font(.caption)
-                .foregroundStyle(.gray)
+                .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
             
             HStack(alignment: .center, spacing: 8) {
                 Text(formatIntervalToMinutesSeconds(interval: restIntervals))
                     .font(.subheadline)
                     .fontWeight(.semibold)
-                    .foregroundStyle(.black)
+                    .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
                 
                 Slider(value: $restIntervals, in: 0...180, step: 10.0)
                     .accentColor(Color.themeStyle.theme.accent)

@@ -31,6 +31,7 @@ struct PivotMainView: View {
             ///  Scheduled exercises
             ScheduleExercisesView()
         }
+        .background(Color.themeStyle.theme.background)
         .veriticalSpacing(.top)
         .overlay(alignment: .bottomTrailing, content: {
             Button(action: {
@@ -195,7 +196,7 @@ struct PivotMainView: View {
             .frame(height: 90)
         }
         .padding(.horizontal, 16)
-        .background(.white)
+        .background(Color.themeStyle.theme.background)
         .horizontalSpacing(.leading)
         .onChange(of: currentWeekIndex, initial: false) { oldValue, newValue in
             /// Creating when it reaches first/last page
@@ -239,13 +240,10 @@ struct PivotMainView: View {
                 /// Update all order number
                 viewModel.updateOrderNumbers()
             })
-            
-            Spacer(minLength: 48)
-                .listRowSeparator(.hidden)
         }
         .padding(.top, 16)
         .listStyle(PlainListStyle())
-        .background(Color.white)
+        .background(Color.themeStyle.theme.background)
     }
     
     /// Load scheduled exercises from Swift Data
@@ -279,6 +277,7 @@ struct ScheduledExerciseCard: View {
                 .frame(maxHeight: .infinity)
         }
         .horizontalSpacing(.leading)
+        .background(Color.themeStyle.theme.background)
     }
     
     @ViewBuilder
@@ -297,15 +296,15 @@ struct ScheduledExerciseCard: View {
         HStack(alignment: .center, spacing: 16) {
             Label("\(Int(exercise.repetitions))", systemImage: "repeat")
                 .font(.caption)
-                .foregroundColor(.black)
+                .foregroundColor(Color.themeStyle.theme.primaryTextColor)
             
             Label("\(Int(exercise.sets))", systemImage: "square.stack.3d.down.right")
                 .font(.caption)
-                .foregroundColor(.black)
+                .foregroundColor(Color.themeStyle.theme.primaryTextColor)
             
             Label(exercise.restIntevals.formatIntervalToMinutesSeconds, systemImage: "clock")
                 .font(.caption)
-                .foregroundColor(.black)
+                .foregroundColor(Color.themeStyle.theme.primaryTextColor)
         }
     }
     
@@ -313,7 +312,7 @@ struct ScheduledExerciseCard: View {
     func ExerciseNameView() -> some View {
         Text(exercise.exericse.name)
             .fontWeight(.semibold)
-            .foregroundStyle(.black)
+            .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
     }
 }
 
