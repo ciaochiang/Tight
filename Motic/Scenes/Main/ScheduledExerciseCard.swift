@@ -14,8 +14,8 @@ struct ScheduledExerciseCard: View {
         /// Content
         HStack(spacing: 8) {
             Rectangle()
-                .foregroundStyle(Color.themeStyle.theme.accent)
-                .frame(width: 1)
+                .foregroundStyle(exercise.isCompleted ? Color.themeStyle.theme.green : Color.themeStyle.theme.secondaryTextColor)
+                .frame(width: 2)
             
             ExerciseView()
                 .frame(maxHeight: .infinity)
@@ -56,8 +56,8 @@ struct ScheduledExerciseCard: View {
     func ExerciseNameView() -> some View {
         Text(exercise.exericse.name)
             .fontWeight(.semibold)
-            .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
-            .strikethrough(exercise.isCompleted)
+            .foregroundStyle(exercise.isCompleted ? Color.themeStyle.theme.secondaryTextColor : Color.themeStyle.theme.primaryTextColor)
+            .strikethrough(exercise.isCompleted, color: Color.themeStyle.theme.secondaryTextColor)
     }
 }
 

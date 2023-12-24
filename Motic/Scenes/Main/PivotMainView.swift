@@ -238,7 +238,7 @@ struct PivotMainView: View {
                             Label("Completed", systemImage: "checkmark")
                                 .symbolVariant(/*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
                         }
-                        .tint(Color.themeStyle.theme.green)
+                        .tint(exercise.isCompleted ? Color.themeStyle.theme.green : Color.themeStyle.theme.secondaryTextColor)
                     }
                     .onTapGesture {
                         exerciseToEdit = exercise
