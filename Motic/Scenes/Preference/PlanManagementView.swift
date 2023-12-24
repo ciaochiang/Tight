@@ -70,9 +70,9 @@ struct PlanManagementView: View {
                         }
                         .tint(Color.themeStyle.theme.accent)
                     }
-                    .onTapGesture {
-                        planToEdit = plan
-                    }
+                    .background(
+                        NavigationLink("", destination: PlanEditView(plan: plan)).opacity(0)
+                    )
             }
         }
         .padding(.top, 16)
@@ -150,7 +150,7 @@ class Plan {
     }
 }
 
-struct DesignedExercise: Codable {
+struct DesignedExercise: Codable, Hashable {
     var exercise: Exercise
     var repetitions: Double
     var sets: Double

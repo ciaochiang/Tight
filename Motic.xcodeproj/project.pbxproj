@@ -46,6 +46,7 @@
 		E521001F2AB74D13000CF3AD /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E521001E2AB74D13000CF3AD /* AccountManager.swift */; };
 		E5215E342B384B530011E4FF /* ScheduledExerciseCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5215E332B384B530011E4FF /* ScheduledExerciseCard.swift */; };
 		E5215E362B3859F90011E4FF /* PlanManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5215E352B3859F90011E4FF /* PlanManagementView.swift */; };
+		E5215E382B38D7130011E4FF /* PlanEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5215E372B38D7130011E4FF /* PlanEditView.swift */; };
 		E5349D232AE169D2003B4808 /* SportProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5349D222AE169D2003B4808 /* SportProvider.swift */; };
 		E5349D272AE56430003B4808 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5349D262AE56430003B4808 /* MainViewModel.swift */; };
 		E53CA8A62ADA550A0009D572 /* WearableDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53CA8A52ADA550A0009D572 /* WearableDeviceManager.swift */; };
@@ -199,6 +200,7 @@
 		E521001E2AB74D13000CF3AD /* AccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
 		E5215E332B384B530011E4FF /* ScheduledExerciseCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledExerciseCard.swift; sourceTree = "<group>"; };
 		E5215E352B3859F90011E4FF /* PlanManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanManagementView.swift; sourceTree = "<group>"; };
+		E5215E372B38D7130011E4FF /* PlanEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanEditView.swift; sourceTree = "<group>"; };
 		E5349D222AE169D2003B4808 /* SportProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportProvider.swift; sourceTree = "<group>"; };
 		E5349D262AE56430003B4808 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		E53CA8A52ADA550A0009D572 /* WearableDeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WearableDeviceManager.swift; sourceTree = "<group>"; };
@@ -677,6 +679,7 @@
 				E5C95E5D2B31771600518A0A /* ExercisePreferenceViewModel.swift */,
 				E559BBE92B329612003D1FEC /* PreferenceView.swift */,
 				E5215E352B3859F90011E4FF /* PlanManagementView.swift */,
+				E5215E372B38D7130011E4FF /* PlanEditView.swift */,
 			);
 			path = Preference;
 			sourceTree = "<group>";
@@ -1012,6 +1015,7 @@
 				E58D15BB2ACAC7F3000D1918 /* ActivitySessionManager .swift in Sources */,
 				E5B0DF782B00828300EC9871 /* HeartRate.swift in Sources */,
 				E5E387312AD542F0008A7353 /* SportSelectorViewModel.swift in Sources */,
+				E5215E382B38D7130011E4FF /* PlanEditView.swift in Sources */,
 				E5E3872F2AD542E3008A7353 /* SportSelectorView.swift in Sources */,
 				E59EB84A2AB5934E0057F630 /* OnboardingViewModel.swift in Sources */,
 				E5AB33F92AC5A946004B8973 /* RecordViewModel.swift in Sources */,
