@@ -114,7 +114,12 @@ class PivotMainViewModel: ObservableObject {
     }
     
     func deleteExercise(exercise: ArrangedExercise) {
+        if let index = arrangedExercises.firstIndex(where: { $0 == exercise }) {
+            arrangedExercises.remove(at: index)
+        }
+        
         context.delete(exercise)
+        updateOrderNumbers()
         reloadArrangedExercises()
     }
     

@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct PlanEditView: View {
+struct EditPlanPresetView: View {
     @Bindable var plan: Plan
     @State private var isAdding: Bool = false
     @State private var exercises: [ArrangedExercise]
@@ -28,16 +28,16 @@ struct PlanEditView: View {
         .navigationTitle(plan.name)
         .sheet(isPresented: $isAdding, content: {
             CreateArrangedExerciseView(plan: plan, incrementalOrderNumber: plan.arrangedExercises.count, completion: { _ in
-                exercises = plan.arrangedExercises
+                exercises = plan.arrangedExercises.sorted { $0.order < $1.order }
             })
                 .presentationDetents([.height(400)])
                 .presentationCornerRadius(30)
         })
-//        .sheet(item: $exerciseToEdit) { $exercise in
-//            EditArrangedExerciseView(arrangedExercise: $exercise)
-//                .presentationDetents([.height(300)])
-//                .presentationCornerRadius(30)
-//        }
+        .sheet(item: $exerciseToEdit) { exercise in
+            EditArrangedExerciseView(arrangedExercise: exercise)
+                .presentationDetents([.height(300)])
+                .presentationCornerRadius(30)
+        }
         .toolbar {
             Button(action: {
                 isAdding.toggle()
@@ -59,9 +59,15 @@ struct PlanEditView: View {
                         Button(action: {
                             /// Delete items
                             withAnimation {
+                                if let index = exercises.firstIndex(where: { $0 == exercise }) {
+                                    exercises.remove(at: index)
+                                }
+                                
                                 if let index = plan.arrangedExercises.firstIndex(where: { $0 == exercise }) {
                                     plan.arrangedExercises.remove(at: index)
                                 }
+                                
+                                updateOrderNumbers()
                                 exercises = plan.arrangedExercises.sorted { $0.order < $1.order }
                             }
                         }) {
@@ -71,7 +77,7 @@ struct PlanEditView: View {
                         .tint(Color.themeStyle.theme.accent)
                     }
                     .onTapGesture {
-                        exerciseToEdit = exercise
+                        self.exerciseToEdit = exercise
                     }
             }
             .onMove(perform: { indexSet, newOffset in
@@ -84,7 +90,6 @@ struct PlanEditView: View {
         .padding(.top, 16)
         .listStyle(PlainListStyle())
         .background(Color.themeStyle.theme.background)
-
     }
     
     func updateOrderNumbers() {

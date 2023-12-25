@@ -58,11 +58,11 @@ struct PivotMainView: View {
             .presentationDetents([.height(400)])
             .presentationCornerRadius(30)
         })
-//        .sheet(item: $exerciseToEdit) { $exercise in
-//            EditArrangedExerciseView(arrangedExercise: $exercise)
-//                .presentationDetents([.height(300)])
-//                .presentationCornerRadius(30)
-//        }
+        .sheet(item: $exerciseToEdit) { exercise in
+            EditArrangedExerciseView(arrangedExercise: exercise)
+                .presentationDetents([.height(300)])
+                .presentationCornerRadius(30)
+        }
         .onChange(of: viewModel.selectedDate) { oldValue, newValue in
             /// Reload current plan when date changed
             viewModel.selectedDate = newValue

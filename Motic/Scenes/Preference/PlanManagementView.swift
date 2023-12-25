@@ -71,7 +71,7 @@ struct PlanManagementView: View {
                         .tint(Color.themeStyle.theme.accent)
                     }
                     .background(
-                        NavigationLink("", destination: PlanEditView(plan: plan)).opacity(0)
+                        NavigationLink("", destination: EditPlanPresetView(plan: plan)).opacity(0)
                     )
             }
         }
