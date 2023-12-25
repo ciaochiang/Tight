@@ -20,16 +20,16 @@ class OnboardingViewModel: ObservableObject {
   
     enum OnboardingState: Int, CaseIterable, Hashable {
         case welcome
-        case requestHealthKitPermission
+//        case requestHealthKitPermission
         case requestNotificationPermission
-        case requestLocationPermission
+//        case requestLocationPermission
         
         init(stateRawValue: Int) {
             switch stateRawValue {
             case 0: self = .welcome
-            case 1: self = .requestHealthKitPermission
-            case 2: self = .requestNotificationPermission
-            case 3: self = .requestLocationPermission
+//            case 1: self = .requestHealthKitPermission
+            case 1: self = .requestNotificationPermission
+//            case 3: self = .requestLocationPermission
             default: self = .welcome
             }
         }
@@ -45,9 +45,9 @@ extension OnboardingViewModel {
   func handleButtonAction(with state: OnboardingState) {
       switch state {
       case .welcome: nextState()
-      case .requestHealthKitPermission: requestHealthKitPermission()
+//      case .requestHealthKitPermission: requestHealthKitPermission()
       case .requestNotificationPermission: requestNotificationPermission()
-      case .requestLocationPermission: requestLocationPermission()
+//      case .requestLocationPermission: requestLocationPermission()
       }
   }
   
@@ -82,7 +82,7 @@ extension OnboardingViewModel {
   }
   
   private func nextState() {
-      if state == .requestLocationPermission {
+      if state == .requestNotificationPermission {
           // go to main view
           isOnboardingCompleted = true
           return

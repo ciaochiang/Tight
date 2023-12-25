@@ -29,9 +29,9 @@ struct OnboardingView: View {
         VStack {
             TabView(selection: $viewModel.currentIndex) {
                 OnboadingWelcomView().tag(0)
-                OnboardingHealthKitView().tag(1)
-                OnboardingNotificationView().tag(2)
-                OnboardingLocationView().tag(3)
+//                OnboardingHealthKitView().tag(1)
+                OnboardingNotificationView().tag(1)
+//                OnboardingLocationView().tag(3)
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
             
@@ -94,7 +94,7 @@ extension OnboardingView {
     
     private var indicators: some View {
         HStack(spacing: 15) {
-            ForEach(0..<4) { index in
+            ForEach(0..<2) { index in
                 Capsule().fill(Color.black)
                     .frame(width:  viewModel.currentIndex == index ? 20 : 7, height: 7)
             }
@@ -120,7 +120,7 @@ struct OnboadingWelcomView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .foregroundColor(Color.themeStyle.theme.accent)
             
-            Text("your best fitness assitant")
+            Text("your best fitness assistant")
                 .font(.body)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .foregroundColor(Color.themeStyle.theme.black)
@@ -168,7 +168,7 @@ struct OnboardingNotificationView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .foregroundColor(Color.themeStyle.theme.accent)
             
-            Text("Allow notifications to stay updated on your workout progress, receive motivational reminders, get informed about new fitness challenges, and never miss a training session.")
+            Text("Allow notifications to stay updated on your workout progress, receive motivational reminders, and never miss a training session.")
                 .font(.body)
                 .foregroundColor(.themeStyle.theme.secondaryTextColor)
                 .frame(maxWidth: 360, alignment: .leading)

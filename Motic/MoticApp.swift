@@ -42,7 +42,6 @@ struct MoticApp: App {
             if isOnboardingCompleted {
                 // Display to AppTabBar view
                 AppTabBarView(logger: logger, experimentsProvider: experiementsProvider)
-                    
             } else {
                 let viewModel = OnboardingViewModel(isOnboardingCompleted: $isOnboardingCompleted)
                 OnboardingView(viewModel: viewModel)
