@@ -11,9 +11,6 @@ import SwiftData
 struct PivotMainView: View {
     @Environment(\.modelContext) var context
     @StateObject var viewModel: PivotMainViewModel
-    @State private var weekSlider: [[Date.Weekday]] = []
-    @State private var currentWeekIndex: Int = 1
-    @State private var createWeek: Bool = false
     @State private var scheduleExercise: Bool = false
     @State private var exerciseToEdit: ScheduledExercise?
         
@@ -48,30 +45,19 @@ struct PivotMainView: View {
             .offset(y: -48)
         })
         .onAppear(perform: {
-
-            if weekSlider.isEmpty {
-                let currentWeek = Date().fetchWeek()
-                
-                if let firstDate = currentWeek.first?.date {
-                    weekSlider.append(firstDate.createPreviousWeek())
-                }
-                
-                weekSlider.append(currentWeek)
-                
-                if let lastDate = currentWeek.last?.date {
-                    weekSlider.append(lastDate.createNextWeek())
-                }
+            if viewModel.weeks.isEmpty {
+                viewModel.loadWeeks()
             }
             
             /// Load Scheduled Exercises
-            loadScheduledExercises(selectedDate: viewModel.selectedDate)
+            viewModel.loadScheduledExercises(selectedDate: viewModel.selectedDate)
         })
         .sheet(isPresented: $scheduleExercise, content: {
             ScheduleExerciseView(selectedDate: viewModel.selectedDate,
                                  incrementalOrderNumber: viewModel.incrementOrderNumber(),
                                  completion: {
                 /// Refetch schedule  exercises
-                loadScheduledExercises(selectedDate: viewModel.selectedDate)
+                viewModel.loadScheduledExercises(selectedDate: viewModel.selectedDate)
             }, callback: nil)
                 .presentationDetents([.height(400)])
                 .presentationCornerRadius(30)
@@ -85,7 +71,45 @@ struct PivotMainView: View {
         .onChange(of: viewModel.selectedDate) { oldValue, newValue in
             /// Fetch scheduled exercise when date changed
             viewModel.selectedDate = newValue
-            loadScheduledExercises(selectedDate: viewModel.selectedDate)
+            viewModel.loadScheduledExercises(selectedDate: viewModel.selectedDate)
+        }
+    }
+    
+    @ViewBuilder
+    func HeaderView() -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 5) {
+                Text(viewModel.selectedDate.format("MMMM")).foregroundStyle(Color.themeStyle.theme.accent)
+                Text(viewModel.selectedDate.format("YYYY")).foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
+            }
+            .font(.title.bold())
+            
+            Text(viewModel.selectedDate.formatted(date: .complete, time: .omitted))
+                .font(.callout)
+                .fontWeight(.semibold)
+                .textScale(.secondary)
+                .foregroundStyle(.gray)
+            
+            /// Week slider
+            TabView(selection: $viewModel.currentWeekIndex) {
+                ForEach(viewModel.weeks.indices, id: \.self) { index in
+                    let week = viewModel.weeks[index]
+                    WeekView(week).tag(index)
+                        .padding(.horizontal, 16)
+                }
+            }
+            .padding(.horizontal, -16)
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            .frame(height: 90)
+        }
+        .padding(.horizontal, 16)
+        .background(Color.themeStyle.theme.background)
+        .horizontalSpacing(.leading)
+        .onChange(of: viewModel.currentWeekIndex, initial: false) { oldValue, newValue in
+            /// Creating when it reaches first/last page
+            if newValue == 0 || newValue == (viewModel.weeks.count - 1) {
+                viewModel.createWeek = true
+            }
         }
     }
     
@@ -141,67 +165,11 @@ struct PivotMainView: View {
                 Color.clear.preference(key: OffsetKey.self, value: minX)
                     .onPreferenceChange(OffsetKey.self) { value in
                         /// When the offset reachs 15 and if the createweek is toggled then simply generating next set of week
-                        if value.rounded() == 16 && createWeek {
-                            paginateWeek()
-                            createWeek = false
+                        if value.rounded() == 16 && viewModel.createWeek {
+                            viewModel.paginateWeek()
+                            viewModel.createWeek = false
                         }
                     }
-            }
-        }
-    }
-    
-    func paginateWeek() {
-        if weekSlider.indices.contains(currentWeekIndex) {
-            if let firstDate = weekSlider[currentWeekIndex].first?.date, currentWeekIndex == 0 {
-                /// Inserting new week at 0th indx and removing last array item
-                weekSlider.insert(firstDate.createPreviousWeek(), at: 0)
-                weekSlider.removeLast()
-                currentWeekIndex = 1
-            }
-            
-            if let lastDate = weekSlider[currentWeekIndex].last?.date, currentWeekIndex == (weekSlider.count - 1) {
-                /// Inserting new week at last indx and removing last array item
-                weekSlider.append(lastDate.createNextWeek())
-                weekSlider.removeFirst()
-                currentWeekIndex = weekSlider.count - 2
-            }
-        }
-    }
-    
-    @ViewBuilder
-    func HeaderView() -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack(spacing: 5) {
-                Text(viewModel.selectedDate.format("MMMM")).foregroundStyle(Color.themeStyle.theme.accent)
-                Text(viewModel.selectedDate.format("YYYY")).foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
-            }
-            .font(.title.bold())
-            
-            Text(viewModel.selectedDate.formatted(date: .complete, time: .omitted))
-                .font(.callout)
-                .fontWeight(.semibold)
-                .textScale(.secondary)
-                .foregroundStyle(.gray)
-            
-            /// Week slider
-            TabView(selection: $currentWeekIndex) {
-                ForEach(weekSlider.indices, id: \.self) { index in
-                    let week = weekSlider[index]
-                    WeekView(week).tag(index)
-                        .padding(.horizontal, 16)
-                }
-            }
-            .padding(.horizontal, -16)
-            .tabViewStyle(.page(indexDisplayMode: .never))
-            .frame(height: 90)
-        }
-        .padding(.horizontal, 16)
-        .background(Color.themeStyle.theme.background)
-        .horizontalSpacing(.leading)
-        .onChange(of: currentWeekIndex, initial: false) { oldValue, newValue in
-            /// Creating when it reaches first/last page
-            if newValue == 0 || newValue == (weekSlider.count - 1) {
-                createWeek = true
             }
         }
     }
@@ -219,10 +187,10 @@ struct PivotMainView: View {
                         Button(action: {
                             /// Delete items
                             withAnimation {
-                                context.delete(exercise)
+                                viewModel.deleteExercise(exercise: exercise)
                                 
                                 /// Reload
-                                loadScheduledExercises(selectedDate: viewModel.selectedDate)
+                                viewModel.loadScheduledExercises(selectedDate: viewModel.selectedDate)
                             }
                         }) {
                             Label("Delete", systemImage: "trash")
@@ -255,27 +223,12 @@ struct PivotMainView: View {
         .listStyle(PlainListStyle())
         .background(Color.themeStyle.theme.background)
     }
-    
-    /// Load scheduled exercises from Swift Data
-    private func loadScheduledExercises(selectedDate: Date) {
-        let calendar = Calendar.current
-        let startDate = calendar.startOfDay(for: selectedDate)
-        guard let endDate = calendar.date(byAdding: .day, value: 1, to: startDate) else { return }
-        
-        let fetchDescriptor = FetchDescriptor<ScheduledExercise>(predicate: #Predicate<ScheduledExercise> { $0.scheduledDate >= startDate && $0.scheduledDate <= endDate }, sortBy: [SortDescriptor(\.order)])
-        
-        do {
-            viewModel.scheduledExercises = try context.fetch(fetchDescriptor)
-        }
-        catch {
-            print(error.localizedDescription)
-        }
-    }
 }
 
 #Preview("Main Screen") {
-    let viewModel = PivotMainViewModel()
     let previewContainer = PreviewContainer([ScheduledExercise.self])
-    return PivotMainView(viewModel: viewModel).modelContainer(previewContainer.container)
+    let context = ModelContext(previewContainer.container)
+    let viewModel = PivotMainViewModel(context: context)
+    return PivotMainView(viewModel: viewModel).modelContext(context)
     
 }

@@ -480,6 +480,14 @@
 			path = Scenes;
 			sourceTree = "<group>";
 		};
+		E5215E392B3962880011E4FF /* Deprecated */ = {
+			isa = PBXGroup;
+			children = (
+				E5E387342AD6E016008A7353 /* CoreDataManager.swift */,
+			);
+			path = Deprecated;
+			sourceTree = "<group>";
+		};
 		E5349D212AE169B9003B4808 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -536,6 +544,7 @@
 		E56A55C72AB2BC7100A35BF3 /* Motic */ = {
 			isa = PBXGroup;
 			children = (
+				E5215E392B3962880011E4FF /* Deprecated */,
 				E5C95E572B316B4400518A0A /* Sport */,
 				E5E387362AD6E572008A7353 /* Entities */,
 				E56A55F22AB2C03000A35BF3 /* Motic.entitlements */,
@@ -687,7 +696,6 @@
 		E5E387332AD6E009008A7353 /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				E5E387342AD6E016008A7353 /* CoreDataManager.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";

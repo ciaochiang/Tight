@@ -32,6 +32,5 @@ class ExperiementsProvider: ObservableObject {
     
     func retrieveFeatureFlags() {
         isRecordingEnabled = gb.isOn(feature: "is_recording_enabled")
-        print(gb.isOn(feature: "is_recording_enabled"))
     }
 }

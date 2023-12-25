@@ -78,3 +78,22 @@ class Mocks {
         return locations
     }
 }
+
+extension Mocks {
+    static var coreDataManager: CoreDataManager {
+        let dependency = CoreDataManagerDependencyImp(logger: CustomLogger())
+        return CoreDataManager(dependency: dependency)
+    }
+    
+    static var wearableDeviceManager: WearableDeviceManager {
+        return WearableDeviceManager(logger: CustomLogger())
+    }
+    
+    static var activitySessionManager: ActivitySessionManager {
+        return ActivitySessionManager.shared
+    }
+    
+    static var experimentProvider: ExperiementsProvider {
+        return ExperiementsProvider()
+    }
+}

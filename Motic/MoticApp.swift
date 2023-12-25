@@ -24,7 +24,6 @@ struct MoticApp: App {
     @StateObject var accountManager: AccountManager = AccountManager.shared
     @AppStorage("IS_ONBOARDING_COMPLETED") var isOnboardingCompleted: Bool = false
     private var logger: CustomLogger
-    private var wearableDeviceManager: WearableDeviceManager
     private var experiementsProvider: ExperiementsProvider
     
     /// Swift data
@@ -36,21 +35,14 @@ struct MoticApp: App {
     
     init() {
         self.logger = CustomLogger()
-        
-        let wearableDeviceManager = WearableDeviceManager(logger: logger)
-        self.wearableDeviceManager = wearableDeviceManager
         self.experiementsProvider = ExperiementsProvider()
     }
 
     var body: some Scene {
         WindowGroup {
             if isOnboardingCompleted {
-                let coreDataManagerDependency = CoreDataManagerDependencyImp(logger: logger)
-                let coreDataManager = CoreDataManager(dependency: coreDataManagerDependency)
-                let viewModel = AppTabBarViewModel(logger: logger,
-                                                   experimentsProvider: experiementsProvider)
-                // Navigate to AppTabBar view
-                AppTabBarView(viewModel: viewModel, logger: logger)
+                // Display to AppTabBar view
+                AppTabBarView(logger: logger, experimentsProvider: experiementsProvider)
                     
             } else {
                 let viewModel = OnboardingViewModel(isOnboardingCompleted: $isOnboardingCompleted)
@@ -69,21 +61,3 @@ struct MoticApp: App {
     }
 }
 
-extension Mocks {
-    static var coreDataManager: CoreDataManager {
-        let dependency = CoreDataManagerDependencyImp(logger: CustomLogger())
-        return CoreDataManager(dependency: dependency)
-    }
-    
-    static var wearableDeviceManager: WearableDeviceManager {
-        return WearableDeviceManager(logger: CustomLogger())
-    }
-    
-    static var activitySessionManager: ActivitySessionManager {
-        return ActivitySessionManager.shared
-    }
-    
-    static var experimentProvider: ExperiementsProvider {
-        return ExperiementsProvider()
-    }
-}

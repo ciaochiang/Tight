@@ -9,17 +9,7 @@ import SwiftUI
 
 import SwiftData
 
-class PreferenceViewModel: ObservableObject {
-    @Published var sections: [String] = ["Exercises", "Health Kit"]
-}
-
 struct PreferenceView: View {
-    @StateObject var viewModel: PreferenceViewModel
-    
-    init(viewModel: PreferenceViewModel) {
-        _viewModel = .init(wrappedValue: viewModel)
-    }
-    
     var body: some View {
         NavigationView {
             VStack {
@@ -54,9 +44,8 @@ struct PreferenceView: View {
 }
 
 #Preview {
-    let viewModel = PreferenceViewModel()
     let previewContainer = PreviewContainer([Plan.self])
-    return PreferenceView(viewModel: viewModel).modelContainer(previewContainer.container)
+    return PreferenceView().modelContainer(previewContainer.container)
 }
 
 

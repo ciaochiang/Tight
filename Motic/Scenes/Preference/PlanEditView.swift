@@ -31,6 +31,7 @@ struct PlanEditView: View {
                 
             }, callback: { exercise in
                 plan.exercises.append(exercise)
+                exercises = plan.exercises.sorted { $0.order < $1.order }
             })
                 .presentationDetents([.height(400)])
                 .presentationCornerRadius(30)
