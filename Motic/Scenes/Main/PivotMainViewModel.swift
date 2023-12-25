@@ -128,26 +128,4 @@ class PivotMainViewModel: ObservableObject {
     }
 }
 
-@Model
-class ScheduledExercise: Identifiable {
-    var exericse: Exercise
-    var scheduledDate: Date
-    var repetitions: Double
-    var sets: Double
-    var restIntevals: TimeInterval
-    var isCompleted: Bool
-    var order: Int
-    
-    init(exericse: Exercise, scheduledDate: Date, repetitions: Double, sets: Double, restIntevals: TimeInterval, isCompleted: Bool, order: Int) {
-        self.exericse = exericse
-        self.scheduledDate = scheduledDate
-        self.repetitions = repetitions
-        self.sets = sets
-        self.restIntevals = restIntevals
-        self.isCompleted = isCompleted
-        self.order = order
-    }
-}
-
-
 

@@ -219,7 +219,7 @@ struct PivotMainView: View {
 }
 
 #Preview("Main Screen") {
-    let previewContainer = PreviewContainer([ScheduledExercise.self])
+    let previewContainer = PreviewContainer([ArrangedExercise.self, Plan.self])
     let context = ModelContext(previewContainer.container)
     let viewModel = PivotMainViewModel(context: context)
     return PivotMainView(viewModel: viewModel).modelContext(context)
