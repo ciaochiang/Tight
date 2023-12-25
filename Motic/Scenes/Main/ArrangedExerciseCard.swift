@@ -33,7 +33,6 @@ struct ArrangedExerciseCard: View {
         }
         .horizontalSpacing(.leading)
         .padding()
-//        .background(Color.themeStyle.theme.background, in: .rect(topLeadingRadius: 16, bottomLeadingRadius: 16))
     }
     
     @ViewBuilder
