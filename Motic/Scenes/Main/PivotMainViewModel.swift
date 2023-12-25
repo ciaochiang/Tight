@@ -11,30 +11,37 @@ import SwiftData
 
 class PivotMainViewModel: ObservableObject {
     var context: ModelContext
-    @Published var selectedDate: Date = .init()
-    @Published var scheduledExercises: [ScheduledExercise] = []
+    @Published var selectedDate: Date
+    @Published var currentPlan: Plan = .init(name: "", arrangedExercises: [], startDate: .init(), repeats: [], duration: 0, updatedDate: .init(), createdDate: .init(), tags: [], isPreset: false)
     
     @Published var createWeek: Bool = false
     @Published var weeks: [[Date.Weekday]] = []
     @Published var currentWeekIndex: Int = 1
+    
+    @Published var arrangedExercises: [ArrangedExercise] = []
 
-    init(context: ModelContext) {
+    init(context: ModelContext, currentDate: Date = .init()) {
         self.context = context
+        self.selectedDate = currentDate
+        self.currentPlan = getPlan(by: currentDate)
+        self.arrangedExercises = self.currentPlan.arrangedExercises.sorted { $0.order < $1.order }
     }
     
     func incrementOrderNumber() -> Int {
-        guard scheduledExercises.isEmpty == false else {
+        guard currentPlan.arrangedExercises.isEmpty == false else {
             return 0
         }
         
-        return scheduledExercises.count
+        return currentPlan.arrangedExercises.count
     }
     
     func updateOrderNumbers() {
-        for i in 0..<scheduledExercises.count {
-            let exercise = scheduledExercises[i]
+        for i in 0..<arrangedExercises.count {
+            let exercise = arrangedExercises[i]
             exercise.order = i
         }
+        
+        currentPlan.arrangedExercises = arrangedExercises
     }
     
     /// Load Weeks
@@ -52,19 +59,39 @@ class PivotMainViewModel: ObservableObject {
         }
     }
     
-    /// Load Scheduled Exercises
-    func loadScheduledExercises(selectedDate: Date) {
+    /// Get  plan by date
+    func getPlan(by date: Date) -> Plan {
+        if let plan = fetchPlan(by: date) {
+            return plan
+        }
+        else {
+            let plan = createNewPlan(by: date)
+            return plan
+        }
+    }
+    
+    /// Create new plan
+    func createNewPlan(by date: Date) -> Plan {
+        let plan = Plan(name: "", arrangedExercises: [], startDate: date, repeats: [], duration: 0, updatedDate: .init(), createdDate: .init(), tags: [], isPreset: false)
+        context.insert(plan)
+        return plan
+    }
+    
+    /// Get current plan by date
+    func fetchPlan(by date: Date) -> Plan? {
         let calendar = Calendar.current
         let startDate = calendar.startOfDay(for: selectedDate)
-        guard let endDate = calendar.date(byAdding: .day, value: 1, to: startDate) else { return }
+        guard let endDate = calendar.date(byAdding: .day, value: 1, to: startDate) else { return nil }
         
-        let fetchDescriptor = FetchDescriptor<ScheduledExercise>(predicate: #Predicate<ScheduledExercise> { $0.scheduledDate >= startDate && $0.scheduledDate <= endDate }, sortBy: [SortDescriptor(\.order)])
+        let fetchDescriptor = FetchDescriptor<Plan>(predicate: #Predicate<Plan> { $0.startDate >= startDate && $0.startDate <= endDate }, sortBy: [SortDescriptor(\.createdDate, order: .reverse)])
         
         do {
-            scheduledExercises = try context.fetch(fetchDescriptor)
+            let plans = try context.fetch(fetchDescriptor)
+            return plans.first
         }
         catch {
             print(error.localizedDescription)
+            return nil
         }
     }
     
@@ -86,8 +113,13 @@ class PivotMainViewModel: ObservableObject {
         }
     }
     
-    func deleteExercise(exercise: ScheduledExercise) {
+    func deleteExercise(exercise: ArrangedExercise) {
         context.delete(exercise)
+        reloadArrangedExercises()
+    }
+    
+    func reloadArrangedExercises() {
+        arrangedExercises = currentPlan.arrangedExercises.sorted { $0.order < $1.order }
     }
 }
 

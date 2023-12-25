@@ -8,8 +8,8 @@
 import SwiftUI
 import SwiftData
 
-struct ScheduledExerciseCard: View {
-    @Binding var exercise: ScheduledExercise
+struct ArrangedExerciseCard: View {
+    @Binding var exercise: ArrangedExercise
   
     var body: some View {
         /// Content
@@ -55,7 +55,7 @@ struct ScheduledExerciseCard: View {
     
     @ViewBuilder
     func ExerciseNameView() -> some View {
-        Text(exercise.exericse.name)
+        Text(exercise.exercise.name)
             .fontWeight(.semibold)
             .foregroundStyle(exercise.isCompleted ? Color.themeStyle.theme.secondaryTextColor : Color.themeStyle.theme.primaryTextColor)
             .strikethrough(exercise.isCompleted, color: Color.themeStyle.theme.secondaryTextColor)
@@ -64,58 +64,14 @@ struct ScheduledExerciseCard: View {
 
 
 #Preview {
-    ScheduledExerciseCard(exercise: .constant(.init(exericse: .arnoldPress, scheduledDate: .init(), repetitions: 10, sets: 3, restIntevals: 90, isCompleted: false, order: 0)))
+    ArrangedExerciseCard(exercise: .constant(.init(exercise: .none,
+                                                   repetitions: 0,
+                                                   sets: 0,
+                                                   weight: 0,
+                                                   durationOfSet: 0,
+                                                   restIntevals: 0,
+                                                   order: 0,
+                                                   tags: [],
+                                                   isCompleted: false)))
 }
 
-
-struct PlannedExerciseCard: View {
-    @Bindable var exercise: DesignedExercise
-  
-    var body: some View {
-        /// Content
-        HStack(spacing: 8) {
-            Rectangle()
-                .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
-                .frame(width: 2)
-            
-            ExerciseView()
-                .frame(maxHeight: .infinity)
-        }
-        .horizontalSpacing(.leading)
-        .background(Color.themeStyle.theme.background)
-    }
-    
-    @ViewBuilder
-    func ExerciseView() -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            ExerciseNameView()
-            ExerciseDetailsView().horizontalSpacing(.leading)
-        }
-        .horizontalSpacing(.leading)
-        .padding()
-    }
-    
-    @ViewBuilder
-    func ExerciseDetailsView() -> some View {
-        HStack(alignment: .center, spacing: 16) {
-            Label("\(Int(exercise.repetitions))", systemImage: "repeat")
-                .font(.caption)
-                .foregroundColor(Color.themeStyle.theme.primaryTextColor)
-            
-            Label("\(Int(exercise.sets))", systemImage: "square.stack.3d.down.right")
-                .font(.caption)
-                .foregroundColor(Color.themeStyle.theme.primaryTextColor)
-            
-            Label(exercise.restIntevals.formatIntervalToMinutesSeconds, systemImage: "clock")
-                .font(.caption)
-                .foregroundColor(Color.themeStyle.theme.primaryTextColor)
-        }
-    }
-    
-    @ViewBuilder
-    func ExerciseNameView() -> some View {
-        Text(exercise.exercise.name)
-            .fontWeight(.semibold)
-            .foregroundStyle( Color.themeStyle.theme.primaryTextColor)
-    }
-}

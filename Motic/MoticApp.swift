@@ -21,14 +21,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct MoticApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @StateObject var accountManager: AccountManager = AccountManager.shared
     @AppStorage("IS_ONBOARDING_COMPLETED") var isOnboardingCompleted: Bool = false
     private var logger: CustomLogger
     private var experiementsProvider: ExperiementsProvider
     
     /// Swift data
     let container: ModelContainer = {
-        let schema = Schema([ScheduledExercise.self, Plan.self, DesignedExercise.self])
+        let schema = Schema([ArrangedExercise.self, Plan.self])
         let container = try! ModelContainer(for: schema, configurations: [])
         return container
     }()

@@ -10,7 +10,7 @@ import SwiftData
 
 struct PlanManagementView: View {
     @Environment(\.modelContext) private var context: ModelContext
-    @Query(sort: \Plan.createdDate) var plans: [Plan]
+    @Query(filter: #Predicate<Plan> { $0.isPreset == true }, sort: \.createdDate) var plans: [Plan]
     @State private var isAdding: Bool = false
     @State private var planToEdit: Plan?
     
@@ -127,43 +127,10 @@ struct PlanCard: View {
     @ViewBuilder
     func PlanDetailsView() -> some View {
         HStack(alignment: .center, spacing: 16) {
-            Label("\(Int(plan.exercises.count))", systemImage: "list.dash")
+            Label("\(Int(plan.arrangedExercises.count))", systemImage: "list.dash")
                 .font(.caption)
                 .foregroundColor(Color.themeStyle.theme.primaryTextColor)
         }
-    }
-}
-
-
-@Model
-class Plan {
-    var name: String
-    var tags: [String]
-    var exercises: [DesignedExercise]
-    var createdDate: Date
-    
-    init(name: String, tags: [String], exercises: [DesignedExercise], createdDate: Date) {
-        self.name = name
-        self.tags = tags
-        self.exercises = exercises
-        self.createdDate = createdDate
-    }
-}
-
-@Model
-class DesignedExercise: Identifiable {
-    var exercise: Exercise
-    var repetitions: Double
-    var sets: Double
-    var restIntevals: TimeInterval
-    var order: Int
-    
-    init(exercise: Exercise, repetitions: Double, sets: Double, restIntevals: TimeInterval, order: Int) {
-        self.exercise = exercise
-        self.repetitions = repetitions
-        self.sets = sets
-        self.restIntevals = restIntevals
-        self.order = order
     }
 }
 
@@ -225,7 +192,16 @@ struct AddPlanView: View {
     func CreateButtonView() -> some View {
         Button(action: {
             /// Save schedule exercise
-            let plan = Plan(name: planName, tags: [], exercises: [], createdDate: .init())
+            let plan = Plan(name: planName,
+                            arrangedExercises: [],
+                            startDate: .init(),
+                            endDate: nil,
+                            repeats: [],
+                            duration: 0,
+                            updatedDate: .init(),
+                            createdDate: .init(),
+                            tags: [],
+                            isPreset: true)
             context.insert(plan)
             dismiss()
         }) {

@@ -11,8 +11,8 @@ import SwiftData
 struct PivotMainView: View {
     @Environment(\.modelContext) var context
     @StateObject var viewModel: PivotMainViewModel
-    @State private var scheduleExercise: Bool = false
-    @State private var exerciseToEdit: ScheduledExercise?
+    @State private var isArrangingExercise: Bool = false
+    @State private var exerciseToEdit: ArrangedExercise?
         
     /// Animation  namespace
     @Namespace private var animation
@@ -26,13 +26,13 @@ struct PivotMainView: View {
             HeaderView()
             
             ///  Scheduled exercises
-            ScheduleExercisesView()
+            ArrangedExercisesView()
         }
         .background(Color.themeStyle.theme.background)
         .veriticalSpacing(.top)
         .overlay(alignment: .bottomTrailing, content: {
             Button(action: {
-                scheduleExercise.toggle()
+                isArrangingExercise.toggle()
             }) {
                 Image(systemName: "plus")
                     .fontWeight(.semibold)
@@ -48,30 +48,26 @@ struct PivotMainView: View {
             if viewModel.weeks.isEmpty {
                 viewModel.loadWeeks()
             }
-            
-            /// Load Scheduled Exercises
-            viewModel.loadScheduledExercises(selectedDate: viewModel.selectedDate)
         })
-        .sheet(isPresented: $scheduleExercise, content: {
-            ScheduleExerciseView(selectedDate: viewModel.selectedDate,
-                                 incrementalOrderNumber: viewModel.incrementOrderNumber(),
-                                 completion: {
-                /// Refetch schedule  exercises
-                viewModel.loadScheduledExercises(selectedDate: viewModel.selectedDate)
-            }, callback: nil)
-                .presentationDetents([.height(400)])
-                .presentationCornerRadius(30)
-
+        .sheet(isPresented: $isArrangingExercise, content: {
+            CreateArrangedExerciseView(plan: viewModel.currentPlan,
+                                       incrementalOrderNumber: viewModel.currentPlan.arrangedExercises.count,
+                                       completion: { _ in
+                viewModel.reloadArrangedExercises()
+            })
+            .presentationDetents([.height(400)])
+            .presentationCornerRadius(30)
         })
-        .sheet(item: $exerciseToEdit) { exercise in
-            EditScheduledExerciseView(scheduledExercise: exercise)
-                .presentationDetents([.height(300)])
-                .presentationCornerRadius(30)
-        }
+//        .sheet(item: $exerciseToEdit) { $exercise in
+//            EditArrangedExerciseView(arrangedExercise: $exercise)
+//                .presentationDetents([.height(300)])
+//                .presentationCornerRadius(30)
+//        }
         .onChange(of: viewModel.selectedDate) { oldValue, newValue in
-            /// Fetch scheduled exercise when date changed
+            /// Reload current plan when date changed
             viewModel.selectedDate = newValue
-            viewModel.loadScheduledExercises(selectedDate: viewModel.selectedDate)
+            viewModel.currentPlan = viewModel.getPlan(by: viewModel.selectedDate)
+            viewModel.reloadArrangedExercises()
         }
     }
     
@@ -176,10 +172,10 @@ struct PivotMainView: View {
     
     /// Schedule Exercises View
     @ViewBuilder
-    func ScheduleExercisesView() -> some View {
+    func ArrangedExercisesView() -> some View {
         List {
-            ForEach($viewModel.scheduledExercises, id: \.self) { $exercise in
-                ScheduledExerciseCard(exercise: $exercise)
+            ForEach($viewModel.arrangedExercises, id: \.self) { $exercise in
+                ArrangedExerciseCard(exercise: $exercise)
                     .veriticalSpacing(.center)
                     .listRowSeparator(.hidden)
                     .listRowInsets(EdgeInsets())
@@ -188,9 +184,6 @@ struct PivotMainView: View {
                             /// Delete items
                             withAnimation {
                                 viewModel.deleteExercise(exercise: exercise)
-                                
-                                /// Reload
-                                viewModel.loadScheduledExercises(selectedDate: viewModel.selectedDate)
                             }
                         }) {
                             Label("Delete", systemImage: "trash")
@@ -213,7 +206,7 @@ struct PivotMainView: View {
                     }
             }
             .onMove(perform: { indexSet, newOffset in
-                viewModel.scheduledExercises.move(fromOffsets: indexSet, toOffset: newOffset)
+                viewModel.arrangedExercises.move(fromOffsets: indexSet, toOffset: newOffset)
                 
                 /// Update all order number
                 viewModel.updateOrderNumbers()

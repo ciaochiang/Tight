@@ -11,36 +11,33 @@ import SwiftData
 struct PlanEditView: View {
     @Bindable var plan: Plan
     @State private var isAdding: Bool = false
-    @State private var exercises: [DesignedExercise]
-    @State private var exerciseToEdit: DesignedExercise?
+    @State private var exercises: [ArrangedExercise]
+    @State private var exerciseToEdit: ArrangedExercise?
     
     init(plan: Plan) {
         self.plan = plan
-        _exercises = .init(wrappedValue: plan.exercises.sorted { $0.order < $1.order })
+        _exercises = .init(wrappedValue: plan.arrangedExercises.sorted { $0.order < $1.order })
     }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            PlannedExercisesView()
+            ArrangedExercisesListView()
         }
         .background(Color.themeStyle.theme.background)
         .veriticalSpacing(.top)
         .navigationTitle(plan.name)
         .sheet(isPresented: $isAdding, content: {
-            ScheduleExerciseView(isPlanMode: true, selectedDate: .init(), incrementalOrderNumber: plan.exercises.count, completion: {
-                
-            }, callback: { exercise in
-                plan.exercises.append(exercise)
-                exercises = plan.exercises.sorted { $0.order < $1.order }
+            CreateArrangedExerciseView(plan: plan, incrementalOrderNumber: plan.arrangedExercises.count, completion: { _ in
+                exercises = plan.arrangedExercises
             })
                 .presentationDetents([.height(400)])
                 .presentationCornerRadius(30)
         })
-        .sheet(item: $exerciseToEdit) { exercise in
-            EditDesignedExerciseView(designedExercise: exercise)
-                .presentationDetents([.height(300)])
-                .presentationCornerRadius(30)
-        }
+//        .sheet(item: $exerciseToEdit) { $exercise in
+//            EditArrangedExerciseView(arrangedExercise: $exercise)
+//                .presentationDetents([.height(300)])
+//                .presentationCornerRadius(30)
+//        }
         .toolbar {
             Button(action: {
                 isAdding.toggle()
@@ -51,10 +48,10 @@ struct PlanEditView: View {
     }
     
     @ViewBuilder
-    func PlannedExercisesView() -> some View {
+    func ArrangedExercisesListView() -> some View {
         List {
-            ForEach(exercises, id: \.self) { exercise in
-                PlannedExerciseCard(exercise: exercise)
+            ForEach($exercises, id: \.self) { $exercise in
+                ArrangedExerciseCard(exercise: $exercise)
                     .veriticalSpacing(.center)
                     .listRowSeparator(.hidden)
                     .listRowInsets(EdgeInsets())
@@ -62,10 +59,10 @@ struct PlanEditView: View {
                         Button(action: {
                             /// Delete items
                             withAnimation {
-                                if let index = plan.exercises.firstIndex(where: { $0 == exercise }) {
-                                    plan.exercises.remove(at: index)
+                                if let index = plan.arrangedExercises.firstIndex(where: { $0 == exercise }) {
+                                    plan.arrangedExercises.remove(at: index)
                                 }
-                                exercises = plan.exercises.sorted { $0.order < $1.order }
+                                exercises = plan.arrangedExercises.sorted { $0.order < $1.order }
                             }
                         }) {
                             Label("Delete", systemImage: "trash")
@@ -96,10 +93,6 @@ struct PlanEditView: View {
             exercise.order = i
         }
         
-        plan.exercises = exercises
+        plan.arrangedExercises = exercises
     }
-}
-
-#Preview {
-    PlanEditView(plan: .init(name: "test", tags: [], exercises: [], createdDate: .init()))
 }
