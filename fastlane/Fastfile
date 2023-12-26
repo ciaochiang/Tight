@@ -31,6 +31,12 @@ platform :ios do
   desc "Run all the tests"
   lane :test do
     #run_tests(scheme: "Motic")
-    scan
+    #scan
+
+    scan(
+      scheme: "Motic",
+      clean: true,
+      output_types: "xcpretty"
+    )
   end
 end

@@ -126,6 +126,12 @@ class PivotMainViewModel: ObservableObject {
     func reloadArrangedExercises() {
         arrangedExercises = currentPlan.arrangedExercises.sorted { $0.order < $1.order }
     }
+    
+    /// Import exercises from plan
+    func importExercises(from plan: Plan) {
+        let exercises = plan.arrangedExercises
+        currentPlan.arrangedExercises = exercises
+    }
 }
 
 

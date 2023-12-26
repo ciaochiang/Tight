@@ -12,6 +12,7 @@ struct PivotMainView: View {
     @Environment(\.modelContext) var context
     @StateObject var viewModel: PivotMainViewModel
     @State private var isArrangingExercise: Bool = false
+    @State private var isImporting: Bool = false
     @State private var exerciseToEdit: ArrangedExercise?
         
     /// Animation  namespace
@@ -26,7 +27,15 @@ struct PivotMainView: View {
             HeaderView()
             
             ///  Scheduled exercises
-            ArrangedExercisesView()
+            if viewModel.currentPlan.arrangedExercises.isEmpty {
+                PlaceholderView()
+                    .veriticalSpacing(.center)
+                    .horizontalSpacing(.center)
+                    .offset(y: -32)
+            }
+            else {
+                ArrangedExercisesView()
+            }
         }
         .background(Color.themeStyle.theme.background)
         .veriticalSpacing(.top)
@@ -63,6 +72,9 @@ struct PivotMainView: View {
                 .presentationDetents([.height(300)])
                 .presentationCornerRadius(30)
         }
+        .sheet(isPresented: $isImporting, content: {
+            // TODO: Displa plan management view
+        })
         .onChange(of: viewModel.selectedDate) { oldValue, newValue in
             /// Reload current plan when date changed
             viewModel.selectedDate = newValue
@@ -215,6 +227,33 @@ struct PivotMainView: View {
         .padding(.top, 16)
         .listStyle(PlainListStyle())
         .background(Color.themeStyle.theme.background)
+    }
+    
+    @ViewBuilder
+    func PlaceholderView() -> some View {
+        VStack(alignment: .center, spacing: 8) {
+            Text("No Exercises")
+                .font(.title2)
+                .fontWeight(.bold)
+            Text("Start adding exercises to your plan.")
+                .font(.caption)
+                .fontWeight(.semibold)
+                .foregroundStyle(.gray)
+            
+            Button(action: {
+                isImporting.toggle()
+            }) {
+                Text("Import from Plans")
+                    .background(Color.themeStyle.theme.accent)
+                    .foregroundColor(Color.themeStyle.theme.white)
+                    .horizontalSpacing(.center)
+                    .frame(height: 44)
+            }
+            .background(Color.themeStyle.theme.accent)
+            .cornerRadius(8)
+            .padding(.horizontal, 64)
+            .padding(.top, 16)
+        }
     }
 }
 
