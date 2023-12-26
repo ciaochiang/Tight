@@ -129,8 +129,21 @@ class PivotMainViewModel: ObservableObject {
     
     /// Import exercises from plan
     func importExercises(from plan: Plan) {
-        let exercises = plan.arrangedExercises
-        currentPlan.arrangedExercises = exercises
+        var newExercises: [ArrangedExercise] = []
+        for exercise in plan.arrangedExercises {
+            let newExercise = ArrangedExercise(exercise: exercise.exercise, 
+                                               repetitions: exercise.repetitions,
+                                               sets: exercise.repetitions,
+                                               weight: exercise.weight,
+                                               durationOfSet: exercise.durationOfSet,
+                                               restIntevals: exercise.restIntevals,
+                                               order: exercise.order,
+                                               tags: exercise.tags,
+                                               isCompleted: false)
+            newExercises.append(newExercise)
+        }
+        currentPlan.arrangedExercises = newExercises
+        reloadArrangedExercises()
     }
 }
 

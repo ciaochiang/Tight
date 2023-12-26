@@ -9,15 +9,22 @@ import SwiftUI
 import SwiftData
 
 struct PlanManagementView: View {
+    @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var context: ModelContext
     @Query(filter: #Predicate<Plan> { $0.isPreset == true }, sort: \.createdDate) var plans: [Plan]
     @State private var isAdding: Bool = false
-    @State private var planToEdit: Plan?
     
+    var isImporting: Bool = false
+    var onSelected: ((Plan) -> Void)? = nil
+
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 8) {
-                PlansListView()
+                if isImporting {
+                    SelectablePlansListView()
+                } else {
+                    PlansListView()
+                }
             }
             .background(Color.themeStyle.theme.background)
             .veriticalSpacing(.top)
@@ -28,13 +35,6 @@ struct PlanManagementView: View {
                     .presentationCornerRadius(30)
 
             })
-            .toolbar {
-                Button(action: {
-                    isAdding.toggle()
-                }) {
-                    Label("Add", systemImage: "plus")
-                }
-            }
         }
     }
     
@@ -75,6 +75,33 @@ struct PlanManagementView: View {
                     .background(
                         NavigationLink("", destination: EditPlanPresetView(plan: plan)).opacity(0)
                     )
+            }
+        }
+        .padding(.top, 16)
+        .listStyle(PlainListStyle())
+        .background(Color.themeStyle.theme.background)
+        .toolbar {
+            Button(action: {
+                isAdding.toggle()
+            }) {
+                Label("Add", systemImage: "plus")
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func SelectablePlansListView() -> some View {
+        List {
+            ForEach(plans, id: \.self) { plan in
+                PlanCard(plan: plan)
+                    .veriticalSpacing(.center)
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets())
+                    .onTapGesture {
+                        /// Callback
+                        onSelected?(plan)
+                        dismiss()
+                    }
             }
         }
         .padding(.top, 16)

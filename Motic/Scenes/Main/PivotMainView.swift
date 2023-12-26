@@ -73,7 +73,9 @@ struct PivotMainView: View {
                 .presentationCornerRadius(30)
         }
         .sheet(isPresented: $isImporting, content: {
-            // TODO: Displa plan management view
+            PlanManagementView(isImporting: true) { plan in
+                viewModel.importExercises(from: plan)
+            }
         })
         .onChange(of: viewModel.selectedDate) { oldValue, newValue in
             /// Reload current plan when date changed
