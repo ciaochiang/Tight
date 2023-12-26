@@ -35,7 +35,11 @@ platform :ios do
 
     scan(
       scheme: "Motic",
-      clean: true
+      clean: true,
+
+      # issue: xcrun simctl spawn 
+      # see here: https://github.com/fastlane/fastlane/issues/17753
+      include_simulator_logs: false
     )
   end
 end
