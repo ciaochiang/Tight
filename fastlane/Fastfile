@@ -35,8 +35,7 @@ platform :ios do
 
     scan(
       scheme: "Motic",
-      clean: true,
-      output_types: "xcpretty"
+      clean: true
     )
   end
 end
