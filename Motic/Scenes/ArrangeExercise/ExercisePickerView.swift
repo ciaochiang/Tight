@@ -22,6 +22,7 @@ struct ExercisePickerView: View {
     
     let callback: ((Exercise) -> Void)?
     
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -31,19 +32,19 @@ struct ExercisePickerView: View {
                         FavoriteExercisesView()
                     }
                     
-                    if upperBodyExercises.filter({ searchText.isEmpty || $0.name.contains(searchText) }).isEmpty == false {
+                    if upperBodyExercises.isEmpty == false {
                         UpperBodyExercisesView()
                     }
                     
-                    if lowerBodyExercises.filter({ searchText.isEmpty || $0.name.contains(searchText) }).isEmpty == false {
+                    if lowerBodyExercises.isEmpty == false {
                         LowerBodyExercisesView()
                     }
                     
-                    if coreExercises.filter({ searchText.isEmpty || $0.name.contains(searchText) }).isEmpty == false {
+                    if coreExercises.isEmpty == false {
                         CoreExercisesView()
                     }
                     
-                    if compoundExercises.filter({ searchText.isEmpty || $0.name.contains(searchText) }).isEmpty == false {
+                    if compoundExercises.isEmpty == false {
                         CompoundExercisesView()
                     }
                 }
@@ -52,11 +53,18 @@ struct ExercisePickerView: View {
                 .onAppear(perform: {
                     favorites = preference.retrieveFavoriteExercises()
                 })
+                .onChange(of: searchText) { oldValue, newValue in
+                    // Filter exercises
+                    upperBodyExercises = Exercise.upperBodyExercises.filter { newValue.isEmpty || $0.name.lowercased().contains(newValue.lowercased()) }
+                    lowerBodyExercises = Exercise.lowerBodyExercises.filter { newValue.isEmpty || $0.name.lowercased().contains(newValue.lowercased()) }
+                    coreExercises = Exercise.coreExercises.filter { newValue.isEmpty || $0.name.lowercased().contains(newValue.lowercased()) }
+                    compoundExercises = Exercise.compoundExercises.filter { newValue.isEmpty || $0.name.lowercased().contains(newValue.lowercased()) }
+                }
             }
+            .searchable(text: $searchText)
             .navigationTitle(title)
             .background(Color.themeStyle.theme.background)
         }
-        .searchable(text: $searchText)
     }
     
     @ViewBuilder
@@ -81,7 +89,7 @@ struct ExercisePickerView: View {
     @ViewBuilder
     func UpperBodyExercisesView() -> some View {
         Section("Upper Body") {
-            ForEach(upperBodyExercises.filter { searchText.isEmpty || $0.name.contains(searchText) }, id: \.self) { exercise in
+            ForEach(upperBodyExercises, id: \.self) { exercise in
                 HStack {
                     Text(exercise.name.capitalized)
                         .fontWeight(selectedExercise == exercise ? .semibold : .none)
@@ -106,7 +114,7 @@ struct ExercisePickerView: View {
     @ViewBuilder
     func LowerBodyExercisesView() -> some View {
         Section("Lower Body") {
-            ForEach(lowerBodyExercises.filter { searchText.isEmpty || $0.name.contains(searchText) }, id: \.self) { exercise in
+            ForEach(lowerBodyExercises, id: \.self) { exercise in
                 HStack {
                     Text(exercise.name.capitalized)
                         .fontWeight(selectedExercise == exercise ? .semibold : .none)
@@ -131,7 +139,7 @@ struct ExercisePickerView: View {
     @ViewBuilder
     func CoreExercisesView() -> some View {
         Section("Core") {
-            ForEach(coreExercises.filter { searchText.isEmpty || $0.name.contains(searchText) }, id: \.self) { exercise in
+            ForEach(coreExercises, id: \.self) { exercise in
                 HStack {
                     Text(exercise.name.capitalized)
                         .fontWeight(selectedExercise == exercise ? .semibold : .none)
@@ -156,7 +164,7 @@ struct ExercisePickerView: View {
     @ViewBuilder
     func CompoundExercisesView() -> some View {
         Section("Compoud / Full-Body") {
-            ForEach(compoundExercises.filter { searchText.isEmpty || $0.name.contains(searchText) }, id: \.self) { exercise in
+            ForEach(compoundExercises, id: \.self) { exercise in
                 HStack {
                     Text(exercise.name.capitalized)
                         .fontWeight(selectedExercise == exercise ? .semibold : .none)
