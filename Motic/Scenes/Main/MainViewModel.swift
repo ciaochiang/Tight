@@ -73,19 +73,24 @@ class MainViewModel: ObservableObject {
     }
     
     func getWeeklySummary() async throws -> WeeklySummary {
-        let period = Date.thisWeek
-        
-        let activities = try await healthStoreManager.getActivties(from: period.start, to: period.end)
-        let workouts = activities.map { $0.workout }
-
-        let totalDistanceKilometers = healthStoreManager.getTotalDistance(from: workouts)
-        let totalElapsedTime = healthStoreManager.getTotalDuration(from: workouts)
-        let averageSpeed = healthStoreManager.getAvgSpeed(totalDistance: totalDistanceKilometers, totalDuration: totalElapsedTime)
-        
-        return WeeklySummary(totalElapsedTime: totalElapsedTime,
-                             totalDistanceKilometers: totalDistanceKilometers,
-                             averageSpeed: averageSpeed, 
-                             activities: activities)
+//        let period = Date.thisWeek
+//        
+//        let activities = try await healthStoreManager.getActivties(from: period.start, to: period.end)
+//        let activities: [Activity] = [
+//        let workouts = activities.map { $0.workout }
+//
+//        let totalDistanceKilometers = healthStoreManager.getTotalDistance(from: workouts)
+//        let totalElapsedTime = healthStoreManager.getTotalDuration(from: workouts)
+//        let averageSpeed = healthStoreManager.getAvgSpeed(totalDistance: totalDistanceKilometers, totalDuration: totalElapsedTime)
+//        
+//        return WeeklySummary(totalElapsedTime: totalElapsedTime,
+//                             totalDistanceKilometers: totalDistanceKilometers,
+//                             averageSpeed: averageSpeed, 
+//                             activities: activities)
+        return WeeklySummary(totalElapsedTime: 0,
+                             totalDistanceKilometers: 0,
+                             averageSpeed: 0,
+                             activities: [])
     }
 }
 

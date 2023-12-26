@@ -20,28 +20,18 @@ class Mocks {
         return HealthStoreManager(dependency: dependency)
     }
   
-  static var mockActivity: Activity {
-      // Define workout parameters
-      let startDate = Date() // Start date of the workout
-      let endDate = startDate.addingTimeInterval(3600) // End date (1 hour later in this example)
-      let workoutType = HKWorkoutActivityType.running // Replace with your desired workout type
-      let energyBurned = HKQuantity(unit: .kilocalorie(), doubleValue: 300) // Energy burned during the workout
-      let distance = HKQuantity(unit: .mile(), doubleValue: 3.5) // Distance covered during the workout
-      let workoutEvents: [HKWorkoutEvent] = [] // You can define workout events if needed
-
-      // Create the workout
-      let workout = HKWorkout(
-          activityType: workoutType,
-          start: startDate,
-          end: endDate,
-          workoutEvents: workoutEvents,
-          totalEnergyBurned: energyBurned,
-          totalDistance: distance,
-          metadata: nil
-      )
-
-      return Activity(workoutActivityType: workoutType, startDate: startDate, endDate: endDate, duration: 0, totalEnergyBurned: energyBurned, workout: workout)
-  }
+//  static var mockActivity: Activity {
+//      // Define workout parameters
+//      let startDate = Date() // Start date of the workout
+//      let endDate = startDate.addingTimeInterval(3600) // End date (1 hour later in this example)
+//      let workoutType = HKWorkoutActivityType.running // Replace with your desired workout type
+//      let energyBurned = HKQuantity(unit: .kilocalorie(), doubleValue: 300) // Energy burned during the workout
+//      let distance = HKQuantity(unit: .mile(), doubleValue: 3.5) // Distance covered during the workout
+//      let workoutEvents: [HKWorkoutEvent] = [] // You can define workout events if needed
+//
+//
+//      return Activity(workoutActivityType: workoutType, startDate: startDate, endDate: endDate, duration: 0, totalEnergyBurned: energyBurned, workout: workout)
+//  }
     
     static var chartDataSet: [ChartData<Double>] {
         let data: [ChartData<Double>] = [

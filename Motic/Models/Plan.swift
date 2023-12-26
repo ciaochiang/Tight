@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-class Plan {
+class Plan: Identifiable {
     var name: String
     var arrangedExercises: [ArrangedExercise]
     var startDate: Date

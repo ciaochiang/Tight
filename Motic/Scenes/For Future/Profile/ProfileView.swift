@@ -54,9 +54,8 @@ struct ProfileView: View {
                 switch item.type {
                 case .darkMode:
                   Toggle("", isOn: $viewModel.isDarkModeOn)
-                    .onChange(of: viewModel.isDarkModeOn) { value in
-                      viewModel.toggleDarkMode(isOn: value)
-                      print("Dark mode change: \(value)")
+                    .onChange(of: viewModel.isDarkModeOn) { oldValue, newValue in
+                      viewModel.toggleDarkMode(isOn: newValue)
                     }
                 default:
                   Text(item.value)

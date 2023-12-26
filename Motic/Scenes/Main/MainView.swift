@@ -149,13 +149,13 @@ extension MainView {
             }
         }
         .sheet(isPresented: $isActivityViewPresented) {
-            if let selectedWorkout = viewModel.selectedActivity  {
-                let dependency = CyclingActivityViewModelDependencyImp(logger: viewModel.dependency.logger)
-                let viewModel = CyclingActivityViewModel(dependency: dependency,
-                                                         healthStoreManager: viewModel.healthStoreManager,
-                                                         activity: selectedWorkout)
-                CyclingActivityView(viewModel: viewModel).presentationDetents([.large])
-            }
+//            if let selectedWorkout = viewModel.selectedActivity  {
+//                let dependency = CyclingActivityViewModelDependencyImp(logger: viewModel.dependency.logger)
+//                let viewModel = CyclingActivityViewModel(dependency: dependency,
+//                                                         healthStoreManager: viewModel.healthStoreManager,
+//                                                         activity: selectedWorkout)
+//                CyclingActivityView(viewModel: viewModel).presentationDetents([.large])
+//            }
         }
       }
   }

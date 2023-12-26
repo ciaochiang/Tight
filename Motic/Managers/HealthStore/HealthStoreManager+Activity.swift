@@ -14,30 +14,28 @@ struct Activity: Identifiable {
     let endDate: Date
     let duration: TimeInterval
     let totalEnergyBurned: HKQuantity?
-    let workout: HKWorkout
 }
 
 extension HealthStoreManager {
-    func getActivties(from start: Date, to end: Date) async throws -> [Activity] {
-        let predicate = HKQuery.predicateForSamples(withStart: start, end: end, options: .strictStartDate)
-
-        // Create the descriptor.
-        let descriptor = HKSampleQueryDescriptor(
-            predicates:[.workout(predicate)],
-            sortDescriptors: [],
-            limit: HKObjectQueryNoLimit)
-
-        let results = try await descriptor.result(for: healthStore)
-        
-        let collection = results.map { result in
-            Activity(workoutActivityType: result.workoutActivityType,
-                     startDate: result.startDate,
-                     endDate: result.endDate,
-                     duration: result.duration,
-                     totalEnergyBurned: result.totalEnergyBurned,
-                     workout: result)
-        }
-        
-        return collection.sorted(by: { $0.endDate > $1.endDate })
-    }
+//    func getActivties(from start: Date, to end: Date) async throws -> [Activity] {
+//        let predicate = HKQuery.predicateForSamples(withStart: start, end: end, options: .strictStartDate)
+//
+//        // Create the descriptor.
+//        let descriptor = HKSampleQueryDescriptor(
+//            predicates:[.workout(predicate)],
+//            sortDescriptors: [],
+//            limit: HKObjectQueryNoLimit)
+//
+//        let results = try await descriptor.result(for: healthStore)
+//        
+//        let collection = results.map { _ in
+//            Activity(workoutActivityType: result.workoutActivityType,
+//                     startDate: result.startDate,
+//                     endDate: result.endDate,
+//                     duration: result.duration,
+//                     totalEnergyBurned: result.totalEnergyBurned)
+//        }
+//        
+//        return collection.sorted(by: { $0.endDate > $1.endDate })
+//    }
 }
