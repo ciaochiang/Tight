@@ -15,23 +15,25 @@ struct PlanManagementView: View {
     @State private var planToEdit: Plan?
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            PlansListView()
-        }
-        .background(Color.themeStyle.theme.background)
-        .veriticalSpacing(.top)
-        .navigationTitle("Plans")
-        .sheet(isPresented: $isAdding, content: {
-            CreatePlanView()
-                .presentationDetents([.height(200)])
-                .presentationCornerRadius(30)
+        NavigationStack {
+            VStack(alignment: .leading, spacing: 8) {
+                PlansListView()
+            }
+            .background(Color.themeStyle.theme.background)
+            .veriticalSpacing(.top)
+            .navigationTitle("Plans")
+            .sheet(isPresented: $isAdding, content: {
+                CreatePlanView()
+                    .presentationDetents([.height(200)])
+                    .presentationCornerRadius(30)
 
-        })
-        .toolbar {
-            Button(action: {
-                isAdding.toggle()
-            }) {
-                Label("Add", systemImage: "plus")
+            })
+            .toolbar {
+                Button(action: {
+                    isAdding.toggle()
+                }) {
+                    Label("Add", systemImage: "plus")
+                }
             }
         }
     }

@@ -20,29 +20,31 @@ struct EditPlanPresetView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            ArrangedExercisesListView()
-        }
-        .background(Color.themeStyle.theme.background)
-        .veriticalSpacing(.top)
-        .navigationTitle(plan.name)
-        .sheet(isPresented: $isAdding, content: {
-            CreateArrangedExerciseView(plan: plan, incrementalOrderNumber: plan.arrangedExercises.count, completion: { _ in
-                exercises = plan.arrangedExercises.sorted { $0.order < $1.order }
+        NavigationStack {
+            VStack(alignment: .leading, spacing: 8) {
+                ArrangedExercisesListView()
+            }
+            .background(Color.themeStyle.theme.background)
+            .veriticalSpacing(.top)
+            .navigationTitle(plan.name)
+            .sheet(isPresented: $isAdding, content: {
+                CreateArrangedExerciseView(plan: plan, incrementalOrderNumber: plan.arrangedExercises.count, completion: { _ in
+                    exercises = plan.arrangedExercises.sorted { $0.order < $1.order }
+                })
+                    .presentationDetents([.height(400)])
+                    .presentationCornerRadius(30)
             })
-                .presentationDetents([.height(400)])
-                .presentationCornerRadius(30)
-        })
-        .sheet(item: $exerciseToEdit) { exercise in
-            EditArrangedExerciseView(arrangedExercise: exercise)
-                .presentationDetents([.height(300)])
-                .presentationCornerRadius(30)
-        }
-        .toolbar {
-            Button(action: {
-                isAdding.toggle()
-            }) {
-                Label("Add", systemImage: "plus")
+            .sheet(item: $exerciseToEdit) { exercise in
+                EditArrangedExerciseView(arrangedExercise: exercise)
+                    .presentationDetents([.height(300)])
+                    .presentationCornerRadius(30)
+            }
+            .toolbar {
+                Button(action: {
+                    isAdding.toggle()
+                }) {
+                    Label("Add", systemImage: "plus")
+                }
             }
         }
     }

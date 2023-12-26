@@ -9,8 +9,10 @@ import SwiftUI
 import SwiftData
 
 struct PreferenceView: View {
+    @State private var path = NavigationPath()
+    
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $path) {
             VStack {
                 List {
                     Section("Exercise Preferences") {
@@ -30,14 +32,18 @@ struct PreferenceView: View {
     @ViewBuilder
     func ExerciseItemView() -> some View {
         HStack {
-            NavigationLink("Favorites", destination: ExercisePickerView(title: "Favorites", callback: nil))
+            NavigationLink(destination: ExercisePickerView(title: "Favorites", callback: nil)) {
+                Text("Favorites")
+            }
         }
     }
     
     @ViewBuilder
     func PlanManagementItem() -> some View {
         HStack {
-            NavigationLink("Plans", destination: PlanManagementView())
+            NavigationLink(destination: PlanManagementView()) {
+                Text("Plans")
+            }
         }
     }
 }
