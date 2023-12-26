@@ -2,26 +2,21 @@
 # See: https://circleci.com/docs/configuration-reference
 version: 2.1
 
-orbs:
-  ruby: circleci/ruby@1.2.0
-
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
-  build:
+  build-and-test:
     macos:
       xcode: "15.1.0"
     environment:
       FL_OUTPUT_DIR: output
-      FASTLANE_UNIT_TEST_LANE: tests
-    working_directory: ~/project
-    shell: /bin/bash --login -o pipefail
+      FASTLANE_LANE: test
     steps:
       - checkout
-      - ruby/install-deps
+      - run: bundle install
       - run:
-          name: Fastlane Run Test
-          command: bundle exec fastlane $FASTLANE_UNIT_TEST_LANE
+          name: Fastlane
+          command: bundle exec fastlane $FASTLANE_LANE
       - store_artifacts:
           path: output
       - store_test_results:
@@ -30,6 +25,6 @@ jobs:
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
-  test-workflow:
+  build-and-test-workflow:
     jobs:
-      - build
+      - build-and-test

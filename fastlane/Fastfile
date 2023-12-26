@@ -28,7 +28,9 @@ platform :ios do
     upload_to_testflight
   end
 
-  lane :tests do
-    run_tests(scheme: "Motic")
+  desc "Run all the tests"
+  lane :test do
+    #run_tests(scheme: "Motic")
+    scan
   end
 end
