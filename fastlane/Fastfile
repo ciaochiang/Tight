@@ -29,6 +29,6 @@ platform :ios do
   end
 
   lane :tests do
-    run_tests(scheme: "MoticTests")
+    run_tests(scheme: "Motic")
   end
 end
