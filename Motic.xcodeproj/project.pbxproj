@@ -59,6 +59,7 @@
 		E5349D272AE56430003B4808 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5349D262AE56430003B4808 /* MainViewModel.swift */; };
 		E5381D142B39C2EE004BA1E9 /* CreatePlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5381D132B39C2EE004BA1E9 /* CreatePlanView.swift */; };
 		E5381D162B39C335004BA1E9 /* PlanCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5381D152B39C335004BA1E9 /* PlanCard.swift */; };
+		E5381D182B3B343F004BA1E9 /* EditPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5381D172B3B343F004BA1E9 /* EditPlanView.swift */; };
 		E53CA8A62ADA550A0009D572 /* WearableDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53CA8A52ADA550A0009D572 /* WearableDeviceManager.swift */; };
 		E53CA8AB2ADBD0180009D572 /* WearableDeviceMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53CA8AA2ADBD0180009D572 /* WearableDeviceMainView.swift */; };
 		E53CA8AD2ADBD02A0009D572 /* WearableDeviceMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53CA8AC2ADBD02A0009D572 /* WearableDeviceMainViewModel.swift */; };
@@ -223,6 +224,7 @@
 		E5349D262AE56430003B4808 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		E5381D132B39C2EE004BA1E9 /* CreatePlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlanView.swift; sourceTree = "<group>"; };
 		E5381D152B39C335004BA1E9 /* PlanCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanCard.swift; sourceTree = "<group>"; };
+		E5381D172B3B343F004BA1E9 /* EditPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPlanView.swift; sourceTree = "<group>"; };
 		E53CA8A52ADA550A0009D572 /* WearableDeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WearableDeviceManager.swift; sourceTree = "<group>"; };
 		E53CA8AA2ADBD0180009D572 /* WearableDeviceMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WearableDeviceMainView.swift; sourceTree = "<group>"; };
 		E53CA8AC2ADBD02A0009D572 /* WearableDeviceMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WearableDeviceMainViewModel.swift; sourceTree = "<group>"; };
@@ -735,6 +737,7 @@
 				E5215E372B38D7130011E4FF /* EditPlanPresetView.swift */,
 				E5381D132B39C2EE004BA1E9 /* CreatePlanView.swift */,
 				E5381D152B39C335004BA1E9 /* PlanCard.swift */,
+				E5381D172B3B343F004BA1E9 /* EditPlanView.swift */,
 			);
 			path = Preference;
 			sourceTree = "<group>";
@@ -1069,6 +1072,7 @@
 				E51DE2002ABB303100957395 /* CyclingActivityViewModel.swift in Sources */,
 				E552B65B2B3316BC00AF9F20 /* OffsetKey.swift in Sources */,
 				E58D15BB2ACAC7F3000D1918 /* ActivitySessionManager .swift in Sources */,
+				E5381D182B3B343F004BA1E9 /* EditPlanView.swift in Sources */,
 				E5215E4C2B39BCD20011E4FF /* ExerciseRepetitionSliderViewComponent.swift in Sources */,
 				E5B0DF782B00828300EC9871 /* HeartRate.swift in Sources */,
 				E5E387312AD542F0008A7353 /* SportSelectorViewModel.swift in Sources */,

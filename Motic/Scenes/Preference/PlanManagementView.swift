@@ -13,6 +13,7 @@ struct PlanManagementView: View {
     @Environment(\.modelContext) private var context: ModelContext
     @Query(filter: #Predicate<Plan> { $0.isPreset == true }, sort: \.createdDate) var plans: [Plan]
     @State private var isAdding: Bool = false
+    @State private var planToEdit: Plan?
     
     var isImporting: Bool = false
     var onSelected: ((Plan) -> Void)? = nil
@@ -35,6 +36,11 @@ struct PlanManagementView: View {
                     .presentationCornerRadius(30)
 
             })
+            .sheet(item: $planToEdit) { plan in
+                EditPlanView(plan: plan)
+                    .presentationDetents([.height(120)])
+                    .presentationCornerRadius(30)
+            }
         }
     }
     
@@ -71,6 +77,13 @@ struct PlanManagementView: View {
                                 .symbolVariant(/*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
                         }
                         .tint(Color.themeStyle.theme.accent)
+                        
+                        Button(action: {
+                            planToEdit = plan
+                        }) {
+                            Label("Edit", systemImage: "pencil")
+                                .symbolVariant(/*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
+                        }
                     }
                     .background(
                         NavigationLink("", destination: EditPlanPresetView(plan: plan)).opacity(0)

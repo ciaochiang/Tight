@@ -16,27 +16,11 @@ struct CreatePlanView: View {
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 28) {
-                PlanNameView().horizontalSpacing(.leading)
+                PlanNameTextfieldView(name: $planName).horizontalSpacing(.leading)
                 CreateButtonView().horizontalSpacing(.leading)
             }
             .padding()
             .veriticalSpacing(.bottom)
-        }
-    }
-    
-    @ViewBuilder
-    func PlanNameView() -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Plan Name")
-                .font(.caption)
-                .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
-            
-            TextField("New Plan", text: $planName)
-                .padding(.vertical, 12)
-                .padding(.horizontal, 16)
-                .foregroundColor(Color.themeStyle.theme.primaryTextColor)
-                .background(Color.themeStyle.theme.background)
-                .cornerRadius(10)
         }
     }
     
