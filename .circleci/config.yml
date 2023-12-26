@@ -2,25 +2,34 @@
 # See: https://circleci.com/docs/configuration-reference
 version: 2.1
 
+orbs:
+  ruby: circleci/ruby@1.2.0
+
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/configuration-reference/#executor-job
-    docker:
-      - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/configuration-reference/#steps
+  build:
+    macos:
+      xcode: "15.1.0"
+    environment:
+      FL_OUTPUT_DIR: output
+      FASTLANE_UNIT_TEST_LANE: tests
+    working_directory: ~/project
+    shell: /bin/bash --login -o pipefail
     steps:
       - checkout
+      - ruby/install-deps
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+        name: Fastlane Run Test
+        command: bundle exec fastlane $FASTLANE_UNIT_TEST_LANE
+      - store_artifacts:
+        path: output
+      - store_test_results:
+        path: output/scan
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
-  say-hello-workflow:
+  test-workflow:
     jobs:
-      - say-hello
+      - build

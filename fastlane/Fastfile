@@ -17,9 +17,18 @@ default_platform(:ios)
 
 platform :ios do
   desc "Push a new beta build to TestFlight"
+
+  before_all do
+    setup_circle_ci
+  end
+
   lane :beta do
     increment_build_number(xcodeproj: "Motic.xcodeproj")
     build_app(scheme: "Motic")
     upload_to_testflight
+  end
+
+  lane :tests do
+    run_tests(scheme: "MoticTests")
   end
 end
