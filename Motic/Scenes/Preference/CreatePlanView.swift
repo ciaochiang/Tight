@@ -11,8 +11,7 @@ import SwiftData
 struct CreatePlanView: View {
     @Environment(\.modelContext) private var context: ModelContext
     @Environment(\.dismiss) private var dismiss
-    @State var planName: String = ""
-    @State var tags: [String] = []
+    @State private var planName: String = ""
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 28) {
@@ -21,12 +20,22 @@ struct CreatePlanView: View {
             }
             .padding()
             .veriticalSpacing(.bottom)
+            .navigationTitle("New Plan")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                Button(action: {
+                    dismiss()
+                }) {
+                    Label("Close", systemImage: "xmark")
+                }
+                .tint(Color.themeStyle.theme.primary)
+            }
         }
     }
     
     @ViewBuilder
     func TagsTextFieldView() -> some View {
-        VStack(alignment: .leading, spacing: 8) {
+        Form {
             Text("Tags")
                 .font(.caption)
                 .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
@@ -36,6 +45,7 @@ struct CreatePlanView: View {
                 .padding(.horizontal, 16)
                 .background(.white.shadow(.drop(color: .black.opacity(0.25), radius: 2)), in: .rect(cornerRadius: 10))
         }
+
     }
     
     @ViewBuilder

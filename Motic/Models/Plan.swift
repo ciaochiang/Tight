@@ -10,6 +10,7 @@ import SwiftData
 
 @Model
 class Plan: Identifiable {
+    @Attribute(.unique) var id: UUID
     var name: String
     var arrangedExercises: [ArrangedExercise]
     var startDate: Date
@@ -21,16 +22,18 @@ class Plan: Identifiable {
     var tags: [String]
     var isPreset: Bool
     
-    init(name: String, 
+    init(id: UUID = UUID(),
+         name: String,
          arrangedExercises: [ArrangedExercise],
          startDate: Date,
          endDate: Date? = nil,
          repeats: [Int],
-         duration: TimeInterval,
+         duration: Double,
          updatedDate: Date,
          createdDate: Date,
          tags: [String],
          isPreset: Bool) {
+        self.id = id
         self.name = name
         self.arrangedExercises = arrangedExercises
         self.startDate = startDate

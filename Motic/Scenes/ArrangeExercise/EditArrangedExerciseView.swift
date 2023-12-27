@@ -10,9 +10,8 @@ import SwiftUI
 struct EditArrangedExerciseView: View {
     @Environment(\.dismiss) private var dismiss
     @Bindable var arrangedExercise: ArrangedExercise
-    
-    /// View Properties
     @State private var isPresented: Bool = false
+    var isPlanMode: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -33,6 +32,31 @@ struct EditArrangedExerciseView: View {
                 })
                     .presentationDetents([.large])
             })
+            .navigationTitle(arrangedExercise.exercise.name)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                if !isPlanMode {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button(action: {
+                            arrangedExercise.isCompleted.toggle()
+                            dismiss()
+                        }) {
+                            Label("Check", systemImage: arrangedExercise.isCompleted ? "checkmark.circle.fill" : "checkmark.circle")
+                        }
+                        .tint(arrangedExercise.isCompleted ? Color.themeStyle.theme.green : Color.gray)
+                    }
+                }
+
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Label("Close", systemImage: "xmark")
+                    }
+                    .tint(Color.themeStyle.theme.primary)
+                }
+            }
         }
     }
 }

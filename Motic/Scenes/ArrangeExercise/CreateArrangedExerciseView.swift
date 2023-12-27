@@ -57,6 +57,16 @@ struct CreateArrangedExerciseView: View {
                 })
                     .presentationDetents([.large])
             })
+            .navigationTitle("Add Exericse")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                Button(action: {
+                    dismiss()
+                }) {
+                    Label("Close", systemImage: "xmark")
+                }
+                .tint(Color.themeStyle.theme.primary)
+            }
         }
     }
     
@@ -68,7 +78,7 @@ struct CreateArrangedExerciseView: View {
             completion?(arrangedExercise)
             dismiss()
         }) {
-            Text("Add Exercise")
+            Text("Add")
                 .font(.title3)
                 .fontWeight(.semibold)
                 .textScale(.secondary)

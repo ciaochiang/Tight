@@ -33,13 +33,13 @@ struct PlanManagementView: View {
             .sheet(isPresented: $isAdding, content: {
                 CreatePlanView()
                     .presentationDetents([.height(200)])
-                    .presentationCornerRadius(30)
+                    .presentationCornerRadius(16)
 
             })
             .sheet(item: $planToEdit) { plan in
                 EditPlanView(plan: plan)
                     .presentationDetents([.height(120)])
-                    .presentationCornerRadius(30)
+                    .presentationCornerRadius(16)
             }
         }
     }

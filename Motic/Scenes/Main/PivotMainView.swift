@@ -65,12 +65,12 @@ struct PivotMainView: View {
                 viewModel.reloadArrangedExercises()
             })
             .presentationDetents([.height(400)])
-            .presentationCornerRadius(30)
+            .presentationCornerRadius(16)
         })
         .sheet(item: $exerciseToEdit) { exercise in
             EditArrangedExerciseView(arrangedExercise: exercise)
-                .presentationDetents([.height(300)])
-                .presentationCornerRadius(30)
+                .presentationDetents([.height(340)])
+                .presentationCornerRadius(16)
         }
         .sheet(isPresented: $isImporting, content: {
             PlanManagementView(isImporting: true) { plan in

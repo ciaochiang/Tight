@@ -10,6 +10,7 @@ import SwiftData
 
 @Model
 class ArrangedExercise: Identifiable {
+    @Attribute(.unique) var id: UUID
     var exercise: Exercise
     var repetitions: Double
     var sets: Double
@@ -20,7 +21,8 @@ class ArrangedExercise: Identifiable {
     var tags: [String]
     var isCompleted: Bool
     
-    init(exercise: Exercise, 
+    init(id: UUID = .init(),
+         exercise: Exercise,
          repetitions: Double,
          sets: Double,
          weight: Double,
@@ -29,6 +31,7 @@ class ArrangedExercise: Identifiable {
          order: Int,
          tags: [String],
          isCompleted: Bool) {
+        self.id = id
         self.exercise = exercise
         self.repetitions = repetitions
         self.sets = sets

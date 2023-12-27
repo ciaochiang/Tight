@@ -32,12 +32,12 @@ struct EditPlanPresetView: View {
                     exercises = plan.arrangedExercises.sorted { $0.order < $1.order }
                 })
                     .presentationDetents([.height(400)])
-                    .presentationCornerRadius(30)
+                    .presentationCornerRadius(16)
             })
             .sheet(item: $exerciseToEdit) { exercise in
-                EditArrangedExerciseView(arrangedExercise: exercise)
-                    .presentationDetents([.height(300)])
-                    .presentationCornerRadius(30)
+                EditArrangedExerciseView(arrangedExercise: exercise, isPlanMode: true)
+                    .presentationDetents([.height(340)])
+                    .presentationCornerRadius(16)
             }
             .toolbar {
                 Button(action: {

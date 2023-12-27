@@ -10,14 +10,22 @@ import SwiftData
 
 @Model
 class Tag: Identifiable {
-    @Attribute(.unique) var name: String
+    @Attribute(.unique) var id: UUID
+    var name: String
     var colourR: Double
     var colourG: Double
     var colourB: Double
     var colourA: Double
     var isInitial: Bool
     
-    init(name: String, colourR: Double, colourG: Double, colourB: Double, colourA: Double, isInitial: Bool = false) {
+    init(id: UUID = .init(),
+         name: String, 
+         colourR: Double,
+         colourG: Double,
+         colourB: Double,
+         colourA: Double,
+         isInitial: Bool = false) {
+        self.id = id
         self.name = name
         self.colourR = colourR
         self.colourG = colourG

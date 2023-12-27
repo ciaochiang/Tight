@@ -14,10 +14,21 @@ struct EditPlanView: View {
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 28) {
-                PlanNameTextfieldView(name: $plan.name).horizontalSpacing(.leading)
+                PlanNameTextfieldView(name: $plan.name)
+                    .horizontalSpacing(.leading)
             }
             .padding()
             .veriticalSpacing(.bottom)
+            .navigationTitle("Edit Plan")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                Button(action: {
+                    dismiss()
+                }) {
+                    Label("Close", systemImage: "xmark")
+                }
+                .tint(Color.themeStyle.theme.primary)
+            }
         }
     }
     
@@ -32,12 +43,14 @@ struct EditPlanView: View {
                 .padding(.vertical, 12)
                 .padding(.horizontal, 16)
                 .background(.white.shadow(.drop(color: .black.opacity(0.25), radius: 2)), in: .rect(cornerRadius: 10))
+
         }
     }
 }
 
 struct PlanNameTextfieldView: View {
     @Binding var name: String
+    @FocusState private var isFocused
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -51,6 +64,13 @@ struct PlanNameTextfieldView: View {
                 .foregroundColor(Color.themeStyle.theme.primaryTextColor)
                 .background(Color.themeStyle.theme.background)
                 .cornerRadius(10)
+                .focused($isFocused)
+                .autocorrectionDisabled()
+                .onAppear {
+                    DispatchQueue.main.asyncAfter(deadline: .now()) {
+                        self.isFocused = true
+                    }
+                }
         }
     }
 }
