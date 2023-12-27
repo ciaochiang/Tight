@@ -8,8 +8,31 @@
 import Foundation
 import SwiftUI
 
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
+
 extension Color {
-  static let themeStyle: ColorThemeStyle = .main
+    static let themeStyle: ColorThemeStyle = .main
+    
+    var components: (r: Double, g: Double, b: Double, a: Double) {
+        #if canImport(UIKit)
+        typealias NativeColor = UIColor
+        #elseif canImport(AppKit)
+        typealias NativeColor = NSColor
+        #endif
+        
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
+        
+        guard NativeColor(self).getRed(&r, green: &g, blue: &b, alpha: &a) else { return (0,0,0,0) }
+        
+        return (Double(r), Double(g), Double(b), Double(a))
+    }
 }
 
 enum ColorThemeStyle {

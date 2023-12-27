@@ -60,6 +60,9 @@
 		E5381D142B39C2EE004BA1E9 /* CreatePlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5381D132B39C2EE004BA1E9 /* CreatePlanView.swift */; };
 		E5381D162B39C335004BA1E9 /* PlanCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5381D152B39C335004BA1E9 /* PlanCard.swift */; };
 		E5381D182B3B343F004BA1E9 /* EditPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5381D172B3B343F004BA1E9 /* EditPlanView.swift */; };
+		E5381D1A2B3C093A004BA1E9 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5381D192B3C093A004BA1E9 /* Tag.swift */; };
+		E5381D1C2B3C1334004BA1E9 /* TagTextfieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5381D1B2B3C1334004BA1E9 /* TagTextfieldView.swift */; };
+		E5381D1E2B3C2588004BA1E9 /* TagLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5381D1D2B3C2588004BA1E9 /* TagLayout.swift */; };
 		E53CA8A62ADA550A0009D572 /* WearableDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53CA8A52ADA550A0009D572 /* WearableDeviceManager.swift */; };
 		E53CA8AB2ADBD0180009D572 /* WearableDeviceMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53CA8AA2ADBD0180009D572 /* WearableDeviceMainView.swift */; };
 		E53CA8AD2ADBD02A0009D572 /* WearableDeviceMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53CA8AC2ADBD02A0009D572 /* WearableDeviceMainViewModel.swift */; };
@@ -225,6 +228,9 @@
 		E5381D132B39C2EE004BA1E9 /* CreatePlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlanView.swift; sourceTree = "<group>"; };
 		E5381D152B39C335004BA1E9 /* PlanCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanCard.swift; sourceTree = "<group>"; };
 		E5381D172B3B343F004BA1E9 /* EditPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPlanView.swift; sourceTree = "<group>"; };
+		E5381D192B3C093A004BA1E9 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		E5381D1B2B3C1334004BA1E9 /* TagTextfieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTextfieldView.swift; sourceTree = "<group>"; };
+		E5381D1D2B3C2588004BA1E9 /* TagLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagLayout.swift; sourceTree = "<group>"; };
 		E53CA8A52ADA550A0009D572 /* WearableDeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WearableDeviceManager.swift; sourceTree = "<group>"; };
 		E53CA8AA2ADBD0180009D572 /* WearableDeviceMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WearableDeviceMainView.swift; sourceTree = "<group>"; };
 		E53CA8AC2ADBD02A0009D572 /* WearableDeviceMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WearableDeviceMainViewModel.swift; sourceTree = "<group>"; };
@@ -538,6 +544,7 @@
 			children = (
 				E5215E432B39948D0011E4FF /* Plan.swift */,
 				E5215E452B3994E90011E4FF /* ArrangedExercise.swift */,
+				E5381D192B3C093A004BA1E9 /* Tag.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -738,6 +745,8 @@
 				E5381D132B39C2EE004BA1E9 /* CreatePlanView.swift */,
 				E5381D152B39C335004BA1E9 /* PlanCard.swift */,
 				E5381D172B3B343F004BA1E9 /* EditPlanView.swift */,
+				E5381D1B2B3C1334004BA1E9 /* TagTextfieldView.swift */,
+				E5381D1D2B3C2588004BA1E9 /* TagLayout.swift */,
 			);
 			path = Preference;
 			sourceTree = "<group>";
@@ -1084,16 +1093,19 @@
 				E5C95E592B316CA500518A0A /* ExerciseItem.swift in Sources */,
 				E5215E462B3994E90011E4FF /* ArrangedExercise.swift in Sources */,
 				E59EB85D2AB6B4150057F630 /* Logger.swift in Sources */,
+				E5381D1E2B3C2588004BA1E9 /* TagLayout.swift in Sources */,
 				E5215E502B39BD400011E4FF /* ExerciseRestIntervalSliderViewComponent.swift in Sources */,
 				E5C95E5C2B31767200518A0A /* ExericisePreferenceView.swift in Sources */,
 				E59EB84D2AB5E29F0057F630 /* HealthStoreManager.swift in Sources */,
 				E552B6592B330E7900AF9F20 /* View+Extension.swift in Sources */,
+				E5381D1A2B3C093A004BA1E9 /* Tag.swift in Sources */,
 				E5215E482B39BC3E0011E4FF /* EditArrangedExerciseView.swift in Sources */,
 				E56A55CB2AB2BC7100A35BF3 /* MainView.swift in Sources */,
 				E51DE1EE2AB8998E00957395 /* Color+Extension.swift in Sources */,
 				E552B6572B32CA7C00AF9F20 /* PivotMainView.swift in Sources */,
 				E521001F2AB74D13000CF3AD /* AccountManager.swift in Sources */,
 				E5AB33EB2AC47764004B8973 /* AppTabBarView.swift in Sources */,
+				E5381D1C2B3C1334004BA1E9 /* TagTextfieldView.swift in Sources */,
 				E51DE20E2AC0546700957395 /* PreferenceManager.swift in Sources */,
 				E5215E442B39948D0011E4FF /* Plan.swift in Sources */,
 				E51DE2302AC2BB3200957395 /* Error.swift in Sources */,
