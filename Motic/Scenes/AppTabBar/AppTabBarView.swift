@@ -34,11 +34,8 @@ struct AppTabBarView: View {
     }
 }
 
-struct AppTabBarView_Previews: PreviewProvider {
-    static var previews: some View {
-        let previewContainer = PreviewContainer([ArrangedExercise.self, Plan.self])
-        AppTabBarView(logger: Mocks.logger, experimentsProvider: Mocks.experimentProvider)
-            .modelContainer(previewContainer.container)
-        
-    }
+#Preview {
+    let previewContainer = PreviewContainer([ArrangedExercise.self, Plan.self])
+    return AppTabBarView(logger: Mocks.logger, experimentsProvider: Mocks.experimentProvider)
+        .modelContainer(previewContainer.container)
 }

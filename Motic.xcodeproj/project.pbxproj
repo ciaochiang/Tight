@@ -85,6 +85,8 @@
 		E56A55E62AB2BC7300A35BF3 /* MoticUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55E52AB2BC7300A35BF3 /* MoticUITestsLaunchTests.swift */; };
 		E58888502B3D74FB00B0188A /* TimeInterval+ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E588884F2B3D74FB00B0188A /* TimeInterval+ExtensionTests.swift */; };
 		E58888522B3D75E400B0188A /* Date+ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58888512B3D75E400B0188A /* Date+ExtensionTests.swift */; };
+		E58888542B3D7F2200B0188A /* View+ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58888532B3D7F2200B0188A /* View+ExtensionTests.swift */; };
+		E58888572B3D804600B0188A /* PivotMainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58888562B3D804600B0188A /* PivotMainViewModelTests.swift */; };
 		E58D15BB2ACAC7F3000D1918 /* ActivitySessionManager .swift in Sources */ = {isa = PBXBuildFile; fileRef = E58D15BA2ACAC7F3000D1918 /* ActivitySessionManager .swift */; };
 		E59EB8482AB58BF20057F630 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8472AB58BF20057F630 /* OnboardingView.swift */; };
 		E59EB84A2AB5934E0057F630 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8492AB5934E0057F630 /* OnboardingViewModel.swift */; };
@@ -261,6 +263,8 @@
 		E56A55F22AB2C03000A35BF3 /* Motic.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Motic.entitlements; sourceTree = "<group>"; };
 		E588884F2B3D74FB00B0188A /* TimeInterval+ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+ExtensionTests.swift"; sourceTree = "<group>"; };
 		E58888512B3D75E400B0188A /* Date+ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ExtensionTests.swift"; sourceTree = "<group>"; };
+		E58888532B3D7F2200B0188A /* View+ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ExtensionTests.swift"; sourceTree = "<group>"; };
+		E58888562B3D804600B0188A /* PivotMainViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PivotMainViewModelTests.swift; sourceTree = "<group>"; };
 		E58D15BA2ACAC7F3000D1918 /* ActivitySessionManager .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivitySessionManager .swift"; sourceTree = "<group>"; };
 		E59EB8472AB58BF20057F630 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		E59EB8492AB5934E0057F630 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
@@ -429,6 +433,7 @@
 				E51DE20B2ABEF13F00957395 /* TimeInterval+Extension.swift */,
 				E51DE2132AC1C6F400957395 /* Date+Extension.swift */,
 				E552B6582B330E7900AF9F20 /* View+Extension.swift */,
+				E58888532B3D7F2200B0188A /* View+ExtensionTests.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -571,6 +576,7 @@
 		E5381D1F2B3D6757004BA1E9 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				E58888552B3D802B00B0188A /* Scenes */,
 				E5381D262B3D69E5004BA1E9 /* Extensions */,
 				E5381D222B3D68FE004BA1E9 /* OffsetKeyTests.swift */,
 			);
@@ -680,6 +686,14 @@
 				E56A55E52AB2BC7300A35BF3 /* MoticUITestsLaunchTests.swift */,
 			);
 			path = MoticUITests;
+			sourceTree = "<group>";
+		};
+		E58888552B3D802B00B0188A /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				E58888562B3D804600B0188A /* PivotMainViewModelTests.swift */,
+			);
+			path = Scenes;
 			sourceTree = "<group>";
 		};
 		E59EB8462AB58BDD0057F630 /* Onboarding */ = {
@@ -1174,11 +1188,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E58888542B3D7F2200B0188A /* View+ExtensionTests.swift in Sources */,
 				E5381D282B3D6A08004BA1E9 /* Color+ExtensionTests.swift in Sources */,
 				E58888502B3D74FB00B0188A /* TimeInterval+ExtensionTests.swift in Sources */,
 				E5381D232B3D68FE004BA1E9 /* OffsetKeyTests.swift in Sources */,
 				E56A55DA2AB2BC7300A35BF3 /* MoticTests.swift in Sources */,
 				E58888522B3D75E400B0188A /* Date+ExtensionTests.swift in Sources */,
+				E58888572B3D804600B0188A /* PivotMainViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

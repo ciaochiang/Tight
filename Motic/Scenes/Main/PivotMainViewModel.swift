@@ -11,6 +11,7 @@ import SwiftData
 
 class PivotMainViewModel: ObservableObject {
     var context: ModelContext
+    var logger: CustomLogger
     @Published var selectedDate: Date
     @Published var currentPlan: Plan = .init(name: "", arrangedExercises: [], startDate: .init(), repeats: [], duration: 0, updatedDate: .init(), createdDate: .init(), tags: [], isPreset: false)
     
@@ -20,8 +21,9 @@ class PivotMainViewModel: ObservableObject {
     
     @Published var arrangedExercises: [ArrangedExercise] = []
 
-    init(context: ModelContext, currentDate: Date = .init()) {
+    init(context: ModelContext, logger: CustomLogger = CustomLogger(), currentDate: Date = .init()) {
         self.context = context
+        self.logger = logger
         self.selectedDate = currentDate
         self.currentPlan = getPlan(by: currentDate)
         self.arrangedExercises = self.currentPlan.arrangedExercises.sorted { $0.order < $1.order }
@@ -80,7 +82,7 @@ class PivotMainViewModel: ObservableObject {
     /// Get current plan by date
     func fetchPlan(by date: Date) -> Plan? {
         let calendar = Calendar.current
-        let startDate = calendar.startOfDay(for: selectedDate)
+        let startDate = calendar.startOfDay(for: date)
         guard let endDate = calendar.date(byAdding: .day, value: 1, to: startDate) else { return nil }
         
         let fetchDescriptor = FetchDescriptor<Plan>(predicate: #Predicate<Plan> { $0.startDate >= startDate && $0.startDate <= endDate }, sortBy: [SortDescriptor(\.createdDate, order: .reverse)])
@@ -90,7 +92,7 @@ class PivotMainViewModel: ObservableObject {
             return plans.first
         }
         catch {
-            print(error.localizedDescription)
+            logger.log(error.localizedDescription, level: .error)
             return nil
         }
     }
