@@ -21,6 +21,7 @@ struct EditPlanView: View {
             .veriticalSpacing(.bottom)
             .navigationTitle("Edit Plan")
             .navigationBarTitleDisplayMode(.inline)
+            .background(Color.themeStyle.theme.background)
             .toolbar {
                 Button(action: {
                     dismiss()

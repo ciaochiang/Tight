@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct ExercisePickerView: View {
+    @Environment(\.dismiss) private var dismiss
+    
     let title: String
+    var isManaging: Bool = false
     @State private var searchText: String = ""
 
     @State var selectedExercise: Exercise = .none
@@ -22,15 +25,13 @@ struct ExercisePickerView: View {
     
     let callback: ((Exercise) -> Void)?
     
-    
     var body: some View {
         NavigationStack {
             VStack {
                 List {
                     // Favorite Section
-                    if favorites.filter({ searchText.isEmpty || $0.name.contains(searchText)}).isEmpty == false {
-                        FavoriteExercisesView()
-                    }
+                    FavoriteExercisesView()
+
                     
                     if upperBodyExercises.isEmpty == false {
                         UpperBodyExercisesView()
@@ -63,26 +64,47 @@ struct ExercisePickerView: View {
             }
             .searchable(text: $searchText)
             .navigationTitle(title)
+            .navigationBarTitleDisplayMode(isManaging ? .automatic : .inline)
             .background(Color.themeStyle.theme.background)
+            .toolbar {
+                if !isManaging {
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Label("Close", systemImage: "xmark")
+                    }
+                    .tint(Color.themeStyle.theme.primary)
+                }
+            }
         }
     }
     
     @ViewBuilder
     func FavoriteExercisesView() -> some View {
         Section("Favorites") {
-            ForEach(favorites.filter { searchText.isEmpty || $0.name.contains(searchText) }, id: \.self) { exercise in
-                HStack {
-                    Text(exercise.name.capitalized)
-                        .fontWeight(selectedExercise == exercise ? .semibold : .none)
-                        .foregroundColor(selectedExercise == exercise ? .themeStyle.theme.accent : .themeStyle.theme.primary)
-                        .frame(height: 40)
-                        .onTapGesture {
-                            selectedExercise = exercise
-                            callback?(exercise)
-                        }
+            if favorites.isEmpty {
+                VStack {
+                    Text("No Favorite Exericses")
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .frame(height: 48)
                 }
+            } else {
+                ForEach(favorites.filter { searchText.isEmpty || $0.name.contains(searchText) }, id: \.self) { exercise in
+                    HStack {
+                        Text(exercise.name.capitalized)
+                            .fontWeight(selectedExercise == exercise ? .semibold : .none)
+                            .foregroundColor(selectedExercise == exercise ? .themeStyle.theme.accent : .themeStyle.theme.primary)
+                            .frame(height: 40)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                selectedExercise = exercise
+                                callback?(exercise)
+                            }
+                    }
+                }
+                .onDelete(perform: deleteFavorite)
             }
-            .onDelete(perform: deleteFavorite)
         }
     }
     
@@ -95,9 +117,14 @@ struct ExercisePickerView: View {
                         .fontWeight(selectedExercise == exercise ? .semibold : .none)
                         .foregroundColor(selectedExercise == exercise ? .themeStyle.theme.accent : .themeStyle.theme.primary)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(Rectangle())
                         .onTapGesture {
-                            selectedExercise = exercise
-                            callback?(exercise)
+                            if isManaging {
+                                handleFavoriteAction(exercise: exercise)
+                            } else {
+                                selectedExercise = exercise
+                                callback?(exercise)
+                            }
                         }
                     Spacer()
                     Image(systemName: favorites.contains(exercise) ? "heart.fill" : "heart")
@@ -120,9 +147,14 @@ struct ExercisePickerView: View {
                         .fontWeight(selectedExercise == exercise ? .semibold : .none)
                         .foregroundColor(selectedExercise == exercise ? .themeStyle.theme.accent : .themeStyle.theme.primary)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(Rectangle())
                         .onTapGesture {
-                            selectedExercise = exercise
-                            callback?(exercise)
+                            if isManaging {
+                                handleFavoriteAction(exercise: exercise)
+                            } else {
+                                selectedExercise = exercise
+                                callback?(exercise)
+                            }
                         }
                     Spacer()
                     Image(systemName: favorites.contains(exercise) ? "heart.fill" : "heart")
@@ -145,16 +177,20 @@ struct ExercisePickerView: View {
                         .fontWeight(selectedExercise == exercise ? .semibold : .none)
                         .foregroundColor(selectedExercise == exercise ? .themeStyle.theme.accent : .themeStyle.theme.primary)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(Rectangle())
                         .onTapGesture {
-                            selectedExercise = exercise
-                            callback?(exercise)
+                            if isManaging {
+                                handleFavoriteAction(exercise: exercise)
+                            } else {
+                                selectedExercise = exercise
+                                callback?(exercise)
+                            }
                         }
                     Spacer()
                     Image(systemName: favorites.contains(exercise) ? "heart.fill" : "heart")
                         .foregroundColor(favorites.contains(exercise) ? .themeStyle.theme.accent : .themeStyle.theme.primary)
                         .frame(width: 40, height: 40)
                         .onTapGesture {
-                            handleFavoriteAction(exercise: exercise)
                         }
                 }
             }
@@ -170,9 +206,14 @@ struct ExercisePickerView: View {
                         .fontWeight(selectedExercise == exercise ? .semibold : .none)
                         .foregroundColor(selectedExercise == exercise ? .themeStyle.theme.accent : .themeStyle.theme.primary)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(Rectangle())
                         .onTapGesture {
-                            selectedExercise = exercise
-                            callback?(exercise)
+                            if isManaging {
+                                handleFavoriteAction(exercise: exercise)
+                            } else {
+                                selectedExercise = exercise
+                                callback?(exercise)
+                            }
                         }
                     Spacer()
                     Image(systemName: favorites.contains(exercise) ? "heart.fill" : "heart")
@@ -219,5 +260,5 @@ struct ExercisePickerView: View {
 }
 
 #Preview {
-    ExercisePickerView(title: "Favorites", callback: nil)
+    ExercisePickerView(title: "Favorites", isManaging: true, callback: nil)
 }

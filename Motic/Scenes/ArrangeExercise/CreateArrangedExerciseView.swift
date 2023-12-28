@@ -59,6 +59,7 @@ struct CreateArrangedExerciseView: View {
             })
             .navigationTitle("Add Exericse")
             .navigationBarTitleDisplayMode(.inline)
+            .background(Color.themeStyle.theme.background)
             .toolbar {
                 Button(action: {
                     dismiss()

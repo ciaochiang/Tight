@@ -34,6 +34,7 @@ struct EditArrangedExerciseView: View {
             })
             .navigationTitle(arrangedExercise.exercise.name)
             .navigationBarTitleDisplayMode(.inline)
+            .background(Color.themeStyle.theme.background)
             .toolbar {
                 if !isPlanMode {
                     ToolbarItem(placement: .topBarLeading) {

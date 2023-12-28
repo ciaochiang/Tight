@@ -16,7 +16,7 @@ struct PreferenceView: View {
             VStack {
                 List {
                     Section("Exercise Preferences") {
-                        ExerciseItemView()
+                        FavoriteExeriesView()
                         PlanManagementItem()
                     }
                 }
@@ -30,9 +30,9 @@ struct PreferenceView: View {
     }
     
     @ViewBuilder
-    func ExerciseItemView() -> some View {
+    func FavoriteExeriesView() -> some View {
         HStack {
-            NavigationLink(destination: ExercisePickerView(title: "Favorites", callback: nil)) {
+            NavigationLink(destination: ExercisePickerView(title: "Favorites", isManaging: true, callback: nil)) {
                 Text("Favorites")
             }
         }

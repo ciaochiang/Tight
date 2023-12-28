@@ -22,6 +22,7 @@ struct CreatePlanView: View {
             .veriticalSpacing(.bottom)
             .navigationTitle("New Plan")
             .navigationBarTitleDisplayMode(.inline)
+            .background(Color.themeStyle.theme.background)
             .toolbar {
                 Button(action: {
                     dismiss()
