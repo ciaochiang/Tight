@@ -4,7 +4,7 @@
 *.swp
 xcuserdata/
 DerivedData/
-/*.xcodeproj/
+#/*.xcodeproj/
 /*.xcworkspace/
 /.idea/
 /*.playground/
@@ -53,6 +53,7 @@ Pods/
 # Fastlane
 /fastlane/report.xml
 /fastlane/screenshots/
+/fastlane/test_output/
 
 # Playgrounds
 /*.playground/
