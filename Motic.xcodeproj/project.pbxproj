@@ -113,8 +113,6 @@
 		E5B0DF852B06500300EC9871 /* GrowthBook-IOS in Frameworks */ = {isa = PBXBuildFile; productRef = E5B0DF842B06500300EC9871 /* GrowthBook-IOS */; };
 		E5B0DF872B06502900EC9871 /* ExperiementsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B0DF862B06502900EC9871 /* ExperiementsProvider.swift */; };
 		E5C95E592B316CA500518A0A /* ExerciseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C95E582B316CA500518A0A /* ExerciseItem.swift */; };
-		E5C95E5C2B31767200518A0A /* ExericisePreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C95E5B2B31767200518A0A /* ExericisePreferenceView.swift */; };
-		E5C95E5E2B31771600518A0A /* ExercisePreferenceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C95E5D2B31771600518A0A /* ExercisePreferenceViewModel.swift */; };
 		E5E3872F2AD542E3008A7353 /* SportSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E3872E2AD542E3008A7353 /* SportSelectorView.swift */; };
 		E5E387312AD542F0008A7353 /* SportSelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E387302AD542F0008A7353 /* SportSelectorViewModel.swift */; };
 		E5E387352AD6E016008A7353 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E387342AD6E016008A7353 /* CoreDataManager.swift */; };
@@ -291,8 +289,6 @@
 		E5B0DF812B0083BE00EC9871 /* ElapsedTimeStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElapsedTimeStatus.swift; sourceTree = "<group>"; };
 		E5B0DF862B06502900EC9871 /* ExperiementsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperiementsProvider.swift; sourceTree = "<group>"; };
 		E5C95E582B316CA500518A0A /* ExerciseItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseItem.swift; sourceTree = "<group>"; };
-		E5C95E5B2B31767200518A0A /* ExericisePreferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExericisePreferenceView.swift; sourceTree = "<group>"; };
-		E5C95E5D2B31771600518A0A /* ExercisePreferenceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisePreferenceViewModel.swift; sourceTree = "<group>"; };
 		E5E3872E2AD542E3008A7353 /* SportSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportSelectorView.swift; sourceTree = "<group>"; };
 		E5E387302AD542F0008A7353 /* SportSelectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportSelectorViewModel.swift; sourceTree = "<group>"; };
 		E5E387342AD6E016008A7353 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -605,13 +601,9 @@
 		E552B65C2B3403C500AF9F20 /* ArrangeExercise */ = {
 			isa = PBXGroup;
 			children = (
+				E58888582B3D858F00B0188A /* ExercisePickerView */,
 				E552B65D2B3403F400AF9F20 /* CreateArrangedExerciseView.swift */,
 				E5215E472B39BC3E0011E4FF /* EditArrangedExerciseView.swift */,
-				E5215E3E2B396A2F0011E4FF /* ExercisePickerView.swift */,
-				E5215E492B39BC8D0011E4FF /* ExerciseSelectorViewComponent.swift */,
-				E5215E4B2B39BCD20011E4FF /* ExerciseRepetitionSliderViewComponent.swift */,
-				E5215E4D2B39BD100011E4FF /* ExerciseSetsSliderViewComponent.swift */,
-				E5215E4F2B39BD400011E4FF /* ExerciseRestIntervalSliderViewComponent.swift */,
 			);
 			path = ArrangeExercise;
 			sourceTree = "<group>";
@@ -696,6 +688,18 @@
 			path = Scenes;
 			sourceTree = "<group>";
 		};
+		E58888582B3D858F00B0188A /* ExercisePickerView */ = {
+			isa = PBXGroup;
+			children = (
+				E5215E3E2B396A2F0011E4FF /* ExercisePickerView.swift */,
+				E5215E492B39BC8D0011E4FF /* ExerciseSelectorViewComponent.swift */,
+				E5215E4B2B39BCD20011E4FF /* ExerciseRepetitionSliderViewComponent.swift */,
+				E5215E4D2B39BD100011E4FF /* ExerciseSetsSliderViewComponent.swift */,
+				E5215E4F2B39BD400011E4FF /* ExerciseRestIntervalSliderViewComponent.swift */,
+			);
+			path = ExercisePickerView;
+			sourceTree = "<group>";
+		};
 		E59EB8462AB58BDD0057F630 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -778,8 +782,6 @@
 		E5C95E5A2B31761100518A0A /* Preference */ = {
 			isa = PBXGroup;
 			children = (
-				E5C95E5B2B31767200518A0A /* ExericisePreferenceView.swift */,
-				E5C95E5D2B31771600518A0A /* ExercisePreferenceViewModel.swift */,
 				E559BBE92B329612003D1FEC /* PreferenceView.swift */,
 				E5215E352B3859F90011E4FF /* PlanManagementView.swift */,
 				E5215E372B38D7130011E4FF /* EditPlanPresetView.swift */,
@@ -1100,7 +1102,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5B0DF802B00837900EC9871 /* MockLocations.swift in Sources */,
-				E5C95E5E2B31771600518A0A /* ExercisePreferenceViewModel.swift in Sources */,
 				E51DE2042ABDF26900957395 /* HealthStoreManager+Distance.swift in Sources */,
 				E51DE2142AC1C6F400957395 /* Date+Extension.swift in Sources */,
 				E51DE2022ABCA03C00957395 /* Mocks.swift in Sources */,
@@ -1129,7 +1130,6 @@
 				E59EB85D2AB6B4150057F630 /* Logger.swift in Sources */,
 				E5381D1E2B3C2588004BA1E9 /* TagLayout.swift in Sources */,
 				E5215E502B39BD400011E4FF /* ExerciseRestIntervalSliderViewComponent.swift in Sources */,
-				E5C95E5C2B31767200518A0A /* ExericisePreferenceView.swift in Sources */,
 				E59EB84D2AB5E29F0057F630 /* HealthStoreManager.swift in Sources */,
 				E552B6592B330E7900AF9F20 /* View+Extension.swift in Sources */,
 				E5381D1A2B3C093A004BA1E9 /* Tag.swift in Sources */,
