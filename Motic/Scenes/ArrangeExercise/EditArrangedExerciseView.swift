@@ -30,7 +30,7 @@ struct EditArrangedExerciseView: View {
                     arrangedExercise.exercise = exercise
                     isPresented.toggle()
                 })
-                    .presentationDetents([.large])
+                .presentationDetents([.large])
             })
             .navigationTitle(arrangedExercise.exercise.name)
             .navigationBarTitleDisplayMode(.inline)

@@ -21,11 +21,13 @@ struct ExerciseRestIntervalSliderViewComponent: View {
                     .font(.subheadline)
                     .fontWeight(.semibold)
                     .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
+                    .frame(width: 48, alignment: .leading)
                 
                 Slider(value: $arrangedExercise.restIntevals, in: 0...180, step: 10.0)
                     .accentColor(Color.themeStyle.theme.accent)
             }
         }
+        .frame(height: 44)
     }
 }
 #Preview {

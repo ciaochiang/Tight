@@ -25,8 +25,12 @@ struct ExerciseSelectorViewComponent: View {
                     .font(.subheadline)
                     .fontWeight(.semibold)
                     .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .contentShape(Rectangle())
             }
+            .horizontalSpacing(.leading)
         }
+        .frame(height: 44)
     }
 }
 

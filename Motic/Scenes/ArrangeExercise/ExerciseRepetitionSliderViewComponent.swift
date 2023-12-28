@@ -21,11 +21,13 @@ struct ExerciseRepetitionSliderViewComponent: View {
                     .font(.subheadline)
                     .fontWeight(.semibold)
                     .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
+                    .frame(width: 24, alignment: .leading)
                 
                 Slider(value: $arrangedExercise.repetitions, in: 1...20, step: 1.0)
                     .accentColor(Color.themeStyle.theme.accent)
             }
         }
+        .frame(height: 44)
     }
 }
 #Preview {

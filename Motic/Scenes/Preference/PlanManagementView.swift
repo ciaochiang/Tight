@@ -24,12 +24,19 @@ struct PlanManagementView: View {
                 if isImporting {
                     SelectablePlansListView()
                 } else {
-                    PlansListView()
+                    if plans.isEmpty {
+                        PlaceholderView()
+                            .veriticalSpacing(.center)
+                            .offset(y: -32)
+                    } else {
+                        PlansListView()
+                    }
                 }
             }
             .background(Color.themeStyle.theme.background)
             .veriticalSpacing(.top)
             .navigationTitle("Plans")
+            .navigationBarTitleDisplayMode(isImporting ? .inline : .automatic)
             .sheet(isPresented: $isAdding, content: {
                 CreatePlanView()
                     .presentationDetents([.height(200)])
@@ -120,6 +127,40 @@ struct PlanManagementView: View {
         .padding(.top, 16)
         .listStyle(PlainListStyle())
         .background(Color.themeStyle.theme.background)
+    }
+    
+    @ViewBuilder
+    func PlaceholderView() -> some View {
+        VStack(alignment: .center, spacing: 8) {
+            Text("No Plans")
+                .font(.title2)
+                .fontWeight(.bold)
+            Text("Start creating new plan.")
+                .font(.caption)
+                .fontWeight(.semibold)
+                .foregroundStyle(.gray)
+            
+            Button(action: {
+                isAdding.toggle()
+            }) {
+                Text("Create New Plan")
+                    .background(Color.themeStyle.theme.accent)
+                    .foregroundColor(Color.themeStyle.theme.white)
+                    .horizontalSpacing(.center)
+                    .frame(height: 44)
+            }
+            .background(Color.themeStyle.theme.accent)
+            .cornerRadius(8)
+            .padding(.horizontal, 64)
+            .padding(.top, 16)
+        }
+        .toolbar {
+            Button(action: {
+                isAdding.toggle()
+            }) {
+                Label("Add", systemImage: "plus")
+            }
+        }
     }
 }
 

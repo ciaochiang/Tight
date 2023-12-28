@@ -22,7 +22,13 @@ struct EditPlanPresetView: View {
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 8) {
-                ArrangedExercisesListView()
+                if exercises.isEmpty {
+                    PlaceholderView()
+                        .veriticalSpacing(.center)
+                        .offset(y: -32)
+                } else {
+                    ArrangedExercisesListView()
+                }
             }
             .background(Color.themeStyle.theme.background)
             .veriticalSpacing(.top)
@@ -92,6 +98,34 @@ struct EditPlanPresetView: View {
         .padding(.top, 16)
         .listStyle(PlainListStyle())
         .background(Color.themeStyle.theme.background)
+    }
+    
+    
+    @ViewBuilder
+    func PlaceholderView() -> some View {
+        VStack(alignment: .center, spacing: 8) {
+            Text("No Exercises")
+                .font(.title2)
+                .fontWeight(.bold)
+            Text("Start adding exercises to your plan.")
+                .font(.caption)
+                .fontWeight(.semibold)
+                .foregroundStyle(.gray)
+            
+            Button(action: {
+                isAdding.toggle()
+            }) {
+                Text("Add Exercise")
+                    .background(Color.themeStyle.theme.accent)
+                    .foregroundColor(Color.themeStyle.theme.white)
+                    .horizontalSpacing(.center)
+                    .frame(height: 44)
+            }
+            .background(Color.themeStyle.theme.accent)
+            .cornerRadius(8)
+            .padding(.horizontal, 64)
+            .padding(.top, 16)
+        }
     }
     
     func updateOrderNumbers() {

@@ -54,11 +54,11 @@ struct PlanNameTextfieldView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Plan Name")
+            Text("Name")
                 .font(.caption)
                 .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
             
-            TextField("New Plan", text: $name)
+            TextField("e.g. lower body, burn weight..", text: $name)
                 .padding(.vertical, 12)
                 .padding(.horizontal, 16)
                 .foregroundColor(Color.themeStyle.theme.primaryTextColor)
