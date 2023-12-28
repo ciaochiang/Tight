@@ -80,7 +80,7 @@ extension Date {
         return components1.year == components2.year &&
                components1.month == components2.month &&
                components1.day == components2.day
-}
+    } 
     
     /// Fetching Week Based  on given date
     func fetchWeek(_ date: Date = .init()) -> [Weekday] {

@@ -9,7 +9,7 @@ import Foundation
 import os
 
 class CustomLogger {
-    private var logger: Logger
+    var logger: Logger
     
     enum SubSystem {
         case `default`

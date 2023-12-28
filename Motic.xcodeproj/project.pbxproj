@@ -63,6 +63,8 @@
 		E5381D1A2B3C093A004BA1E9 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5381D192B3C093A004BA1E9 /* Tag.swift */; };
 		E5381D1C2B3C1334004BA1E9 /* TagTextfieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5381D1B2B3C1334004BA1E9 /* TagTextfieldView.swift */; };
 		E5381D1E2B3C2588004BA1E9 /* TagLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5381D1D2B3C2588004BA1E9 /* TagLayout.swift */; };
+		E5381D232B3D68FE004BA1E9 /* OffsetKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5381D222B3D68FE004BA1E9 /* OffsetKeyTests.swift */; };
+		E5381D282B3D6A08004BA1E9 /* Color+ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5381D272B3D6A08004BA1E9 /* Color+ExtensionTests.swift */; };
 		E53CA8A62ADA550A0009D572 /* WearableDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53CA8A52ADA550A0009D572 /* WearableDeviceManager.swift */; };
 		E53CA8AB2ADBD0180009D572 /* WearableDeviceMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53CA8AA2ADBD0180009D572 /* WearableDeviceMainView.swift */; };
 		E53CA8AD2ADBD02A0009D572 /* WearableDeviceMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53CA8AC2ADBD02A0009D572 /* WearableDeviceMainViewModel.swift */; };
@@ -81,6 +83,8 @@
 		E56A55DA2AB2BC7300A35BF3 /* MoticTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55D92AB2BC7300A35BF3 /* MoticTests.swift */; };
 		E56A55E42AB2BC7300A35BF3 /* MoticUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55E32AB2BC7300A35BF3 /* MoticUITests.swift */; };
 		E56A55E62AB2BC7300A35BF3 /* MoticUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A55E52AB2BC7300A35BF3 /* MoticUITestsLaunchTests.swift */; };
+		E58888502B3D74FB00B0188A /* TimeInterval+ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E588884F2B3D74FB00B0188A /* TimeInterval+ExtensionTests.swift */; };
+		E58888522B3D75E400B0188A /* Date+ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58888512B3D75E400B0188A /* Date+ExtensionTests.swift */; };
 		E58D15BB2ACAC7F3000D1918 /* ActivitySessionManager .swift in Sources */ = {isa = PBXBuildFile; fileRef = E58D15BA2ACAC7F3000D1918 /* ActivitySessionManager .swift */; };
 		E59EB8482AB58BF20057F630 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8472AB58BF20057F630 /* OnboardingView.swift */; };
 		E59EB84A2AB5934E0057F630 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59EB8492AB5934E0057F630 /* OnboardingViewModel.swift */; };
@@ -231,6 +235,8 @@
 		E5381D192B3C093A004BA1E9 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		E5381D1B2B3C1334004BA1E9 /* TagTextfieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTextfieldView.swift; sourceTree = "<group>"; };
 		E5381D1D2B3C2588004BA1E9 /* TagLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagLayout.swift; sourceTree = "<group>"; };
+		E5381D222B3D68FE004BA1E9 /* OffsetKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetKeyTests.swift; sourceTree = "<group>"; };
+		E5381D272B3D6A08004BA1E9 /* Color+ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+ExtensionTests.swift"; sourceTree = "<group>"; };
 		E53CA8A52ADA550A0009D572 /* WearableDeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WearableDeviceManager.swift; sourceTree = "<group>"; };
 		E53CA8AA2ADBD0180009D572 /* WearableDeviceMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WearableDeviceMainView.swift; sourceTree = "<group>"; };
 		E53CA8AC2ADBD02A0009D572 /* WearableDeviceMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WearableDeviceMainViewModel.swift; sourceTree = "<group>"; };
@@ -253,6 +259,8 @@
 		E56A55E32AB2BC7300A35BF3 /* MoticUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticUITests.swift; sourceTree = "<group>"; };
 		E56A55E52AB2BC7300A35BF3 /* MoticUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoticUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E56A55F22AB2C03000A35BF3 /* Motic.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Motic.entitlements; sourceTree = "<group>"; };
+		E588884F2B3D74FB00B0188A /* TimeInterval+ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+ExtensionTests.swift"; sourceTree = "<group>"; };
+		E58888512B3D75E400B0188A /* Date+ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ExtensionTests.swift"; sourceTree = "<group>"; };
 		E58D15BA2ACAC7F3000D1918 /* ActivitySessionManager .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivitySessionManager .swift"; sourceTree = "<group>"; };
 		E59EB8472AB58BF20057F630 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		E59EB8492AB5934E0057F630 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
@@ -560,6 +568,25 @@
 			path = Manager;
 			sourceTree = "<group>";
 		};
+		E5381D1F2B3D6757004BA1E9 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				E5381D262B3D69E5004BA1E9 /* Extensions */,
+				E5381D222B3D68FE004BA1E9 /* OffsetKeyTests.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		E5381D262B3D69E5004BA1E9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E5381D272B3D6A08004BA1E9 /* Color+ExtensionTests.swift */,
+				E588884F2B3D74FB00B0188A /* TimeInterval+ExtensionTests.swift */,
+				E58888512B3D75E400B0188A /* Date+ExtensionTests.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		E53CA8A72ADBCFE30009D572 /* WearableDevice */ = {
 			isa = PBXGroup;
 			children = (
@@ -640,6 +667,7 @@
 		E56A55D82AB2BC7300A35BF3 /* MoticTests */ = {
 			isa = PBXGroup;
 			children = (
+				E5381D1F2B3D6757004BA1E9 /* Utils */,
 				E56A55D92AB2BC7300A35BF3 /* MoticTests.swift */,
 			);
 			path = MoticTests;
@@ -1146,7 +1174,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5381D282B3D6A08004BA1E9 /* Color+ExtensionTests.swift in Sources */,
+				E58888502B3D74FB00B0188A /* TimeInterval+ExtensionTests.swift in Sources */,
+				E5381D232B3D68FE004BA1E9 /* OffsetKeyTests.swift in Sources */,
 				E56A55DA2AB2BC7300A35BF3 /* MoticTests.swift in Sources */,
+				E58888522B3D75E400B0188A /* Date+ExtensionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

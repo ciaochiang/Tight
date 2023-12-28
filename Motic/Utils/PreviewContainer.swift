@@ -13,8 +13,8 @@ struct PreviewContainer {
     
     init(_ types: [any PersistentModel.Type], isStoredInMemoryOnly: Bool = true) {
         let schema = Schema(types)
-        let configuation = ModelConfiguration(isStoredInMemoryOnly: isStoredInMemoryOnly)
-        self.container = try! ModelContainer(for: schema, configurations: configuation)
+        let configuration = ModelConfiguration(isStoredInMemoryOnly: isStoredInMemoryOnly)
+        self.container = try! ModelContainer(for: schema, configurations: configuration)
     }
     
     func add(items: [any PersistentModel]) {
