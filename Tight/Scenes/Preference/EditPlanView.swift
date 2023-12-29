@@ -17,8 +17,6 @@ struct EditPlanView: View {
             VStack(alignment: .leading, spacing: 16) {
                 PlanNameTextfieldView(name: $plan.name)
                     .horizontalSpacing(.leading)
-                TagsTextFieldView()
-                    .horizontalSpacing(.leading)
             }
             .padding()
             .veriticalSpacing(.bottom)

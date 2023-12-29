@@ -136,7 +136,7 @@ class PivotMainViewModel: ObservableObject {
         for exercise in plan.arrangedExercises {
             let newExercise = ArrangedExercise(exercise: exercise.exercise,
                                                repetitions: exercise.repetitions,
-                                               sets: exercise.repetitions,
+                                               sets: exercise.sets,
                                                weight: exercise.weight,
                                                durationOfSet: exercise.durationOfSet,
                                                restIntevals: exercise.restIntevals,
