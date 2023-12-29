@@ -9,6 +9,24 @@ import SwiftUI
 import SwiftData
 import FirebaseCore
 
+// MARK: Swift Data Models
+typealias Plan = TightSchemaV1.Plan
+typealias ArrangedExercise = TightSchemaV1.ArrangedExercise
+typealias Tag = TightSchemaV1.Tag
+
+// MARK: Migration Plan
+enum TightMigrationPlan: SchemaMigrationPlan {
+    static var schemas: [VersionedSchema.Type] {
+        [TightSchemaV1.self, TightSchemaV2.self]
+    }
+    
+    static var stages: [MigrationStage] {
+        []
+    }
+    
+    static let migrateV1toV2 = MigrationStage.lightweight(fromVersion: TightSchemaV1.self, toVersion: TightSchemaV2.self)
+}
+
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -29,7 +47,12 @@ struct TightApp: App {
     /// Swift data
     let container: ModelContainer = {
         let schema = Schema([ArrangedExercise.self, Plan.self])
-        let container = try! ModelContainer(for: schema, configurations: [])
+        let configuratin = ModelConfiguration()
+        
+        let container = try! ModelContainer(
+            for: schema,
+            migrationPlan: TightMigrationPlan.self,
+            configurations: [configuratin])
         return container
     }()
     

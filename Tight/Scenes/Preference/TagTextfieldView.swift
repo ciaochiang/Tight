@@ -8,7 +8,13 @@
 import SwiftUI
 
 struct TagTestView: View {
-    @State private var tags: [Tag] = []
+    @State private var tags: [Tag] = [
+        .init(name: "13243", colourR: 0, colourG: 0, colourB: 0, colourA: 0),
+        .init(name: "13243", colourR: 0, colourG: 0, colourB: 0, colourA: 0),
+        .init(name: "13243", colourR: 0, colourG: 0, colourB: 0, colourA: 0),
+        .init(name: "13243", colourR: 0, colourG: 0, colourB: 0, colourA: 0),
+        .init(name: "13243", colourR: 0, colourG: 0, colourB: 0, colourA: 0)
+    ]
 
     var body: some View {
         NavigationStack {
@@ -18,7 +24,7 @@ struct TagTestView: View {
                     .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
                     .horizontalSpacing(.leading)
                 
-                TagField(tags: $tags)
+                TagField(tags: $tags, limit: 5)
                     .horizontalSpacing(.leading)
             }
             .navigationTitle("Tag Test View")
@@ -28,35 +34,43 @@ struct TagTestView: View {
 
 struct TagField: View {
     @Binding var tags: [Tag]
+    @State var limit: Int
     
     var body: some View {
         HStack {
             TagLayout(alignment: .leading) {
                 ForEach($tags) { $tag in
                     TagView(tag: $tag, allTags: $tags)
-                        .onChange(of: tag.name) { oldValue, newValue in
-                            if newValue.last == "," {
-                                /// Removing Comma
-                                tag.name.removeLast()
-                                /// Inserting New Tag Item
-                                if !tag.name.isEmpty {
-                                    /// Safe Check
-                                    tags.append(createNewTag(value: "", isInitial: false))
-                                }
-                            }
-                        }
+                    
+                    /// Disable Manual Add Tag Function
+//                        .onChange(of: tag.name) { oldValue, newValue in
+//                            if newValue.last == "," {
+//                                /// Removing Comma
+//                                tag.name.removeLast()
+//                                
+//                                /// Safe Check
+//                                let trimmedText = tag.name.trimmingCharacters(in: .whitespacesAndNewlines)
+//                                if trimmedText.isEmpty {
+//                                    tag.name = ""
+//                                }
+//                                
+//                                /// Inserting New Tag Item
+//                                if !trimmedText.isEmpty {
+//                                    /// Safe Check
+//                                    tags.append(createNewTag(value: "", isInitial: false))
+//                                }
+//                            }
+//                        }
                 }
             }
-            .padding()
         }
-        .background(.bar, in: .rect(cornerRadius: 12))
-        .onAppear(perform: {
-            /// Initialing tag view
-            if tags.isEmpty {
-                let tag = createNewTag(value: "")
-                tags.append(tag)
-            }
-        })
+//        .onAppear(perform: {
+//            /// Initialing tag view
+//            if tags.isEmpty {
+//                let tag = createNewTag(value: "")
+//                tags.append(tag)
+//            }
+//        })
         .padding(.horizontal, 16)
     }
     
@@ -114,10 +128,11 @@ struct TagView: View {
 fileprivate struct BackSpaceListenerTextField: UIViewRepresentable {
     var hint: String = "Tag"
     @Binding var text: String
+    @State private var isOverLimit: Bool = false
     var onBackPressed: () -> ()
     
     func makeCoordinator() -> Coordinator {
-        return Coordinator(text: $text)
+        return Coordinator(text: $text, isOverLimit: $isOverLimit)
     }
     
     func makeUIView(context: Context) -> CustomTextField {
@@ -143,15 +158,19 @@ fileprivate struct BackSpaceListenerTextField: UIViewRepresentable {
     
     class Coordinator: NSObject, UITextFieldDelegate {
         @Binding var text: String
+        @Binding var isOverLimit: Bool
+        private let characterLimit = 21
         
-        init(text: Binding<String>) {
+        init(text: Binding<String>, isOverLimit: Binding<Bool>) {
             self._text = text
+            self._isOverLimit = isOverLimit
         }
         
         /// Text Change
         @objc
         func textChange(textField: UITextField) {
             text = textField.text ?? ""
+            textField.textColor = isOverLimit ? .red : .primary
             
             /// Closing on Pressing Return Button
         }
@@ -159,10 +178,22 @@ fileprivate struct BackSpaceListenerTextField: UIViewRepresentable {
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
             textField.resignFirstResponder()
         }
+        
+        // MARK: UITextFieldDelegate
+        func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+            // Calculate the new text after the replacement
+            let currentText = textField.text ?? ""
+            let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
+            
+            isOverLimit = newText.count == characterLimit
+
+            // Check if the new text exceeds the character limit
+            return newText.count <= characterLimit
+        }
     }
 }
 
-fileprivate class CustomTextField: UITextField {
+fileprivate class CustomTextField: UITextField, UITextFieldDelegate {
     open var onBackPressed: (() -> ())?
     
     override init(frame: CGRect) {

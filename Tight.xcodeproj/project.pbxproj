@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E509EA1C2B3EA53A0025E76C /* TightSchemaV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = E509EA1B2B3EA53A0025E76C /* TightSchemaV1.swift */; };
+		E509EA1E2B3EA7EA0025E76C /* TightSchemaV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E509EA1D2B3EA7EA0025E76C /* TightSchemaV2.swift */; };
 		E562D6FB2B3DA34E000775B7 /* TightApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E562D6FA2B3DA34E000775B7 /* TightApp.swift */; };
 		E562D7012B3DA34F000775B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E562D7002B3DA34F000775B7 /* Assets.xcassets */; };
 		E562D7042B3DA34F000775B7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E562D7032B3DA34F000775B7 /* Preview Assets.xcassets */; };
@@ -76,6 +78,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E509EA1B2B3EA53A0025E76C /* TightSchemaV1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TightSchemaV1.swift; sourceTree = "<group>"; };
+		E509EA1D2B3EA7EA0025E76C /* TightSchemaV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TightSchemaV2.swift; sourceTree = "<group>"; };
 		E562D6F72B3DA34E000775B7 /* Tight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E562D6FA2B3DA34E000775B7 /* TightApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TightApp.swift; sourceTree = "<group>"; };
 		E562D7002B3DA34F000775B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -255,6 +259,8 @@
 				E57FD77B2B3DAE5200696968 /* Plan.swift */,
 				E57FD7792B3DAE5200696968 /* Tag.swift */,
 				E57FD7842B3DAF7D00696968 /* Exercise.swift */,
+				E509EA1B2B3EA53A0025E76C /* TightSchemaV1.swift */,
+				E509EA1D2B3EA7EA0025E76C /* TightSchemaV2.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -510,6 +516,7 @@
 				E57FD7702B3DAE0400696968 /* OffsetKey.swift in Sources */,
 				E57FD7C62B3DB25200696968 /* UserPreference.swift in Sources */,
 				E57FD7AE2B3DB18C00696968 /* TagTextfieldView.swift in Sources */,
+				E509EA1E2B3EA7EA0025E76C /* TightSchemaV2.swift in Sources */,
 				E57FD7B92B3DB1DD00696968 /* EditArrangedExerciseView.swift in Sources */,
 				E57FD7B02B3DB18C00696968 /* PreferenceView.swift in Sources */,
 				E57FD78E2B3DB00900696968 /* AppTabBarView.swift in Sources */,
@@ -520,6 +527,7 @@
 				E562D6FB2B3DA34E000775B7 /* TightApp.swift in Sources */,
 				E57FD77E2B3DAE5200696968 /* Plan.swift in Sources */,
 				E57FD7BA2B3DB1DD00696968 /* CreateArrangedExerciseView.swift in Sources */,
+				E509EA1C2B3EA53A0025E76C /* TightSchemaV1.swift in Sources */,
 				E57FD7C22B3DB1E500696968 /* ExerciseSetsSliderViewComponent.swift in Sources */,
 				E57FD7852B3DAF7D00696968 /* Exercise.swift in Sources */,
 				E57FD7982B3DB0ED00696968 /* TabBarItemType.swift in Sources */,

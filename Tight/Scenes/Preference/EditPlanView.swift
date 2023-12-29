@@ -11,10 +11,13 @@ import SwiftData
 struct EditPlanView: View {
     @Environment(\.dismiss) private var dismiss
     @Bindable var plan: Plan
+    @State private var tags: [Tag] = []
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading, spacing: 28) {
+            VStack(alignment: .leading, spacing: 16) {
                 PlanNameTextfieldView(name: $plan.name)
+                    .horizontalSpacing(.leading)
+                TagsTextFieldView()
                     .horizontalSpacing(.leading)
             }
             .padding()
@@ -40,11 +43,7 @@ struct EditPlanView: View {
                 .font(.caption)
                 .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
                         
-            TextField("New Plan", text: $plan.name)
-                .padding(.vertical, 12)
-                .padding(.horizontal, 16)
-                .background(.white.shadow(.drop(color: .black.opacity(0.25), radius: 2)), in: .rect(cornerRadius: 10))
-
+            TagField(tags: $tags, limit: 5)
         }
     }
 }
@@ -77,5 +76,7 @@ struct PlanNameTextfieldView: View {
 }
 
 #Preview {
-    EditPlanView(plan: .init(name: "", arrangedExercises: [], startDate: .init(), endDate: .init(), repeats: [], duration: 0, updatedDate: .init(), createdDate: .init(), tags: [], isPreset: true))
+    let previewContainer = PreviewContainer([Tag.self])
+    let plan: Plan = .init(name: "", arrangedExercises: [], startDate: .init(), endDate: .init(), repeats: [], duration: 0, updatedDate: .init(), createdDate: .init(), tags: [], isPreset: true)
+    return EditPlanView(plan: plan).modelContainer(previewContainer.container)
 }
