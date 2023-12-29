@@ -14,12 +14,12 @@ class NotificationManager: ObservableObject {
     func requestNotificationAuthorization(completion: @escaping (Bool) -> ()) {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
             if granted {
-                print("Notification permission granted.")
                 self.isGranted = granted
+                self.logger.log("Notification permission granted.", level: .info)
             } else if let error = error {
-                print("Notification permission error: \(error)")
+                self.logger.log(error.localizedDescription, level: .error)
             } else {
-                print("Notification permission denied.")
+                self.logger.log("Notification permission denied.", level: .info)
             }
               
             completion(true)

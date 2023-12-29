@@ -79,6 +79,6 @@ struct PlanNameTextfieldView: View {
 
 #Preview {
     let previewContainer = PreviewContainer([Tag.self])
-    let plan: Plan = .init(name: "", arrangedExercises: [], startDate: .init(), endDate: .init(), repeats: [], duration: 0, updatedDate: .init(), createdDate: .init(), tags: [], isPreset: true)
+    let plan: Plan = .init(name: "", startDate: .init(), endDate: .init(), repeats: [], duration: 0, updatedDate: .init(), createdDate: .init(), tags: [], isPreset: true)
     return EditPlanView(plan: plan).modelContainer(previewContainer.container)
 }

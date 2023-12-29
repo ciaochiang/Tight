@@ -19,7 +19,7 @@ enum TightSchemaV2: VersionedSchema {
 extension TightSchemaV2 {
     @Model
     class Plan: Identifiable {
-        @Attribute(.unique) var id: UUID
+        @Attribute(.unique) var id: String
         var name: String
         var arrangedExercises: [ArrangedExercise]
         var startDate: Date
@@ -31,7 +31,7 @@ extension TightSchemaV2 {
         var tags: [String]
         var isPreset: Bool
         
-        init(id: UUID = UUID(),
+        init(id: String = UUID().uuidString,
              name: String,
              arrangedExercises: [ArrangedExercise],
              startDate: Date,
@@ -58,7 +58,7 @@ extension TightSchemaV2 {
     
     @Model
     class ArrangedExercise: Identifiable {
-        @Attribute(.unique) var id: UUID
+        @Attribute(.unique) var id: String
         var exercise: Exercise
         var repetitions: Double
         var sets: Double
@@ -69,7 +69,7 @@ extension TightSchemaV2 {
         var tags: [Int]
         var isCompleted: Bool
         
-        init(id: UUID = .init(),
+        init(id: String = UUID().uuidString,
              exercise: Exercise,
              repetitions: Double,
              sets: Double,
@@ -94,7 +94,7 @@ extension TightSchemaV2 {
 
     @Model
     class Tag: Identifiable {
-        @Attribute(.unique) var id: UUID
+        @Attribute(.unique) var id: String
         var name: String
         var colourR: Double
         var colourG: Double
@@ -102,7 +102,7 @@ extension TightSchemaV2 {
         var colourA: Double
         var isInitial: Bool
         
-        init(id: UUID = .init(),
+        init(id: String = UUID().uuidString,
              name: String,
              colourR: Double,
              colourG: Double,

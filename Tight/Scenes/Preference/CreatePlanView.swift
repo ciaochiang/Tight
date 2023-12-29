@@ -56,7 +56,6 @@ struct CreatePlanView: View {
         Button(action: {
             /// Save schedule exercise
             let plan = Plan(name: planName,
-                            arrangedExercises: [],
                             startDate: .init(),
                             endDate: nil,
                             repeats: [],
@@ -65,6 +64,7 @@ struct CreatePlanView: View {
                             createdDate: .init(),
                             tags: [],
                             isPreset: true)
+            
             context.insert(plan)
             dismiss()
         }) {

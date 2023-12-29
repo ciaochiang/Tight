@@ -18,10 +18,13 @@ enum TightSchemaV1: VersionedSchema {
 
 extension TightSchemaV1 {
     @Model
-    class Plan: Identifiable {
+    class Plan {
         @Attribute(.unique) var id: UUID
         var name: String
-        var arrangedExercises: [ArrangedExercise]
+        
+        @Relationship(deleteRule: .cascade)
+        var arrangedExercises = [ArrangedExercise]()
+        
         var startDate: Date
         var endDate: Date?
         var repeats: [Int]
@@ -33,7 +36,6 @@ extension TightSchemaV1 {
         
         init(id: UUID = UUID(),
              name: String,
-             arrangedExercises: [ArrangedExercise],
              startDate: Date,
              endDate: Date? = nil,
              repeats: [Int],
@@ -44,7 +46,6 @@ extension TightSchemaV1 {
              isPreset: Bool) {
             self.id = id
             self.name = name
-            self.arrangedExercises = arrangedExercises
             self.startDate = startDate
             self.endDate = endDate
             self.repeats = repeats
@@ -57,7 +58,7 @@ extension TightSchemaV1 {
     }
     
     @Model
-    class ArrangedExercise: Identifiable {
+    class ArrangedExercise {
         @Attribute(.unique) var id: UUID
         var exercise: Exercise
         var repetitions: Double
@@ -69,7 +70,7 @@ extension TightSchemaV1 {
         var tags: [Int]
         var isCompleted: Bool
         
-        init(id: UUID = .init(),
+        init(id: UUID = UUID(),
              exercise: Exercise,
              repetitions: Double,
              sets: Double,
@@ -93,7 +94,7 @@ extension TightSchemaV1 {
     }
 
     @Model
-    class Tag: Identifiable {
+    class Tag {
         @Attribute(.unique) var id: UUID
         var name: String
         var colourR: Double
@@ -102,7 +103,7 @@ extension TightSchemaV1 {
         var colourA: Double
         var isInitial: Bool
         
-        init(id: UUID = .init(),
+        init(id: UUID = UUID(),
              name: String,
              colourR: Double,
              colourG: Double,

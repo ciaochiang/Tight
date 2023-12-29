@@ -20,9 +20,9 @@ class ExperiementsProvider: ObservableObject {
                 "id": "test"
             ], trackingCallback: { experiment, experimentResult in
                 // TODO: Use your real analytics tracking system
-                print("Viewed Experiment")
-                print("Experiment Id: ", experiment.key)
-                print("Variation Id: ", experimentResult.variationId)
+//                print("Viewed Experiment")
+//                print("Experiment Id: ", experiment.key)
+//                print("Variation Id: ", experimentResult.variationId)
             }
         ).initializer()
         

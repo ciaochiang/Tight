@@ -66,6 +66,11 @@ extension Date {
         return dateFormatter.string(from: self)
     }
     
+    var today: Date {
+        let calendar = Calendar.current
+        return calendar.startOfDay(for: self)
+    }
+    
     /// Checking whether the Date is Today
     var isToday: Bool {
         return Calendar.current.isDateInToday(self)
@@ -98,7 +103,7 @@ extension Date {
                 week.append(.init(date: weekDay))
             }
         }
-        
+                
         return week
     }
     

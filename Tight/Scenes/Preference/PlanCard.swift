@@ -56,5 +56,5 @@ struct PlanCard: View {
 }
 
 #Preview {
-    PlanCard(plan: .init(name: "", arrangedExercises: [], startDate: .init(), repeats: [], duration: 0, updatedDate: .init(), createdDate: .init(), tags: [], isPreset: false))
+    PlanCard(plan: .init(name: "", startDate: .init(), repeats: [], duration: 0, updatedDate: .init(), createdDate: .init(), tags: [], isPreset: false))
 }

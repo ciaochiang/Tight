@@ -27,7 +27,7 @@ struct PivotMainView: View {
             HeaderView()
             
             ///  Scheduled exercises
-            if viewModel.currentPlan.arrangedExercises.isEmpty {
+            if viewModel.currentPlan?.arrangedExercises.isEmpty == true {
                 PlaceholderView()
                     .veriticalSpacing(.center)
                     .horizontalSpacing(.center)
@@ -59,13 +59,15 @@ struct PivotMainView: View {
             }
         })
         .sheet(isPresented: $isArrangingExercise, content: {
-            CreateArrangedExerciseView(plan: viewModel.currentPlan,
-                                       incrementalOrderNumber: viewModel.currentPlan.arrangedExercises.count,
-                                       completion: { _ in
-                viewModel.reloadArrangedExercises()
-            })
-            .presentationDetents([.height(400)])
-            .presentationCornerRadius(16)
+            if let plan = viewModel.currentPlan {
+                CreateArrangedExerciseView(plan: plan,
+                                           incrementalOrderNumber: plan.arrangedExercises.count,
+                                           completion: { _ in
+                    viewModel.reloadArrangedExercises()
+                })
+                .presentationDetents([.height(400)])
+                .presentationCornerRadius(16)
+            }
         })
         .sheet(item: $exerciseToEdit) { exercise in
             EditArrangedExerciseView(arrangedExercise: exercise)
@@ -77,11 +79,12 @@ struct PivotMainView: View {
                 viewModel.importExercises(from: plan)
             }
         })
+        .onChange(of: viewModel.currentPlan, { oldValue, newValue in
+            viewModel.reloadArrangedExercises()
+        })
         .onChange(of: viewModel.selectedDate) { oldValue, newValue in
             /// Reload current plan when date changed
-            viewModel.selectedDate = newValue
-            viewModel.currentPlan = viewModel.getPlan(by: viewModel.selectedDate)
-            viewModel.reloadArrangedExercises()
+            viewModel.currentPlan = viewModel.getPlan(by: newValue)
         }
     }
     
@@ -162,9 +165,7 @@ struct PivotMainView: View {
                 .contentShape(.rect)
                 .onTapGesture {
                     /// Updating current date
-                    withAnimation(.snappy) {
-                        viewModel.selectedDate = day.date
-                    }
+                    viewModel.selectedDate = day.date
                 }
             }
         }

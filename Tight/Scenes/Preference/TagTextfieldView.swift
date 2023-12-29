@@ -9,13 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct TagTestView: View {
-    @State private var tags: [Tag] = [
-        .init(name: "13243", colourR: 0, colourG: 0, colourB: 0, colourA: 0),
-        .init(name: "13243", colourR: 0, colourG: 0, colourB: 0, colourA: 0),
-        .init(name: "13243", colourR: 0, colourG: 0, colourB: 0, colourA: 0),
-        .init(name: "13243", colourR: 0, colourG: 0, colourB: 0, colourA: 0),
-        .init(name: "13243", colourR: 0, colourG: 0, colourB: 0, colourA: 0)
-    ]
+    @State private var tags: [Tag] = []
 
     var body: some View {
         NavigationStack {

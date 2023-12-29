@@ -97,6 +97,6 @@ struct CreateArrangedExerciseView: View {
 
 #Preview {
     let previewContainer = PreviewContainer([ArrangedExercise.self, Plan.self])
-    let plan = Plan(name: "Preview", arrangedExercises: [], startDate: .init(), repeats: [], duration: 0, updatedDate: .init(), createdDate: .init(), tags: [], isPreset: false)
+    let plan = Plan(name: "Preview", startDate: .init(), repeats: [], duration: 0, updatedDate: .init(), createdDate: .init(), tags: [], isPreset: false)
     return CreateArrangedExerciseView(plan: plan, incrementalOrderNumber: 0).modelContainer(previewContainer.container)
 }

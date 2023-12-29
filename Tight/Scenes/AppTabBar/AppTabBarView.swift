@@ -21,7 +21,8 @@ struct AppTabBarView: View {
     var body: some View {
         TabView {
             /// Create pivot main view
-            let mainViewModel = PivotMainViewModel(context: context)
+            let today = Date().today
+            let mainViewModel = PivotMainViewModel(context: context, currentDate: today)
             PivotMainView(viewModel: mainViewModel).tabItem {
                 Label("Plan", systemImage: TabBarItemType.plan.iconName)
             }
