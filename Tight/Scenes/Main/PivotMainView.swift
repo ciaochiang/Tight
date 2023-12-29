@@ -69,7 +69,7 @@ struct PivotMainView: View {
         })
         .sheet(item: $exerciseToEdit) { exercise in
             EditArrangedExerciseView(arrangedExercise: exercise)
-                .presentationDetents([.height(340)])
+                .presentationDetents([.fraction(0.7)])
                 .presentationCornerRadius(16)
         }
         .sheet(isPresented: $isImporting, content: {
@@ -200,7 +200,7 @@ struct PivotMainView: View {
                                 viewModel.deleteExercise(exercise: exercise)
                             }
                         }) {
-                            Label("Delete", systemImage: "trash")
+                            Image(systemName: "trash")
                                 .symbolVariant(/*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
                         }
                         .tint(Color.themeStyle.theme.accent)
@@ -210,10 +210,10 @@ struct PivotMainView: View {
                             /// Delete items
                             exercise.isCompleted.toggle()
                         }) {
-                            Label("Completed", systemImage: "checkmark")
+                            Image(systemName: "checkmark")
                                 .symbolVariant(/*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
                         }
-                        .tint(exercise.isCompleted ? Color.themeStyle.theme.green : Color.themeStyle.theme.secondaryTextColor)
+                        .tint(exercise.isCompleted ? Color.themeStyle.theme.secondaryAccent : Color.themeStyle.theme.secondaryTextColor)
                     }
                     .onTapGesture {
                         exerciseToEdit = exercise

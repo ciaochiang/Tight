@@ -15,7 +15,7 @@ struct ArrangedExerciseCard: View {
         /// Content
         HStack(spacing: 8) {
             Rectangle()
-                .foregroundStyle(exercise.isCompleted ? Color.themeStyle.theme.green : Color.themeStyle.theme.secondaryTextColor)
+                .foregroundStyle(exercise.isCompleted ? Color.themeStyle.theme.secondaryAccent : Color.themeStyle.theme.secondaryTextColor)
                 .frame(width: 2)
             
             ExerciseView()
@@ -30,6 +30,10 @@ struct ArrangedExerciseCard: View {
         VStack(alignment: .leading, spacing: 8) {
             ExerciseNameView()
             ExerciseDetailsView().horizontalSpacing(.leading)
+            
+            if !exercise.tags.isEmpty {
+                ExerciseTagsView().horizontalSpacing(.leading)
+            }
         }
         .horizontalSpacing(.leading)
         .padding()
@@ -59,6 +63,25 @@ struct ArrangedExerciseCard: View {
             .foregroundStyle(exercise.isCompleted ? Color.themeStyle.theme.secondaryTextColor : Color.themeStyle.theme.primaryTextColor)
             .strikethrough(exercise.isCompleted, color: Color.themeStyle.theme.secondaryTextColor)
     }
+    
+    @ViewBuilder
+    func ExerciseTagsView() -> some View {
+        HStack(spacing: 8) {
+            ForEach(exercise.tags, id: \.self) { int in
+                VStack {
+                    Text(ExerciseTag(rawValue: int)?.name ?? "")
+                        .font(.caption2)
+                        .fontWeight(.semibold)
+                        .background(.clear)
+                        .padding(.vertical, 2)
+                        .padding(.horizontal, 6)
+                        .foregroundColor(.white)
+                }
+                .background(Color.themeStyle.theme.accent)
+                .cornerRadius(4)
+            }
+        }
+    }
 }
 
 
@@ -70,7 +93,7 @@ struct ArrangedExerciseCard: View {
                                                    durationOfSet: 0,
                                                    restIntevals: 0,
                                                    order: 0,
-                                                   tags: [],
+                                                   tags: [1,2,4],
                                                    isCompleted: false)))
 }
 

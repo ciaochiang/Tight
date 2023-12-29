@@ -53,7 +53,7 @@ struct ColorTheme {
     let accent = Color("AccentColor")
     let background = Color("BackgroundColor")
     let secondaryBackground = Color("SecondaryBackgroundColor")
-    let green = Color("GreenColor")
+    let secondaryAccent = Color("SecondaryAccentColor")
     let primaryTextColor = Color("PrimaryTextColor")
     let secondaryTextColor = Color("SecondaryTextColor")
 }

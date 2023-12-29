@@ -61,12 +61,14 @@ struct CreateArrangedExerciseView: View {
             .navigationBarTitleDisplayMode(.inline)
             .background(Color.themeStyle.theme.background)
             .toolbar {
-                Button(action: {
-                    dismiss()
-                }) {
-                    Label("Close", systemImage: "xmark")
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Label("Close", systemImage: "xmark")
+                    }
+                    .tint(Color.themeStyle.theme.primary)
                 }
-                .tint(Color.themeStyle.theme.primary)
             }
         }
     }

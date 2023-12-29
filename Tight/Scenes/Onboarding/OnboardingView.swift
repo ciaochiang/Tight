@@ -40,6 +40,13 @@ struct OnboardingView: View {
                 .padding(.bottom, 16)
         }
         .background(Color.themeStyle.theme.white)
+        .onChange(of: viewModel.currentIndex) { oldValue, newValue in
+            switch newValue {
+            case 0: viewModel.state = .welcome
+            case 1: viewModel.state = .requestNotificationPermission
+            default: break
+            }
+        }
       
 //      VStack {
         // Content
@@ -114,13 +121,13 @@ extension OnboardingView {
 struct OnboadingWelcomView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Oasis")
+            Text("Tight")
                 .font(.largeTitle)
                 .fontWeight(.heavy)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .foregroundColor(Color.themeStyle.theme.accent)
             
-            Text("your best fitness assistant")
+            Text("your perosnal fitness assistant")
                 .font(.body)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .foregroundColor(Color.themeStyle.theme.black)

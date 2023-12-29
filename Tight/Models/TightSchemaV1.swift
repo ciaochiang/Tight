@@ -66,7 +66,7 @@ extension TightSchemaV1 {
         var durationOfSet: TimeInterval
         var restIntevals: TimeInterval
         var order: Int
-        var tags: [String]
+        var tags: [Int]
         var isCompleted: Bool
         
         init(id: UUID = .init(),
@@ -77,7 +77,7 @@ extension TightSchemaV1 {
              durationOfSet: TimeInterval,
              restIntevals: TimeInterval,
              order: Int,
-             tags: [String],
+             tags: [Int],
              isCompleted: Bool) {
             self.id = id
             self.exercise = exercise

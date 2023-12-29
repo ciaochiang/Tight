@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E509EA1C2B3EA53A0025E76C /* TightSchemaV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = E509EA1B2B3EA53A0025E76C /* TightSchemaV1.swift */; };
 		E509EA1E2B3EA7EA0025E76C /* TightSchemaV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E509EA1D2B3EA7EA0025E76C /* TightSchemaV2.swift */; };
+		E509EA202B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E509EA1F2B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift */; };
 		E562D6FB2B3DA34E000775B7 /* TightApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E562D6FA2B3DA34E000775B7 /* TightApp.swift */; };
 		E562D7012B3DA34F000775B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E562D7002B3DA34F000775B7 /* Assets.xcassets */; };
 		E562D7042B3DA34F000775B7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E562D7032B3DA34F000775B7 /* Preview Assets.xcassets */; };
@@ -24,9 +25,6 @@
 		E57FD7732B3DAE0400696968 /* MockLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD76D2B3DAE0300696968 /* MockLocations.swift */; };
 		E57FD7752B3DAE0400696968 /* PreviewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD76F2B3DAE0300696968 /* PreviewContainer.swift */; };
 		E57FD7772B3DAE3B00696968 /* ExperiementsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7762B3DAE3B00696968 /* ExperiementsProvider.swift */; };
-		E57FD77C2B3DAE5200696968 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7792B3DAE5200696968 /* Tag.swift */; };
-		E57FD77D2B3DAE5200696968 /* ArrangedExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD77A2B3DAE5200696968 /* ArrangedExercise.swift */; };
-		E57FD77E2B3DAE5200696968 /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD77B2B3DAE5200696968 /* Plan.swift */; };
 		E57FD7852B3DAF7D00696968 /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7842B3DAF7D00696968 /* Exercise.swift */; };
 		E57FD7892B3DAFEB00696968 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7872B3DAFEB00696968 /* OnboardingViewModel.swift */; };
 		E57FD78A2B3DAFEB00696968 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7882B3DAFEB00696968 /* OnboardingView.swift */; };
@@ -80,6 +78,7 @@
 /* Begin PBXFileReference section */
 		E509EA1B2B3EA53A0025E76C /* TightSchemaV1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TightSchemaV1.swift; sourceTree = "<group>"; };
 		E509EA1D2B3EA7EA0025E76C /* TightSchemaV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TightSchemaV2.swift; sourceTree = "<group>"; };
+		E509EA1F2B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseTagPickerViewComponent.swift; sourceTree = "<group>"; };
 		E562D6F72B3DA34E000775B7 /* Tight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E562D6FA2B3DA34E000775B7 /* TightApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TightApp.swift; sourceTree = "<group>"; };
 		E562D7002B3DA34F000775B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -96,9 +95,6 @@
 		E57FD76D2B3DAE0300696968 /* MockLocations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLocations.swift; sourceTree = "<group>"; };
 		E57FD76F2B3DAE0300696968 /* PreviewContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewContainer.swift; sourceTree = "<group>"; };
 		E57FD7762B3DAE3B00696968 /* ExperiementsProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperiementsProvider.swift; sourceTree = "<group>"; };
-		E57FD7792B3DAE5200696968 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
-		E57FD77A2B3DAE5200696968 /* ArrangedExercise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrangedExercise.swift; sourceTree = "<group>"; };
-		E57FD77B2B3DAE5200696968 /* Plan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plan.swift; sourceTree = "<group>"; };
 		E57FD7842B3DAF7D00696968 /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
 		E57FD7872B3DAFEB00696968 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		E57FD7882B3DAFEB00696968 /* OnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -255,9 +251,6 @@
 		E57FD7782B3DAE4600696968 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E57FD77A2B3DAE5200696968 /* ArrangedExercise.swift */,
-				E57FD77B2B3DAE5200696968 /* Plan.swift */,
-				E57FD7792B3DAE5200696968 /* Tag.swift */,
 				E57FD7842B3DAF7D00696968 /* Exercise.swift */,
 				E509EA1B2B3EA53A0025E76C /* TightSchemaV1.swift */,
 				E509EA1D2B3EA7EA0025E76C /* TightSchemaV2.swift */,
@@ -349,6 +342,7 @@
 				E57FD7BE2B3DB1E500696968 /* ExerciseRestIntervalSliderViewComponent.swift */,
 				E57FD7BC2B3DB1E500696968 /* ExerciseSelectorViewComponent.swift */,
 				E57FD7BD2B3DB1E500696968 /* ExerciseSetsSliderViewComponent.swift */,
+				E509EA1F2B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift */,
 			);
 			path = ExercisePickerView;
 			sourceTree = "<group>";
@@ -505,13 +499,12 @@
 				E57FD7902B3DB04400696968 /* NotificationManager.swift in Sources */,
 				E57FD7A32B3DB13F00696968 /* Color+Extension.swift in Sources */,
 				E57FD7AF2B3DB18C00696968 /* PlanManagementView.swift in Sources */,
-				E57FD77D2B3DAE5200696968 /* ArrangedExercise.swift in Sources */,
 				E57FD7682B3DADCC00696968 /* Logger.swift in Sources */,
 				E57FD7942B3DB0BE00696968 /* ArrangedExerciseCard.swift in Sources */,
 				E57FD7962B3DB0BE00696968 /* PivotMainViewModel.swift in Sources */,
+				E509EA202B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift in Sources */,
 				E57FD7A22B3DB13F00696968 /* Date+Extension.swift in Sources */,
 				E57FD78A2B3DAFEB00696968 /* OnboardingView.swift in Sources */,
-				E57FD77C2B3DAE5200696968 /* Tag.swift in Sources */,
 				E57FD7952B3DB0BE00696968 /* PivotMainView.swift in Sources */,
 				E57FD7702B3DAE0400696968 /* OffsetKey.swift in Sources */,
 				E57FD7C62B3DB25200696968 /* UserPreference.swift in Sources */,
@@ -525,7 +518,6 @@
 				E57FD7712B3DAE0400696968 /* Error.swift in Sources */,
 				E57FD7AD2B3DB18C00696968 /* TagLayout.swift in Sources */,
 				E562D6FB2B3DA34E000775B7 /* TightApp.swift in Sources */,
-				E57FD77E2B3DAE5200696968 /* Plan.swift in Sources */,
 				E57FD7BA2B3DB1DD00696968 /* CreateArrangedExerciseView.swift in Sources */,
 				E509EA1C2B3EA53A0025E76C /* TightSchemaV1.swift in Sources */,
 				E57FD7C22B3DB1E500696968 /* ExerciseSetsSliderViewComponent.swift in Sources */,

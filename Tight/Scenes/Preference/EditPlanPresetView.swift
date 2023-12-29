@@ -42,7 +42,7 @@ struct EditPlanPresetView: View {
             })
             .sheet(item: $exerciseToEdit) { exercise in
                 EditArrangedExerciseView(arrangedExercise: exercise, isPlanMode: true)
-                    .presentationDetents([.height(340)])
+                    .presentationDetents([.fraction(0.7)])
                     .presentationCornerRadius(16)
             }
             .toolbar {

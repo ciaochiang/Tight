@@ -17,7 +17,7 @@ typealias Tag = TightSchemaV1.Tag
 // MARK: Migration Plan
 enum TightMigrationPlan: SchemaMigrationPlan {
     static var schemas: [VersionedSchema.Type] {
-        [TightSchemaV1.self, TightSchemaV2.self]
+        [TightSchemaV1.self]
     }
     
     static var stages: [MigrationStage] {
@@ -32,7 +32,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
 
-        
         return true
     }
 }

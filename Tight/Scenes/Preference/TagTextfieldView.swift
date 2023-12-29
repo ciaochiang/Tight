@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct TagTestView: View {
     @State private var tags: [Tag] = [
@@ -32,6 +33,42 @@ struct TagTestView: View {
     }
 }
 
+struct ExerciseTagListView: View {
+    @State var allTags: [ExerciseTag] = ExerciseTag.allCases
+    @Binding var selectedTags: [Int]
+    var limit: Int = 3
+
+    var body: some View {
+        HStack {
+            TagLayout(alignment: .leading) {
+                ForEach(allTags, id: \.self) { tag in
+                    VStack {
+                        Text(tag.name)
+                            .font(.caption)
+                            .fontWeight(.semibold)
+                            .background(.clear)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 16)
+                            .foregroundColor(selectedTags.contains(tag.rawValue) ? .white : Color.themeStyle.theme.secondaryTextColor)
+                            
+                    }
+                    .background(selectedTags.contains(tag.rawValue) ? Color.themeStyle.theme.accent : .clear)
+                    .cornerRadius(4)
+                    .onTapGesture {
+                        if selectedTags.contains(tag.rawValue) {
+                            selectedTags.removeAll(where: { $0 == tag.rawValue })
+                        } else {
+                            if selectedTags.count < limit {
+                                selectedTags.append(tag.rawValue)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 struct TagField: View {
     @Binding var tags: [Tag]
     @State var limit: Int
@@ -43,24 +80,24 @@ struct TagField: View {
                     TagView(tag: $tag, allTags: $tags)
                     
                     /// Disable Manual Add Tag Function
-//                        .onChange(of: tag.name) { oldValue, newValue in
-//                            if newValue.last == "," {
-//                                /// Removing Comma
-//                                tag.name.removeLast()
-//                                
-//                                /// Safe Check
-//                                let trimmedText = tag.name.trimmingCharacters(in: .whitespacesAndNewlines)
-//                                if trimmedText.isEmpty {
-//                                    tag.name = ""
-//                                }
-//                                
-//                                /// Inserting New Tag Item
-//                                if !trimmedText.isEmpty {
-//                                    /// Safe Check
-//                                    tags.append(createNewTag(value: "", isInitial: false))
-//                                }
-//                            }
-//                        }
+                        .onChange(of: tag.name) { oldValue, newValue in
+                            if newValue.last == "," {
+                                /// Removing Comma
+                                tag.name.removeLast()
+                                
+                                /// Safe Check
+                                let trimmedText = tag.name.trimmingCharacters(in: .whitespacesAndNewlines)
+                                if trimmedText.isEmpty {
+                                    tag.name = ""
+                                }
+                                
+                                /// Inserting New Tag Item
+                                if !trimmedText.isEmpty {
+                                    /// Safe Check
+                                    tags.append(createNewTag(value: "", isInitial: false))
+                                }
+                            }
+                        }
                 }
             }
         }

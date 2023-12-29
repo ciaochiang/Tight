@@ -20,6 +20,8 @@ struct EditArrangedExerciseView: View {
                 ExerciseRepetitionSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
                 ExerciseSetsSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
                 ExerciseRestIntervalSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
+                ExerciseTagPickerViewComponent(arrangedExercise: arrangedExercise)
+                    .horizontalSpacing(.leading)
             }
             .padding()
             .veriticalSpacing(.bottom)
@@ -37,19 +39,19 @@ struct EditArrangedExerciseView: View {
             .background(Color.themeStyle.theme.background)
             .toolbar {
                 if !isPlanMode {
-                    ToolbarItem(placement: .topBarLeading) {
+                    ToolbarItem(placement: .topBarTrailing) {
                         Button(action: {
                             arrangedExercise.isCompleted.toggle()
                             dismiss()
                         }) {
                             Label("Check", systemImage: arrangedExercise.isCompleted ? "checkmark.circle.fill" : "checkmark.circle")
                         }
-                        .tint(arrangedExercise.isCompleted ? Color.themeStyle.theme.green : Color.gray)
+                        .tint(arrangedExercise.isCompleted ? Color.themeStyle.theme.secondaryAccent : Color.gray)
                     }
                 }
 
                 
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .topBarLeading) {
                     Button(action: {
                         dismiss()
                     }) {
@@ -64,5 +66,6 @@ struct EditArrangedExerciseView: View {
 
 
 #Preview {
-    EditArrangedExerciseView(arrangedExercise: .init(exercise: .none, repetitions: 0, sets: 0, weight: 0, durationOfSet: 0, restIntevals: 0, order: 0, tags: [], isCompleted: false))
+    let previewContainer = PreviewContainer([ArrangedExercise.self])
+    return EditArrangedExerciseView(arrangedExercise: .init(exercise: .none, repetitions: 0, sets: 0, weight: 0, durationOfSet: 0, restIntevals: 0, order: 0, tags: [], isCompleted: false)).modelContainer(previewContainer.container)
 }
