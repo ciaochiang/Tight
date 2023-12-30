@@ -56,6 +56,8 @@
 		E57FD7C62B3DB25200696968 /* UserPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7C52B3DB25200696968 /* UserPreference.swift */; };
 		E57FD7CC2B3DC6BE00696968 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E57FD7CB2B3DC6BE00696968 /* LaunchScreen.storyboard */; };
 		E57FD7CE2B3DD47600696968 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E57FD7CD2B3DD47600696968 /* GoogleService-Info.plist */; };
+		E5B700BF2B400B740080442D /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E5B700BE2B400B740080442D /* Localizable.xcstrings */; };
+		E5B700C12B40105E0080442D /* LocalizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B700C02B40105E0080442D /* LocalizationProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +128,8 @@
 		E57FD7C52B3DB25200696968 /* UserPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreference.swift; sourceTree = "<group>"; };
 		E57FD7CB2B3DC6BE00696968 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E57FD7CD2B3DD47600696968 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E5B700BE2B400B740080442D /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		E5B700C02B40105E0080442D /* LocalizationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +192,8 @@
 				E562D7002B3DA34F000775B7 /* Assets.xcassets */,
 				E57FD7CD2B3DD47600696968 /* GoogleService-Info.plist */,
 				E562D7022B3DA34F000775B7 /* Preview Content */,
+				E5B700BE2B400B740080442D /* Localizable.xcstrings */,
+				E5B700C02B40105E0080442D /* LocalizationProvider.swift */,
 			);
 			path = Tight;
 			sourceTree = "<group>";
@@ -446,6 +452,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hant",
 			);
 			mainGroup = E562D6EE2B3DA34E000775B7;
 			packageReferences = (
@@ -469,6 +476,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E562D7042B3DA34F000775B7 /* Preview Assets.xcassets in Resources */,
+				E5B700BF2B400B740080442D /* Localizable.xcstrings in Resources */,
 				E57FD7CE2B3DD47600696968 /* GoogleService-Info.plist in Resources */,
 				E57FD7CC2B3DC6BE00696968 /* LaunchScreen.storyboard in Resources */,
 				E562D7012B3DA34F000775B7 /* Assets.xcassets in Resources */,
@@ -560,6 +568,7 @@
 				E57FD7A02B3DB13F00696968 /* View+Extension.swift in Sources */,
 				E57FD7B32B3DB18C00696968 /* CreatePlanView.swift in Sources */,
 				E57FD7752B3DAE0400696968 /* PreviewContainer.swift in Sources */,
+				E5B700C12B40105E0080442D /* LocalizationProvider.swift in Sources */,
 				E57FD7722B3DAE0400696968 /* Mocks.swift in Sources */,
 				E57FD7B12B3DB18C00696968 /* PlanCard.swift in Sources */,
 				E57FD79F2B3DB13F00696968 /* TimeInterval+Extension.swift in Sources */,
@@ -724,7 +733,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Tight/Preview Content\"";
 				DEVELOPMENT_TEAM = RQ845TWDMJ;
@@ -764,7 +773,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Tight/Preview Content\"";
 				DEVELOPMENT_TEAM = RQ845TWDMJ;
@@ -804,7 +813,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = RQ845TWDMJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -824,7 +833,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = RQ845TWDMJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -843,7 +852,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = RQ845TWDMJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -862,7 +871,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = RQ845TWDMJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;

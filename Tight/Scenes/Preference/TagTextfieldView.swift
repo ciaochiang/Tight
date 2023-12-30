@@ -14,7 +14,7 @@ struct TagTestView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Tags")
+                Text(LocalizationProvider.tags.nameKey)
                     .font(.caption)
                     .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
                     .horizontalSpacing(.leading)
@@ -37,7 +37,7 @@ struct ExerciseTagListView: View {
             TagLayout(alignment: .leading) {
                 ForEach(allTags, id: \.self) { tag in
                     VStack {
-                        Text(tag.name)
+                        Text(tag.namekey)
                             .font(.caption)
                             .fontWeight(.semibold)
                             .background(.clear)

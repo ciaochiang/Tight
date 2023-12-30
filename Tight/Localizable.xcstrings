@@ -1,0 +1,467 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {
+
+    },
+    "%lld" : {
+
+    },
+    "Add" : {
+
+    },
+    "Add Exercise" : {
+
+    },
+    "Add Exericse" : {
+
+    },
+    "Allow notifications to stay updated on your workout progress, receive motivational reminders, and never miss a training session." : {
+
+    },
+    "Check" : {
+
+    },
+    "Close" : {
+
+    },
+    "common_key_tags" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tags"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "標籤"
+          }
+        }
+      }
+    },
+    "Compoud / Full-Body" : {
+
+    },
+    "connect" : {
+
+    },
+    "Core" : {
+
+    },
+    "Create" : {
+
+    },
+    "Create New Plan" : {
+
+    },
+    "Delete" : {
+
+    },
+    "e.g. lower body, burn weight.." : {
+
+    },
+    "Edit" : {
+
+    },
+    "Edit Plan" : {
+
+    },
+    "Exercise" : {
+
+    },
+    "Exercise Preferences" : {
+
+    },
+    "exercise_tag_key_barbell" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Barbell"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "杠鈴"
+          }
+        }
+      }
+    },
+    "exercise_tag_key_battle_rope" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Battle Rope"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "戰繩"
+          }
+        }
+      }
+    },
+    "exercise_tag_key_bench" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bench"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "平板椅"
+          }
+        }
+      }
+    },
+    "exercise_tag_key_dumbbell" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dumbbell"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "啞鈴"
+          }
+        }
+      }
+    },
+    "exercise_tag_key_kettlebell" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kettlebell"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "壺鈴"
+          }
+        }
+      }
+    },
+    "exercise_tag_key_machine" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Machine"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "機器"
+          }
+        }
+      }
+    },
+    "exercise_tag_key_medicine_ball" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medicine Ball"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "藥球"
+          }
+        }
+      }
+    },
+    "exercise_tag_key_others" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Others"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "其他"
+          }
+        }
+      }
+    },
+    "exercise_tag_key_pull_up_bar" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pull up Bar"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "引體單槓"
+          }
+        }
+      }
+    },
+    "exercise_tag_key_rack" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rack"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "深蹲架"
+          }
+        }
+      }
+    },
+    "exercise_tag_key_resistance_band" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resistance Band"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "彈力繩"
+          }
+        }
+      }
+    },
+    "exercise_tag_key_rower" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rower"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "划船器"
+          }
+        }
+      }
+    },
+    "exercise_tag_key_treadmill" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Treadmill"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "跑步機"
+          }
+        }
+      }
+    },
+    "exercise_tag_key_tricep_rope" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tricep Rope"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下拉繩"
+          }
+        }
+      }
+    },
+    "exercise_tag_key_trx" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TRX"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TRX"
+          }
+        }
+      }
+    },
+    "Favorites" : {
+
+    },
+    "Import from Plans" : {
+
+    },
+    "Lower Body" : {
+
+    },
+    "Name" : {
+
+    },
+    "New Plan" : {
+
+    },
+    "No Exercises" : {
+
+    },
+    "No Favorite Exericses" : {
+
+    },
+    "No Plans" : {
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目前沒有任何計畫"
+          }
+        }
+      }
+    },
+    "Notification" : {
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知"
+          }
+        }
+      }
+    },
+    "Plan" : {
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "計畫"
+          }
+        }
+      }
+    },
+    "Plans" : {
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "計畫管理"
+          }
+        }
+      }
+    },
+    "receive" : {
+
+    },
+    "record" : {
+
+    },
+    "Repetitions" : {
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重複次數"
+          }
+        }
+      }
+    },
+    "Reptitions" : {
+
+    },
+    "Rest Intervals" : {
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "組間休息"
+          }
+        }
+      }
+    },
+    "Sets" : {
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "組數"
+          }
+        }
+      }
+    },
+    "Settings" : {
+
+    },
+    "Start adding exercises to your plan." : {
+
+    },
+    "Start creating new plan." : {
+
+    },
+    "Tag Test View" : {
+
+    },
+    "Tight" : {
+
+    },
+    "To accurately track your outdoor workouts like running or cycling, we continuously monitor your location, even when the app is in the background." : {
+
+    },
+    "Upper Body" : {
+
+    },
+    "We will save your workout data to the HealthKit to give you a consolidated view of your fitness activity and to help you track your progress over time" : {
+
+    },
+    "Your Health" : {
+
+    },
+    "Your Paths" : {
+
+    },
+    "your perosnal fitness assistant" : {
+
+    }
+  },
+  "version" : "1.0"
+}

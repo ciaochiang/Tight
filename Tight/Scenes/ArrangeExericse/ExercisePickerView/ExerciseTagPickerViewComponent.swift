@@ -12,7 +12,7 @@ struct ExerciseTagPickerViewComponent: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Tags")
+            Text(LocalizationProvider.tags.nameKey)
                 .font(.caption)
                 .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
             

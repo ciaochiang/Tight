@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 // MARK: Exercise
 enum Exercise: Int, CaseIterable, Hashable, Codable {
@@ -218,26 +219,26 @@ enum ExerciseTag: Int, CaseIterable, Hashable, Codable {
     case battleRope = 106
     case trx = 107
     
-    var name: String {
+    var namekey: LocalizedStringKey {
         switch self {
-        case .others: return "Others"
+        case .others: return "exercise_tag_key_others"
             
-        case .bench: return "Bench"
-        case .rack: return "Rack"
-        case .machine: return "Machine"
-        case .pullupBar: return "Pull up Bar"
-        case .treadmill: return "Treadmill"
-        case .rower: return "Rower"
+        case .bench: return "exercise_tag_key_bench"
+        case .rack: return "exercise_tag_key_rack"
+        case .machine: return "exercise_tag_key_machine"
+        case .pullupBar: return "exercise_tag_key_pull_up_bar"
+        case .treadmill: return "exercise_tag_key_treadmill"
+        case .rower: return "exercise_tag_key_rower"
             
-        case .dumbbell: return "Dumbbell"
-        case .barbell: return "Barbell"
-        case .resistanceBand: return "Resistance Band"
-        case .kettlebell: return "Kettelbell"
-        case .medicineBall: return "Medicine Ball"
+        case .dumbbell: return "exercise_tag_key_dumbbell"
+        case .barbell: return "exercise_tag_key_barbell"
+        case .resistanceBand: return "exercise_tag_key_resistance_band"
+        case .kettlebell: return "exercise_tag_key_kettlebell"
+        case .medicineBall: return "exercise_tag_key_medicine_ball"
             
-        case .tricepRope: return "Tricep Rope"
-        case .battleRope: return "Battle Rope"
-        case .trx: return "TRX"
+        case .tricepRope: return "exercise_tag_key_tricep_rope"
+        case .battleRope: return "exercise_tag_key_battle_rope"
+        case .trx: return "exercise_tag_key_trx"
         }
     }
 }

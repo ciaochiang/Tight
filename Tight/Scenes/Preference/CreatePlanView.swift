@@ -39,7 +39,7 @@ struct CreatePlanView: View {
     @ViewBuilder
     func TagsTextFieldView() -> some View {
         Form {
-            Text("Tags")
+            Text(LocalizationProvider.tags.nameKey)
                 .font(.caption)
                 .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
                         

@@ -69,7 +69,7 @@ struct ArrangedExerciseCard: View {
         HStack(spacing: 8) {
             ForEach(exercise.tags, id: \.self) { int in
                 VStack {
-                    Text(ExerciseTag(rawValue: int)?.name ?? "")
+                    Text(ExerciseTag(rawValue: int)?.namekey ?? "")
                         .font(.caption2)
                         .fontWeight(.semibold)
                         .background(.clear)
