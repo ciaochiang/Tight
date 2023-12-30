@@ -12,7 +12,7 @@ struct ExerciseRepetitionSliderViewComponent: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Repetitions")
+            Text(LocalizationProvider.repetitions.nameKey)
                 .font(.caption)
                 .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
             

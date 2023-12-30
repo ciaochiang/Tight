@@ -12,7 +12,7 @@ struct ExerciseRestIntervalSliderViewComponent: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Rest Intervals")
+            Text(LocalizationProvider.restIntervals.nameKey)
                 .font(.caption)
                 .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
             

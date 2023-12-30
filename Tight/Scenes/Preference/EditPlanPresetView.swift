@@ -49,7 +49,7 @@ struct EditPlanPresetView: View {
                 Button(action: {
                     isAdding.toggle()
                 }) {
-                    Label("Add", systemImage: "plus")
+                    Label(LocalizationProvider.add.nameKey, systemImage: "plus")
                 }
             }
         }
@@ -115,7 +115,7 @@ struct EditPlanPresetView: View {
             Button(action: {
                 isAdding.toggle()
             }) {
-                Text("Add Exercise")
+                Text(LocalizationProvider.addExercise.nameKey)
                     .background(Color.themeStyle.theme.accent)
                     .foregroundColor(Color.themeStyle.theme.white)
                     .horizontalSpacing(.center)

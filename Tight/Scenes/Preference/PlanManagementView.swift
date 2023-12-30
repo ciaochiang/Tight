@@ -104,7 +104,7 @@ struct PlanManagementView: View {
             Button(action: {
                 isAdding.toggle()
             }) {
-                Label("Add", systemImage: "plus")
+                Label(LocalizationProvider.add.nameKey, systemImage: "plus")
             }
         }
     }
@@ -158,7 +158,7 @@ struct PlanManagementView: View {
             Button(action: {
                 isAdding.toggle()
             }) {
-                Label("Add", systemImage: "plus")
+                Label(LocalizationProvider.add.nameKey, systemImage: "plus")
             }
         }
     }

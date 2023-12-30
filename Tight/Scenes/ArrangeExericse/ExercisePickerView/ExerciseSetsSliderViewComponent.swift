@@ -12,7 +12,7 @@ struct ExerciseSetsSliderViewComponent: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Sets")
+            Text(LocalizationProvider.sets.nameKey)
                 .font(.caption)
                 .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
             

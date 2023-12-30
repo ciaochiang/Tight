@@ -11,6 +11,13 @@ import SwiftUI
 enum LocalizationProvider {
     /// Common
     case tags
+    case exercise
+    case settings
+    case favorites
+    
+    /// Actions
+    case add
+    case addExercise
     
     ///  Exericse Glossary
     case sets
@@ -19,10 +26,21 @@ enum LocalizationProvider {
     
     var nameKey: LocalizedStringKey {
         switch self {
+            
+        /// Common
         case .tags: return "common_key_tags"
-        case .sets: return "Sets"
-        case .repetitions: return "Reptitions"
-        case .restIntervals: return "Rest Intervals"
+        case .exercise: return "common_key_exercise"
+        case .settings: return "common_key_settings"
+        case .favorites: return "common_key_favorites"
+            
+        /// Actions
+        case .add: return "action_key_add"
+        case .addExercise: return "action_key_add_exercise"
+            
+        /// Exercise Glossary
+        case .sets: return "exercise_glossary_sets"
+        case .repetitions: return "exercise_glossary_repetitions"
+        case .restIntervals: return "exercise_glossary_rest_intervals"
         }
     }
 }

@@ -10,7 +10,7 @@ import SwiftUI
 struct ExercisePickerView: View {
     @Environment(\.dismiss) private var dismiss
     
-    let title: String
+    let title: LocalizedStringKey
     var isManaging: Bool = false
     @State private var searchText: String = ""
 

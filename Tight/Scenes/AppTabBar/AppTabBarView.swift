@@ -29,7 +29,7 @@ struct AppTabBarView: View {
             
             /// Create PreferenceViews
             PreferenceView().tabItem {
-                Label("Settings", systemImage: TabBarItemType.more.iconName)
+                Label(LocalizationProvider.settings.nameKey, systemImage: TabBarItemType.more.iconName)
             }
         }
     }

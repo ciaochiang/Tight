@@ -15,7 +15,7 @@ struct PreferenceView: View {
         NavigationStack(path: $path) {
             VStack {
                 List {
-                    Section("Exercise Preferences") {
+                    Section(LocalizationProvider.exercise.nameKey) {
                         FavoriteExeriesView()
                         PlanManagementItem()
                     }
@@ -24,7 +24,7 @@ struct PreferenceView: View {
                 .scrollContentBackground(.hidden)
             }
             .veriticalSpacing(.top)
-            .navigationTitle("Settings")
+            .navigationTitle(LocalizationProvider.settings.nameKey)
             .background(Color.themeStyle.theme.background)
         }
     }
@@ -32,8 +32,8 @@ struct PreferenceView: View {
     @ViewBuilder
     func FavoriteExeriesView() -> some View {
         HStack {
-            NavigationLink(destination: ExercisePickerView(title: "Favorites", isManaging: true, callback: nil)) {
-                Text("Favorites")
+            NavigationLink(destination: ExercisePickerView(title: LocalizationProvider.favorites.nameKey, isManaging: true, callback: nil)) {
+                Text(LocalizationProvider.favorites.nameKey)
             }
         }
     }

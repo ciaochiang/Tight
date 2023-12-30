@@ -57,7 +57,7 @@ struct CreateArrangedExerciseView: View {
                 })
                     .presentationDetents([.large])
             })
-            .navigationTitle("Add Exericse")
+            .navigationTitle(LocalizationProvider.addExercise.nameKey)
             .navigationBarTitleDisplayMode(.inline)
             .background(Color.themeStyle.theme.background)
             .toolbar {
@@ -81,7 +81,7 @@ struct CreateArrangedExerciseView: View {
             completion?(arrangedExercise)
             dismiss()
         }) {
-            Text("Add")
+            Text(LocalizationProvider.add.nameKey)
                 .font(.title3)
                 .fontWeight(.semibold)
                 .textScale(.secondary)

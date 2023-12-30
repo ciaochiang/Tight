@@ -7,14 +7,37 @@
     "%lld" : {
 
     },
-    "Add" : {
-
+    "action_key_add" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新增"
+          }
+        }
+      }
     },
-    "Add Exercise" : {
-
-    },
-    "Add Exericse" : {
-
+    "action_key_add_exercise" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Exercise"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新增運動"
+          }
+        }
+      }
     },
     "Allow notifications to stay updated on your workout progress, receive motivational reminders, and never miss a training session." : {
 
@@ -24,6 +47,54 @@
     },
     "Close" : {
 
+    },
+    "common_key_exercise" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exercise"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "運動"
+          }
+        }
+      }
+    },
+    "common_key_favorites" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Favorites"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我的最愛"
+          }
+        }
+      }
+    },
+    "common_key_settings" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定"
+          }
+        }
+      }
     },
     "common_key_tags" : {
       "localizations" : {
@@ -68,11 +139,53 @@
     "Edit Plan" : {
 
     },
-    "Exercise" : {
-
+    "exercise_glossary_repetitions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Repetitions"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重複次數"
+          }
+        }
+      }
     },
-    "Exercise Preferences" : {
-
+    "exercise_glossary_rest_intervals" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rest Intervals"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "組間休息"
+          }
+        }
+      }
+    },
+    "exercise_glossary_sets" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sets"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "組數"
+          }
+        }
+      }
     },
     "exercise_tag_key_barbell" : {
       "extractionState" : "manual",
@@ -370,6 +483,9 @@
         }
       }
     },
+    "Pick Exercise" : {
+
+    },
     "Plan" : {
       "localizations" : {
         "zh-Hant" : {
@@ -394,42 +510,6 @@
 
     },
     "record" : {
-
-    },
-    "Repetitions" : {
-      "localizations" : {
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "重複次數"
-          }
-        }
-      }
-    },
-    "Reptitions" : {
-
-    },
-    "Rest Intervals" : {
-      "localizations" : {
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "組間休息"
-          }
-        }
-      }
-    },
-    "Sets" : {
-      "localizations" : {
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "組數"
-          }
-        }
-      }
-    },
-    "Settings" : {
 
     },
     "Start adding exercises to your plan." : {
