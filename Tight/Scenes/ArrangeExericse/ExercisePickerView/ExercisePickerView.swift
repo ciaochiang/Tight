@@ -56,10 +56,10 @@ struct ExercisePickerView: View {
                 })
                 .onChange(of: searchText) { oldValue, newValue in
                     // Filter exercises
-                    upperBodyExercises = Exercise.upperBodyExercises.filter { newValue.isEmpty || $0.name.lowercased().contains(newValue.lowercased()) }
-                    lowerBodyExercises = Exercise.lowerBodyExercises.filter { newValue.isEmpty || $0.name.lowercased().contains(newValue.lowercased()) }
-                    coreExercises = Exercise.coreExercises.filter { newValue.isEmpty || $0.name.lowercased().contains(newValue.lowercased()) }
-                    compoundExercises = Exercise.compoundExercises.filter { newValue.isEmpty || $0.name.lowercased().contains(newValue.lowercased()) }
+                    upperBodyExercises = Exercise.upperBodyExercises.filter { newValue.isEmpty || $0.name.localizedCaseInsensitiveContains(newValue.lowercased()) }
+                    lowerBodyExercises = Exercise.lowerBodyExercises.filter { newValue.isEmpty || $0.name.localizedCaseInsensitiveContains(newValue.lowercased()) }
+                    coreExercises = Exercise.coreExercises.filter { newValue.isEmpty || $0.name.localizedCaseInsensitiveContains(newValue.lowercased()) }
+                    compoundExercises = Exercise.compoundExercises.filter { newValue.isEmpty || $0.name.localizedCaseInsensitiveContains(newValue.lowercased()) }
                 }
             }
             .searchable(text: $searchText)
@@ -89,7 +89,7 @@ struct ExercisePickerView: View {
                         .frame(height: 48)
                 }
             } else {
-                ForEach(favorites.filter { searchText.isEmpty || $0.name.contains(searchText) }, id: \.self) { exercise in
+                ForEach(favorites.filter { searchText.isEmpty || $0.name.localizedCaseInsensitiveContains(searchText) }, id: \.self) { exercise in
                     HStack {
                         Text(exercise.name.capitalized)
                             .fontWeight(selectedExercise == exercise ? .semibold : .none)

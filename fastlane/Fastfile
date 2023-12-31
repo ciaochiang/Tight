@@ -23,7 +23,8 @@ platform :ios do
   end
 
   lane :beta do
-    increment_build_number(xcodeproj: "Tight.xcodeproj")
+    current_date = Time.now.strftime("%Y%m%d%H%M%S")
+    increment_build_number(build_number: current_date)
     build_app(scheme: "Tight")
     app_store_connect_api_key(
       key_id: "QQT3769X94",
