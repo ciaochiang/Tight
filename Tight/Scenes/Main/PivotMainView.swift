@@ -235,10 +235,10 @@ struct PivotMainView: View {
     @ViewBuilder
     func PlaceholderView() -> some View {
         VStack(alignment: .center, spacing: 8) {
-            Text("No Exercises")
+            Text(LocalizationProvider.noExercises.nameKey)
                 .font(.title2)
                 .fontWeight(.bold)
-            Text("Start adding exercises to your plan.")
+            Text(LocalizationProvider.startAddingExerciseToPlan.nameKey)
                 .font(.caption)
                 .fontWeight(.semibold)
                 .foregroundStyle(.gray)
@@ -246,7 +246,7 @@ struct PivotMainView: View {
             Button(action: {
                 isImporting.toggle()
             }) {
-                Text("Import from Plans")
+                Text(LocalizationProvider.importFromPlans.nameKey)
                     .background(Color.themeStyle.theme.accent)
                     .foregroundColor(Color.themeStyle.theme.white)
                     .horizontalSpacing(.center)

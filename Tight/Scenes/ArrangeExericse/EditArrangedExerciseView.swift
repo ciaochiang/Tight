@@ -26,7 +26,7 @@ struct EditArrangedExerciseView: View {
             .padding()
             .veriticalSpacing(.bottom)
             .sheet(isPresented: $isPresented, content: {
-                ExercisePickerView(title: "Pick Exercise",
+                ExercisePickerView(title: LocalizationProvider.pickExercise.nameKey,
                                    selectedExercise: arrangedExercise.exercise,
                                    callback: { exercise in
                     arrangedExercise.exercise = exercise
@@ -44,7 +44,8 @@ struct EditArrangedExerciseView: View {
                             arrangedExercise.isCompleted.toggle()
                             dismiss()
                         }) {
-                            Label("Check", systemImage: arrangedExercise.isCompleted ? "checkmark.circle.fill" : "checkmark.circle")
+                            Image(systemName: arrangedExercise.isCompleted ? "checkmark.circle.fill" : "checkmark.circle")
+                                .symbolVariant(.fill)
                         }
                         .tint(arrangedExercise.isCompleted ? Color.themeStyle.theme.secondaryAccent : Color.gray)
                     }
@@ -55,7 +56,7 @@ struct EditArrangedExerciseView: View {
                     Button(action: {
                         dismiss()
                     }) {
-                        Label("Close", systemImage: "xmark")
+                        Label(LocalizationProvider.close.nameKey, systemImage: "xmark")
                     }
                     .tint(Color.themeStyle.theme.primary)
                 }

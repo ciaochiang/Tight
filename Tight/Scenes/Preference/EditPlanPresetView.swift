@@ -79,7 +79,7 @@ struct EditPlanPresetView: View {
                                 exercises = plan.arrangedExercises.sorted { $0.order < $1.order }
                             }
                         }) {
-                            Label("Delete", systemImage: "trash")
+                            Image(systemName: "trash")
                                 .symbolVariant(/*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
                         }
                         .tint(Color.themeStyle.theme.accent)
@@ -104,10 +104,10 @@ struct EditPlanPresetView: View {
     @ViewBuilder
     func PlaceholderView() -> some View {
         VStack(alignment: .center, spacing: 8) {
-            Text("No Exercises")
+            Text(LocalizationProvider.noExercises.nameKey)
                 .font(.title2)
                 .fontWeight(.bold)
-            Text("Start adding exercises to your plan.")
+            Text(LocalizationProvider.startAddingExerciseToPlan.nameKey)
                 .font(.caption)
                 .fontWeight(.semibold)
                 .foregroundStyle(.gray)

@@ -35,7 +35,7 @@ struct PlanManagementView: View {
             }
             .background(Color.themeStyle.theme.background)
             .veriticalSpacing(.top)
-            .navigationTitle("Plans")
+            .navigationTitle(LocalizationProvider.plans.nameKey)
             .navigationBarTitleDisplayMode(isImporting ? .inline : .automatic)
             .sheet(isPresented: $isAdding, content: {
                 CreatePlanView()
@@ -55,7 +55,7 @@ struct PlanManagementView: View {
     func HeaderView() -> some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 5) {
-                Text("Plans").foregroundStyle(Color.themeStyle.theme.accent)
+                Text(LocalizationProvider.plans.nameKey).foregroundStyle(Color.themeStyle.theme.accent)
             }
             .font(.title.bold())
             .frame(height: 90)
@@ -80,15 +80,15 @@ struct PlanManagementView: View {
                                 context.delete(plan)
                             }
                         }) {
-                            Label("Delete", systemImage: "trash")
-                                .symbolVariant(/*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
+                            Image(systemName: "trash")
+                                .symbolVariant(.fill)
                         }
                         .tint(Color.themeStyle.theme.accent)
                         
                         Button(action: {
                             planToEdit = plan
                         }) {
-                            Label("Edit", systemImage: "pencil")
+                            Image(systemName: "pencil")
                                 .symbolVariant(/*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
                         }
                     }
@@ -132,10 +132,10 @@ struct PlanManagementView: View {
     @ViewBuilder
     func PlaceholderView() -> some View {
         VStack(alignment: .center, spacing: 8) {
-            Text("No Plans")
+            Text(LocalizationProvider.noPlans.nameKey)
                 .font(.title2)
                 .fontWeight(.bold)
-            Text("Start creating new plan.")
+            Text(LocalizationProvider.startCreatingNewPlan.nameKey)
                 .font(.caption)
                 .fontWeight(.semibold)
                 .foregroundStyle(.gray)
@@ -143,7 +143,7 @@ struct PlanManagementView: View {
             Button(action: {
                 isAdding.toggle()
             }) {
-                Text("Create New Plan")
+                Text(LocalizationProvider.createNewPlan.nameKey)
                     .background(Color.themeStyle.theme.accent)
                     .foregroundColor(Color.themeStyle.theme.white)
                     .horizontalSpacing(.center)

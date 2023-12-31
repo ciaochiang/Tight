@@ -56,7 +56,7 @@ enum Exercise: Int, CaseIterable, Hashable, Codable {
     /// Compound and Full-Body Exercise
     case cleanAndJerk = 901
     case snatch = 902
-    case kettleSwing = 903
+    case kettlebellSwing = 903
     case medicineBallSlam = 904
     case battleRope = 905
     case burpee = 906
@@ -121,7 +121,7 @@ enum Exercise: Int, CaseIterable, Hashable, Codable {
         return [
             .cleanAndJerk,
             .snatch,
-            .kettleSwing,
+            .kettlebellSwing,
             .medicineBallSlam,
             .battleRope,
             .burpee,
@@ -186,7 +186,7 @@ enum Exercise: Int, CaseIterable, Hashable, Codable {
         /// Compound and Full Body
         case .cleanAndJerk: return "exercise_key_clean_and_jerk"
         case .snatch: return "exercise_key_snatch"
-        case .kettleSwing: return "exercise_key_kettle_swing"
+        case .kettlebellSwing: return "exercise_key_kettlebell_swing"
         case .medicineBallSlam: return "exercise_key_medicine_ball_slams"
         case .battleRope: return "exercise_key_battle_rope"
         case .burpee: return "exercise_key_burpee"
@@ -194,7 +194,7 @@ enum Exercise: Int, CaseIterable, Hashable, Codable {
         case .pushPress: return "exercise_key_push_press"
         case .turkishGetUp: return "exercise_key_turkish_get_Up"
         case .thruster: return "exercise_key_thruster"
-        case .wallBall: return "exercise_key_walk_ball"
+        case .wallBall: return "exercise_key_wall_ball"
         case .rowingMachine: return "exercise_key_rowing_machine"
         }
     }

@@ -20,7 +20,7 @@ struct CreatePlanView: View {
             }
             .padding()
             .veriticalSpacing(.bottom)
-            .navigationTitle("New Plan")
+            .navigationTitle(LocalizationProvider.newPlan.nameKey)
             .navigationBarTitleDisplayMode(.inline)
             .background(Color.themeStyle.theme.background)
             .toolbar {
@@ -28,7 +28,7 @@ struct CreatePlanView: View {
                     Button(action: {
                         dismiss()
                     }) {
-                        Label("Close", systemImage: "xmark")
+                        Label(LocalizationProvider.close.nameKey, systemImage: "xmark")
                     }
                     .tint(Color.themeStyle.theme.primary)
                 }
@@ -43,7 +43,7 @@ struct CreatePlanView: View {
                 .font(.caption)
                 .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
                         
-            TextField("New Plan", text: $planName)
+            TextField(LocalizationProvider.startAddingExerciseToPlan.nameKey, text: $planName)
                 .padding(.vertical, 12)
                 .padding(.horizontal, 16)
                 .background(.white.shadow(.drop(color: .black.opacity(0.25), radius: 2)), in: .rect(cornerRadius: 10))
@@ -68,7 +68,7 @@ struct CreatePlanView: View {
             context.insert(plan)
             dismiss()
         }) {
-            Text("Create")
+            Text(LocalizationProvider.create.nameKey)
                 .font(.title3)
                 .fontWeight(.semibold)
                 .textScale(.secondary)

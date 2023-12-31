@@ -20,7 +20,7 @@ struct EditPlanView: View {
             }
             .padding()
             .veriticalSpacing(.bottom)
-            .navigationTitle("Edit Plan")
+            .navigationTitle(LocalizationProvider.editPlan.nameKey)
             .navigationBarTitleDisplayMode(.inline)
             .background(Color.themeStyle.theme.background)
             .toolbar {
@@ -28,7 +28,7 @@ struct EditPlanView: View {
                     Button(action: {
                         dismiss()
                     }) {
-                        Label("Close", systemImage: "xmark")
+                        Label(LocalizationProvider.close.nameKey, systemImage: "xmark")
                     }
                     .tint(Color.themeStyle.theme.primary)
                 }
@@ -54,11 +54,11 @@ struct PlanNameTextfieldView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Name")
+            Text(LocalizationProvider.planName.nameKey)
                 .font(.caption)
                 .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
             
-            TextField("e.g. lower body, burn weight..", text: $name)
+            TextField(LocalizationProvider.placeholderPlanNameTextfield.nameKey, text: $name)
                 .padding(.vertical, 12)
                 .padding(.horizontal, 16)
                 .foregroundColor(Color.themeStyle.theme.primaryTextColor)

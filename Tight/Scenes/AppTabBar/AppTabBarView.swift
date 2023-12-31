@@ -24,7 +24,7 @@ struct AppTabBarView: View {
             let today = Date().today
             let mainViewModel = PivotMainViewModel(context: context, currentDate: today)
             PivotMainView(viewModel: mainViewModel).tabItem {
-                Label("Plan", systemImage: TabBarItemType.plan.iconName)
+                Label(LocalizationProvider.plan.nameKey, systemImage: TabBarItemType.plan.iconName)
             }
             
             /// Create PreferenceViews

@@ -121,13 +121,13 @@ extension OnboardingView {
 struct OnboadingWelcomView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Tight")
+            Text(LocalizationProvider.appName.nameKey)
                 .font(.largeTitle)
                 .fontWeight(.heavy)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .foregroundColor(Color.themeStyle.theme.accent)
             
-            Text("your perosnal fitness assistant")
+            Text(LocalizationProvider.onboardingWelcomeDescription.nameKey)
                 .font(.body)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .foregroundColor(Color.themeStyle.theme.black)
@@ -136,46 +136,47 @@ struct OnboadingWelcomView: View {
     }
 }
 
-struct OnboardingHealthKitView: View {
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("connect")
-                .font(.title)
-                .fontWeight(.semibold)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
-            
-            Text("Your Health")
-                .font(.largeTitle)
-                .fontWeight(.heavy)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundColor(Color.themeStyle.theme.accent)
-            
-            Text("We will save your workout data to the HealthKit to give you a consolidated view of your fitness activity and to help you track your progress over time")
-                .font(.body)
-                .foregroundColor(.themeStyle.theme.secondaryTextColor)
-                .frame(maxWidth: 360, alignment: .leading)
-        }
-        .padding(32)
-    }
-}
+//struct OnboardingHealthKitView: View {
+//    var body: some View {
+//        VStack(alignment: .leading, spacing: 8) {
+//            Text("connect")
+//                .font(.title)
+//                .fontWeight(.semibold)
+//                .frame(maxWidth: .infinity, alignment: .leading)
+//                .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
+//            
+//            Text("Your Health")
+//                .font(.largeTitle)
+//                .fontWeight(.heavy)
+//                .frame(maxWidth: .infinity, alignment: .leading)
+//                .foregroundColor(Color.themeStyle.theme.accent)
+//            
+//            Text("We will save your workout data to the HealthKit to give you a consolidated view of your fitness activity and to help you track your progress over time")
+//                .font(.body)
+//                .foregroundColor(.themeStyle.theme.secondaryTextColor)
+//                .frame(maxWidth: 360, alignment: .leading)
+//        }
+//        .padding(32)
+//    }
+//}
 
 struct OnboardingNotificationView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("receive")
-                .font(.title)
-                .fontWeight(.semibold)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
+            HStack(spacing: 4) {
+                Text(LocalizationProvider.allowReceive.nameKey)
+                    .textCase(.lowercase)
+                    .font(.title)
+                    .fontWeight(.semibold)
+                    .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
+                
+                Text(LocalizationProvider.notification.nameKey)
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .foregroundColor(Color.themeStyle.theme.accent)
+            }
             
-            Text("Notification")
-                .font(.largeTitle)
-                .fontWeight(.heavy)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundColor(Color.themeStyle.theme.accent)
-            
-            Text("Allow notifications to stay updated on your workout progress, receive motivational reminders, and never miss a training session.")
+            Text(LocalizationProvider.onboardingNotificationDescription.nameKey)
                 .font(.body)
                 .foregroundColor(.themeStyle.theme.secondaryTextColor)
                 .frame(maxWidth: 360, alignment: .leading)
@@ -184,26 +185,26 @@ struct OnboardingNotificationView: View {
     }
 }
 
-struct OnboardingLocationView: View {
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("record")
-                .font(.title)
-                .fontWeight(.semibold)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
-            
-            Text("Your Paths")
-                .font(.largeTitle)
-                .fontWeight(.heavy)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundColor(Color.themeStyle.theme.accent)
-            
-            Text("To accurately track your outdoor workouts like running or cycling, we continuously monitor your location, even when the app is in the background.")
-                .font(.body)
-                .foregroundColor(.themeStyle.theme.secondaryTextColor)
-                .frame(maxWidth: 360, alignment: .leading)
-        }
-        .padding(32)
-    }
-}
+//struct OnboardingLocationView: View {
+//    var body: some View {
+//        VStack(alignment: .leading, spacing: 8) {
+//            Text("record")
+//                .font(.title)
+//                .fontWeight(.semibold)
+//                .frame(maxWidth: .infinity, alignment: .leading)
+//                .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
+//            
+//            Text("Your Paths")
+//                .font(.largeTitle)
+//                .fontWeight(.heavy)
+//                .frame(maxWidth: .infinity, alignment: .leading)
+//                .foregroundColor(Color.themeStyle.theme.accent)
+//            
+//            Text("To accurately track your outdoor workouts like running or cycling, we continuously monitor your location, even when the app is in the background.")
+//                .font(.body)
+//                .foregroundColor(.themeStyle.theme.secondaryTextColor)
+//                .frame(maxWidth: 360, alignment: .leading)
+//        }
+//        .padding(32)
+//    }
+//}

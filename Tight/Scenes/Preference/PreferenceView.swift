@@ -42,7 +42,7 @@ struct PreferenceView: View {
     func PlanManagementItem() -> some View {
         HStack {
             NavigationLink(destination: PlanManagementView()) {
-                Text("Plans")
+                Text(LocalizationProvider.plans.nameKey)
             }
         }
     }

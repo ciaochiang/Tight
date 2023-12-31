@@ -49,7 +49,7 @@ struct CreateArrangedExerciseView: View {
             .padding()
             .veriticalSpacing(.bottom)
             .sheet(isPresented: $isPresented, content: {
-                ExercisePickerView(title: "Pick Exercise", 
+                ExercisePickerView(title: LocalizationProvider.pickExercise.nameKey, 
                                    selectedExercise: arrangedExercise.exercise,
                                    callback: { exercise in
                     arrangedExercise.exercise = exercise
@@ -65,7 +65,7 @@ struct CreateArrangedExerciseView: View {
                     Button(action: {
                         dismiss()
                     }) {
-                        Label("Close", systemImage: "xmark")
+                        Label(LocalizationProvider.close.nameKey, systemImage: "xmark")
                     }
                     .tint(Color.themeStyle.theme.primary)
                 }

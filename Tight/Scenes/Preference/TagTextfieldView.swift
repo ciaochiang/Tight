@@ -22,7 +22,6 @@ struct TagTestView: View {
                 TagField(tags: $tags, limit: 5)
                     .horizontalSpacing(.leading)
             }
-            .navigationTitle("Tag Test View")
         }
     }
 }

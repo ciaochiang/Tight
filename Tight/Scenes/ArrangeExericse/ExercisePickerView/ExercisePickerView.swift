@@ -71,7 +71,7 @@ struct ExercisePickerView: View {
                     Button(action: {
                         dismiss()
                     }) {
-                        Label("Close", systemImage: "xmark")
+                        Label(LocalizationProvider.close.nameKey, systemImage: "xmark")
                     }
                     .tint(Color.themeStyle.theme.primary)
                 }
@@ -81,10 +81,10 @@ struct ExercisePickerView: View {
     
     @ViewBuilder
     func FavoriteExercisesView() -> some View {
-        Section("Favorites") {
+        Section(LocalizationProvider.favorites.nameKey) {
             if favorites.isEmpty {
                 VStack {
-                    Text("No Favorite Exericses")
+                    Text(LocalizationProvider.noFavorites.nameKey)
                         .frame(maxWidth: .infinity, alignment: .center)
                         .frame(height: 48)
                 }
@@ -110,7 +110,7 @@ struct ExercisePickerView: View {
     
     @ViewBuilder
     func UpperBodyExercisesView() -> some View {
-        Section("Upper Body") {
+        Section(LocalizationProvider.upperBody.nameKey) {
             ForEach(upperBodyExercises, id: \.self) { exercise in
                 HStack {
                     Text(exercise.name.capitalized)
@@ -140,7 +140,7 @@ struct ExercisePickerView: View {
     
     @ViewBuilder
     func LowerBodyExercisesView() -> some View {
-        Section("Lower Body") {
+        Section(LocalizationProvider.lowerBody.nameKey) {
             ForEach(lowerBodyExercises, id: \.self) { exercise in
                 HStack {
                     Text(exercise.name.capitalized)
@@ -170,7 +170,7 @@ struct ExercisePickerView: View {
     
     @ViewBuilder
     func CoreExercisesView() -> some View {
-        Section("Core") {
+        Section(LocalizationProvider.core.nameKey) {
             ForEach(coreExercises, id: \.self) { exercise in
                 HStack {
                     Text(exercise.name.capitalized)
@@ -199,7 +199,7 @@ struct ExercisePickerView: View {
     
     @ViewBuilder
     func CompoundExercisesView() -> some View {
-        Section("Compoud / Full-Body") {
+        Section(LocalizationProvider.compoundOrFullBody.nameKey) {
             ForEach(compoundExercises, id: \.self) { exercise in
                 HStack {
                     Text(exercise.name.capitalized)
@@ -260,5 +260,5 @@ struct ExercisePickerView: View {
 }
 
 #Preview {
-    ExercisePickerView(title: "Favorites", isManaging: true, callback: nil)
+    ExercisePickerView(title: LocalizationProvider.favorites.nameKey, isManaging: true, callback: nil)
 }
