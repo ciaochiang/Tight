@@ -94,7 +94,7 @@ struct ExercisePickerView: View {
                         Text(exercise.name.capitalized)
                             .fontWeight(selectedExercise == exercise ? .semibold : .none)
                             .foregroundColor(selectedExercise == exercise ? .themeStyle.theme.accent : .themeStyle.theme.primary)
-                            .frame(height: 40)
+                            .frame(height: Constants.DEFAULT_LIST_ROW_HEIGHT)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .contentShape(Rectangle())
                             .onTapGesture {

@@ -34,7 +34,10 @@ struct PreferenceView: View {
         HStack {
             NavigationLink(destination: ExercisePickerView(title: LocalizationProvider.favorites.nameKey, isManaging: true, callback: nil)) {
                 Text(LocalizationProvider.favorites.nameKey)
+                    .frame(height: Constants.DEFAULT_LIST_ROW_HEIGHT)
+                    .contentShape(Rectangle())
             }
+
         }
     }
     
@@ -43,6 +46,8 @@ struct PreferenceView: View {
         HStack {
             NavigationLink(destination: PlanManagementView()) {
                 Text(LocalizationProvider.plans.nameKey)
+                    .frame(height: Constants.DEFAULT_LIST_ROW_HEIGHT)
+                    .contentShape(Rectangle())
             }
         }
     }

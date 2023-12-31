@@ -56,6 +56,7 @@
 		E57FD7C62B3DB25200696968 /* UserPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7C52B3DB25200696968 /* UserPreference.swift */; };
 		E57FD7CC2B3DC6BE00696968 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E57FD7CB2B3DC6BE00696968 /* LaunchScreen.storyboard */; };
 		E57FD7CE2B3DD47600696968 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E57FD7CD2B3DD47600696968 /* GoogleService-Info.plist */; };
+		E59B08F82B41495000280FC4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B08F72B41495000280FC4 /* Constants.swift */; };
 		E5B700BF2B400B740080442D /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E5B700BE2B400B740080442D /* Localizable.xcstrings */; };
 		E5B700C12B40105E0080442D /* LocalizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B700C02B40105E0080442D /* LocalizationProvider.swift */; };
 /* End PBXBuildFile section */
@@ -128,6 +129,7 @@
 		E57FD7C52B3DB25200696968 /* UserPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreference.swift; sourceTree = "<group>"; };
 		E57FD7CB2B3DC6BE00696968 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E57FD7CD2B3DD47600696968 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E59B08F72B41495000280FC4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E5B700BE2B400B740080442D /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		E5B700C02B40105E0080442D /* LocalizationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -241,6 +243,7 @@
 				E57FD7672B3DADCC00696968 /* Logger.swift */,
 				E57FD7972B3DB0ED00696968 /* TabBarItemType.swift */,
 				E57FD7C52B3DB25200696968 /* UserPreference.swift */,
+				E59B08F72B41495000280FC4 /* Constants.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -542,6 +545,7 @@
 				E57FD7A22B3DB13F00696968 /* Date+Extension.swift in Sources */,
 				E57FD78A2B3DAFEB00696968 /* OnboardingView.swift in Sources */,
 				E57FD7952B3DB0BE00696968 /* PivotMainView.swift in Sources */,
+				E59B08F82B41495000280FC4 /* Constants.swift in Sources */,
 				E57FD7702B3DAE0400696968 /* OffsetKey.swift in Sources */,
 				E57FD7C62B3DB25200696968 /* UserPreference.swift in Sources */,
 				E57FD7AE2B3DB18C00696968 /* TagTextfieldView.swift in Sources */,
