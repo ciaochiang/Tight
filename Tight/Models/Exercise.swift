@@ -135,6 +135,10 @@ enum Exercise: Int, CaseIterable, Hashable, Codable {
     }
     
     var name: String {
+        return String(localized: nameKey)
+    }
+    
+    var nameKey: String.LocalizationValue {
         switch self {
         case .none: return "exercise_key_none"
         

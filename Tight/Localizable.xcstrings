@@ -187,6 +187,163 @@
         }
       }
     },
+    "exercise_key_arnold_press" : {
+
+    },
+    "exercise_key_battle_rope" : {
+
+    },
+    "exercise_key_bench_press" : {
+
+    },
+    "exercise_key_bent_over_row" : {
+
+    },
+    "exercise_key_bicep_curl" : {
+
+    },
+    "exercise_key_bicycle_crunch" : {
+
+    },
+    "exercise_key_box_jump" : {
+
+    },
+    "exercise_key_bulgarian_split_squat" : {
+
+    },
+    "exercise_key_burpee" : {
+
+    },
+    "exercise_key_calf_raise" : {
+
+    },
+    "exercise_key_chest_fly" : {
+
+    },
+    "exercise_key_clean_and_jerk" : {
+
+    },
+    "exercise_key_crunch" : {
+
+    },
+    "exercise_key_deaflift" : {
+
+    },
+    "exercise_key_dumbbell_row" : {
+
+    },
+    "exercise_key_farmer_walk" : {
+
+    },
+    "exercise_key_glute_bridge" : {
+
+    },
+    "exercise_key_hamstring_curl" : {
+
+    },
+    "exercise_key_hanging_leg_raise" : {
+
+    },
+    "exercise_key_incline_bench_press" : {
+
+    },
+    "exercise_key_kettle_swing" : {
+
+    },
+    "exercise_key_lat_pulldown" : {
+
+    },
+    "exercise_key_lateral_raise" : {
+
+    },
+    "exercise_key_leg_extension" : {
+
+    },
+    "exercise_key_leg_press" : {
+
+    },
+    "exercise_key_leg_raise" : {
+
+    },
+    "exercise_key_lunge" : {
+
+    },
+    "exercise_key_medicine_ball_slams" : {
+
+    },
+    "exercise_key_none" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "None"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未選擇"
+          }
+        }
+      }
+    },
+    "exercise_key_plank" : {
+
+    },
+    "exercise_key_pull_up" : {
+
+    },
+    "exercise_key_push_press" : {
+
+    },
+    "exercise_key_push_up" : {
+
+    },
+    "exercise_key_romanian_deadlift" : {
+
+    },
+    "exercise_key_rowing_machine" : {
+
+    },
+    "exercise_key_russian_twist" : {
+
+    },
+    "exercise_key_shoulder_press" : {
+
+    },
+    "exercise_key_shrug" : {
+
+    },
+    "exercise_key_snatch" : {
+
+    },
+    "exercise_key_squat" : {
+
+    },
+    "exercise_key_step_up" : {
+
+    },
+    "exercise_key_superman" : {
+
+    },
+    "exercise_key_thruster" : {
+
+    },
+    "exercise_key_tricep_dip" : {
+
+    },
+    "exercise_key_turkish_get_Up" : {
+
+    },
+    "exercise_key_upright_row" : {
+
+    },
+    "exercise_key_walk_ball" : {
+
+    },
+    "exercise_key_woodchopper" : {
+
+    },
     "exercise_tag_key_barbell" : {
       "extractionState" : "manual",
       "localizations" : {
