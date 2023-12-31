@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ExerciseRestIntervalSliderViewComponent: View {
     @Bindable var arrangedExercise: ArrangedExercise
+    @AppStorage(Constants.DEFAULT_EXERCISE_REST_INTERVALS) private var defaultRestIntervals: Double = 0
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -28,6 +29,9 @@ struct ExerciseRestIntervalSliderViewComponent: View {
             }
         }
         .frame(height: 44)
+        .onAppear {
+            arrangedExercise.restIntevals = defaultRestIntervals
+        }
     }
 }
 #Preview {

@@ -295,6 +295,22 @@
         }
       }
     },
+    "common_key_perferences" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preferences"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "偏好"
+          }
+        }
+      }
+    },
     "common_key_pick_exercise" : {
       "localizations" : {
         "en" : {

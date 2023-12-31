@@ -27,6 +27,7 @@ enum LocalizationProvider {
     case pickExercise
     case notification
     case allowReceive
+    case preferences
     
     /// Onboarding
     case onboardingWelcomeDescription
@@ -79,6 +80,8 @@ enum LocalizationProvider {
         case .pickExercise: return "common_key_pick_exercise"
         case .notification: return "common_key_notification"
         case .allowReceive: return "common_key_allow_receive"
+        case .preferences: return "common_key_perferences"
+            
             
         /// Onboarding
         case .onboardingWelcomeDescription: return "onboarding_key_welcome_description"

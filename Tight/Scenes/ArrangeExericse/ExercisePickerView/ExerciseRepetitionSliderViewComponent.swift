@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ExerciseRepetitionSliderViewComponent: View {
     @Bindable var arrangedExercise: ArrangedExercise
+    @AppStorage(Constants.DEFAULT_EXERCISE_REPETITIONS) private var defaultRepetitions: Double = 0
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -28,6 +29,9 @@ struct ExerciseRepetitionSliderViewComponent: View {
             }
         }
         .frame(height: 44)
+        .onAppear {
+            arrangedExercise.repetitions = defaultRepetitions
+        }
     }
 }
 #Preview {
