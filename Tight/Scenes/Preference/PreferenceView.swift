@@ -52,6 +52,7 @@ struct PreferenceView: View {
             .background(Color.themeStyle.theme.background)
             .sheet(isPresented: $isWeightUnitDialogPresented) {
                 WeightUnitBottomSheetView(isSheetPresented: $isWeightUnitDialogPresented, weightUnit: $defaultWeightUnit)
+                    .background(.red)
                     .presentationDetents([.height(180)])
             }
         }
@@ -151,6 +152,10 @@ struct PreferenceView: View {
     return PreferenceView().modelContainer(previewContainer.container)
 }
 
+#Preview("test") {
+    WeightUnitBottomSheetView(isSheetPresented: .constant(true), weightUnit: .constant(0))
+}
+
 
 struct WeightUnitBottomSheetView: View {
     @Binding var isSheetPresented: Bool
@@ -193,8 +198,19 @@ struct WeightUnitBottomSheetView: View {
             }
             .navigationTitle(LocalizationProvider.weightUnit.nameKey)
             .navigationBarTitleDisplayMode(.inline)
+            .veriticalSpacing(.bottom)
             .padding()
-            .background(Color.white)
+            .background(Color.themeStyle.theme.background)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(action: {
+                        isSheetPresented = false
+                    }) {
+                        Image(systemName: "xmark")
+                    }
+                    .tint(Color.themeStyle.theme.primary)
+                }
+            }
         }
     }
 }
