@@ -5,7 +5,7 @@
 xcuserdata/
 DerivedData/
 #/*.xcodeproj/
-#/*.xcworkspace/
+/*.xcworkspace/
 /.idea/
 /*.playground/
 /*.xcplayground/
@@ -37,8 +37,8 @@ xcuserdata/
 /*.xcarchive/
 /*.xctestrun
 *.xcuserstate
-project.xcworkspace/
-*.xcworkspace/
+#project.xcworkspace/
+#*.xcworkspace/
 exportOptions.plist
 *.lock
 Podfile.lock
@@ -61,7 +61,7 @@ Pods/
 # IDE settings
 *.idea/
 *.xcuserdatad/
-*.xcworkspace/
+#*.xcworkspace/
 xcuserdata/
 .DS_Store
 .idea/
