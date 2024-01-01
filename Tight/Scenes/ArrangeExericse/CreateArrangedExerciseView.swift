@@ -11,6 +11,10 @@ import SwiftData
 struct CreateArrangedExerciseView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var context
+    @AppStorage(Constants.DEFAULT_EXERCISE_REST_INTERVALS) private var defaultRestIntervals: Double = 90
+    @AppStorage(Constants.DEFAULT_EXERCISE_SETS) private var defaultSets: Double = 3
+    @AppStorage(Constants.DEFAULT_EXERCISE_REPETITIONS) private var defaultRepetitions: Double = 10
+    @AppStorage(Constants.DEFAULT_EXERCISE_WEIGHT_UNIT) private var defaultWeightUnit: Int = 0
     
     @Bindable var plan: Plan
     @State private var arrangedExercise: ArrangedExercise
@@ -29,6 +33,7 @@ struct CreateArrangedExerciseView: View {
                                         repetitions: 10,
                                         sets: 3,
                                         weight: 0,
+                                        weightUnit: 0,
                                         durationOfSet: 0,
                                         restIntevals: 60,
                                         order: incrementalOrderNumber,
@@ -39,11 +44,16 @@ struct CreateArrangedExerciseView: View {
     
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading, spacing: 16) {
-                ExerciseSelectorViewComponent(isPresented: $isPresented, arrangedExericse: arrangedExercise).horizontalSpacing(.leading)
+            VStack(alignment: .leading, spacing: 24) {
+                HStack {
+                    ExerciseSelectorViewComponent(isPresented: $isPresented, arrangedExericse: arrangedExercise)
+                    ExerciseWeightSliderViewComponent(arrangedExercise: arrangedExercise)
+                }.horizontalSpacing(.leading)
+                
+                Divider()
+
                 ExerciseRepetitionSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
                 ExerciseSetsSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
-                ExerciseWeightSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
                 ExerciseRestIntervalSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
                 AddButtonView()
             }
@@ -70,6 +80,12 @@ struct CreateArrangedExerciseView: View {
                     }
                     .tint(Color.themeStyle.theme.primary)
                 }
+            }
+            .onAppear {
+                arrangedExercise.weightUnit = defaultWeightUnit
+                arrangedExercise.restIntevals = defaultRestIntervals
+                arrangedExercise.sets = defaultSets
+                arrangedExercise.repetitions = defaultRepetitions
             }
         }
     }

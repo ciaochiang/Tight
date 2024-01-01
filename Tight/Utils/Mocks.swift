@@ -13,6 +13,11 @@ class Mocks {
     static var logger: CustomLogger {
         return CustomLogger(subSystem: .dev)
     }
+    
+    static var mockArrangedExercise: ArrangedExercise {
+        return .init(exercise: .none, repetitions: 0, sets: 0, weight: 0, weightUnit: 0, durationOfSet: 0, restIntevals: 0, order: 0, tags: [], isCompleted: false)
+    }
+
 }
 
 extension Mocks {

@@ -12,7 +12,7 @@ struct ExerciseSelectorViewComponent: View {
     @Bindable var arrangedExericse: ArrangedExercise
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 16) {
             Text(LocalizationProvider.exercise.nameKey)
                 .font(.caption)
                 .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
@@ -30,10 +30,9 @@ struct ExerciseSelectorViewComponent: View {
             }
             .horizontalSpacing(.leading)
         }
-        .frame(height: 44)
     }
 }
 
 #Preview {
-    ExerciseSelectorViewComponent(isPresented: .constant(false), arrangedExericse: .init(exercise: .none, repetitions: 0, sets: 0, weight: 0, durationOfSet: 0, restIntevals: 0, order: 0, tags: [], isCompleted: false))
+    ExerciseSelectorViewComponent(isPresented: .constant(false), arrangedExericse: Mocks.mockArrangedExercise)
 }

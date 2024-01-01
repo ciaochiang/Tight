@@ -64,6 +64,7 @@ extension TightSchemaV1 {
         var repetitions: Double
         var sets: Double
         var weight: Double
+        var weightUnit: Int = 0
         var durationOfSet: TimeInterval
         var restIntevals: TimeInterval
         var order: Int
@@ -75,6 +76,7 @@ extension TightSchemaV1 {
              repetitions: Double,
              sets: Double,
              weight: Double,
+             weightUnit: Int = 0,
              durationOfSet: TimeInterval,
              restIntevals: TimeInterval,
              order: Int,
@@ -85,6 +87,7 @@ extension TightSchemaV1 {
             self.repetitions = repetitions
             self.sets = sets
             self.weight = weight
+            self.weightUnit = weightUnit
             self.durationOfSet = durationOfSet
             self.restIntevals = restIntevals
             self.order = order

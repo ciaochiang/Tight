@@ -24,5 +24,5 @@ struct ExerciseTagPickerViewComponent: View {
 
 #Preview {
     let previewContainer = PreviewContainer([ArrangedExercise.self])
-    return ExerciseTagPickerViewComponent(arrangedExercise: .init(exercise: .none, repetitions: 0, sets: 0, weight: 0, durationOfSet: 0, restIntevals: 0, order: 0, tags: [], isCompleted: false)).modelContainer(previewContainer.container)
+    return ExerciseTagPickerViewComponent(arrangedExercise: Mocks.mockArrangedExercise).modelContainer(previewContainer.container)
 }

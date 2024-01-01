@@ -9,28 +9,28 @@ import SwiftUI
 
 struct ExerciseWeightSliderViewComponent: View {
     @Bindable var arrangedExercise: ArrangedExercise
+    @State private var weightValue: Double?
+    @AppStorage(Constants.DEFAULT_EXERCISE_WEIGHT_UNIT) private var defaultWeightUnit: Int = 0
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 16) {
             Text(LocalizationProvider.weight.nameKey)
                 .font(.caption)
                 .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
             
             HStack(alignment: .center, spacing: 8) {
-                Text(String(format: "%.0f", arrangedExercise.weight))
+                TextField("0", value: $weightValue, format: .number)
+                    .font(.subheadline)
+                    .keyboardType(.numberPad)
+                
+                Text(WeightUnit(rawValue: defaultWeightUnit)?.nameKey ?? "")
                     .font(.subheadline)
                     .fontWeight(.semibold)
-                    .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
-                    .frame(width: 24, alignment: .leading)
-                
-                Slider(value: $arrangedExercise.weight, in: 1...6, step: 1.0)
-                    .accentColor(Color.themeStyle.theme.accent)
             }
         }
-        .frame(height: 44)
     }
 }
 
 #Preview {
-    ExerciseWeightSliderViewComponent(arrangedExercise: .init(exercise: .none, repetitions: 0, sets: 0, weight: 0, durationOfSet: 0, restIntevals: 0, order: 0, tags: [], isCompleted: false))
+    ExerciseWeightSliderViewComponent(arrangedExercise: Mocks.mockArrangedExercise)
 }

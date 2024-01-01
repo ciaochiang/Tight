@@ -18,10 +18,13 @@ enum TightSchemaV2: VersionedSchema {
 
 extension TightSchemaV2 {
     @Model
-    class Plan: Identifiable {
-        @Attribute(.unique) var id: String
+    class Plan {
+        @Attribute(.unique) var id: UUID
         var name: String
-        var arrangedExercises: [ArrangedExercise]
+        
+        @Relationship(deleteRule: .cascade)
+        var arrangedExercises = [ArrangedExercise]()
+        
         var startDate: Date
         var endDate: Date?
         var repeats: [Int]
@@ -31,9 +34,8 @@ extension TightSchemaV2 {
         var tags: [String]
         var isPreset: Bool
         
-        init(id: String = UUID().uuidString,
+        init(id: UUID = UUID(),
              name: String,
-             arrangedExercises: [ArrangedExercise],
              startDate: Date,
              endDate: Date? = nil,
              repeats: [Int],
@@ -44,7 +46,6 @@ extension TightSchemaV2 {
              isPreset: Bool) {
             self.id = id
             self.name = name
-            self.arrangedExercises = arrangedExercises
             self.startDate = startDate
             self.endDate = endDate
             self.repeats = repeats
@@ -57,23 +58,25 @@ extension TightSchemaV2 {
     }
     
     @Model
-    class ArrangedExercise: Identifiable {
-        @Attribute(.unique) var id: String
+    class ArrangedExercise {
+        @Attribute(.unique) var id: UUID
         var exercise: Exercise
         var repetitions: Double
         var sets: Double
         var weight: Double
+        var weightUnit: Int = 0
         var durationOfSet: TimeInterval
         var restIntevals: TimeInterval
         var order: Int
         var tags: [Int]
         var isCompleted: Bool
         
-        init(id: String = UUID().uuidString,
+        init(id: UUID = UUID(),
              exercise: Exercise,
              repetitions: Double,
              sets: Double,
              weight: Double,
+             weightUnit: Int = 0,
              durationOfSet: TimeInterval,
              restIntevals: TimeInterval,
              order: Int,
@@ -84,6 +87,7 @@ extension TightSchemaV2 {
             self.repetitions = repetitions
             self.sets = sets
             self.weight = weight
+            self.weightUnit = weightUnit
             self.durationOfSet = durationOfSet
             self.restIntevals = restIntevals
             self.order = order
@@ -93,8 +97,8 @@ extension TightSchemaV2 {
     }
 
     @Model
-    class Tag: Identifiable {
-        @Attribute(.unique) var id: String
+    class Tag {
+        @Attribute(.unique) var id: UUID
         var name: String
         var colourR: Double
         var colourG: Double
@@ -102,7 +106,7 @@ extension TightSchemaV2 {
         var colourA: Double
         var isInitial: Bool
         
-        init(id: String = UUID().uuidString,
+        init(id: UUID = UUID(),
              name: String,
              colourR: Double,
              colourG: Double,

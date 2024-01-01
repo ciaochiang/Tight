@@ -9,10 +9,9 @@ import SwiftUI
 
 struct ExerciseSetsSliderViewComponent: View {
     @Bindable var arrangedExercise: ArrangedExercise
-    @AppStorage(Constants.DEFAULT_EXERCISE_SETS) private var defaultSets: Double = 0
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 16) {
             Text(LocalizationProvider.sets.nameKey)
                 .font(.caption)
                 .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
@@ -28,13 +27,9 @@ struct ExerciseSetsSliderViewComponent: View {
                     .accentColor(Color.themeStyle.theme.accent)
             }
         }
-        .frame(height: 44)
-        .onAppear {
-            arrangedExercise.sets = defaultSets
-        }
     }
 }
 
 #Preview {
-    ExerciseSetsSliderViewComponent(arrangedExercise: .init(exercise: .none, repetitions: 0, sets: 0, weight: 0, durationOfSet: 0, restIntevals: 0, order: 0, tags: [], isCompleted: false))
+    ExerciseSetsSliderViewComponent(arrangedExercise: Mocks.mockArrangedExercise)
 }

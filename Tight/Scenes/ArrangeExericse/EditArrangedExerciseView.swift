@@ -68,5 +68,5 @@ struct EditArrangedExerciseView: View {
 
 #Preview {
     let previewContainer = PreviewContainer([ArrangedExercise.self])
-    return EditArrangedExerciseView(arrangedExercise: .init(exercise: .none, repetitions: 0, sets: 0, weight: 0, durationOfSet: 0, restIntevals: 0, order: 0, tags: [], isCompleted: false)).modelContainer(previewContainer.container)
+    return EditArrangedExerciseView(arrangedExercise: Mocks.mockArrangedExercise).modelContainer(previewContainer.container)
 }

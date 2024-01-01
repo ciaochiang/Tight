@@ -86,14 +86,6 @@ struct ArrangedExerciseCard: View {
 
 
 #Preview {
-    ArrangedExerciseCard(exercise: .constant(.init(exercise: .none,
-                                                   repetitions: 0,
-                                                   sets: 0,
-                                                   weight: 0,
-                                                   durationOfSet: 0,
-                                                   restIntevals: 0,
-                                                   order: 0,
-                                                   tags: [1,2,4],
-                                                   isCompleted: false)))
+    ArrangedExerciseCard(exercise: .constant(Mocks.mockArrangedExercise))
 }
 

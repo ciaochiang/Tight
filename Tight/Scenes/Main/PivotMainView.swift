@@ -65,7 +65,7 @@ struct PivotMainView: View {
                                            completion: { _ in
                     viewModel.reloadArrangedExercises()
                 })
-                .presentationDetents([.height(400)])
+                .presentationDetents([.fraction(0.7)])
                 .presentationCornerRadius(16)
             }
         })
