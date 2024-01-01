@@ -43,13 +43,14 @@ struct CreateArrangedExerciseView: View {
                 ExerciseSelectorViewComponent(isPresented: $isPresented, arrangedExericse: arrangedExercise).horizontalSpacing(.leading)
                 ExerciseRepetitionSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
                 ExerciseSetsSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
+                ExerciseWeightSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
                 ExerciseRestIntervalSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
                 AddButtonView()
             }
             .padding()
             .veriticalSpacing(.bottom)
             .sheet(isPresented: $isPresented, content: {
-                ExercisePickerView(title: LocalizationProvider.pickExercise.nameKey, 
+                ExercisePickerView(title: LocalizationProvider.pickExercise.nameKey,
                                    selectedExercise: arrangedExercise.exercise,
                                    callback: { exercise in
                     arrangedExercise.exercise = exercise

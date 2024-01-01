@@ -519,6 +519,38 @@
         }
       }
     },
+    "exercise_glossary_weight" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weight"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重量"
+          }
+        }
+      }
+    },
+    "exercise_glossary_weight_unit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weight Unit"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重量單位"
+          }
+        }
+      }
+    },
     "exercise_key_arnold_press" : {
       "localizations" : {
         "en" : {
@@ -1538,6 +1570,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "TRX"
+          }
+        }
+      }
+    },
+    "exercise_weight_unit_kilogram" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kg"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "公斤"
+          }
+        }
+      }
+    },
+    "exercise_weight_unit_pound" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "lb"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "磅"
           }
         }
       }

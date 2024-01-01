@@ -53,6 +53,8 @@ enum LocalizationProvider {
     case sets
     case repetitions
     case restIntervals
+    case weight
+    case weightUnit
     
     /// Exercise Category
     case upperBody
@@ -107,6 +109,8 @@ enum LocalizationProvider {
         case .sets: return "exercise_glossary_sets"
         case .repetitions: return "exercise_glossary_repetitions"
         case .restIntervals: return "exercise_glossary_rest_intervals"
+        case .weight: return "exercise_glossary_weight"
+        case .weightUnit: return "exercise_glossary_weight_unit"
             
         /// Exercise Category
         case .upperBody: return "exercise_category_upper_body"

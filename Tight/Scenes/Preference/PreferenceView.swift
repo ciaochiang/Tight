@@ -8,11 +8,25 @@
 import SwiftUI
 import SwiftData
 
+enum WeightUnit: Int {
+    case kilogram = 0
+    case pound = 1
+    
+    var nameKey: LocalizedStringKey {
+        switch self {
+        case .kilogram: return "exercise_weight_unit_kilogram"
+        case .pound: return "exercise_weight_unit_pound"
+        }
+    }
+}
+
 struct PreferenceView: View {
     @State private var path = NavigationPath()
     @AppStorage(Constants.DEFAULT_EXERCISE_SETS) var defaultSets: Double = 3
     @AppStorage(Constants.DEFAULT_EXERCISE_REPETITIONS) var defaultRepetitions: Double = 10
     @AppStorage(Constants.DEFAULT_EXERCISE_REST_INTERVALS) var defaultRestIntervals: Double = 90
+    @AppStorage(Constants.DEFAULT_EXERCISE_WEIGHT_UNIT) var defaultWeightUnit: Int = 0
+    @State private var isWeightUnitDialogPresented: Bool = false
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -24,6 +38,7 @@ struct PreferenceView: View {
                     }
                     
                     Section(LocalizationProvider.preferences.nameKey) {
+                        WeightUnitItem()
                         RepetitionsSliderItem().padding(.top, 8)
                         SetsSliderItem().padding(.top, 8)
                         RestIntervalSliderItem().padding(.top, 8)
@@ -35,6 +50,10 @@ struct PreferenceView: View {
             .veriticalSpacing(.top)
             .navigationTitle(LocalizationProvider.settings.nameKey)
             .background(Color.themeStyle.theme.background)
+            .sheet(isPresented: $isWeightUnitDialogPresented) {
+                WeightUnitBottomSheetView(isSheetPresented: $isWeightUnitDialogPresented, weightUnit: $defaultWeightUnit)
+                    .presentationDetents([.height(180)])
+            }
         }
     }
     
@@ -58,6 +77,23 @@ struct PreferenceView: View {
                     .frame(height: Constants.DEFAULT_LIST_ROW_HEIGHT)
                     .contentShape(Rectangle())
             }
+        }
+    }
+    
+    @ViewBuilder
+    func WeightUnitItem() -> some View {
+        HStack {
+            Text(LocalizationProvider.weightUnit.nameKey)
+                .frame(height: Constants.DEFAULT_LIST_ROW_HEIGHT)
+            Spacer()
+            Text(WeightUnit(rawValue: defaultWeightUnit)?.nameKey ?? "")
+                .font(.caption)
+                .foregroundStyle(.gray)
+                .frame(height: Constants.DEFAULT_LIST_ROW_HEIGHT)
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            isWeightUnitDialogPresented.toggle()
         }
     }
     
@@ -113,6 +149,54 @@ struct PreferenceView: View {
 #Preview {
     let previewContainer = PreviewContainer([Plan.self])
     return PreferenceView().modelContainer(previewContainer.container)
+}
+
+
+struct WeightUnitBottomSheetView: View {
+    @Binding var isSheetPresented: Bool
+    @Binding var weightUnit: Int
+
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 16) {
+                Button(action: {
+                    weightUnit = 0
+                    isSheetPresented = false
+                }) {
+                    HStack {
+                        Text(WeightUnit.kilogram.nameKey)
+                            .font(.callout)
+                            .fontWeight(.semibold)
+                            .foregroundColor(Color.themeStyle.theme.primary)
+                        Spacer()
+                        Image(systemName: "checkmark").opacity(weightUnit == 0 ? 1 : 0)
+                    }
+                }
+                .horizontalSpacing(.leading)
+
+                Divider()
+                
+                Button(action: {
+                    weightUnit = 1
+                    isSheetPresented = false
+                }) {
+                    HStack {
+                        Text(WeightUnit.pound.nameKey)
+                            .font(.callout)
+                            .fontWeight(.semibold)
+                            .foregroundColor(Color.themeStyle.theme.primary)
+                        Spacer()
+                        Image(systemName: "checkmark").opacity(weightUnit == 1 ? 1 : 0)
+                    }
+                }
+                .horizontalSpacing(.leading)
+            }
+            .navigationTitle(LocalizationProvider.weightUnit.nameKey)
+            .navigationBarTitleDisplayMode(.inline)
+            .padding()
+            .background(Color.white)
+        }
+    }
 }
 
 

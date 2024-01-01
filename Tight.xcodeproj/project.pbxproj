@@ -57,6 +57,7 @@
 		E57FD7CC2B3DC6BE00696968 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E57FD7CB2B3DC6BE00696968 /* LaunchScreen.storyboard */; };
 		E57FD7CE2B3DD47600696968 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E57FD7CD2B3DD47600696968 /* GoogleService-Info.plist */; };
 		E59B08F82B41495000280FC4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B08F72B41495000280FC4 /* Constants.swift */; };
+		E59B08FD2B4292A900280FC4 /* ExerciseWeightSliderViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B08FC2B4292A900280FC4 /* ExerciseWeightSliderViewComponent.swift */; };
 		E5B700BF2B400B740080442D /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E5B700BE2B400B740080442D /* Localizable.xcstrings */; };
 		E5B700C12B40105E0080442D /* LocalizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B700C02B40105E0080442D /* LocalizationProvider.swift */; };
 /* End PBXBuildFile section */
@@ -130,6 +131,7 @@
 		E57FD7CB2B3DC6BE00696968 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E57FD7CD2B3DD47600696968 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E59B08F72B41495000280FC4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		E59B08FC2B4292A900280FC4 /* ExerciseWeightSliderViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseWeightSliderViewComponent.swift; sourceTree = "<group>"; };
 		E5B700BE2B400B740080442D /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		E5B700C02B40105E0080442D /* LocalizationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -336,6 +338,7 @@
 		E57FD7B52B3DB1AE00696968 /* ArrangeExericse */ = {
 			isa = PBXGroup;
 			children = (
+				E59B08F92B42925200280FC4 /* Components */,
 				E57FD7B82B3DB1DD00696968 /* CreateArrangedExerciseView.swift */,
 				E57FD7B72B3DB1DD00696968 /* EditArrangedExerciseView.swift */,
 				E57FD7B62B3DB1CB00696968 /* ExercisePickerView */,
@@ -347,11 +350,6 @@
 			isa = PBXGroup;
 			children = (
 				E57FD7BF2B3DB1E500696968 /* ExercisePickerView.swift */,
-				E57FD7BB2B3DB1E500696968 /* ExerciseRepetitionSliderViewComponent.swift */,
-				E57FD7BE2B3DB1E500696968 /* ExerciseRestIntervalSliderViewComponent.swift */,
-				E57FD7BC2B3DB1E500696968 /* ExerciseSelectorViewComponent.swift */,
-				E57FD7BD2B3DB1E500696968 /* ExerciseSetsSliderViewComponent.swift */,
-				E509EA1F2B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift */,
 			);
 			path = ExercisePickerView;
 			sourceTree = "<group>";
@@ -362,6 +360,19 @@
 				E57FD7CB2B3DC6BE00696968 /* LaunchScreen.storyboard */,
 			);
 			path = Launch;
+			sourceTree = "<group>";
+		};
+		E59B08F92B42925200280FC4 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				E57FD7BB2B3DB1E500696968 /* ExerciseRepetitionSliderViewComponent.swift */,
+				E57FD7BE2B3DB1E500696968 /* ExerciseRestIntervalSliderViewComponent.swift */,
+				E57FD7BC2B3DB1E500696968 /* ExerciseSelectorViewComponent.swift */,
+				E57FD7BD2B3DB1E500696968 /* ExerciseSetsSliderViewComponent.swift */,
+				E509EA1F2B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift */,
+				E59B08FC2B4292A900280FC4 /* ExerciseWeightSliderViewComponent.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -557,6 +568,7 @@
 				E57FD7772B3DAE3B00696968 /* ExperiementsProvider.swift in Sources */,
 				E57FD7712B3DAE0400696968 /* Error.swift in Sources */,
 				E57FD7AD2B3DB18C00696968 /* TagLayout.swift in Sources */,
+				E59B08FD2B4292A900280FC4 /* ExerciseWeightSliderViewComponent.swift in Sources */,
 				E562D6FB2B3DA34E000775B7 /* TightApp.swift in Sources */,
 				E57FD7BA2B3DB1DD00696968 /* CreateArrangedExerciseView.swift in Sources */,
 				E509EA1C2B3EA53A0025E76C /* TightSchemaV1.swift in Sources */,
@@ -737,7 +749,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20231231154354;
+				CURRENT_PROJECT_VERSION = 20231231162503;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Tight/Preview Content\"";
 				DEVELOPMENT_TEAM = RQ845TWDMJ;
@@ -777,7 +789,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20231231154354;
+				CURRENT_PROJECT_VERSION = 20231231162503;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Tight/Preview Content\"";
 				DEVELOPMENT_TEAM = RQ845TWDMJ;
@@ -817,7 +829,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20231231154354;
+				CURRENT_PROJECT_VERSION = 20231231162503;
 				DEVELOPMENT_TEAM = RQ845TWDMJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -837,7 +849,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20231231154354;
+				CURRENT_PROJECT_VERSION = 20231231162503;
 				DEVELOPMENT_TEAM = RQ845TWDMJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -856,7 +868,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20231231154354;
+				CURRENT_PROJECT_VERSION = 20231231162503;
 				DEVELOPMENT_TEAM = RQ845TWDMJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -875,7 +887,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20231231154354;
+				CURRENT_PROJECT_VERSION = 20231231162503;
 				DEVELOPMENT_TEAM = RQ845TWDMJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
