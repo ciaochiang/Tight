@@ -15,13 +15,21 @@ struct EditArrangedExerciseView: View {
     
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading, spacing: 16) {
-                ExerciseSelectorViewComponent(isPresented: $isPresented, arrangedExericse: arrangedExercise).horizontalSpacing(.leading)
-                ExerciseRepetitionSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
-                ExerciseSetsSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
-                ExerciseRestIntervalSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
-                ExerciseTagPickerViewComponent(arrangedExercise: arrangedExercise)
-                    .horizontalSpacing(.leading)
+            ScrollView(.vertical) {
+                VStack(alignment: .leading, spacing: 24) {
+                    HStack {
+                        ExerciseSelectorViewComponent(isPresented: $isPresented, arrangedExericse: arrangedExercise)
+                        ExerciseWeightSliderViewComponent(arrangedExercise: arrangedExercise)
+                    }.horizontalSpacing(.leading)
+                    
+                    Divider()
+                    
+                    ExerciseRepetitionSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
+                    ExerciseSetsSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
+                    ExerciseRestIntervalSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
+                    ExerciseTagPickerViewComponent(arrangedExercise: arrangedExercise)
+                        .horizontalSpacing(.leading)
+                }
             }
             .padding()
             .veriticalSpacing(.bottom)

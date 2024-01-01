@@ -71,7 +71,7 @@ struct PivotMainView: View {
         })
         .sheet(item: $exerciseToEdit) { exercise in
             EditArrangedExerciseView(arrangedExercise: exercise)
-                .presentationDetents([.fraction(0.7)])
+                .presentationDetents([.large])
                 .presentationCornerRadius(16)
         }
         .sheet(isPresented: $isImporting, content: {

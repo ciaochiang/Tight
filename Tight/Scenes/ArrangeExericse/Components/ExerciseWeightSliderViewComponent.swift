@@ -19,7 +19,7 @@ struct ExerciseWeightSliderViewComponent: View {
                 .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
             
             HStack(alignment: .center, spacing: 8) {
-                TextField("0", value: $weightValue, format: .number)
+                TextField("0", value: $arrangedExercise.weight, format: .number)
                     .font(.subheadline)
                     .keyboardType(.numberPad)
                 
