@@ -226,6 +226,15 @@ struct PivotMainView: View {
                 /// Update all order number
                 viewModel.updateOrderNumbers()
             })
+            
+            /// Bottom Placeholder
+            VStack { }
+            .frame(height: 140)
+            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+            .background(Color.themeStyle.theme.background)
+            .listRowInsets(EdgeInsets())
+            .listRowSeparator(.hidden)
+
         }
         .padding(.top, 16)
         .listStyle(PlainListStyle())
