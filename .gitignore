@@ -5,7 +5,7 @@
 xcuserdata/
 DerivedData/
 #/*.xcodeproj/
-/*.xcworkspace/
+#/*.xcworkspace/
 /.idea/
 /*.playground/
 /*.xcplayground/
