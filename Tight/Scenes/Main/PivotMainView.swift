@@ -11,6 +11,7 @@ import SwiftData
 struct PivotMainView: View {
     @Environment(\.modelContext) var context
     @StateObject var viewModel: PivotMainViewModel
+    @StateObject var trainingSessionManager: TrainingSessionManager
     @State private var isArrangingExercise: Bool = false
     @State private var isImporting: Bool = false
     @State private var exerciseToEdit: ArrangedExercise?
@@ -18,13 +19,24 @@ struct PivotMainView: View {
     /// Animation  namespace
     @Namespace private var animation
     
-    init(viewModel: PivotMainViewModel) {
+    init(viewModel: PivotMainViewModel, trainingSessionManager: TrainingSessionManager) {
         _viewModel = .init(wrappedValue: viewModel)
+        _trainingSessionManager = .init(wrappedValue: trainingSessionManager)
     }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HeaderView()
+            
+            HStack {
+                Text("Elasped Time: \(trainingSessionManager.elapsedTime)")
+                Button(action: {
+                    trainingSessionManager.configure(arrangedExercises: viewModel.arrangedExercises)
+                    trainingSessionManager.startTrainingSession()
+                }) {
+                    Text("Start Training")
+                }
+            }
             
             ///  Scheduled exercises
             if viewModel.currentPlan?.arrangedExercises.isEmpty == true {
@@ -273,6 +285,8 @@ struct PivotMainView: View {
     let previewContainer = PreviewContainer([ArrangedExercise.self, Plan.self])
     let context = ModelContext(previewContainer.container)
     let viewModel = PivotMainViewModel(context: context)
-    return PivotMainView(viewModel: viewModel).modelContext(context)
+    let trainingSessionManager = TrainingSessionManager()
+    return PivotMainView(viewModel: viewModel,
+                         trainingSessionManager: trainingSessionManager).modelContext(context)
     
 }

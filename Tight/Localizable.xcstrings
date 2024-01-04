@@ -410,6 +410,9 @@
         }
       }
     },
+    "Elasped Time: %lf" : {
+
+    },
     "exercise_category_compound_or_fullbody" : {
       "localizations" : {
         "en" : {
@@ -1656,6 +1659,9 @@
           }
         }
       }
+    },
+    "Start Training" : {
+
     }
   },
   "version" : "1.0"
