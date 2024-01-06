@@ -26,13 +26,19 @@ class TrainingSessionManager: ObservableObject {
     /// Configure arranged exercises
     /// NOTE:  Invoke this function before start the training session
     func configure(arrangedExercises: [ArrangedExercise]) {
+        /// End and remove existing live activtiy
+        
         self.arrangedExercises = arrangedExercises
+        self.currentStage = 0
     }
     
     /// Start Training Session
     func startTrainingSession() {
         /// Ensure arranged exercise list is not empty
         guard arrangedExercises.isEmpty == false else { return }
+        
+        /// Remove activity
+        removeActivity()
         
         /// Init the timer
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] _ in
@@ -92,6 +98,20 @@ class TrainingSessionManager: ObservableObject {
             currentLiveActivityID = activity.id
         } catch {
             print(error.localizedDescription)
+        }
+    }
+    
+    /// Delete exising activity
+    func removeActivity() {
+        ///  Find activity
+        if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
+            activity.id == currentLiveActivityID
+        }) {
+            Task {
+                let dismissalPolicy: ActivityUIDismissalPolicy = .immediate
+                let finalState = activity.content.state
+                await activity.end(.init(state: finalState, staleDate: nil), dismissalPolicy: dismissalPolicy)
+            }
         }
     }
 }
