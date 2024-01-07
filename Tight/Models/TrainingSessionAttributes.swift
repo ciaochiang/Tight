@@ -15,11 +15,13 @@ struct TrainingSessionAttributes: ActivityAttributes {
         var currentStage: Int
         var currentExerciseID: String
         var currentExercise: String
-        var nextExercise: String
+        var totalSetsCount: Int
+        var indexOfSet: Int
         var weight: Double
         var repetition: Double
         var restInterval: TimeInterval
         var elapsedTime: TimeInterval
+        var completionMessage: String
     }
 
     // Fixed non-changing properties about your activity go here!

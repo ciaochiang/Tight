@@ -1631,13 +1631,7 @@
         }
       }
     },
-    "L" : {
-
-    },
     "Mark current exercise as completed and start rest" : {
-
-    },
-    "Next: %@" : {
 
     },
     "onboarding_key_notification_description" : {
@@ -1695,9 +1689,6 @@
 
     },
     "Stop Training Session" : {
-
-    },
-    "T %lf" : {
 
     },
     "Time: %lf" : {

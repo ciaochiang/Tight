@@ -22,6 +22,7 @@ class TrainingSessionManager: ObservableObject {
     @Published var elapsedTime: TimeInterval = 0
     @Published var currentLiveActivityID: String = ""
     @Published var currentStage: Int = 0
+    @Published var currentIndexOfSet: Int = 1
     
     static let shared = TrainingSessionManager()
     
@@ -32,6 +33,7 @@ class TrainingSessionManager: ObservableObject {
         
         self.arrangedExercises = arrangedExercises
         self.currentStage = 0
+        self.currentIndexOfSet = 1
     }
     
     /// Start Training Session
@@ -49,19 +51,6 @@ class TrainingSessionManager: ObservableObject {
         
         /// Add live activity
         addLiveAcitvity()
-    }
-    
-    /// Stop Training Session
-    func stopTrainingSession() {
-        timer?.invalidate()
-        timer = nil
-        
-        DispatchQueue.main.async {
-            self.elapsedTime = 0
-        }
-        
-        /// End current live activity
-        removeActivity()
     }
     
     /// Handle function when timer tiggered it
@@ -92,16 +81,15 @@ class TrainingSessionManager: ObservableObject {
             exercise.isCompleted.toggle()
         }
         
-        /// Stop training sessio if there is not more stage
+        /// Complete training session if there is no more exercise
         if currentStage + 1 >= arrangedExercises.count  {
-            stopTrainingSession()
+            done()
             return
         }
         
         /// Go to next arranged exercise
         let newStage = currentStage + 1
         let currentExercise = arrangedExercises[newStage]
-        let nextExercise = newStage + 1 >= arrangedExercises.count ? "" : arrangedExercises[newStage + 1].exercise.name
         
         DispatchQueue.main.async {
             self.currentStage = newStage
@@ -117,7 +105,8 @@ class TrainingSessionManager: ObservableObject {
                 contentState.currentStage = newStage
                 contentState.currentExerciseID = currentExercise.id.uuidString
                 contentState.currentExercise = currentExercise.exercise.name
-                contentState.nextExercise = nextExercise
+                contentState.totalSetsCount = Int(currentExercise.sets)
+                contentState.indexOfSet = currentIndexOfSet
                 contentState.weight = currentExercise.weight
                 contentState.repetition = currentExercise.repetitions
                 contentState.restInterval = currentExercise.restIntevals
@@ -125,7 +114,61 @@ class TrainingSessionManager: ObservableObject {
                 await activity.update(.init(state: contentState, staleDate: nil))
             }
         }
+    }
+    
+    /// Stop Training Session
+    func stopTrainingSession() {
+        /// Reset
+        reset()
         
+        /// Find activity
+        if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
+            activity.id == currentLiveActivityID
+        }) {
+            Task {
+                /// Update activity info
+                var contentState = activity.content.state
+                contentState.completionMessage = "Keep it Up! 🤙🏻"
+                await activity.update(.init(state: contentState, staleDate: nil))
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self.removeActivity()
+                }
+            }
+        }
+    }
+    
+    /// Reset
+    func reset() {
+        timer?.invalidate()
+        timer = nil
+        
+        DispatchQueue.main.async {
+            self.elapsedTime = 0
+            self.currentIndexOfSet = 1
+        }
+    }
+
+    ///
+    func done() {
+        /// Reset
+        reset()
+        
+        /// Find activity
+        if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
+            activity.id == currentLiveActivityID
+        }) {
+            Task {
+                /// Update activity info
+                var contentState = activity.content.state
+                contentState.completionMessage = "Well Done!"
+                await activity.update(.init(state: contentState, staleDate: nil))
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self.removeActivity()
+                }
+            }
+        }
     }
     
     /// Add live activity
@@ -137,11 +180,13 @@ class TrainingSessionManager: ObservableObject {
                                                                   currentStage: currentStage,
                                                                   currentExerciseID: currentExercise.id.uuidString,
                                                                   currentExercise: currentExercise.exercise.name,
-                                                                  nextExercise: nextExercise,
+                                                                  totalSetsCount: Int(currentExercise.sets),
+                                                                  indexOfSet: currentIndexOfSet,
                                                                   weight: currentExercise.weight,
                                                                   repetition: currentExercise.repetitions,
                                                                   restInterval: currentExercise.restIntevals,
-                                                                  elapsedTime: elapsedTime)
+                                                                  elapsedTime: elapsedTime,
+                                                                  completionMessage: "")
         
         do {
             let activity = try Activity<TrainingSessionAttributes>.request(attributes: trainingSessionAttributes, 

@@ -10,6 +10,7 @@ import WidgetKit
 import SwiftUI
 import AppIntents
 
+@available(iOS 16.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 struct CompleteExercise: LiveActivityIntent {
     
     static var title: LocalizedStringResource = "Complete Current Exercise"
@@ -33,6 +34,7 @@ struct CompleteExercise: LiveActivityIntent {
     }
 }
 
+@available(iOS 16.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 struct StopTrainingSession: LiveActivityIntent {
     
     static var title: LocalizedStringResource = "Stop Training Session"
@@ -52,90 +54,91 @@ struct TrainingSessionLiveActivity: Widget {
         ActivityConfiguration(for: TrainingSessionAttributes.self) { context in
             // Lock screen/banner UI goes here
             VStack(spacing: 16) {
-                HStack {
-                    ElapsedTimeView(context: context)
-                    Spacer()
-                    
-                    if context.state.nextExercise != "" {
-                        Text("Next: \(context.state.nextExercise)")
-                            .foregroundStyle(Color.themeStyle.theme.secondaryTextColor.opacity(0.5))
-                            .font(.caption)
-                            .fontWeight(.semibold)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
+                if context.state.completionMessage != ""  {
+                    Text(context.state.completionMessage)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.vertical, 40)
+                        .padding(.horizontal)
+                } else {
+                    HStack {
+                        ElapsedTimeView(context: context)
+                        Spacer()
+                        SetsProgressView(context: context)
                     }
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.top)
-                .padding(.horizontal)
-                
-                StagesView(totalExerciseCount: context.state.totalExerciseCount,
-                           currentStage: context.state.currentStage)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.top)
+                    .padding(.horizontal)
+                    
+                    StagesView(totalExerciseCount: context.state.totalExerciseCount,
+                               currentStage: context.state.currentStage)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.horizontal)
-                
-                ControlsView(context: context)
-                    .padding(.bottom)
-
+                    
+                    ControlsView(context: context)
+                        .padding(.horizontal)
+                        .padding(.bottom)
+                }
             }
             .frame(maxWidth: .infinity)
-            .activityBackgroundTint(Color.clear)
             .activitySystemActionForegroundColor(Color.themeStyle.theme.accent)
-
+            
         } dynamicIsland: { context in
             DynamicIsland {
                 // Expanded UI goes here.  Compose the expanded UI through
                 // various regions, like leading/trailing/center/bottom
                 DynamicIslandExpandedRegion(.leading) {
-                    HStack {
-                        Text(context.state.currentExercise)
-                            .font(.title3)
-                            .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
+                    Text("\(context.state.elapsedTime.formatIntervalToMinutesSeconds)")
+                        .font(.headline)
+                        .fontWeight(.bold)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
+                
                 DynamicIslandExpandedRegion(.trailing) {
-                    VStack(spacing: 16) {
-                        Text("\(context.state.elapsedTime.formatIntervalToMinutesSeconds)")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                    }
+                    SetsProgressView(context: context)
+                        .frame(width: 28, height: 28)
                 }
+                
                 DynamicIslandExpandedRegion(.bottom) {
                     VStack {
                         StagesView(totalExerciseCount: context.state.totalExerciseCount,
                                    currentStage: context.state.currentStage)
-
-                        HStack {
-                            ExerciseInfoView(context: context)
-                            Spacer()
-                            ControlsView(context: context)
-                        }
+                        ControlsView(context: context)
                     }
-                    // more content
+                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
+                    .padding(.bottom)
                 }
             } compactLeading: {
-                Text("L")
+                Text("\(context.state.elapsedTime.formatIntervalToMinutesSeconds)")
             } compactTrailing: {
-                Text("T \(context.state.elapsedTime)")
+                SetsProgressView(context: context)
+                    .frame(width: 24, height: 24)
             } minimal: {
-                Text("Time: \(context.state.elapsedTime)")
+                SetsProgressView(context: context)
+                    .frame(width: 24, height: 24)
             }
             .widgetURL(URL(string: "http://www.apple.com"))
-            .keylineTint(Color.red)
+            .keylineTint(Color.themeStyle.theme.accent)
         }
+    }
+    
+    @ViewBuilder
+    func SetsProgressView(context: ActivityViewContext<TrainingSessionAttributes>) -> some View {
+        ProgressView(value: CGFloat(context.state.indexOfSet) / CGFloat(context.state.totalSetsCount)) {
+            Text("\(context.state.indexOfSet)")
+        }
+        .progressViewStyle(CircularProgressViewStyle(tint: Color.themeStyle.theme.accent))
     }
     
     @ViewBuilder
     func ExerciseInfoView(context: ActivityViewContext<TrainingSessionAttributes>) -> some View {
         VStack(spacing: 8) {
-            HStack {
-                Text(context.state.currentExercise)
-                    .font(.title2)
-                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                    .foregroundColor(Color.themeStyle.theme.primaryTextColor)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
+            Text(context.state.currentExercise)
+                .font(.title2)
+                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+                .frame(maxWidth: .infinity, alignment: .leading)
             
             Text("\(Int(context.state.weight))kg x \(Int(context.state.repetition))")
                 .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
@@ -154,6 +157,7 @@ struct TrainingSessionLiveActivity: Widget {
                 .tracking(1.4)
                 .minimumScaleFactor(0.8)
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .foregroundColor(Color.themeStyle.theme.primaryTextColor)
                 .contentTransition(.numericText(value: context.state.elapsedTime))
         }
     }
@@ -174,9 +178,8 @@ struct TrainingSessionLiveActivity: Widget {
             }
             .tint(Color.themeStyle.theme.secondaryAccent)
         }
-        .padding(.horizontal)
     }
-    
+
     @ViewBuilder
     func StagesView(totalExerciseCount: Int, currentStage: Int) -> some View {
         ZStack {
@@ -236,11 +239,31 @@ extension TrainingSessionAttributes {
 
 extension TrainingSessionAttributes.ContentState {
     fileprivate static var initial: TrainingSessionAttributes.ContentState {
-        TrainingSessionAttributes.ContentState(totalExerciseCount: 5, currentStage: 0, currentExerciseID: "123", currentExercise: "Bench Press", nextExercise: "Pull Up", weight: 40, repetition: 12, restInterval: 90, elapsedTime: 0)
+        TrainingSessionAttributes.ContentState(totalExerciseCount: 5,
+                                               currentStage: 0,
+                                               currentExerciseID: "123",
+                                               currentExercise: "Bench Press",
+                                               totalSetsCount: 3,
+                                               indexOfSet: 1,
+                                               weight: 40,
+                                               repetition: 12,
+                                               restInterval: 90,
+                                               elapsedTime: 0,
+                                               completionMessage: "")
      }
      
      fileprivate static var progressing: TrainingSessionAttributes.ContentState {
-         TrainingSessionAttributes.ContentState(totalExerciseCount: 5, currentStage: 1, currentExerciseID: "234", currentExercise: "Bench Press", nextExercise: "Pull Up", weight: 40, repetition: 12, restInterval: 90, elapsedTime: 120)
+         TrainingSessionAttributes.ContentState(totalExerciseCount: 5, 
+                                                currentStage: 1,
+                                                currentExerciseID: "234",
+                                                currentExercise: "Bench Press",
+                                                totalSetsCount: 3,
+                                                indexOfSet: 2,
+                                                weight: 40,
+                                                repetition: 12,
+                                                restInterval: 90,
+                                                elapsedTime: 120,
+                                                completionMessage: "")
      }
 }
 
