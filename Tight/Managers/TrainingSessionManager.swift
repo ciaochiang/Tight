@@ -20,9 +20,13 @@ class TrainingSessionManager: ObservableObject {
     private var timer: Timer?
     
     @Published var elapsedTime: TimeInterval = 0
+    
+    /// Live Activity Properties
     @Published var currentLiveActivityID: String = ""
+    @Published var currentExercise: ArrangedExercise?
     @Published var currentStage: Int = 0
     @Published var currentIndexOfSet: Int = 1
+    @Published var isResting: Bool = false
     
     static let shared = TrainingSessionManager()
     
@@ -53,69 +57,6 @@ class TrainingSessionManager: ObservableObject {
         addLiveAcitvity()
     }
     
-    /// Handle function when timer tiggered it
-    func handleTimerAction() {
-        ///  Add 1 second
-        let newElapsedTime: TimeInterval = elapsedTime + 1.0
-        DispatchQueue.main.async {
-            self.elapsedTime = newElapsedTime
-        }
-        
-        ///  Find activity
-        if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
-            activity.id == currentLiveActivityID
-        }) {
-            Task {
-                /// Update activity info
-                var contentState = activity.content.state
-                contentState.elapsedTime = newElapsedTime
-                await activity.update(.init(state: contentState, staleDate: nil))
-            }
-        }
-    }
-    
-    /// Complete current exercise
-    func completeCurrentExercise(exerciseID: String) {        
-        /// Mark it as completed
-        if let exercise = arrangedExercises.first(where: { $0.id.uuidString == exerciseID }) {
-            exercise.isCompleted.toggle()
-        }
-        
-        /// Complete training session if there is no more exercise
-        if currentStage + 1 >= arrangedExercises.count  {
-            done()
-            return
-        }
-        
-        /// Go to next arranged exercise
-        let newStage = currentStage + 1
-        let currentExercise = arrangedExercises[newStage]
-        
-        DispatchQueue.main.async {
-            self.currentStage = newStage
-        }
-        
-        ///  Find activity
-        if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
-            activity.id == currentLiveActivityID
-        }) {
-            Task {
-                /// Update activity info
-                var contentState = activity.content.state
-                contentState.currentStage = newStage
-                contentState.currentExerciseID = currentExercise.id.uuidString
-                contentState.currentExercise = currentExercise.exercise.name
-                contentState.totalSetsCount = Int(currentExercise.sets)
-                contentState.indexOfSet = currentIndexOfSet
-                contentState.weight = currentExercise.weight
-                contentState.repetition = currentExercise.repetitions
-                contentState.restInterval = currentExercise.restIntevals
-                
-                await activity.update(.init(state: contentState, staleDate: nil))
-            }
-        }
-    }
-    
     /// Stop Training Session
     func stopTrainingSession() {
         /// Reset
@@ -138,6 +79,56 @@ class TrainingSessionManager: ObservableObject {
         }
     }
     
+    /// Handle function when timer tiggered it
+    func handleTimerAction() {
+        ///  Add 1 second
+        let newElapsedTime: TimeInterval = elapsedTime + 1.0
+        DispatchQueue.main.async {
+            self.elapsedTime = newElapsedTime
+        }
+        
+        ///  Find activity
+        if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
+            activity.id == currentLiveActivityID
+        }) {
+            Task {
+                /// Update activity info
+                var contentState = activity.content.state
+                contentState.elapsedTime = newElapsedTime
+                await activity.update(.init(state: contentState, staleDate: nil))
+            }
+        }
+    }
+    
+    /// Complete current exercise
+    func completeCurrentSet(exerciseID: String) {
+        /// 1. Find the corresponding exercise
+        guard let exercise = arrangedExercises.first(where: { $0.id.uuidString == exerciseID }) else { return }
+        
+        /// 2.
+        /// - Go rest
+        /// - If there is more set of current exercise, then update the IndexOfSet number
+        /// - If there is no more set, then mark it as completed and  jump to next exercise
+        /// - If there is no next exercise, then complete the training session
+        if currentIndexOfSet >= Int(exercise.sets) {
+            /// Sets are completed, mark exercise as completed and jump to next exercise
+            exercise.isCompleted = true
+            
+            /// If there is more exercise, then `nextExercise`, else  `completeTrainingSession`
+            if currentStage + 1 >= arrangedExercises.count {
+                /// Complete training session
+                done()
+            }
+            else {
+                nextExercise()
+            }
+        }
+        else {
+            /// Keep current exercise and go to next set
+            nextSet()
+        }
+    }
+    
     /// Reset
     func reset() {
         timer?.invalidate()
@@ -149,7 +140,7 @@ class TrainingSessionManager: ObservableObject {
         }
     }
 
-    ///
+    /// Done
     func done() {
         /// Reset
         reset()
@@ -171,25 +162,85 @@ class TrainingSessionManager: ObservableObject {
         }
     }
     
+    /// Next Set
+    func nextSet() {
+        /// indexOfSet increased
+        let newSetNumber = currentIndexOfSet + 1
+        
+        DispatchQueue.main.async {
+            self.currentIndexOfSet = newSetNumber
+        }
+        
+        /// Update Live Activity
+        if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
+            activity.id == currentLiveActivityID
+        }) {
+            Task {
+                /// Update activity info
+                var contentState = activity.content.state
+                contentState.indexOfSet = newSetNumber
+                await activity.update(.init(state: contentState, staleDate: nil))
+            }
+        }
+    }
+    
+    /// Next Exericse
+    func nextExercise() {
+        /// Go to next arranged exercise
+        let newStage = currentStage + 1
+        let newIndexOfSet = 1
+        let newExercise = arrangedExercises[newStage]
+        
+        DispatchQueue.main.async {
+            self.currentStage = newStage
+            self.currentIndexOfSet = newIndexOfSet
+        }
+        
+        /// Update Live Activity
+        if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
+            activity.id == currentLiveActivityID
+        }) {
+            Task {
+                /// Update activity info
+                var contentState = activity.content.state
+                contentState.currentStage = newStage
+                contentState.currentExerciseID = newExercise.id.uuidString
+                contentState.currentExercise = newExercise.exercise.name
+                contentState.totalSetsCount = Int(newExercise.sets)
+                contentState.indexOfSet = newIndexOfSet
+                contentState.weight = newExercise.weight
+                contentState.repetition = newExercise.repetitions
+                contentState.restInterval = newExercise.restIntevals
+                
+                await activity.update(.init(state: contentState, staleDate: nil))
+            }
+        }
+    }
+}
+
+// MARK: Live Activity
+extension TrainingSessionManager {
     /// Add live activity
     func addLiveAcitvity() {
+        /// Gete first exercise
+        let firstExercise = arrangedExercises[currentStage]
+        self.currentExercise = firstExercise
+        
         let trainingSessionAttributes = TrainingSessionAttributes(name: "TrainingSession")
-        let currentExercise = arrangedExercises[currentStage]
-        let nextExercise = currentStage + 1 >= arrangedExercises.count ? "" : arrangedExercises[currentStage + 1].exercise.name
         let initialState = TrainingSessionAttributes.ContentState(totalExerciseCount: arrangedExercises.count,
                                                                   currentStage: currentStage,
-                                                                  currentExerciseID: currentExercise.id.uuidString,
-                                                                  currentExercise: currentExercise.exercise.name,
-                                                                  totalSetsCount: Int(currentExercise.sets),
+                                                                  currentExerciseID: firstExercise.id.uuidString,
+                                                                  currentExercise: firstExercise.exercise.name,
+                                                                  totalSetsCount: Int(firstExercise.sets),
                                                                   indexOfSet: currentIndexOfSet,
-                                                                  weight: currentExercise.weight,
-                                                                  repetition: currentExercise.repetitions,
-                                                                  restInterval: currentExercise.restIntevals,
+                                                                  weight: firstExercise.weight,
+                                                                  repetition: firstExercise.repetitions,
+                                                                  restInterval: firstExercise.restIntevals,
                                                                   elapsedTime: elapsedTime,
                                                                   completionMessage: "")
         
         do {
-            let activity = try Activity<TrainingSessionAttributes>.request(attributes: trainingSessionAttributes, 
+            let activity = try Activity<TrainingSessionAttributes>.request(attributes: trainingSessionAttributes,
                                                                            content: .init(state: initialState, staleDate: nil),
                                                                            pushType: nil)
             /// Storing current live activity id for updating activity

@@ -11,7 +11,7 @@ import SwiftUI
 import AppIntents
 
 @available(iOS 16.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
-struct CompleteExercise: LiveActivityIntent {
+struct CompleteSet: LiveActivityIntent {
     
     static var title: LocalizedStringResource = "Complete Current Exercise"
     static var description = IntentDescription("Mark current exercise as completed and start rest")
@@ -29,7 +29,7 @@ struct CompleteExercise: LiveActivityIntent {
     
     func perform() async throws -> some IntentResult {
         /// Update Database
-        TrainingSessionManager.shared.completeCurrentExercise(exerciseID: id)
+        TrainingSessionManager.shared.completeCurrentSet(exerciseID: id)
         return .result()
     }
 }
@@ -173,7 +173,7 @@ struct TrainingSessionLiveActivity: Widget {
             }
             .tint(Color.themeStyle.theme.accent)
             
-            Button(intent: CompleteExercise(id: context.state.currentExerciseID)) {
+            Button(intent: CompleteSet(id: context.state.currentExerciseID)) {
                 Image(systemName: "checkmark.square.fill")
             }
             .tint(Color.themeStyle.theme.secondaryAccent)
