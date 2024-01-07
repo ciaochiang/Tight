@@ -19,7 +19,7 @@ struct TrainingSessionAttributes: ActivityAttributes {
         var indexOfSet: Int
         var weight: Double
         var repetition: Double
-        var restInterval: TimeInterval
+        var restIntervals: TimeInterval
         var elapsedTime: TimeInterval
         var completionMessage: String
     }

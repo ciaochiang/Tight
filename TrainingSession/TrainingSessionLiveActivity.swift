@@ -35,6 +35,19 @@ struct CompleteSet: LiveActivityIntent {
 }
 
 @available(iOS 16.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
+struct SkipRest: LiveActivityIntent {
+    
+    static var title: LocalizedStringResource = "Skip Current Rest"
+    static var description = IntentDescription("Skip rest and jump to next set")
+    
+    func perform() async throws -> some IntentResult {
+        /// Update Database
+        TrainingSessionManager.shared.skipRest()
+        return .result()
+    }
+}
+
+@available(iOS 16.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 struct StopTrainingSession: LiveActivityIntent {
     
     static var title: LocalizedStringResource = "Stop Training Session"
@@ -134,31 +147,58 @@ struct TrainingSessionLiveActivity: Widget {
     @ViewBuilder
     func ExerciseInfoView(context: ActivityViewContext<TrainingSessionAttributes>) -> some View {
         VStack(spacing: 8) {
-            Text(context.state.currentExercise)
-                .font(.title2)
-                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                .foregroundColor(Color.themeStyle.theme.primaryTextColor)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            
-            Text("\(Int(context.state.weight))kg x \(Int(context.state.repetition))")
-                .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
-                .font(.subheadline)
-                .fontWeight(.semibold)
-                .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
+            if context.state.restIntervals > 0 {
+                Text("Take a break!")
+                    .font(.title2)
+                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                    .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Text("Stay hydrated")
+                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
+            }
+            else {
+                Text(context.state.currentExercise)
+                    .font(.title2)
+                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                    .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Text("\(Int(context.state.weight))kg x \(Int(context.state.repetition))")
+                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
+            }
         }
     }
     
     @ViewBuilder
     func ElapsedTimeView(context: ActivityViewContext<TrainingSessionAttributes>) -> some View {
         VStack {
-            Text("\(context.state.elapsedTime.formatIntervalToMinutesSeconds)")
-                .font(.title)
-                .fontWeight(.bold)
-                .tracking(1.4)
-                .minimumScaleFactor(0.8)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundColor(Color.themeStyle.theme.primaryTextColor)
-                .contentTransition(.numericText(value: context.state.elapsedTime))
+            if context.state.restIntervals > 0 {
+                Text( "\(context.state.restIntervals.formatIntervalToMinutesSeconds)")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .tracking(1.4)
+                    .minimumScaleFactor(0.8)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .foregroundColor(Color.blue)
+                    .contentTransition(.numericText(value: context.state.restIntervals))
+            }
+            else {
+                Text( "\(context.state.elapsedTime.formatIntervalToMinutesSeconds)")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .tracking(1.4)
+                    .minimumScaleFactor(0.8)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+                    .contentTransition(.numericText(value: context.state.elapsedTime))
+            }
         }
     }
     
@@ -173,41 +213,50 @@ struct TrainingSessionLiveActivity: Widget {
             }
             .tint(Color.themeStyle.theme.accent)
             
-            Button(intent: CompleteSet(id: context.state.currentExerciseID)) {
-                Image(systemName: "checkmark.square.fill")
+            if context.state.restIntervals > 0 {
+                Button(intent: SkipRest()) {
+                    Image(systemName: "chevron.forward.2")
+                }
+                .tint(Color.blue)
             }
-            .tint(Color.themeStyle.theme.secondaryAccent)
+            else {
+                Button(intent: CompleteSet(id: context.state.currentExerciseID)) {
+                    Image(systemName: "checkmark.square.fill")
+                }
+                .tint(Color.themeStyle.theme.secondaryAccent)
+            }
         }
     }
 
     @ViewBuilder
     func StagesView(totalExerciseCount: Int, currentStage: Int) -> some View {
-        ZStack {
-            Rectangle()
-                .fill(.white.opacity(0.3))
-                .frame(height: 4)
-                .padding(.horizontal, 4)
+        GeometryReader(content: { geometry in
+            let progress = CGFloat(currentStage) / CGFloat(totalExerciseCount - 1)
             
-            GeometryReader(content: { geometry in
-                let offsetRatio = CGFloat(currentStage) / CGFloat(totalExerciseCount - 1)
+            ZStack {
+                Rectangle()
+                    .fill(.white.opacity(0.3))
+                    .frame(height: 4)
+                    .padding(.horizontal, 4)
+                
                 Rectangle()
                     .fill(Color.themeStyle.theme.accent)
                     .frame(height: 4)
-                    .frame(width: (geometry.frame(in: .global).width * offsetRatio) - 8, alignment: .leading)
+                    .frame(width: (geometry.frame(in: .global).width * progress), alignment: .leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 4)
-                    .offset(y: 8)
-            })
-            
-            HStack {
-                ForEach(0..<totalExerciseCount, id: \.self) { i in
-                    BreathCircleView(isCurrentStage: i == currentStage, isPendingStage: i > currentStage)
+                
+                HStack {
+                    ForEach(0..<totalExerciseCount, id: \.self) { i in
+                        BreathCircleView(isCurrentStage: i == currentStage, isPendingStage: i > currentStage)
 
-                    if i < totalExerciseCount - 1 {
-                        Spacer()
+                        if i < totalExerciseCount - 1 {
+                            Spacer()
+                        }
                     }
                 }
             }
-        }
+        })
     }
 }
 
@@ -247,7 +296,7 @@ extension TrainingSessionAttributes.ContentState {
                                                indexOfSet: 1,
                                                weight: 40,
                                                repetition: 12,
-                                               restInterval: 90,
+                                               restIntervals: 10,
                                                elapsedTime: 0,
                                                completionMessage: "")
      }
@@ -261,7 +310,7 @@ extension TrainingSessionAttributes.ContentState {
                                                 indexOfSet: 2,
                                                 weight: 40,
                                                 repetition: 12,
-                                                restInterval: 90,
+                                                restIntervals: 0,
                                                 elapsedTime: 120,
                                                 completionMessage: "")
      }

@@ -26,7 +26,7 @@ class TrainingSessionManager: ObservableObject {
     @Published var currentExercise: ArrangedExercise?
     @Published var currentStage: Int = 0
     @Published var currentIndexOfSet: Int = 1
-    @Published var isResting: Bool = false
+    @Published var currentRestIntervals: TimeInterval = 0
     
     static let shared = TrainingSessionManager()
     
@@ -81,10 +81,17 @@ class TrainingSessionManager: ObservableObject {
     
     /// Handle function when timer tiggered it
     func handleTimerAction() {
-        ///  Add 1 second
+        /// Add 1 second
         let newElapsedTime: TimeInterval = elapsedTime + 1.0
+        
+        /// Handle resting
+        let isResting = currentRestIntervals > 0
+        let newRestIntervals = isResting ? currentRestIntervals - 1 : 0
+        print("new rest interval: \(newRestIntervals)")
+        
         DispatchQueue.main.async {
             self.elapsedTime = newElapsedTime
+            self.currentRestIntervals = newRestIntervals
         }
         
         ///  Find activity
@@ -95,7 +102,19 @@ class TrainingSessionManager: ObservableObject {
                 /// Update activity info
                 var contentState = activity.content.state
                 contentState.elapsedTime = newElapsedTime
-                await activity.update(.init(state: contentState, staleDate: nil))
+                contentState.restIntervals = newRestIntervals
+                
+                /// If rest time up, then alerting, if not, then just normal update
+//                var alertConfig: AlertConfiguration? = nil
+//                if newRestIntervals == 0 {
+//                    alertConfig = AlertConfiguration(
+//                        title: "Break Time is Over!",
+//                        body: "Let's go for next set",
+//                        sound: .default
+//                    )
+//                }
+                
+                await activity.update(.init(state: contentState, staleDate: nil), alertConfiguration: nil)
             }
         }
     }
@@ -135,8 +154,11 @@ class TrainingSessionManager: ObservableObject {
         timer = nil
         
         DispatchQueue.main.async {
+            self.currentExercise = nil
             self.elapsedTime = 0
+            self.currentStage = 0
             self.currentIndexOfSet = 1
+            self.currentRestIntervals = 0
         }
     }
 
@@ -145,7 +167,7 @@ class TrainingSessionManager: ObservableObject {
         /// Reset
         reset()
         
-        /// Find activity
+        /// Update Live Activity
         if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
             activity.id == currentLiveActivityID
         }) {
@@ -162,13 +184,34 @@ class TrainingSessionManager: ObservableObject {
         }
     }
     
+    /// Skip Rest
+    func skipRest() {
+        let newRestInterval: TimeInterval = 0
+        DispatchQueue.main.async {
+            self.currentRestIntervals = newRestInterval
+        }
+        
+        if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
+            activity.id == currentLiveActivityID
+        }) {
+            Task {
+                /// Update activity info
+                var contentState = activity.content.state
+                contentState.restIntervals = newRestInterval
+                await activity.update(.init(state: contentState, staleDate: nil))
+            }
+        }
+    }
+    
     /// Next Set
     func nextSet() {
         /// indexOfSet increased
         let newSetNumber = currentIndexOfSet + 1
+        let newRestIntervals = currentExercise?.restIntevals ?? 0
         
         DispatchQueue.main.async {
             self.currentIndexOfSet = newSetNumber
+            self.currentRestIntervals = newRestIntervals
         }
         
         /// Update Live Activity
@@ -179,6 +222,7 @@ class TrainingSessionManager: ObservableObject {
                 /// Update activity info
                 var contentState = activity.content.state
                 contentState.indexOfSet = newSetNumber
+                contentState.restIntervals = newRestIntervals
                 await activity.update(.init(state: contentState, staleDate: nil))
             }
         }
@@ -190,10 +234,13 @@ class TrainingSessionManager: ObservableObject {
         let newStage = currentStage + 1
         let newIndexOfSet = 1
         let newExercise = arrangedExercises[newStage]
+        let currentExerciseRestInterval = currentExercise?.restIntevals ?? 0
         
         DispatchQueue.main.async {
             self.currentStage = newStage
+            self.currentExercise = newExercise
             self.currentIndexOfSet = newIndexOfSet
+            self.currentRestIntervals = newExercise.restIntevals
         }
         
         /// Update Live Activity
@@ -210,7 +257,7 @@ class TrainingSessionManager: ObservableObject {
                 contentState.indexOfSet = newIndexOfSet
                 contentState.weight = newExercise.weight
                 contentState.repetition = newExercise.repetitions
-                contentState.restInterval = newExercise.restIntevals
+                contentState.restIntervals = currentExerciseRestInterval
                 
                 await activity.update(.init(state: contentState, staleDate: nil))
             }
@@ -235,7 +282,7 @@ extension TrainingSessionManager {
                                                                   indexOfSet: currentIndexOfSet,
                                                                   weight: firstExercise.weight,
                                                                   repetition: firstExercise.repetitions,
-                                                                  restInterval: firstExercise.restIntevals,
+                                                                  restIntervals: 0,     /// No rest interval at initial state
                                                                   elapsedTime: elapsedTime,
                                                                   completionMessage: "")
         

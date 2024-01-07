@@ -1682,13 +1682,25 @@
         }
       }
     },
+    "Skip Current Rest" : {
+
+    },
+    "Skip rest and jump to next set" : {
+
+    },
     "Start Training" : {
+
+    },
+    "Stay hydrated" : {
 
     },
     "Stop current training session and reset timer" : {
 
     },
     "Stop Training Session" : {
+
+    },
+    "Take a break!" : {
 
     }
   },
