@@ -151,6 +151,9 @@
         }
       }
     },
+    "Break Time is Over!" : {
+
+    },
     "callout_key_start_adding_exercise_to_plan" : {
       "localizations" : {
         "en" : {
@@ -1630,6 +1633,9 @@
           }
         }
       }
+    },
+    "Let's go for next set" : {
+
     },
     "Mark current exercise as completed and start rest" : {
 

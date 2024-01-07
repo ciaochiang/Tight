@@ -86,8 +86,8 @@ class TrainingSessionManager: ObservableObject {
         
         /// Handle resting
         let isResting = currentRestIntervals > 0
+        let remianRestInterval = currentRestIntervals
         let newRestIntervals = isResting ? currentRestIntervals - 1 : 0
-        print("new rest interval: \(newRestIntervals)")
         
         DispatchQueue.main.async {
             self.elapsedTime = newElapsedTime
@@ -105,16 +105,19 @@ class TrainingSessionManager: ObservableObject {
                 contentState.restIntervals = newRestIntervals
                 
                 /// If rest time up, then alerting, if not, then just normal update
-//                var alertConfig: AlertConfiguration? = nil
-//                if newRestIntervals == 0 {
-//                    alertConfig = AlertConfiguration(
-//                        title: "Break Time is Over!",
-//                        body: "Let's go for next set",
-//                        sound: .default
-//                    )
-//                }
+                var alertConfig: AlertConfiguration? = nil
+                if remianRestInterval == 1 && newRestIntervals == 0 {
+                    alertConfig = AlertConfiguration(
+                        title: "Break Time is Over!",
+                        body: "Let's go for next set",
+                        sound: .default
+                    )
+                    
+                    /// Vibrate
+                    await UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                }
                 
-                await activity.update(.init(state: contentState, staleDate: nil), alertConfiguration: nil)
+                await activity.update(.init(state: contentState, staleDate: nil), alertConfiguration: alertConfig)
             }
         }
     }
@@ -269,6 +272,8 @@ class TrainingSessionManager: ObservableObject {
 extension TrainingSessionManager {
     /// Add live activity
     func addLiveAcitvity() {
+        guard ActivityAuthorizationInfo().areActivitiesEnabled else { return }
+        
         /// Gete first exercise
         let firstExercise = arrangedExercises[currentStage]
         self.currentExercise = firstExercise

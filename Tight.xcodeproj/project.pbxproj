@@ -73,7 +73,6 @@
 		E5A2F3332B496ED100735FC2 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD79E2B3DB13F00696968 /* Color+Extension.swift */; };
 		E5B700BF2B400B740080442D /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E5B700BE2B400B740080442D /* Localizable.xcstrings */; };
 		E5B700C12B40105E0080442D /* LocalizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B700C02B40105E0080442D /* LocalizationProvider.swift */; };
-		E5C1C6B02B4A57130081B3EF /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E5C1C6AF2B4A57130081B3EF /* FirebaseAnalytics */; };
 		E5C1C6B22B4A59570081B3EF /* TightSchemaV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = E509EA1B2B3EA53A0025E76C /* TightSchemaV1.swift */; };
 		E5C1C6B62B4A5A5C0081B3EF /* TrainingSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B08FE2B4594C000280FC4 /* TrainingSessionManager.swift */; };
 		E5C1C6B72B4A5A780081B3EF /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7842B3DAF7D00696968 /* Exercise.swift */; };
@@ -194,7 +193,6 @@
 			files = (
 				E554FB952B4837FA007AB30F /* SwiftUI.framework in Frameworks */,
 				E554FB932B4837FA007AB30F /* WidgetKit.framework in Frameworks */,
-				E5C1C6B02B4A57130081B3EF /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -473,7 +471,6 @@
 			);
 			name = TrainingSessionExtension;
 			packageProductDependencies = (
-				E5C1C6AF2B4A57130081B3EF /* FirebaseAnalytics */,
 			);
 			productName = TrainingSessionExtension;
 			productReference = E554FB912B4837FA007AB30F /* TrainingSessionExtension.appex */;
@@ -870,7 +867,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -927,7 +924,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -944,7 +941,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20240101224347;
+				CURRENT_PROJECT_VERSION = 20240101224348;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Tight/Preview Content\"";
 				DEVELOPMENT_TEAM = RQ845TWDMJ;
@@ -987,7 +984,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20240101224347;
+				CURRENT_PROJECT_VERSION = 20240101224348;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Tight/Preview Content\"";
 				DEVELOPMENT_TEAM = RQ845TWDMJ;
@@ -1177,11 +1174,6 @@
 			productName = "GrowthBook-IOS";
 		};
 		E57FD7622B3DAD3900696968 /* FirebaseAnalytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E57FD75E2B3DAC5B00696968 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalytics;
-		};
-		E5C1C6AF2B4A57130081B3EF /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E57FD75E2B3DAC5B00696968 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalytics;
