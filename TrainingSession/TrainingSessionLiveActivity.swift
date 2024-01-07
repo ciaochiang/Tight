@@ -67,8 +67,10 @@ struct TrainingSessionLiveActivity: Widget {
         ActivityConfiguration(for: TrainingSessionAttributes.self) { context in
             // Lock screen/banner UI goes here
             VStack(spacing: 16) {
-                if context.state.completionMessage != ""  {
-                    Text(context.state.completionMessage)
+                if context.state.completionType > -1 {  /// -1 is initial state
+                    Text(context.state.completionType == 0
+                         ? LocalizationProvider.abortCompletionMessage.nameKey
+                         : LocalizationProvider.doneCompletionMessage.nameKey)
                         .font(.title2)
                         .fontWeight(.bold)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -84,10 +86,13 @@ struct TrainingSessionLiveActivity: Widget {
                     .padding(.top)
                     .padding(.horizontal)
                     
-                    StagesView(totalExerciseCount: context.state.totalExerciseCount,
-                               currentStage: context.state.currentStage)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .padding(.horizontal)
+                    /// Only display when exercise count > 1
+                    if context.state.totalExerciseCount > 1 {
+                        StagesView(totalExerciseCount: context.state.totalExerciseCount,
+                                   currentStage: context.state.currentStage)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.horizontal)
+                    }
                     
                     ControlsView(context: context)
                         .padding(.horizontal)
@@ -106,6 +111,7 @@ struct TrainingSessionLiveActivity: Widget {
                         .font(.headline)
                         .fontWeight(.bold)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.leading, 2)
                 }
                 
                 DynamicIslandExpandedRegion(.trailing) {
@@ -114,13 +120,28 @@ struct TrainingSessionLiveActivity: Widget {
                 }
                 
                 DynamicIslandExpandedRegion(.bottom) {
-                    VStack {
-                        StagesView(totalExerciseCount: context.state.totalExerciseCount,
-                                   currentStage: context.state.currentStage)
-                        ControlsView(context: context)
+                    if context.state.completionType > -1 {  /// -1 is initial state
+                        Text(context.state.completionType == 0
+                             ? LocalizationProvider.abortCompletionMessage.nameKey
+                             : LocalizationProvider.doneCompletionMessage.nameKey)
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.bottom)
+                    } else {
+                        VStack {
+                            /// Only display when exercise count > 1
+                            if context.state.totalExerciseCount > 1 {
+                                StagesView(totalExerciseCount: context.state.totalExerciseCount,
+                                           currentStage: context.state.currentStage)
+                                .padding(.vertical, 4)
+                            }
+
+                            ControlsView(context: context)
+                                .padding(.leading, 2)
+                        }
+                        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
                     }
-                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
-                    .padding(.bottom)
                 }
             } compactLeading: {
                 Text("\(context.state.elapsedTime.formatIntervalToMinutesSeconds)")
@@ -146,17 +167,19 @@ struct TrainingSessionLiveActivity: Widget {
     
     @ViewBuilder
     func ExerciseInfoView(context: ActivityViewContext<TrainingSessionAttributes>) -> some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 4) {
             if context.state.restIntervals > 0 {
-                Text("Take a break!")
+                Text(LocalizationProvider.breakTimeTitle.nameKey)
                     .font(.title2)
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                    .minimumScaleFactor(0.8)
                     .foregroundColor(Color.themeStyle.theme.primaryTextColor)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                Text("Stay hydrated")
+                Text(LocalizationProvider.breakTimeSubtitle.nameKey)
                     .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
                     .font(.subheadline)
+                    .minimumScaleFactor(0.8)
                     .fontWeight(.semibold)
                     .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
             }
@@ -164,12 +187,14 @@ struct TrainingSessionLiveActivity: Widget {
                 Text(context.state.currentExercise)
                     .font(.title2)
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                    .minimumScaleFactor(0.8)
                     .foregroundColor(Color.themeStyle.theme.primaryTextColor)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Text("\(Int(context.state.weight))kg x \(Int(context.state.repetition))")
                     .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
                     .font(.subheadline)
+                    .minimumScaleFactor(0.8)
                     .fontWeight(.semibold)
                     .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
             }
@@ -298,7 +323,7 @@ extension TrainingSessionAttributes.ContentState {
                                                repetition: 12,
                                                restIntervals: 10,
                                                elapsedTime: 0,
-                                               completionMessage: "")
+                                               completionType: -1)
      }
      
      fileprivate static var progressing: TrainingSessionAttributes.ContentState {
@@ -312,7 +337,7 @@ extension TrainingSessionAttributes.ContentState {
                                                 repetition: 12,
                                                 restIntervals: 0,
                                                 elapsedTime: 120,
-                                                completionMessage: "")
+                                                completionType: -1)
      }
 }
 

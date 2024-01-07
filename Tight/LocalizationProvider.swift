@@ -62,6 +62,13 @@ enum LocalizationProvider {
     case core
     case compoundOrFullBody
     
+    /// Live Activity
+    case trainingCompleted
+    case breakTimeTitle
+    case breakTimeSubtitle
+    case doneCompletionMessage
+    case abortCompletionMessage
+    
     var nameKey: LocalizedStringKey {
         switch self {
         /// App Name
@@ -117,6 +124,13 @@ enum LocalizationProvider {
         case .lowerBody: return "exercise_category_lower_body"
         case .core: return "exercise_category_core"
         case .compoundOrFullBody: return "exercise_category_compound_or_fullbody"
+            
+        /// Live Acitvity
+        case .trainingCompleted: return "live_activity_key_training_completed"
+        case .breakTimeTitle: return "live_activity_key_break_time_title"
+        case .breakTimeSubtitle: return "live_activity_key_break_time_subtitle"
+        case .doneCompletionMessage: return "live_activity_key_done_completion_message"
+        case .abortCompletionMessage: return "live_activity_key_abort_completion_message"
         }
     }
 }

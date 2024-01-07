@@ -21,7 +21,7 @@ struct TrainingSessionAttributes: ActivityAttributes {
         var repetition: Double
         var restIntervals: TimeInterval
         var elapsedTime: TimeInterval
-        var completionMessage: String
+        var completionType: Int     /// 0: Abort 1: Done
     }
 
     // Fixed non-changing properties about your activity go here!

@@ -69,7 +69,7 @@ class TrainingSessionManager: ObservableObject {
             Task {
                 /// Update activity info
                 var contentState = activity.content.state
-                contentState.completionMessage = "Keep it Up! 🤙🏻"
+                contentState.completionType = 0
                 await activity.update(.init(state: contentState, staleDate: nil))
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
@@ -177,7 +177,7 @@ class TrainingSessionManager: ObservableObject {
             Task {
                 /// Update activity info
                 var contentState = activity.content.state
-                contentState.completionMessage = "Well Done!"
+                contentState.completionType = 1
                 await activity.update(.init(state: contentState, staleDate: nil))
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
@@ -289,7 +289,7 @@ extension TrainingSessionManager {
                                                                   repetition: firstExercise.repetitions,
                                                                   restIntervals: 0,     /// No rest interval at initial state
                                                                   elapsedTime: elapsedTime,
-                                                                  completionMessage: "")
+                                                                  completionType: -1)    /// -1 is initial state)
         
         do {
             let activity = try Activity<TrainingSessionAttributes>.request(attributes: trainingSessionAttributes,

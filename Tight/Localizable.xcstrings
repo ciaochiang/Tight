@@ -429,6 +429,9 @@
     "Complete Current Exercise" : {
 
     },
+    "Configuration" : {
+
+    },
     "Elasped Time: %lf" : {
 
     },
@@ -1634,7 +1637,56 @@
         }
       }
     },
+    "Favorite Emoji" : {
+
+    },
+    "Favorite Emoji:" : {
+
+    },
     "Let's go for next set" : {
+
+    },
+    "live_activity_key_abort_completion_message" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keep It Up! 🤙🏻"
+          }
+        }
+      }
+    },
+    "live_activity_key_break_time_subtitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stay hydrated"
+          }
+        }
+      }
+    },
+    "live_activity_key_break_time_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Take a break!"
+          }
+        }
+      }
+    },
+    "live_activity_key_done_completion_message" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Well Done!"
+          }
+        }
+      }
+    },
+    "live_activity_key_training_completed" : {
 
     },
     "Mark current exercise as completed and start rest" : {
@@ -1697,16 +1749,16 @@
     "Start Training" : {
 
     },
-    "Stay hydrated" : {
-
-    },
     "Stop current training session and reset timer" : {
 
     },
     "Stop Training Session" : {
 
     },
-    "Take a break!" : {
+    "This is an example widget." : {
+
+    },
+    "Time:" : {
 
     }
   },
