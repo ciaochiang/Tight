@@ -23,9 +23,8 @@ struct AppTabBarView: View {
             /// Create pivot main view
             let today = Date().today
             let mainViewModel = PivotMainViewModel(context: context, currentDate: today)
-            let trainingSessionManager = TrainingSessionManager()
             PivotMainView(viewModel: mainViewModel,
-                          trainingSessionManager: trainingSessionManager).tabItem {
+                          trainingSessionManager: TrainingSessionManager.shared).tabItem {
                 Label(LocalizationProvider.plan.nameKey, systemImage: TabBarItemType.plan.iconName)
             }
             

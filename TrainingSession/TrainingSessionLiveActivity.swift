@@ -10,12 +10,37 @@ import WidgetKit
 import SwiftUI
 import AppIntents
 
-struct CompleteExercise: AppIntent {
+struct CompleteExercise: LiveActivityIntent {
     
-    static var title: LocalizedStringResource = "Completed current exercise"
-    static var description = IntentDescription("Mark current exercise as completed and go to next.")
+    static var title: LocalizedStringResource = "Complete Current Exercise"
+    static var description = IntentDescription("Mark current exercise as completed and start rest")
+    
+    @Parameter(title: "Exercise ID")
+    var id: String
+    
+    init() {
+        
+    }
+    
+    init(id: String) {
+        self.id = id
+    }
     
     func perform() async throws -> some IntentResult {
+        /// Update Database
+        TrainingSessionManager.shared.completeCurrentExercise(exerciseID: id)
+        return .result()
+    }
+}
+
+struct StopTrainingSession: LiveActivityIntent {
+    
+    static var title: LocalizedStringResource = "Stop Training Session"
+    static var description = IntentDescription("Stop current training session and reset timer")
+    
+    func perform() async throws -> some IntentResult {
+        /// Update Database
+        TrainingSessionManager.shared.stopTrainingSession()
         return .result()
     }
 }
@@ -136,18 +161,15 @@ struct TrainingSessionLiveActivity: Widget {
     @ViewBuilder
     func ControlsView(context: ActivityViewContext<TrainingSessionAttributes>) -> some View {
         HStack {
-            
             ExerciseInfoView(context: context)
-
-
             Spacer()
             
-            Button(intent: CompleteExercise()) {
+            Button(intent: StopTrainingSession()) {
                 Image(systemName: "stop.fill")
             }
             .tint(Color.themeStyle.theme.accent)
             
-            Button(intent: CompleteExercise()) {
+            Button(intent: CompleteExercise(id: context.state.currentExerciseID)) {
                 Image(systemName: "checkmark.square.fill")
             }
             .tint(Color.themeStyle.theme.secondaryAccent)
@@ -214,11 +236,11 @@ extension TrainingSessionAttributes {
 
 extension TrainingSessionAttributes.ContentState {
     fileprivate static var initial: TrainingSessionAttributes.ContentState {
-        TrainingSessionAttributes.ContentState(totalExerciseCount: 5, currentStage: 0, currentExercise: "Bench Press", nextExercise: "Pull Up", weight: 40, repetition: 12, restInterval: 90, elapsedTime: 0)
+        TrainingSessionAttributes.ContentState(totalExerciseCount: 5, currentStage: 0, currentExerciseID: "123", currentExercise: "Bench Press", nextExercise: "Pull Up", weight: 40, repetition: 12, restInterval: 90, elapsedTime: 0)
      }
      
      fileprivate static var progressing: TrainingSessionAttributes.ContentState {
-         TrainingSessionAttributes.ContentState(totalExerciseCount: 5, currentStage: 0, currentExercise: "Bench Press", nextExercise: "Pull Up", weight: 40, repetition: 12, restInterval: 90, elapsedTime: 120)
+         TrainingSessionAttributes.ContentState(totalExerciseCount: 5, currentStage: 1, currentExerciseID: "234", currentExercise: "Bench Press", nextExercise: "Pull Up", weight: 40, repetition: 12, restInterval: 90, elapsedTime: 120)
      }
 }
 

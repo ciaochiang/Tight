@@ -285,8 +285,7 @@ struct PivotMainView: View {
     let previewContainer = PreviewContainer([ArrangedExercise.self, Plan.self])
     let context = ModelContext(previewContainer.container)
     let viewModel = PivotMainViewModel(context: context)
-    let trainingSessionManager = TrainingSessionManager()
     return PivotMainView(viewModel: viewModel,
-                         trainingSessionManager: trainingSessionManager).modelContext(context)
+                         trainingSessionManager: TrainingSessionManager.shared).modelContext(context)
     
 }

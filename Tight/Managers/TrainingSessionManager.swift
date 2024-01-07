@@ -23,10 +23,12 @@ class TrainingSessionManager: ObservableObject {
     @Published var currentLiveActivityID: String = ""
     @Published var currentStage: Int = 0
     
+    static let shared = TrainingSessionManager()
+    
     /// Configure arranged exercises
     /// NOTE:  Invoke this function before start the training session
     func configure(arrangedExercises: [ArrangedExercise]) {
-        /// End and remove existing live activtiy
+        /// End and remove existing live activtiy   
         
         self.arrangedExercises = arrangedExercises
         self.currentStage = 0
@@ -53,6 +55,13 @@ class TrainingSessionManager: ObservableObject {
     func stopTrainingSession() {
         timer?.invalidate()
         timer = nil
+        
+        DispatchQueue.main.async {
+            self.elapsedTime = 0
+        }
+        
+        /// End current live activity
+        removeActivity()
     }
     
     /// Handle function when timer tiggered it
@@ -76,6 +85,49 @@ class TrainingSessionManager: ObservableObject {
         }
     }
     
+    /// Complete current exercise
+    func completeCurrentExercise(exerciseID: String) {        
+        /// Mark it as completed
+        if let exercise = arrangedExercises.first(where: { $0.id.uuidString == exerciseID }) {
+            exercise.isCompleted.toggle()
+        }
+        
+        /// Stop training sessio if there is not more stage
+        if currentStage + 1 >= arrangedExercises.count  {
+            stopTrainingSession()
+            return
+        }
+        
+        /// Go to next arranged exercise
+        let newStage = currentStage + 1
+        let currentExercise = arrangedExercises[newStage]
+        let nextExercise = newStage + 1 >= arrangedExercises.count ? "" : arrangedExercises[newStage + 1].exercise.name
+        
+        DispatchQueue.main.async {
+            self.currentStage = newStage
+        }
+        
+        ///  Find activity
+        if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
+            activity.id == currentLiveActivityID
+        }) {
+            Task {
+                /// Update activity info
+                var contentState = activity.content.state
+                contentState.currentStage = newStage
+                contentState.currentExerciseID = currentExercise.id.uuidString
+                contentState.currentExercise = currentExercise.exercise.name
+                contentState.nextExercise = nextExercise
+                contentState.weight = currentExercise.weight
+                contentState.repetition = currentExercise.repetitions
+                contentState.restInterval = currentExercise.restIntevals
+                
+                await activity.update(.init(state: contentState, staleDate: nil))
+            }
+        }
+        
+    }
+    
     /// Add live activity
     func addLiveAcitvity() {
         let trainingSessionAttributes = TrainingSessionAttributes(name: "TrainingSession")
@@ -83,6 +135,7 @@ class TrainingSessionManager: ObservableObject {
         let nextExercise = currentStage + 1 >= arrangedExercises.count ? "" : arrangedExercises[currentStage + 1].exercise.name
         let initialState = TrainingSessionAttributes.ContentState(totalExerciseCount: arrangedExercises.count,
                                                                   currentStage: currentStage,
+                                                                  currentExerciseID: currentExercise.id.uuidString,
                                                                   currentExercise: currentExercise.exercise.name,
                                                                   nextExercise: nextExercise,
                                                                   weight: currentExercise.weight,

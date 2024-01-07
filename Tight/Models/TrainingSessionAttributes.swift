@@ -13,6 +13,7 @@ struct TrainingSessionAttributes: ActivityAttributes {
         // Dynamic stateful properties about your activity go here!
         var totalExerciseCount: Int
         var currentStage: Int
+        var currentExerciseID: String
         var currentExercise: String
         var nextExercise: String
         var weight: Double

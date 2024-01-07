@@ -4,8 +4,21 @@
     "" : {
 
     },
+    "%@" : {
+
+    },
     "%lld" : {
 
+    },
+    "%lldkg x %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lldkg x %2$lld"
+          }
+        }
+      }
     },
     "0" : {
 
@@ -410,7 +423,13 @@
         }
       }
     },
+    "Complete Current Exercise" : {
+
+    },
     "Elasped Time: %lf" : {
+
+    },
+    "Exercise ID" : {
 
     },
     "exercise_category_compound_or_fullbody" : {
@@ -1612,6 +1631,15 @@
         }
       }
     },
+    "L" : {
+
+    },
+    "Mark current exercise as completed and start rest" : {
+
+    },
+    "Next: %@" : {
+
+    },
     "onboarding_key_notification_description" : {
       "localizations" : {
         "en" : {
@@ -1661,6 +1689,18 @@
       }
     },
     "Start Training" : {
+
+    },
+    "Stop current training session and reset timer" : {
+
+    },
+    "Stop Training Session" : {
+
+    },
+    "T %lf" : {
+
+    },
+    "Time: %lf" : {
 
     }
   },

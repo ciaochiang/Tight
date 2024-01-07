@@ -8,6 +8,11 @@
 import Foundation
 import SwiftData
 
+// MARK: Swift Data Models
+typealias Plan = TightSchemaV1.Plan
+typealias ArrangedExercise = TightSchemaV1.ArrangedExercise
+typealias Tag = TightSchemaV1.Tag
+
 enum TightSchemaV1: VersionedSchema {
     static var models: [any PersistentModel.Type] {
         [Plan.self, ArrangedExercise.self, Tag.self]

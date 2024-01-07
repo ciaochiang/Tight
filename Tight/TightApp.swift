@@ -9,11 +9,6 @@ import SwiftUI
 import SwiftData
 import FirebaseCore
 
-// MARK: Swift Data Models
-typealias Plan = TightSchemaV1.Plan
-typealias ArrangedExercise = TightSchemaV1.ArrangedExercise
-typealias Tag = TightSchemaV1.Tag
-
 // MARK: Migration Plan
 enum TightMigrationPlan: SchemaMigrationPlan {
     static var schemas: [VersionedSchema.Type] {
