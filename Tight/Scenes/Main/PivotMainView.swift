@@ -279,20 +279,20 @@ struct PivotMainView: View {
     @ViewBuilder
     func TrainingSessionView() -> some View {
         VStack {
-//            if trainingSessionManager.timer == nil {
-//                /// Show strat button
-//                TrainingSessionStartButton()
-//                
-//            }
-//            else {
+            if trainingSessionManager.timer == nil {
+                /// Show strat button
+                TrainingSessionStartButton()
+            }
+            else {
                 TrainingSessionRunningView()
                 .frame(minHeight: 132)
-//            }
+            }
         }
         .horizontalSpacing(.center)
         .background(Color.black.opacity(0.7))
         .cornerRadius(16)
-        .padding(.horizontal, 16)
+        .padding(.horizontal)
+        .padding(.top)
     }
     
     @ViewBuilder
@@ -306,6 +306,7 @@ struct PivotMainView: View {
                 .font(.headline)
                 .fontWeight(.semibold)
                 .padding()
+                .background(Color.themeStyle.theme.accent)
                 .foregroundColor(Color.themeStyle.theme.white)
         }
     }
@@ -316,20 +317,16 @@ struct PivotMainView: View {
             HStack(spacing: 16) {
                 VStack(spacing: 8) {
                     ElapsedTimeView(elapsedTime: trainingSessionManager.elapsedTime,
-                                    restIntervals: trainingSessionManager.currentRestIntervals)
+                                    restIntervals: trainingSessionManager.currentRestIntervals,
+                                    currentIndexOfSet: trainingSessionManager.currentIndexOfSet,
+                                    totalSetsCount: trainingSessionManager.currentExercise?.sets ?? 0)
                     ExerciseInfoView(restIntervals: trainingSessionManager.currentRestIntervals,
-                                     exerciseName: "Bench Press",
-                                     weight: 50,
-                                     repetition: 10)
+                                     exerciseName: trainingSessionManager.currentExercise?.exercise.name ?? "",
+                                     weight: trainingSessionManager.currentExercise?.weight ?? 0,
+                                     repetition: trainingSessionManager.currentExercise?.repetitions ?? 0)
                 }
                 
-                VStack {
-                    ControlsView(restIntervals: trainingSessionManager.currentRestIntervals,
-                                 exerciseName: "Bench Press",
-                                 weight: 50,
-                                 repetition: 10)
-                }
-
+                ControlsView(restIntervals: trainingSessionManager.currentRestIntervals)
             }
             .padding(.vertical)
             .padding(.horizontal)
@@ -340,21 +337,23 @@ struct PivotMainView: View {
     }
     
     @ViewBuilder
-    func ElapsedTimeView(elapsedTime: TimeInterval, restIntervals: TimeInterval) -> some View {
+    func ElapsedTimeView(elapsedTime: TimeInterval, restIntervals: TimeInterval, currentIndexOfSet: Int, totalSetsCount: Double) -> some View {
         HStack(spacing: 24) {
-            Text("1")
+            Text("\(currentIndexOfSet)")
+                .foregroundStyle(Color.themeStyle.theme.white.opacity(0.8))
                 .font(.caption)
+                .fontWeight(.semibold)
                 .overlay {
                     ZStack {
                         Circle()
                             .stroke( // 1
-                                Color.black.opacity(0.5),
+                                Color.white.opacity(0.7),
                                 lineWidth: 2
                             )
                             .frame(width: 28, height: 28)
                         
                         Circle()
-                            .trim(from: 0, to: 0.65)
+                            .trim(from: 0, to: Double(currentIndexOfSet) / totalSetsCount)
                             .stroke( // 1
                                 Color.themeStyle.theme.accent,
                                 lineWidth: 2
@@ -404,9 +403,12 @@ struct PivotMainView: View {
     }
     
     @ViewBuilder
-    func ControlsView(restIntervals: TimeInterval, exerciseName: String, weight: Double, repetition: Double) -> some View {
+    func ControlsView(restIntervals: TimeInterval) -> some View {
         HStack(spacing: 16) {
-            Button(action: {}) {
+            /// Stop Button
+            Button(action: {
+                trainingSessionManager.stopTrainingSession()
+            }) {
                 Image(systemName: "stop.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -418,13 +420,26 @@ struct PivotMainView: View {
             .cornerRadius(22)
             
             if restIntervals > 0 {
-                Button(action: {}) {
+                Button(action: {
+                    trainingSessionManager.skipRest()
+                }) {
                     Image(systemName: "chevron.forward.2")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 16, height: 16)
                 }
-                .tint(Color.blue)
+                .tint(Color.black.opacity(0.7))
+                .frame(width: 44, height: 44)
+                .background(Color.white)
+                .cornerRadius(22)
             }
             else {
-                Button(action: {}) {
+                /// Done Button
+                Button(action: {
+                    if let exerciseID = trainingSessionManager.currentExercise?.id {
+                        trainingSessionManager.completeCurrentSet(exerciseID: exerciseID.uuidString)
+                    }
+                }) {
                     Image(systemName: "checkmark")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
