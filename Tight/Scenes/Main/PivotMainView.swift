@@ -5,6 +5,7 @@
 //  Created by Ciao Chiang on 2023/12/20.
 //
 
+import Foundation
 import SwiftUI
 import SwiftData
 
@@ -27,16 +28,7 @@ struct PivotMainView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HeaderView()
-            
-            HStack {
-                Text("Elasped Time: \(trainingSessionManager.elapsedTime)")
-                Button(action: {
-                    trainingSessionManager.configure(arrangedExercises: viewModel.arrangedExercises)
-                    trainingSessionManager.startTrainingSession()
-                }) {
-                    Text("Start Training")
-                }
-            }
+            TrainingSessionView()
             
             ///  Scheduled exercises
             if viewModel.currentPlan?.arrangedExercises.isEmpty == true {
@@ -70,6 +62,8 @@ struct PivotMainView: View {
                 viewModel.loadWeeks()
             }
         })
+        
+        // MARK: Bottom Sheet
         .sheet(isPresented: $isArrangingExercise, content: {
             if let plan = viewModel.currentPlan {
                 CreateArrangedExerciseView(plan: plan,
@@ -91,6 +85,8 @@ struct PivotMainView: View {
                 viewModel.importExercises(from: plan)
             }
         })
+        
+        // MARK: Observer
         .onChange(of: viewModel.currentPlan, { oldValue, newValue in
             viewModel.reloadArrangedExercises()
         })
@@ -277,6 +273,183 @@ struct PivotMainView: View {
             .cornerRadius(8)
             .padding(.horizontal, 64)
             .padding(.top, 16)
+        }
+    }
+    
+    @ViewBuilder
+    func TrainingSessionView() -> some View {
+        VStack {
+//            if trainingSessionManager.timer == nil {
+//                /// Show strat button
+//                TrainingSessionStartButton()
+//                
+//            }
+//            else {
+                TrainingSessionRunningView()
+                .frame(maxHeight: 132)
+//            }
+        }
+        .horizontalSpacing(.center)
+        .background(Color.black.opacity(0.7))
+        .cornerRadius(16)
+        .padding(.horizontal, 16)
+    }
+    
+    @ViewBuilder
+    func TrainingSessionStartButton() -> some View {
+        Button(action: {
+            trainingSessionManager.configure(arrangedExercises: viewModel.arrangedExercises)
+            trainingSessionManager.startTrainingSession()
+        }) {
+            Label("Start Training", systemImage: "flame.fill")
+                .horizontalSpacing(.center)
+                .font(.headline)
+                .fontWeight(.semibold)
+                .padding()
+                .foregroundColor(Color.themeStyle.theme.white)
+        }
+    }
+    
+    @ViewBuilder
+    func TrainingSessionRunningView() -> some View {
+        VStack {
+            HStack(spacing: 16) {
+                VStack(spacing: 8) {
+                    ElapsedTimeView(elapsedTime: trainingSessionManager.elapsedTime,
+                                    restIntervals: trainingSessionManager.currentRestIntervals)
+                    ExerciseInfoView(restIntervals: trainingSessionManager.currentRestIntervals,
+                                     exerciseName: "Bench Press",
+                                     weight: 50,
+                                     repetition: 10)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.top)
+                .padding(.horizontal)
+                .veriticalSpacing(.top)
+                
+                VStack {
+                    ControlsView(restIntervals: trainingSessionManager.currentRestIntervals,
+                                 exerciseName: "Bench Press",
+                                 weight: 50,
+                                 repetition: 10)
+                }
+                .veriticalSpacing(.center)
+                .padding(.trailing)
+            }
+            
+            StagesView(totalExerciseCount: 6,
+                       currentStage: 3)
+        }
+    }
+    
+    @ViewBuilder
+    func ElapsedTimeView(elapsedTime: TimeInterval, restIntervals: TimeInterval) -> some View {
+        VStack {
+            if restIntervals > 0.0 {
+                Text( "\(restIntervals.formatIntervalToMinutesSeconds)")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .tracking(1.4)
+                    .minimumScaleFactor(0.8)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .foregroundColor(Color.blue)
+                    .contentTransition(.numericText(value: restIntervals))
+            }
+            else {
+                Text( "\(elapsedTime.formatIntervalToMinutesSeconds)")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .tracking(1.4)
+                    .minimumScaleFactor(0.8)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .foregroundColor(Color.themeStyle.theme.white.opacity(0.8))
+                    .contentTransition(.numericText(value: elapsedTime))
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func SetsProgressView(indexOfSet: Int, totalSetsCount: Int) -> some View {
+        ProgressView(value: CGFloat(indexOfSet) / CGFloat(totalSetsCount)) {
+            Text("\(indexOfSet)")
+        }
+        .progressViewStyle(CircularProgressViewStyle(tint: Color.themeStyle.theme.accent))
+    }
+    
+    @ViewBuilder
+    func StagesView(totalExerciseCount: Int, currentStage: Int) -> some View {
+        ProgressView(value: CGFloat(currentStage), total: CGFloat(totalExerciseCount))
+            .background(Color.white.opacity(0.7))
+    }
+    
+    @ViewBuilder
+    func ControlsView(restIntervals: TimeInterval, exerciseName: String, weight: Double, repetition: Double) -> some View {
+        HStack(spacing: 16) {
+            Button(action: {}) {
+                Image(systemName: "stop.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 16, height: 16)
+            }
+            .frame(width: 44, height: 44)
+            .background(Color.white)
+            .tint(Color.black.opacity(0.7))
+            .cornerRadius(22)
+            
+            if restIntervals > 0 {
+                Button(action: {}) {
+                    Image(systemName: "chevron.forward.2")
+                }
+                .tint(Color.blue)
+            }
+            else {
+                Button(action: {}) {
+                    Image(systemName: "checkmark")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 16, height: 16)
+                }
+                .frame(width: 44, height: 44)
+                .background(Color.white)
+                .tint(Color.black.opacity(0.7))
+                .cornerRadius(22)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func ExerciseInfoView(restIntervals: TimeInterval, exerciseName: String, weight: Double, repetition: Double) -> some View {
+        VStack(spacing: 4) {
+            if restIntervals > 0 {
+                Text(LocalizationProvider.breakTimeTitle.nameKey)
+                    .font(.title2)
+                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                    .minimumScaleFactor(0.8)
+                    .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Text(LocalizationProvider.breakTimeSubtitle.nameKey)
+                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
+                    .font(.subheadline)
+                    .minimumScaleFactor(0.8)
+                    .fontWeight(.semibold)
+                    .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
+            }
+            else {
+                Text(exerciseName)
+                    .font(.title2)
+                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                    .minimumScaleFactor(0.8)
+                    .foregroundColor(Color.themeStyle.theme.accent.opacity(0.8))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Text("\(Int(weight))kg x \(Int(repetition))")
+                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
+                    .font(.subheadline)
+                    .minimumScaleFactor(0.8)
+                    .fontWeight(.semibold)
+                    .foregroundColor(Color.white.opacity(0.8))
+            }
         }
     }
 }

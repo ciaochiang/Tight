@@ -16,8 +16,8 @@ import ActivityKit
  */
 
 class TrainingSessionManager: ObservableObject {
-    private var arrangedExercises: [ArrangedExercise] = []
-    private var timer: Timer?
+    private(set) var arrangedExercises: [ArrangedExercise] = []
+    @Published private(set) var timer: Timer?
     
     @Published var elapsedTime: TimeInterval = 0
     
@@ -26,6 +26,7 @@ class TrainingSessionManager: ObservableObject {
     @Published var currentExercise: ArrangedExercise?
     @Published var currentStage: Int = 0
     @Published var currentIndexOfSet: Int = 1
+    @Published var currentTotalSetsCount: Int = 0
     @Published var currentRestIntervals: TimeInterval = 0
     
     static let shared = TrainingSessionManager()

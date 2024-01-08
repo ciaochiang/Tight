@@ -274,7 +274,6 @@
 				E57FD7CD2B3DD47600696968 /* GoogleService-Info.plist */,
 				E562D7022B3DA34F000775B7 /* Preview Content */,
 				E5B700BE2B400B740080442D /* Localizable.xcstrings */,
-				E5B700C02B40105E0080442D /* LocalizationProvider.swift */,
 			);
 			path = Tight;
 			sourceTree = "<group>";
@@ -332,6 +331,7 @@
 		E57FD7692B3DADD700696968 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				E5B700C02B40105E0080442D /* LocalizationProvider.swift */,
 				E57FD78F2B3DB04400696968 /* NotificationManager.swift */,
 				E57FD7762B3DAE3B00696968 /* ExperiementsProvider.swift */,
 				E59B08FE2B4594C000280FC4 /* TrainingSessionManager.swift */,
