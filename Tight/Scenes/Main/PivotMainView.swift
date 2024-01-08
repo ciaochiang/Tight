@@ -286,7 +286,7 @@ struct PivotMainView: View {
 //            }
 //            else {
                 TrainingSessionRunningView()
-                .frame(maxHeight: 132)
+                .frame(minHeight: 132)
 //            }
         }
         .horizontalSpacing(.center)
@@ -322,10 +322,6 @@ struct PivotMainView: View {
                                      weight: 50,
                                      repetition: 10)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.top)
-                .padding(.horizontal)
-                .veriticalSpacing(.top)
                 
                 VStack {
                     ControlsView(restIntervals: trainingSessionManager.currentRestIntervals,
@@ -333,18 +329,42 @@ struct PivotMainView: View {
                                  weight: 50,
                                  repetition: 10)
                 }
-                .veriticalSpacing(.center)
-                .padding(.trailing)
+
             }
+            .padding(.vertical)
+            .padding(.horizontal)
             
-            StagesView(totalExerciseCount: 6,
-                       currentStage: 3)
+            StagesView(totalExerciseCount: trainingSessionManager.arrangedExercises.count,
+                       currentStage: trainingSessionManager.currentStage)
         }
     }
     
     @ViewBuilder
     func ElapsedTimeView(elapsedTime: TimeInterval, restIntervals: TimeInterval) -> some View {
-        VStack {
+        HStack(spacing: 24) {
+            Text("1")
+                .font(.caption)
+                .overlay {
+                    ZStack {
+                        Circle()
+                            .stroke( // 1
+                                Color.black.opacity(0.5),
+                                lineWidth: 2
+                            )
+                            .frame(width: 28, height: 28)
+                        
+                        Circle()
+                            .trim(from: 0, to: 0.65)
+                            .stroke( // 1
+                                Color.themeStyle.theme.accent,
+                                lineWidth: 2
+                            )
+                            .frame(width: 28, height: 28)
+                            .rotationEffect(.degrees(-90))
+                    }
+                }
+                .padding(.leading, 12)
+            
             if restIntervals > 0.0 {
                 Text( "\(restIntervals.formatIntervalToMinutesSeconds)")
                     .font(.title)
@@ -379,6 +399,7 @@ struct PivotMainView: View {
     @ViewBuilder
     func StagesView(totalExerciseCount: Int, currentStage: Int) -> some View {
         ProgressView(value: CGFloat(currentStage), total: CGFloat(totalExerciseCount))
+            .progressViewStyle(.linear)
             .background(Color.white.opacity(0.7))
     }
     
