@@ -17,9 +17,6 @@ import ActivityKit
 
 class TrainingSessionManager: ObservableObject {
     private(set) var arrangedExercises: [ArrangedExercise] = []
-    @Published private(set) var timer: Timer?
-    
-    @Published var elapsedTime: TimeInterval = 0
     
     /// Live Activity Properties
     @Published var currentLiveActivityID: String = ""
@@ -27,7 +24,9 @@ class TrainingSessionManager: ObservableObject {
     @Published var currentStage: Int = 0
     @Published var currentIndexOfSet: Int = 1
     @Published var currentTotalSetsCount: Int = 0
-    @Published var currentRestIntervals: TimeInterval = 0
+    @Published var startTime: Date?
+    @Published var restStartTime: Date?
+    @Published var restIntervals: Double?
     
     static let shared = TrainingSessionManager()
     
@@ -49,10 +48,13 @@ class TrainingSessionManager: ObservableObject {
         /// Remove activity
         removeActivity()
         
-        /// Init the timer
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] _ in
-            self?.handleTimerAction()
-        })
+        /// Init start time
+        startTime = Date.now
+        
+//        /// Init the timer
+//        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] _ in
+//            self?.handleTimerAction()
+//        })
         
         /// Add live activity
         addLiveAcitvity()
@@ -81,47 +83,47 @@ class TrainingSessionManager: ObservableObject {
     }
     
     /// Handle function when timer tiggered it
-    func handleTimerAction() {
-        /// Add 1 second
-        let newElapsedTime: TimeInterval = elapsedTime + 1.0
-        
-        /// Handle resting
-        let isResting = currentRestIntervals > 0
-        let remianRestInterval = currentRestIntervals
-        let newRestIntervals = isResting ? currentRestIntervals - 1 : 0
-        
-        DispatchQueue.main.async {
-            self.elapsedTime = newElapsedTime
-            self.currentRestIntervals = newRestIntervals
-        }
-        
-        ///  Find activity
-        if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
-            activity.id == currentLiveActivityID
-        }) {
-            Task {
-                /// Update activity info
-                var contentState = activity.content.state
-                contentState.elapsedTime = newElapsedTime
-                contentState.restIntervals = newRestIntervals
-                
-                /// If rest time up, then alerting, if not, then just normal update
-                var alertConfig: AlertConfiguration? = nil
-                if remianRestInterval == 1 && newRestIntervals == 0 {
-                    alertConfig = AlertConfiguration(
-                        title: "Break Time is Over!",
-                        body: "Let's go for next set",
-                        sound: .default
-                    )
-                    
-                    /// Vibrate
-                    await UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                }
-                
-                await activity.update(.init(state: contentState, staleDate: nil), alertConfiguration: alertConfig)
-            }
-        }
-    }
+//    func handleTimerAction() {
+//        /// Add 1 second
+//        let newElapsedTime: TimeInterval = elapsedTime + 1.0
+//        
+//        /// Handle resting
+//        let isResting = currentRestIntervals > 0
+//        let remianRestInterval = currentRestIntervals
+//        let newRestIntervals = isResting ? currentRestIntervals - 1 : 0
+//        
+//        DispatchQueue.main.async {
+//            self.elapsedTime = newElapsedTime
+//            self.currentRestIntervals = newRestIntervals
+//        }
+//        
+//        ///  Find activity
+//        if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
+//            activity.id == currentLiveActivityID
+//        }) {
+//            Task {
+//                /// Update activity info
+//                var contentState = activity.content.state
+//                contentState.elapsedTime = newElapsedTime
+//                contentState.restIntervals = newRestIntervals
+//                
+//                /// If rest time up, then alerting, if not, then just normal update
+//                var alertConfig: AlertConfiguration? = nil
+//                if remianRestInterval == 1 && newRestIntervals == 0 {
+//                    alertConfig = AlertConfiguration(
+//                        title: "Break Time is Over!",
+//                        body: "Let's go for next set",
+//                        sound: .default
+//                    )
+//                    
+//                    /// Vibrate
+//                    await UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+//                }
+//                
+//                await activity.update(.init(state: contentState, staleDate: nil), alertConfiguration: alertConfig)
+//            }
+//        }
+//    }
     
     /// Complete current exercise
     func completeCurrentSet(exerciseID: String) {
@@ -154,15 +156,12 @@ class TrainingSessionManager: ObservableObject {
     
     /// Reset
     func reset() {
-        timer?.invalidate()
-        timer = nil
-        
         DispatchQueue.main.async {
             self.currentExercise = nil
-            self.elapsedTime = 0
             self.currentStage = 0
             self.currentIndexOfSet = 1
-            self.currentRestIntervals = 0
+            self.restStartTime = nil
+            self.restIntervals = 0
         }
     }
 
@@ -190,9 +189,11 @@ class TrainingSessionManager: ObservableObject {
     
     /// Skip Rest
     func skipRest() {
-        let newRestInterval: TimeInterval = 0
+        let newRestStartTime: Date? = nil
+        let newRestIntervals: Double? = nil
         DispatchQueue.main.async {
-            self.currentRestIntervals = newRestInterval
+            self.restStartTime = newRestStartTime
+            self.restIntervals = newRestIntervals
         }
         
         if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
@@ -201,7 +202,8 @@ class TrainingSessionManager: ObservableObject {
             Task {
                 /// Update activity info
                 var contentState = activity.content.state
-                contentState.restIntervals = newRestInterval
+                contentState.restStartTime = newRestStartTime
+                contentState.restIntervals = newRestIntervals
                 await activity.update(.init(state: contentState, staleDate: nil))
             }
         }
@@ -211,11 +213,13 @@ class TrainingSessionManager: ObservableObject {
     func nextSet() {
         /// indexOfSet increased
         let newSetNumber = currentIndexOfSet + 1
+        let newRestStartTime = Date.now
         let newRestIntervals = currentExercise?.restIntevals ?? 0
         
         DispatchQueue.main.async {
             self.currentIndexOfSet = newSetNumber
-            self.currentRestIntervals = newRestIntervals
+            self.restStartTime = newRestStartTime
+            self.restIntervals = newRestIntervals
         }
         
         /// Update Live Activity
@@ -226,6 +230,7 @@ class TrainingSessionManager: ObservableObject {
                 /// Update activity info
                 var contentState = activity.content.state
                 contentState.indexOfSet = newSetNumber
+                contentState.restStartTime = newRestStartTime
                 contentState.restIntervals = newRestIntervals
                 await activity.update(.init(state: contentState, staleDate: nil))
             }
@@ -238,13 +243,15 @@ class TrainingSessionManager: ObservableObject {
         let newStage = currentStage + 1
         let newIndexOfSet = 1
         let newExercise = arrangedExercises[newStage]
-        let currentExerciseRestInterval = currentExercise?.restIntevals ?? 0
+        let newRestStartTime = Date.now
+        let newRestIntervals = currentExercise?.restIntevals ?? 0
         
         DispatchQueue.main.async {
             self.currentStage = newStage
             self.currentExercise = newExercise
             self.currentIndexOfSet = newIndexOfSet
-            self.currentRestIntervals = newExercise.restIntevals
+            self.restStartTime = newRestStartTime
+            self.restIntervals = newRestIntervals
         }
         
         /// Update Live Activity
@@ -261,7 +268,8 @@ class TrainingSessionManager: ObservableObject {
                 contentState.indexOfSet = newIndexOfSet
                 contentState.weight = newExercise.weight
                 contentState.repetition = newExercise.repetitions
-                contentState.restIntervals = currentExerciseRestInterval
+                contentState.restStartTime = newRestStartTime
+                contentState.restIntervals = newRestIntervals
                 
                 await activity.update(.init(state: contentState, staleDate: nil))
             }
@@ -288,9 +296,10 @@ extension TrainingSessionManager {
                                                                   indexOfSet: currentIndexOfSet,
                                                                   weight: firstExercise.weight,
                                                                   repetition: firstExercise.repetitions,
-                                                                  restIntervals: 0,     /// No rest interval at initial state
-                                                                  elapsedTime: elapsedTime,
-                                                                  completionType: -1)    /// -1 is initial state)
+                                                                  completionType: -1,
+                                                                  startTime: startTime ?? .now,
+                                                                  restStartTime: nil,
+                                                                  restIntervals: nil)
         
         do {
             let activity = try Activity<TrainingSessionAttributes>.request(attributes: trainingSessionAttributes,

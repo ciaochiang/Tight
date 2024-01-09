@@ -279,7 +279,7 @@ struct PivotMainView: View {
     @ViewBuilder
     func TrainingSessionView() -> some View {
         VStack {
-            if trainingSessionManager.timer == nil {
+            if trainingSessionManager.startTime == nil {
                 /// Show strat button
                 TrainingSessionStartButton()
             }
@@ -316,17 +316,21 @@ struct PivotMainView: View {
         VStack {
             HStack(spacing: 16) {
                 VStack(spacing: 8) {
-                    ElapsedTimeView(elapsedTime: trainingSessionManager.elapsedTime,
-                                    restIntervals: trainingSessionManager.currentRestIntervals,
-                                    currentIndexOfSet: trainingSessionManager.currentIndexOfSet,
-                                    totalSetsCount: trainingSessionManager.currentExercise?.sets ?? 0)
-                    ExerciseInfoView(restIntervals: trainingSessionManager.currentRestIntervals,
+                    if let startTime = trainingSessionManager.startTime {
+                        ElapsedTimeView(startTime: startTime,
+                                        restStartTime: trainingSessionManager.restStartTime,
+                                        restIntervals: trainingSessionManager.restIntervals,
+                                        currentIndexOfSet: trainingSessionManager.currentIndexOfSet,
+                                        totalSetsCount: trainingSessionManager.currentExercise?.sets ?? 0)
+                    }
+
+                    ExerciseInfoView(isResting: trainingSessionManager.restStartTime != nil,
                                      exerciseName: trainingSessionManager.currentExercise?.exercise.name ?? "",
                                      weight: trainingSessionManager.currentExercise?.weight ?? 0,
                                      repetition: trainingSessionManager.currentExercise?.repetitions ?? 0)
                 }
                 
-                ControlsView(restIntervals: trainingSessionManager.currentRestIntervals)
+                ControlsView(isResting: trainingSessionManager.restStartTime != nil)
             }
             .padding(.vertical)
             .padding(.horizontal)
@@ -337,7 +341,7 @@ struct PivotMainView: View {
     }
     
     @ViewBuilder
-    func ElapsedTimeView(elapsedTime: TimeInterval, restIntervals: TimeInterval, currentIndexOfSet: Int, totalSetsCount: Double) -> some View {
+    func ElapsedTimeView(startTime: Date, restStartTime: Date?, restIntervals: TimeInterval?, currentIndexOfSet: Int, totalSetsCount: Double) -> some View {
         HStack(spacing: 24) {
             Text("\(currentIndexOfSet)")
                 .foregroundStyle(Color.themeStyle.theme.white.opacity(0.8))
@@ -364,25 +368,25 @@ struct PivotMainView: View {
                 }
                 .padding(.leading, 12)
             
-            if restIntervals > 0.0 {
-                Text( "\(restIntervals.formatIntervalToMinutesSeconds)")
+            if let restStartTime = restStartTime, let restIntervals = restIntervals {
+                Text(timerInterval: restStartTime...restStartTime.addingTimeInterval(restIntervals), countsDown: true)
                     .font(.title)
                     .fontWeight(.bold)
                     .tracking(1.4)
                     .minimumScaleFactor(0.8)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .foregroundColor(Color.blue)
-                    .contentTransition(.numericText(value: restIntervals))
+                    .contentTransition(.numericText(countsDown: true))
             }
             else {
-                Text( "\(elapsedTime.formatIntervalToMinutesSeconds)")
+                Text(startTime, style: .timer)
                     .font(.title)
                     .fontWeight(.bold)
                     .tracking(1.4)
                     .minimumScaleFactor(0.8)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .foregroundColor(Color.themeStyle.theme.white.opacity(0.8))
-                    .contentTransition(.numericText(value: elapsedTime))
+                    .contentTransition(.numericText())
             }
         }
     }
@@ -403,7 +407,7 @@ struct PivotMainView: View {
     }
     
     @ViewBuilder
-    func ControlsView(restIntervals: TimeInterval) -> some View {
+    func ControlsView(isResting: Bool) -> some View {
         HStack(spacing: 16) {
             /// Stop Button
             Button(action: {
@@ -419,7 +423,7 @@ struct PivotMainView: View {
             .tint(Color.black.opacity(0.7))
             .cornerRadius(22)
             
-            if restIntervals > 0 {
+            if isResting {
                 Button(action: {
                     trainingSessionManager.skipRest()
                 }) {
@@ -454,9 +458,9 @@ struct PivotMainView: View {
     }
     
     @ViewBuilder
-    func ExerciseInfoView(restIntervals: TimeInterval, exerciseName: String, weight: Double, repetition: Double) -> some View {
+    func ExerciseInfoView(isResting: Bool, exerciseName: String, weight: Double, repetition: Double) -> some View {
         VStack(spacing: 4) {
-            if restIntervals > 0 {
+            if isResting {
                 Text(LocalizationProvider.breakTimeTitle.nameKey)
                     .font(.title2)
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)

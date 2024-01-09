@@ -19,9 +19,10 @@ struct TrainingSessionAttributes: ActivityAttributes {
         var indexOfSet: Int
         var weight: Double
         var repetition: Double
-        var restIntervals: TimeInterval
-        var elapsedTime: TimeInterval
         var completionType: Int     /// 0: Abort 1: Done
+        var startTime: Date
+        var restStartTime: Date?
+        var restIntervals: TimeInterval?
     }
 
     // Fixed non-changing properties about your activity go here!

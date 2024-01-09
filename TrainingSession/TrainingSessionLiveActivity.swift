@@ -107,11 +107,12 @@ struct TrainingSessionLiveActivity: Widget {
                 // Expanded UI goes here.  Compose the expanded UI through
                 // various regions, like leading/trailing/center/bottom
                 DynamicIslandExpandedRegion(.leading) {
-                    Text("\(context.state.elapsedTime.formatIntervalToMinutesSeconds)")
+                    Text(context.state.startTime, style: .timer)
                         .font(.headline)
                         .fontWeight(.bold)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 2)
+                        .contentTransition(.numericText())
                 }
                 
                 DynamicIslandExpandedRegion(.trailing) {
@@ -144,7 +145,8 @@ struct TrainingSessionLiveActivity: Widget {
                     }
                 }
             } compactLeading: {
-                Text("\(context.state.elapsedTime.formatIntervalToMinutesSeconds)")
+                Text(context.state.startTime, style: .timer)
+                    .contentTransition(.numericText())
             } compactTrailing: {
                 SetsProgressView(context: context)
                     .frame(width: 24, height: 24)
@@ -168,7 +170,7 @@ struct TrainingSessionLiveActivity: Widget {
     @ViewBuilder
     func ExerciseInfoView(context: ActivityViewContext<TrainingSessionAttributes>) -> some View {
         VStack(spacing: 4) {
-            if context.state.restIntervals > 0 {
+            if context.state.restStartTime != nil {
                 Text(LocalizationProvider.breakTimeTitle.nameKey)
                     .font(.title2)
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
@@ -204,25 +206,26 @@ struct TrainingSessionLiveActivity: Widget {
     @ViewBuilder
     func ElapsedTimeView(context: ActivityViewContext<TrainingSessionAttributes>) -> some View {
         VStack {
-            if context.state.restIntervals > 0 {
-                Text( "\(context.state.restIntervals.formatIntervalToMinutesSeconds)")
+            if let restStartTime = context.state.restStartTime,
+               let restIntervals = context.state.restIntervals {
+                Text(timerInterval: restStartTime...restStartTime.addingTimeInterval(restIntervals), countsDown: true)
                     .font(.title)
                     .fontWeight(.bold)
                     .tracking(1.4)
                     .minimumScaleFactor(0.8)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .foregroundColor(Color.blue)
-                    .contentTransition(.numericText(value: context.state.restIntervals))
+                    .contentTransition(.numericText(countsDown: true))
             }
             else {
-                Text( "\(context.state.elapsedTime.formatIntervalToMinutesSeconds)")
+                Text(context.state.startTime, style: .timer)
                     .font(.title)
                     .fontWeight(.bold)
                     .tracking(1.4)
                     .minimumScaleFactor(0.8)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .foregroundColor(Color.themeStyle.theme.primaryTextColor)
-                    .contentTransition(.numericText(value: context.state.elapsedTime))
+                    .contentTransition(.numericText())
             }
         }
     }
@@ -238,7 +241,7 @@ struct TrainingSessionLiveActivity: Widget {
             }
             .tint(Color.themeStyle.theme.accent)
             
-            if context.state.restIntervals > 0 {
+            if context.state.restStartTime != nil {
                 Button(intent: SkipRest()) {
                     Image(systemName: "chevron.forward.2")
                 }
@@ -321,9 +324,10 @@ extension TrainingSessionAttributes.ContentState {
                                                indexOfSet: 1,
                                                weight: 40,
                                                repetition: 12,
-                                               restIntervals: 10,
-                                               elapsedTime: 0,
-                                               completionType: -1)
+                                               completionType: -1,
+                                               startTime: .now,
+                                               restStartTime: nil,
+                                               restIntervals: nil)
      }
      
      fileprivate static var progressing: TrainingSessionAttributes.ContentState {
@@ -335,9 +339,10 @@ extension TrainingSessionAttributes.ContentState {
                                                 indexOfSet: 2,
                                                 weight: 40,
                                                 repetition: 12,
-                                                restIntervals: 0,
-                                                elapsedTime: 120,
-                                                completionType: -1)
+                                                completionType: -1,
+                                                startTime: .now + 20,
+                                                restStartTime: nil,
+                                                restIntervals: nil)
      }
 }
 
