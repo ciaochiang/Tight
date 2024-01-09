@@ -16,6 +16,7 @@ struct PivotMainView: View {
     @State private var isArrangingExercise: Bool = false
     @State private var isImporting: Bool = false
     @State private var exerciseToEdit: ArrangedExercise?
+    
         
     /// Animation  namespace
     @Namespace private var animation
@@ -93,6 +94,9 @@ struct PivotMainView: View {
         .onChange(of: viewModel.selectedDate) { oldValue, newValue in
             /// Reload current plan when date changed
             viewModel.currentPlan = viewModel.getPlan(by: newValue)
+        }
+        .onReceive(trainingSessionManager.timer) { _ in
+            trainingSessionManager.handleTimerAction()
         }
     }
     
@@ -425,7 +429,7 @@ struct PivotMainView: View {
             
             if isResting {
                 Button(action: {
-                    trainingSessionManager.skipRest()
+                    trainingSessionManager.endRest()
                 }) {
                     Image(systemName: "chevron.forward.2")
                         .resizable()

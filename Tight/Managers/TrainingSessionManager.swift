@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import ActivityKit
+import BackgroundTasks
 
 /**
  - Countdown timer
@@ -28,6 +29,8 @@ class TrainingSessionManager: ObservableObject {
     @Published var restStartTime: Date?
     @Published var restIntervals: Double?
     
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+
     static let shared = TrainingSessionManager()
     
     /// Configure arranged exercises
@@ -50,11 +53,6 @@ class TrainingSessionManager: ObservableObject {
         
         /// Init start time
         startTime = Date.now
-        
-//        /// Init the timer
-//        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] _ in
-//            self?.handleTimerAction()
-//        })
         
         /// Add live activity
         addLiveAcitvity()
@@ -83,47 +81,43 @@ class TrainingSessionManager: ObservableObject {
     }
     
     /// Handle function when timer tiggered it
-//    func handleTimerAction() {
-//        /// Add 1 second
-//        let newElapsedTime: TimeInterval = elapsedTime + 1.0
-//        
-//        /// Handle resting
-//        let isResting = currentRestIntervals > 0
-//        let remianRestInterval = currentRestIntervals
-//        let newRestIntervals = isResting ? currentRestIntervals - 1 : 0
-//        
-//        DispatchQueue.main.async {
-//            self.elapsedTime = newElapsedTime
-//            self.currentRestIntervals = newRestIntervals
-//        }
-//        
-//        ///  Find activity
-//        if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
-//            activity.id == currentLiveActivityID
-//        }) {
-//            Task {
-//                /// Update activity info
-//                var contentState = activity.content.state
-//                contentState.elapsedTime = newElapsedTime
-//                contentState.restIntervals = newRestIntervals
-//                
-//                /// If rest time up, then alerting, if not, then just normal update
-//                var alertConfig: AlertConfiguration? = nil
-//                if remianRestInterval == 1 && newRestIntervals == 0 {
-//                    alertConfig = AlertConfiguration(
-//                        title: "Break Time is Over!",
-//                        body: "Let's go for next set",
-//                        sound: .default
-//                    )
-//                    
-//                    /// Vibrate
-//                    await UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-//                }
-//                
-//                await activity.update(.init(state: contentState, staleDate: nil), alertConfiguration: alertConfig)
-//            }
-//        }
-//    }
+    func handleTimerAction() {
+        /// Verify the date is over rest end time
+        guard let restStartTime = restStartTime, let restInterval = restIntervals else { return }
+        
+        /// Determine rest time is over or not
+        guard Date.now >= restStartTime.addingTimeInterval(restInterval) else { return }
+        
+        /// Reset rest time
+        DispatchQueue.main.async {
+            self.restStartTime = nil
+            self.restIntervals = nil
+        }
+        
+        ///  Find activity
+        if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
+            activity.id == currentLiveActivityID
+        }) {
+            Task {
+                /// Update activity info
+                var contentState = activity.content.state
+                contentState.restStartTime = nil
+                contentState.restIntervals = nil
+
+                /// If rest time up, then alerting, if not, then just normal update
+                let alertConfig = AlertConfiguration(
+                    title: "Break Time is Over!",
+                    body: "Let's go for next set",
+                    sound: .default
+                )
+                
+                /// Vibrate
+                await UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                
+                await activity.update(.init(state: contentState, staleDate: nil), alertConfiguration: alertConfig)
+            }
+        }
+    }
     
     /// Complete current exercise
     func completeCurrentSet(exerciseID: String) {
@@ -188,9 +182,10 @@ class TrainingSessionManager: ObservableObject {
     }
     
     /// Skip Rest
-    func skipRest() {
+    func endRest() {
         let newRestStartTime: Date? = nil
         let newRestIntervals: Double? = nil
+        
         DispatchQueue.main.async {
             self.restStartTime = newRestStartTime
             self.restIntervals = newRestIntervals

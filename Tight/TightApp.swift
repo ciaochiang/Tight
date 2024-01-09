@@ -8,6 +8,8 @@
 import SwiftUI
 import SwiftData
 import FirebaseCore
+import BackgroundTasks
+import UIKit
 
 // MARK: Migration Plan
 enum TightMigrationPlan: SchemaMigrationPlan {
@@ -26,7 +28,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
-
+        
         return true
     }
 }
@@ -35,8 +37,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct TightApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @AppStorage("IS_ONBOARDING_COMPLETED") var isOnboardingCompleted: Bool = false
-    private var logger: CustomLogger
-    private var experiementsProvider: ExperiementsProvider
+    private var logger = CustomLogger()
+    private var experiementsProvider = ExperiementsProvider()
     
     /// Swift data
     let container: ModelContainer = {
@@ -51,8 +53,7 @@ struct TightApp: App {
     }()
     
     init() {
-        self.logger = CustomLogger()
-        self.experiementsProvider = ExperiementsProvider()
+        
     }
 
     var body: some Scene {

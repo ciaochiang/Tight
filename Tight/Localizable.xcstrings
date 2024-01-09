@@ -148,6 +148,9 @@
         }
       }
     },
+    "Break Time is Over!" : {
+
+    },
     "callout_key_start_adding_exercise_to_plan" : {
       "localizations" : {
         "en" : {
@@ -1632,6 +1635,9 @@
 
     },
     "Favorite Emoji:" : {
+
+    },
+    "Let's go for next set" : {
 
     },
     "live_activity_key_abort_completion_message" : {

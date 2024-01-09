@@ -42,7 +42,7 @@ struct SkipRest: LiveActivityIntent {
     
     func perform() async throws -> some IntentResult {
         /// Update Database
-        TrainingSessionManager.shared.skipRest()
+        TrainingSessionManager.shared.endRest()
         return .result()
     }
 }
