@@ -161,8 +161,8 @@ struct TrainingSessionLiveActivity: Widget {
     
     @ViewBuilder
     func SetsProgressView(context: ActivityViewContext<TrainingSessionAttributes>) -> some View {
-        ProgressView(value: CGFloat(context.state.indexOfSet) / CGFloat(context.state.totalSetsCount)) {
-            Text("\(context.state.indexOfSet)")
+        ProgressView(value: context.state.currentSetsProgress) {
+            Text("\(context.state.indexOfSet + 1)")
         }
         .progressViewStyle(CircularProgressViewStyle(tint: Color.themeStyle.theme.accent))
     }
@@ -186,7 +186,7 @@ struct TrainingSessionLiveActivity: Widget {
                     .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
             }
             else {
-                Text(context.state.currentExercise)
+                Text(context.state.currentExerciseName)
                     .font(.title2)
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .minimumScaleFactor(0.8)
@@ -316,33 +316,29 @@ extension TrainingSessionAttributes {
 
 extension TrainingSessionAttributes.ContentState {
     fileprivate static var initial: TrainingSessionAttributes.ContentState {
-        TrainingSessionAttributes.ContentState(totalExerciseCount: 5,
-                                               currentStage: 0,
-                                               currentExerciseID: "123",
-                                               currentExercise: "Bench Press",
-                                               totalSetsCount: 3,
-                                               indexOfSet: 1,
-                                               weight: 40,
-                                               repetition: 12,
-                                               completionType: -1,
+        TrainingSessionAttributes.ContentState(currentExerciseID: "123",
+                                               currentExerciseName: "Bench Press",
+                                               weight: 50,
+                                               repetition: 10,
                                                startTime: .now,
-                                               restStartTime: nil,
-                                               restIntervals: nil)
+                                               indexOfSet: 0,
+                                               currentSetsProgress: 0.3,
+                                               totalExerciseCount: 3, 
+                                               currentStage: 1,
+                                               completionType: -1)
      }
      
      fileprivate static var progressing: TrainingSessionAttributes.ContentState {
-         TrainingSessionAttributes.ContentState(totalExerciseCount: 5, 
+         TrainingSessionAttributes.ContentState(currentExerciseID: "234",
+                                                currentExerciseName: "Leg Extension",
+                                                weight: 50,
+                                                repetition: 10,
+                                                startTime: .now,
+                                                indexOfSet: 0,
+                                                currentSetsProgress: 0.3,
+                                                totalExerciseCount: 3,
                                                 currentStage: 1,
-                                                currentExerciseID: "234",
-                                                currentExercise: "Bench Press",
-                                                totalSetsCount: 3,
-                                                indexOfSet: 2,
-                                                weight: 40,
-                                                repetition: 12,
-                                                completionType: -1,
-                                                startTime: .now + 20,
-                                                restStartTime: nil,
-                                                restIntervals: nil)
+                                                completionType: -1)
      }
 }
 

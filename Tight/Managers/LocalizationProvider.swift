@@ -69,6 +69,19 @@ enum LocalizationProvider {
     case doneCompletionMessage
     case abortCompletionMessage
     
+    var localizedString: String {
+        return String(localized: localizationValue)
+    }
+    
+    var localizationValue: String.LocalizationValue {
+        switch self {
+        case .breakTimeTitle: return "live_activity_key_break_time_title"
+        case .breakTimeSubtitle: return "live_activity_key_break_time_subtitle"
+        default: return ""
+        }
+    }
+
+    
     var nameKey: LocalizedStringKey {
         switch self {
         /// App Name

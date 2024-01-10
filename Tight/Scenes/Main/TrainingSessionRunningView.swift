@@ -14,7 +14,7 @@ struct TrainingSessionRunningView: View {
         VStack {
             HStack(spacing: 16) {
                 /// Sets Progress
-                Text("\(trainingSessionManager.currentIndexOfSet)")
+                Text("\(trainingSessionManager.currentIndexOfSet + 1)")
                     .foregroundStyle(Color.themeStyle.theme.white.opacity(0.8))
                     .font(.title3)
                     .fontWeight(.semibold)
@@ -23,7 +23,7 @@ struct TrainingSessionRunningView: View {
                             Circle()
                                 .stroke( // 1
                                     Color.white.opacity(0.7),
-                                    lineWidth: 4
+                                    lineWidth: 2
                                 )
                                 .frame(width: 48, height: 48)
                             
@@ -35,6 +35,7 @@ struct TrainingSessionRunningView: View {
                                 )
                                 .frame(width: 48, height: 48)
                                 .rotationEffect(.degrees(-90))
+                                .animation(.easeInOut, value: trainingSessionManager.currentSetsProgress)
                         }
                     }
                     .padding(.leading, 16)
@@ -59,24 +60,16 @@ struct TrainingSessionRunningView: View {
             .padding(.horizontal)
             .padding(.top, 8)
             
-            StagesView(totalExerciseCount: trainingSessionManager.totalExerciseCount,
-                       currentStage: trainingSessionManager.currentStage)
+            StagesView(progress: trainingSessionManager.currentProgress)
         }
     }
     
     @ViewBuilder
-    func SetsProgressView(indexOfSet: Int, totalSetsCount: Int) -> some View {
-        ProgressView(value: CGFloat(indexOfSet) / CGFloat(totalSetsCount)) {
-            Text("\(indexOfSet)")
-        }
-        .progressViewStyle(CircularProgressViewStyle(tint: Color.themeStyle.theme.accent))
-    }
-    
-    @ViewBuilder
-    func StagesView(totalExerciseCount: Int, currentStage: Int) -> some View {
-        ProgressView(value: CGFloat(currentStage), total: CGFloat(totalExerciseCount))
+    func StagesView(progress: Double) -> some View {
+        ProgressView(value: progress)
             .progressViewStyle(.linear)
             .background(Color.white.opacity(0.7))
+            .animation(.easeInOut, value: progress)
     }
     
     @ViewBuilder
@@ -133,36 +126,21 @@ struct TrainingSessionRunningView: View {
     @ViewBuilder
     func ExerciseInfoView(isResting: Bool, exerciseName: String, weight: Double, repetition: Double) -> some View {
         VStack {
-            if isResting {
-                Text(LocalizationProvider.breakTimeTitle.nameKey)
-                    .font(.headline)
-                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                    .minimumScaleFactor(0.8)
-                    .foregroundColor(Color.themeStyle.theme.primaryTextColor)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Text(LocalizationProvider.breakTimeSubtitle.nameKey)
-                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
-                    .font(.subheadline)
-                    .minimumScaleFactor(0.8)
-                    .fontWeight(.semibold)
-                    .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
-            }
-            else {
-                Text(exerciseName)
-                    .font(.headline)
-                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                    .minimumScaleFactor(0.8)
-                    .foregroundColor(Color.themeStyle.theme.accent.opacity(0.8))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Text("\(Int(weight))kg x \(Int(repetition))")
-                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
-                    .font(.subheadline)
-                    .minimumScaleFactor(0.8)
-                    .fontWeight(.semibold)
-                    .foregroundColor(Color.white.opacity(0.8))
-            }
+            Text(isResting ? LocalizationProvider.breakTimeTitle.localizedString : exerciseName)
+                .font(.headline)
+                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                .minimumScaleFactor(0.8)
+                .foregroundColor(isResting ? Color.themeStyle.theme.primaryTextColor : Color.themeStyle.theme.accent.opacity(0.8))
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentTransition(.opacity)
+            
+            Text(isResting ? LocalizationProvider.breakTimeSubtitle.localizedString : "\(Int(weight))kg x \(Int(repetition))")
+                .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
+                .font(.subheadline)
+                .minimumScaleFactor(0.8)
+                .fontWeight(.semibold)
+                .foregroundColor(Color.white.opacity(0.8))
+                .contentTransition(.opacity)
         }
     }
     

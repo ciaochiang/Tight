@@ -10,6 +10,14 @@ import SwiftUI
 import ActivityKit
 import BackgroundTasks
 
+enum TraningSessionState {
+    case notStarted
+    case training
+    case resting
+    case aborted
+    case finshed
+}
+
 /**
  - Countdown timer
  - Based on  Arranged Exercises rest intervals
@@ -20,49 +28,50 @@ class TrainingSessionManager: ObservableObject {
     private(set) var arrangedExercises: [ArrangedExercise] = []
     
     /// Live Activity Properties
+    @Published var state: TraningSessionState = .notStarted
     @Published var currentLiveActivityID: String = ""
     @Published var currentExercise: ArrangedExercise?
-    @Published var totalExerciseCount: Int = 0
-    @Published var currentStage: Int = 0
-    @Published var currentIndexOfSet: Int = 1
+    @Published private var totalExerciseCount: Int = 0
+    @Published private var currentStage: Int = 0
+    @Published var currentProgress: Double = 0
+    @Published var currentIndexOfSet: Int = 0
     @Published var currentSetsProgress: Double = 0.0
     @Published var startTime: Date?
     @Published var restStartTime: Date?
     @Published var restIntervals: Double?
-    @Published var isEnd: Bool = false
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     static let shared = TrainingSessionManager()
     
-    /// Configure arranged exercises
-    /// NOTE:  Invoke this function before start the training session
-    func configure(arrangedExercises: [ArrangedExercise]) {
-        /// End and remove existing live activtiy   
-        
-        self.arrangedExercises = arrangedExercises
-        self.totalExerciseCount = arrangedExercises.count
-        
-        /// NOTE: Do not use `rest` function here given that is async function
+    /// Start Training Session
+    func startTrainingSession(arrangedExercises: [ArrangedExercise]) {
+        /// NOTE: Do not use `reset` function here given that is async function
         self.currentExercise = nil
         self.startTime = nil
         self.restStartTime = nil
         self.restIntervals = 0
         self.currentStage = 0
-        self.currentIndexOfSet = 1
-        self.currentSetsProgress = 0
-    }
-    
-    /// Start Training Session
-    func startTrainingSession() {
+        self.currentIndexOfSet = 0
+        self.currentProgress = 0
+        
         /// Ensure arranged exercise list is not empty
         guard arrangedExercises.isEmpty == false else { return }
+        
+        self.arrangedExercises = arrangedExercises
+        self.totalExerciseCount = arrangedExercises.count
+        
+        /// Gete first exercise
+        let firstExercise = arrangedExercises[currentStage]
+        self.currentExercise = firstExercise
+        self.currentSetsProgress = Double(currentIndexOfSet) / Double(firstExercise.sets)
         
         /// Remove existing activity
         removeExistingAcitvity()
         
-        /// Init start time
+        /// Init start time and change state
         startTime = Date.now
+        state = .training
         
         /// Add live activity
         addLiveAcitvity()
@@ -70,7 +79,17 @@ class TrainingSessionManager: ObservableObject {
     
     /// Stop Training Session
     func stopTrainingSession() {
+        let newState: TraningSessionState = .aborted
+
+        DispatchQueue.main.async {
+            self.state = newState
+        }
+        
         /// Reset
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            self.state = .notStarted
+        })
+        
         reset()
         
         /// Remove live activity
@@ -84,7 +103,11 @@ class TrainingSessionManager: ObservableObject {
                 await activity.update(.init(state: contentState, staleDate: nil))
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    self.removeActivity()
+                    Task {
+                        let dismissalPolicy: ActivityUIDismissalPolicy = .immediate
+                        let finalState = activity.content.state
+                        await activity.end(.init(state: finalState, staleDate: nil), dismissalPolicy: dismissalPolicy)
+                    }
                 }
             }
         }
@@ -98,8 +121,11 @@ class TrainingSessionManager: ObservableObject {
         /// Determine rest time is over or not
         guard Date.now >= restStartTime.addingTimeInterval(restInterval) else { return }
         
+        let newState: TraningSessionState = .training
+        
         /// Reset rest time
         DispatchQueue.main.async {
+            self.state = newState
             self.restStartTime = nil
             self.restIntervals = nil
         }
@@ -139,7 +165,7 @@ class TrainingSessionManager: ObservableObject {
         /// - If there is more set of current exercise, then update the IndexOfSet number
         /// - If there is no more set, then mark it as completed and  jump to next exercise
         /// - If there is no next exercise, then complete the training session
-        if currentIndexOfSet >= Int(exercise.sets) {
+        if currentIndexOfSet >= Int(exercise.sets - 1) {
             /// Sets are completed, mark exercise as completed and jump to next exercise
             exercise.isCompleted = true
             
@@ -166,17 +192,12 @@ class TrainingSessionManager: ObservableObject {
             self.restStartTime = nil
             self.restIntervals = 0
             self.currentStage = 0
-            self.currentIndexOfSet = 1
+            self.currentIndexOfSet = 0
         }
     }
 
     /// Done
     func done() {
-        /// Mark training session is ended
-        DispatchQueue.main.async {
-            self.isEnd = true
-        }
-        
         /// Reset
         reset()
         
@@ -190,8 +211,13 @@ class TrainingSessionManager: ObservableObject {
                 contentState.completionType = 1
                 await activity.update(.init(state: contentState, staleDate: nil))
                 
+                /// Remove activity
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    self.removeActivity()
+                    Task {
+                        let dismissalPolicy: ActivityUIDismissalPolicy = .immediate
+                        let finalState = activity.content.state
+                        await activity.end(.init(state: finalState, staleDate: nil), dismissalPolicy: dismissalPolicy)
+                    }
                 }
             }
         }
@@ -223,12 +249,14 @@ class TrainingSessionManager: ObservableObject {
     /// Next Set
     func nextSet() {
         /// indexOfSet increased
+        let newState: TraningSessionState = .resting
         let newSetNumber = currentIndexOfSet + 1
         let newRestStartTime = Date.now
         let newRestIntervals = currentExercise?.restIntevals ?? 0
         let newSetsProgress = Double(newSetNumber) / Double(currentExercise?.sets ?? 0)
         
         DispatchQueue.main.async {
+            self.state = newState
             self.currentIndexOfSet = newSetNumber
             self.restStartTime = newRestStartTime
             self.restIntervals = newRestIntervals
@@ -253,18 +281,24 @@ class TrainingSessionManager: ObservableObject {
     /// Next Exericse
     func nextExercise() {
         /// Go to next arranged exercise
+        let newState: TraningSessionState = .resting
         let newStage = currentStage + 1
-        let newIndexOfSet = 1
+        let newIndexOfSet = 0
         let newExercise = arrangedExercises[newStage]
         let newRestStartTime = Date.now
         let newRestIntervals = currentExercise?.restIntevals ?? 0
+        let newSetsProgress = 0.0
+        let newProgress = Double(newStage) / Double(totalExerciseCount)
         
         DispatchQueue.main.async {
+            self.state = newState
             self.currentStage = newStage
             self.currentExercise = newExercise
             self.currentIndexOfSet = newIndexOfSet
             self.restStartTime = newRestStartTime
             self.restIntervals = newRestIntervals
+            self.currentSetsProgress = newSetsProgress
+            self.currentProgress = newProgress
         }
         
         /// Update Live Activity
@@ -276,8 +310,8 @@ class TrainingSessionManager: ObservableObject {
                 var contentState = activity.content.state
                 contentState.currentStage = newStage
                 contentState.currentExerciseID = newExercise.id.uuidString
-                contentState.currentExercise = newExercise.exercise.name
-                contentState.totalSetsCount = Int(newExercise.sets)
+                contentState.currentExerciseName = newExercise.exercise.name
+                contentState.currentStage = newStage
                 contentState.indexOfSet = newIndexOfSet
                 contentState.weight = newExercise.weight
                 contentState.repetition = newExercise.repetitions
@@ -294,25 +328,21 @@ class TrainingSessionManager: ObservableObject {
 extension TrainingSessionManager {
     /// Add live activity
     func addLiveAcitvity() {
-        guard ActivityAuthorizationInfo().areActivitiesEnabled else { return }
-        
-        /// Gete first exercise
-        let firstExercise = arrangedExercises[currentStage]
-        self.currentExercise = firstExercise
+        guard ActivityAuthorizationInfo().areActivitiesEnabled, let firstExercise = currentExercise else { return }
         
         let trainingSessionAttributes = TrainingSessionAttributes(name: "TrainingSession")
-        let initialState = TrainingSessionAttributes.ContentState(totalExerciseCount: arrangedExercises.count,
-                                                                  currentStage: currentStage,
-                                                                  currentExerciseID: firstExercise.id.uuidString,
-                                                                  currentExercise: firstExercise.exercise.name,
-                                                                  totalSetsCount: Int(firstExercise.sets),
-                                                                  indexOfSet: currentIndexOfSet,
+        let initialState = TrainingSessionAttributes.ContentState(currentExerciseID: firstExercise.id.uuidString,
+                                                                  currentExerciseName: firstExercise.exercise.name,
                                                                   weight: firstExercise.weight,
                                                                   repetition: firstExercise.repetitions,
-                                                                  completionType: -1,
                                                                   startTime: startTime ?? .now,
                                                                   restStartTime: nil,
-                                                                  restIntervals: nil)
+                                                                  restIntervals: nil,
+                                                                  indexOfSet: currentIndexOfSet,
+                                                                  currentSetsProgress: currentSetsProgress,
+                                                                  totalExerciseCount: totalExerciseCount,
+                                                                  currentStage: currentStage, 
+                                                                  completionType: -1)
         
         do {
             let activity = try Activity<TrainingSessionAttributes>.request(attributes: trainingSessionAttributes,
@@ -322,20 +352,6 @@ extension TrainingSessionManager {
             currentLiveActivityID = activity.id
         } catch {
             print(error.localizedDescription)
-        }
-    }
-    
-    /// Delete exising activity
-    func removeActivity() {
-        ///  Remove  activity
-        if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
-            activity.id == currentLiveActivityID
-        }) {
-            Task {
-                let dismissalPolicy: ActivityUIDismissalPolicy = .immediate
-                let finalState = activity.content.state
-                await activity.end(.init(state: finalState, staleDate: nil), dismissalPolicy: dismissalPolicy)
-            }
         }
     }
     

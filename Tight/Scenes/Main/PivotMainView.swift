@@ -320,18 +320,16 @@ struct PivotMainView: View {
     @ViewBuilder
     func TrainingSessionStartButton() -> some View {
         Button(action: {
-            trainingSessionManager.configure(arrangedExercises: viewModel.arrangedExercises)
-            trainingSessionManager.startTrainingSession()
+            trainingSessionManager.startTrainingSession(arrangedExercises: viewModel.arrangedExercises)
         }) {
             Label("Start Training", systemImage: "flame.fill")
                 .horizontalSpacing(.center)
-                .font(.headline)
+                .font(.title3)
                 .fontWeight(.semibold)
-                .padding()
+                .padding(.vertical, 24)
                 .background(Color.themeStyle.theme.accent)
                 .foregroundColor(Color.themeStyle.theme.white)
         }
-        .frame(height: 44)
     }
 }
 
