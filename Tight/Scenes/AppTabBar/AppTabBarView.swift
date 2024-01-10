@@ -33,6 +33,14 @@ struct AppTabBarView: View {
                 Label(LocalizationProvider.settings.nameKey, systemImage: TabBarItemType.more.iconName)
             }
         }
+        .toolbarBackground(Color.themeStyle.theme.background, for: .tabBar)
+        .onAppear {
+            // correct the transparency bug for Tab bars
+            let tabBarAppearance = UITabBarAppearance()
+            tabBarAppearance.configureWithDefaultBackground()
+            tabBarAppearance.backgroundColor = UIColor(Color.themeStyle.theme.background)
+            UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+        }
     }
 }
 

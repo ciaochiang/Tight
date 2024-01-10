@@ -28,7 +28,7 @@ struct PivotMainView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading) {
             HeaderView()
             
             ///  Scheduled exercises
@@ -39,14 +39,8 @@ struct PivotMainView: View {
                     .offset(y: -32)
             }
             else {
-                ZStack {
-                    ArrangedExercisesView()
-                    VStack {
-                        Spacer()
-                        TrainingSessionView()
-                            .padding(.bottom)
-                    }
-                }
+                ArrangedExercisesView()
+                TrainingSessionView()
             }
         }
         .background(Color.themeStyle.theme.background)
@@ -63,6 +57,9 @@ struct PivotMainView: View {
             }
             .padding(16)
             .offset(y: -120)
+        })
+        .overlay(alignment: .bottomLeading, content: {
+
         })
         .onAppear(perform: {
             if viewModel.weeks.isEmpty {
@@ -270,6 +267,7 @@ struct PivotMainView: View {
         }
         .padding(.top, 16)
         .listStyle(PlainListStyle())
+        .scrollIndicators(.hidden)
         .background(Color.themeStyle.theme.background)
     }
     
@@ -302,19 +300,16 @@ struct PivotMainView: View {
     
     @ViewBuilder
     func TrainingSessionView() -> some View {
-        VStack {
-            if !showTrainingSessionRunningView {
-                /// Show strat button
-                TrainingSessionStartButton()
-                    .opacity(opacity)
-            }
-            else {
-                TrainingSessionRunningView()
-                    .transition(.scale)
-            }
+        
+        if !showTrainingSessionRunningView {
+            /// Show strat button
+            TrainingSessionStartButton()
+                .opacity(opacity)
         }
-        .horizontalSpacing(.center)
-        .background(Color.black.opacity(0.7))
+        else {
+            TrainingSessionRunningView()
+                .transition(.scale)
+        }
     }
     
     @ViewBuilder
@@ -327,9 +322,10 @@ struct PivotMainView: View {
                 .font(.title3)
                 .fontWeight(.semibold)
                 .padding(.vertical, 24)
-                .background(Color.themeStyle.theme.accent)
                 .foregroundColor(Color.themeStyle.theme.white)
+                .background(Color.themeStyle.theme.accent)
         }
+        .contentShape(Rectangle())
     }
 }
 
