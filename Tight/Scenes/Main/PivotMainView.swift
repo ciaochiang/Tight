@@ -29,7 +29,6 @@ struct PivotMainView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HeaderView()
-            TrainingSessionView()
             
             ///  Scheduled exercises
             if viewModel.currentPlan?.arrangedExercises.isEmpty == true {
@@ -39,7 +38,14 @@ struct PivotMainView: View {
                     .offset(y: -32)
             }
             else {
-                ArrangedExercisesView()
+                ZStack {
+                    ArrangedExercisesView()
+                    VStack {
+                        Spacer()
+                        TrainingSessionView()
+                            .padding(.bottom)
+                    }
+                }
             }
         }
         .background(Color.themeStyle.theme.background)
@@ -53,10 +59,9 @@ struct PivotMainView: View {
                     .foregroundColor(.white)
                     .frame(width: 60, height: 60)
                     .background(Color.themeStyle.theme.accent.shadow(.drop(color: .black.opacity(0.25), radius: 5, x: 5, y: 5)), in: .circle)
-                
             }
             .padding(16)
-            .offset(y: -48)
+            .offset(y: -120)
         })
         .onAppear(perform: {
             if viewModel.weeks.isEmpty {
@@ -288,15 +293,28 @@ struct PivotMainView: View {
                 TrainingSessionStartButton()
             }
             else {
-                TrainingSessionRunningView()
-                .frame(minHeight: 132)
+                TrainingSessionRunningView(startTime: $trainingSessionManager.startTime,
+                                           restStartTime: $trainingSessionManager.restStartTime, 
+                                           restIntervals: $trainingSessionManager.restIntervals,
+                                           currentIndexOfSet: $trainingSessionManager.currentIndexOfSet,
+                                           currentSetsProgress: $trainingSessionManager.currentSetsProgress,
+                                           currentExercise: $trainingSessionManager.currentExercise,
+                                           totalExerciseCount: $trainingSessionManager.totalExerciseCount,
+                                           currentStage: $trainingSessionManager.currentStage,
+                                           onStopButtonTapped: {
+                    trainingSessionManager.stopTrainingSession()
+                    
+                },
+                                           onCompleteButtonTapped: { exerciseID in
+                    trainingSessionManager.completeCurrentSet(exerciseID: exerciseID)
+                },
+                                           onSkipButtonTapped: {
+                    trainingSessionManager.endRest()
+                })
             }
         }
         .horizontalSpacing(.center)
         .background(Color.black.opacity(0.7))
-        .cornerRadius(16)
-        .padding(.horizontal)
-        .padding(.top)
     }
     
     @ViewBuilder
@@ -313,188 +331,7 @@ struct PivotMainView: View {
                 .background(Color.themeStyle.theme.accent)
                 .foregroundColor(Color.themeStyle.theme.white)
         }
-    }
-    
-    @ViewBuilder
-    func TrainingSessionRunningView() -> some View {
-        VStack {
-            HStack(spacing: 16) {
-                VStack(spacing: 8) {
-                    if let startTime = trainingSessionManager.startTime {
-                        ElapsedTimeView(startTime: startTime,
-                                        restStartTime: trainingSessionManager.restStartTime,
-                                        restIntervals: trainingSessionManager.restIntervals,
-                                        currentIndexOfSet: trainingSessionManager.currentIndexOfSet,
-                                        totalSetsCount: trainingSessionManager.currentExercise?.sets ?? 0)
-                    }
-
-                    ExerciseInfoView(isResting: trainingSessionManager.restStartTime != nil,
-                                     exerciseName: trainingSessionManager.currentExercise?.exercise.name ?? "",
-                                     weight: trainingSessionManager.currentExercise?.weight ?? 0,
-                                     repetition: trainingSessionManager.currentExercise?.repetitions ?? 0)
-                }
-                
-                ControlsView(isResting: trainingSessionManager.restStartTime != nil)
-            }
-            .padding(.vertical)
-            .padding(.horizontal)
-            
-            StagesView(totalExerciseCount: trainingSessionManager.arrangedExercises.count,
-                       currentStage: trainingSessionManager.currentStage)
-        }
-    }
-    
-    @ViewBuilder
-    func ElapsedTimeView(startTime: Date, restStartTime: Date?, restIntervals: TimeInterval?, currentIndexOfSet: Int, totalSetsCount: Double) -> some View {
-        HStack(spacing: 24) {
-            Text("\(currentIndexOfSet)")
-                .foregroundStyle(Color.themeStyle.theme.white.opacity(0.8))
-                .font(.caption)
-                .fontWeight(.semibold)
-                .overlay {
-                    ZStack {
-                        Circle()
-                            .stroke( // 1
-                                Color.white.opacity(0.7),
-                                lineWidth: 2
-                            )
-                            .frame(width: 28, height: 28)
-                        
-                        Circle()
-                            .trim(from: 0, to: Double(currentIndexOfSet) / totalSetsCount)
-                            .stroke( // 1
-                                Color.themeStyle.theme.accent,
-                                lineWidth: 2
-                            )
-                            .frame(width: 28, height: 28)
-                            .rotationEffect(.degrees(-90))
-                    }
-                }
-                .padding(.leading, 12)
-            
-            if let restStartTime = restStartTime, let restIntervals = restIntervals {
-                Text(timerInterval: restStartTime...restStartTime.addingTimeInterval(restIntervals), countsDown: true)
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .tracking(1.4)
-                    .minimumScaleFactor(0.8)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .foregroundColor(Color.blue)
-                    .contentTransition(.numericText(countsDown: true))
-            }
-            else {
-                Text(startTime, style: .timer)
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .tracking(1.4)
-                    .minimumScaleFactor(0.8)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .foregroundColor(Color.themeStyle.theme.white.opacity(0.8))
-                    .contentTransition(.numericText())
-            }
-        }
-    }
-    
-    @ViewBuilder
-    func SetsProgressView(indexOfSet: Int, totalSetsCount: Int) -> some View {
-        ProgressView(value: CGFloat(indexOfSet) / CGFloat(totalSetsCount)) {
-            Text("\(indexOfSet)")
-        }
-        .progressViewStyle(CircularProgressViewStyle(tint: Color.themeStyle.theme.accent))
-    }
-    
-    @ViewBuilder
-    func StagesView(totalExerciseCount: Int, currentStage: Int) -> some View {
-        ProgressView(value: CGFloat(currentStage), total: CGFloat(totalExerciseCount))
-            .progressViewStyle(.linear)
-            .background(Color.white.opacity(0.7))
-    }
-    
-    @ViewBuilder
-    func ControlsView(isResting: Bool) -> some View {
-        HStack(spacing: 16) {
-            /// Stop Button
-            Button(action: {
-                trainingSessionManager.stopTrainingSession()
-            }) {
-                Image(systemName: "stop.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 16, height: 16)
-            }
-            .frame(width: 44, height: 44)
-            .background(Color.white)
-            .tint(Color.black.opacity(0.7))
-            .cornerRadius(22)
-            
-            if isResting {
-                Button(action: {
-                    trainingSessionManager.endRest()
-                }) {
-                    Image(systemName: "chevron.forward.2")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 16, height: 16)
-                }
-                .tint(Color.black.opacity(0.7))
-                .frame(width: 44, height: 44)
-                .background(Color.white)
-                .cornerRadius(22)
-            }
-            else {
-                /// Done Button
-                Button(action: {
-                    if let exerciseID = trainingSessionManager.currentExercise?.id {
-                        trainingSessionManager.completeCurrentSet(exerciseID: exerciseID.uuidString)
-                    }
-                }) {
-                    Image(systemName: "checkmark")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 16, height: 16)
-                }
-                .frame(width: 44, height: 44)
-                .background(Color.white)
-                .tint(Color.black.opacity(0.7))
-                .cornerRadius(22)
-            }
-        }
-    }
-    
-    @ViewBuilder
-    func ExerciseInfoView(isResting: Bool, exerciseName: String, weight: Double, repetition: Double) -> some View {
-        VStack(spacing: 4) {
-            if isResting {
-                Text(LocalizationProvider.breakTimeTitle.nameKey)
-                    .font(.title2)
-                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                    .minimumScaleFactor(0.8)
-                    .foregroundColor(Color.themeStyle.theme.primaryTextColor)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Text(LocalizationProvider.breakTimeSubtitle.nameKey)
-                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
-                    .font(.subheadline)
-                    .minimumScaleFactor(0.8)
-                    .fontWeight(.semibold)
-                    .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
-            }
-            else {
-                Text(exerciseName)
-                    .font(.title2)
-                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                    .minimumScaleFactor(0.8)
-                    .foregroundColor(Color.themeStyle.theme.accent.opacity(0.8))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Text("\(Int(weight))kg x \(Int(repetition))")
-                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
-                    .font(.subheadline)
-                    .minimumScaleFactor(0.8)
-                    .fontWeight(.semibold)
-                    .foregroundColor(Color.white.opacity(0.8))
-            }
-        }
+        .frame(height: 44)
     }
 }
 

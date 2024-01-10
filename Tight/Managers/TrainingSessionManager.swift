@@ -22,12 +22,14 @@ class TrainingSessionManager: ObservableObject {
     /// Live Activity Properties
     @Published var currentLiveActivityID: String = ""
     @Published var currentExercise: ArrangedExercise?
+    @Published var totalExerciseCount: Int = 0
     @Published var currentStage: Int = 0
     @Published var currentIndexOfSet: Int = 1
-    @Published var currentTotalSetsCount: Int = 0
+    @Published var currentSetsProgress: Double = 0.0
     @Published var startTime: Date?
     @Published var restStartTime: Date?
     @Published var restIntervals: Double?
+    @Published var isEnd: Bool = false
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
@@ -39,8 +41,9 @@ class TrainingSessionManager: ObservableObject {
         /// End and remove existing live activtiy   
         
         self.arrangedExercises = arrangedExercises
-        self.currentStage = 0
-        self.currentIndexOfSet = 1
+        self.totalExerciseCount = arrangedExercises.count
+        
+        reset()
     }
     
     /// Start Training Session
@@ -48,8 +51,8 @@ class TrainingSessionManager: ObservableObject {
         /// Ensure arranged exercise list is not empty
         guard arrangedExercises.isEmpty == false else { return }
         
-        /// Remove activity
-        removeActivity()
+        /// Remove existing activity
+        removeExistingAcitvity()
         
         /// Init start time
         startTime = Date.now
@@ -63,7 +66,7 @@ class TrainingSessionManager: ObservableObject {
         /// Reset
         reset()
         
-        /// Find activity
+        /// Remove live activity
         if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
             activity.id == currentLiveActivityID
         }) {
@@ -94,7 +97,7 @@ class TrainingSessionManager: ObservableObject {
             self.restIntervals = nil
         }
         
-        ///  Find activity
+        ///  Update activity
         if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
             activity.id == currentLiveActivityID
         }) {
@@ -152,15 +155,21 @@ class TrainingSessionManager: ObservableObject {
     func reset() {
         DispatchQueue.main.async {
             self.currentExercise = nil
-            self.currentStage = 0
-            self.currentIndexOfSet = 1
+            self.startTime = nil
             self.restStartTime = nil
             self.restIntervals = 0
+            self.currentStage = 0
+            self.currentIndexOfSet = 1
         }
     }
 
     /// Done
     func done() {
+        /// Mark training session is ended
+        DispatchQueue.main.async {
+            self.isEnd = true
+        }
+        
         /// Reset
         reset()
         
@@ -210,11 +219,13 @@ class TrainingSessionManager: ObservableObject {
         let newSetNumber = currentIndexOfSet + 1
         let newRestStartTime = Date.now
         let newRestIntervals = currentExercise?.restIntevals ?? 0
+        let newSetsProgress = Double(newSetNumber) / Double(currentExercise?.sets ?? 0)
         
         DispatchQueue.main.async {
             self.currentIndexOfSet = newSetNumber
             self.restStartTime = newRestStartTime
             self.restIntervals = newRestIntervals
+            self.currentSetsProgress = newSetsProgress
         }
         
         /// Update Live Activity
@@ -309,9 +320,22 @@ extension TrainingSessionManager {
     
     /// Delete exising activity
     func removeActivity() {
-        ///  Find activity
+        ///  Remove  activity
         if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
             activity.id == currentLiveActivityID
+        }) {
+            Task {
+                let dismissalPolicy: ActivityUIDismissalPolicy = .immediate
+                let finalState = activity.content.state
+                await activity.end(.init(state: finalState, staleDate: nil), dismissalPolicy: dismissalPolicy)
+            }
+        }
+    }
+    
+    /// Remove all existing live activity
+    func removeExistingAcitvity() {
+        if let activity = Activity.activities.first(where: {(activity: Activity<TrainingSessionAttributes>) in
+                                                       return true
         }) {
             Task {
                 let dismissalPolicy: ActivityUIDismissalPolicy = .immediate
