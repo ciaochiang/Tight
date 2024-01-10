@@ -16,7 +16,8 @@ struct PivotMainView: View {
     @State private var isArrangingExercise: Bool = false
     @State private var isImporting: Bool = false
     @State private var exerciseToEdit: ArrangedExercise?
-    
+    @State private var showTrainingSessionRunningView: Bool = false
+    @State private var opacity: Double = 1.0
         
     /// Animation  namespace
     @Namespace private var animation
@@ -102,6 +103,19 @@ struct PivotMainView: View {
         }
         .onReceive(trainingSessionManager.timer) { _ in
             trainingSessionManager.handleTimerAction()
+        }
+        .onChange(of: trainingSessionManager.startTime) { oldValue, newValue in
+            if newValue == nil {
+                withAnimation {
+                    showTrainingSessionRunningView = false
+                    opacity = opacity == 0.0 ? 1.0 : 0.0
+                }
+            } else {
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    showTrainingSessionRunningView = true
+                    opacity = opacity == 1.0 ? 0.0 : 1.0
+                }
+            }
         }
     }
     
@@ -288,9 +302,10 @@ struct PivotMainView: View {
     @ViewBuilder
     func TrainingSessionView() -> some View {
         VStack {
-            if trainingSessionManager.startTime == nil {
+            if !showTrainingSessionRunningView {
                 /// Show strat button
                 TrainingSessionStartButton()
+                    .opacity(opacity)
             }
             else {
                 TrainingSessionRunningView(startTime: $trainingSessionManager.startTime,
@@ -311,6 +326,7 @@ struct PivotMainView: View {
                                            onSkipButtonTapped: {
                     trainingSessionManager.endRest()
                 })
+                .transition(.scale)
             }
         }
         .horizontalSpacing(.center)

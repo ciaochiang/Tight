@@ -43,7 +43,14 @@ class TrainingSessionManager: ObservableObject {
         self.arrangedExercises = arrangedExercises
         self.totalExerciseCount = arrangedExercises.count
         
-        reset()
+        /// NOTE: Do not use `rest` function here given that is async function
+        self.currentExercise = nil
+        self.startTime = nil
+        self.restStartTime = nil
+        self.restIntervals = 0
+        self.currentStage = 0
+        self.currentIndexOfSet = 1
+        self.currentSetsProgress = 0
     }
     
     /// Start Training Session
