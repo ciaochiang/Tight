@@ -117,6 +117,7 @@ struct PivotMainView: View {
                 }
             }
         }
+        .environmentObject(trainingSessionManager)
     }
     
     @ViewBuilder
@@ -308,25 +309,8 @@ struct PivotMainView: View {
                     .opacity(opacity)
             }
             else {
-                TrainingSessionRunningView(startTime: $trainingSessionManager.startTime,
-                                           restStartTime: $trainingSessionManager.restStartTime, 
-                                           restIntervals: $trainingSessionManager.restIntervals,
-                                           currentIndexOfSet: $trainingSessionManager.currentIndexOfSet,
-                                           currentSetsProgress: $trainingSessionManager.currentSetsProgress,
-                                           currentExercise: $trainingSessionManager.currentExercise,
-                                           totalExerciseCount: $trainingSessionManager.totalExerciseCount,
-                                           currentStage: $trainingSessionManager.currentStage,
-                                           onStopButtonTapped: {
-                    trainingSessionManager.stopTrainingSession()
-                    
-                },
-                                           onCompleteButtonTapped: { exerciseID in
-                    trainingSessionManager.completeCurrentSet(exerciseID: exerciseID)
-                },
-                                           onSkipButtonTapped: {
-                    trainingSessionManager.endRest()
-                })
-                .transition(.scale)
+                TrainingSessionRunningView()
+                    .transition(.scale)
             }
         }
         .horizontalSpacing(.center)

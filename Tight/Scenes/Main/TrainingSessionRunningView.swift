@@ -8,24 +8,13 @@
 import SwiftUI
 
 struct TrainingSessionRunningView: View {
-    @Binding var startTime: Date?
-    @Binding var restStartTime: Date?
-    @Binding var restIntervals: TimeInterval?
-    @Binding var currentIndexOfSet: Int
-    @Binding var currentSetsProgress: Double
-    @Binding var currentExercise: ArrangedExercise?
-    @Binding var totalExerciseCount: Int
-    @Binding var currentStage: Int
-    
-    let onStopButtonTapped: (() -> Void)?
-    let onCompleteButtonTapped: ((_ exerciseID: String) -> Void)?
-    let onSkipButtonTapped: (() -> Void)?
+    @EnvironmentObject private var trainingSessionManager: TrainingSessionManager
     
     var body: some View {
         VStack {
             HStack(spacing: 16) {
                 /// Sets Progress
-                Text("\(currentIndexOfSet)")
+                Text("\(trainingSessionManager.currentIndexOfSet)")
                     .foregroundStyle(Color.themeStyle.theme.white.opacity(0.8))
                     .font(.title3)
                     .fontWeight(.semibold)
@@ -39,7 +28,7 @@ struct TrainingSessionRunningView: View {
                                 .frame(width: 48, height: 48)
                             
                             Circle()
-                                .trim(from: 0, to: currentSetsProgress)
+                                .trim(from: 0, to: trainingSessionManager.currentSetsProgress)
                                 .stroke( // 1
                                     Color.themeStyle.theme.accent,
                                     lineWidth: 4
@@ -52,26 +41,26 @@ struct TrainingSessionRunningView: View {
                     .padding(.trailing, 8)
                 
                 VStack(spacing: 4) {
-                    if let startTime = startTime {
+                    if let startTime = trainingSessionManager.startTime {
                         ElapsedTimeView(startTime: startTime,
-                                        restStartTime: restStartTime,
-                                        restIntervals: restIntervals)
+                                        restStartTime: trainingSessionManager.restStartTime,
+                                        restIntervals: trainingSessionManager.restIntervals)
                     }
 
-                    ExerciseInfoView(isResting: restStartTime != nil,
-                                     exerciseName: currentExercise?.exercise.name ?? "",
-                                     weight: currentExercise?.weight ?? 0,
-                                     repetition: currentExercise?.repetitions ?? 0)
+                    ExerciseInfoView(isResting: trainingSessionManager.restStartTime != nil,
+                                     exerciseName: trainingSessionManager.currentExercise?.exercise.name ?? "",
+                                     weight: trainingSessionManager.currentExercise?.weight ?? 0,
+                                     repetition: trainingSessionManager.currentExercise?.repetitions ?? 0)
                 }
                 .padding(.leading, 8)
                 
-                ControlsView(isResting: restStartTime != nil)
+                ControlsView(isResting: trainingSessionManager.restStartTime != nil)
             }
             .padding(.horizontal)
             .padding(.top, 8)
             
-            StagesView(totalExerciseCount: totalExerciseCount,
-                       currentStage: currentStage)
+            StagesView(totalExerciseCount: trainingSessionManager.totalExerciseCount,
+                       currentStage: trainingSessionManager.currentStage)
         }
     }
     
@@ -95,7 +84,7 @@ struct TrainingSessionRunningView: View {
         HStack(spacing: 16) {
             /// Stop Button
             Button(action: {
-                onStopButtonTapped?()
+                trainingSessionManager.stopTrainingSession()
             }) {
                 Image(systemName: "stop.fill")
                     .resizable()
@@ -109,7 +98,7 @@ struct TrainingSessionRunningView: View {
             
             if isResting {
                 Button(action: {
-                    onSkipButtonTapped?()
+                    trainingSessionManager.endRest()
                 }) {
                     Image(systemName: "chevron.forward.2")
                         .resizable()
@@ -124,8 +113,8 @@ struct TrainingSessionRunningView: View {
             else {
                 /// Done Button
                 Button(action: {
-                    if let exerciseID = currentExercise?.id {
-                        onCompleteButtonTapped?(exerciseID.uuidString)
+                    if let exerciseID = trainingSessionManager.currentExercise?.id {
+                        trainingSessionManager.completeCurrentSet(exerciseID: exerciseID.uuidString)
                     }
                 }) {
                     Image(systemName: "checkmark")
@@ -203,18 +192,6 @@ struct TrainingSessionRunningView: View {
 }
 
 #Preview {
-    TrainingSessionRunningView(startTime: .constant(.now),
-                               restStartTime: .constant(nil),
-                               restIntervals: .constant(nil),
-                               currentIndexOfSet: .constant(1),
-                               currentSetsProgress: .constant(0.5),
-                               currentExercise: .constant(.init(exercise: .woodchopper, repetitions: 10, sets: 3, weight: 50, durationOfSet: 60, restIntevals: 60, order: 0, tags: [], isCompleted: false)),
-                               totalExerciseCount: .constant(1),
-                               currentStage: .constant(0)) {
-        
-    } onCompleteButtonTapped: { exerciseID in
-        
-    } onSkipButtonTapped: {
-        
-    }
+    TrainingSessionRunningView()
+        .environmentObject(TrainingSessionManager())
 }
