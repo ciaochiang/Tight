@@ -17,7 +17,6 @@ struct PivotMainView: View {
     @State private var isImporting: Bool = false
     @State private var exerciseToEdit: ArrangedExercise?
     @State private var showTrainingSessionRunningView: Bool = false
-    @State private var opacity: Double = 1.0
         
     /// Animation  namespace
     @Namespace private var animation
@@ -40,27 +39,12 @@ struct PivotMainView: View {
             }
             else {
                 ArrangedExercisesView()
-                TrainingSessionView()
             }
+            
+            ControlPanelView()
         }
         .background(Color.themeStyle.theme.background)
         .veriticalSpacing(.top)
-        .overlay(alignment: .bottomTrailing, content: {
-            Button(action: {
-                isArrangingExercise.toggle()
-            }) {
-                Image(systemName: "plus")
-                    .fontWeight(.semibold)
-                    .foregroundColor(.white)
-                    .frame(width: 60, height: 60)
-                    .background(Color.themeStyle.theme.accent.shadow(.drop(color: .black.opacity(0.25), radius: 5, x: 5, y: 5)), in: .circle)
-            }
-            .padding(16)
-            .offset(y: -120)
-        })
-        .overlay(alignment: .bottomLeading, content: {
-
-        })
         .onAppear(perform: {
             if viewModel.weeks.isEmpty {
                 viewModel.loadWeeks()
@@ -105,12 +89,10 @@ struct PivotMainView: View {
             if newValue == nil {
                 withAnimation {
                     showTrainingSessionRunningView = false
-                    opacity = opacity == 0.0 ? 1.0 : 0.0
                 }
             } else {
                 withAnimation(.easeInOut(duration: 0.3)) {
                     showTrainingSessionRunningView = true
-                    opacity = opacity == 1.0 ? 0.0 : 1.0
                 }
             }
         }
@@ -258,7 +240,7 @@ struct PivotMainView: View {
             
             /// Bottom Placeholder
             VStack { }
-            .frame(height: 140)
+            .frame(height: 80)
             .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
             .background(Color.themeStyle.theme.background)
             .listRowInsets(EdgeInsets())
@@ -299,16 +281,47 @@ struct PivotMainView: View {
     }
     
     @ViewBuilder
-    func TrainingSessionView() -> some View {
-        
+    func ControlPanelView() -> some View {
         if !showTrainingSessionRunningView {
             /// Show strat button
-            TrainingSessionStartButton()
-                .opacity(opacity)
+            HStack(spacing: 4) {
+                /// Only dislay trainnin session button when the selected day is today.
+                if viewModel.selectedDate.isToday && viewModel.currentPlan?.arrangedExercises.isEmpty == false {
+                    TrainingSessionStartButton()
+                        .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: -1)
+                }
+
+                Button(action: {
+                    isArrangingExercise.toggle()
+                }) {
+                    if viewModel.selectedDate.isToday {
+                        Image(systemName: "plus")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(.white)
+                            .padding(20)
+                    }
+                    else {
+                        Label("Add Exercise", systemImage: "plus")
+                            .font(.headline)
+                            .fontWeight(.semibold)
+                            .padding(.vertical, 20)
+                            .foregroundColor(Color.themeStyle.theme.white)
+                            .background(Color.themeStyle.theme.accent)
+                            .contentShape(Rectangle())
+                            .horizontalSpacing(.center)
+                    }
+                }
+                .frame(maxWidth: viewModel.selectedDate.isToday ? 80 : .infinity, alignment: .center)
+            }
+            .transition(.move(edge: .bottom))
+            .background(Color.themeStyle.theme.accent)
         }
         else {
             TrainingSessionRunningView()
-                .transition(.scale)
+                .transition(.move(edge: .bottom))
+                .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: -1)
         }
     }
     
@@ -319,9 +332,9 @@ struct PivotMainView: View {
         }) {
             Label("Start Training", systemImage: "flame.fill")
                 .horizontalSpacing(.center)
-                .font(.title3)
+                .font(.headline)
                 .fontWeight(.semibold)
-                .padding(.vertical, 24)
+                .padding(.vertical, 20)
                 .foregroundColor(Color.themeStyle.theme.white)
                 .background(Color.themeStyle.theme.accent)
         }

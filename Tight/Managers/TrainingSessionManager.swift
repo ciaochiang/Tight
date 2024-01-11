@@ -10,7 +10,7 @@ import SwiftUI
 import ActivityKit
 import BackgroundTasks
 
-enum TraningSessionState {
+enum TrainingSessionState {
     case notStarted
     case training
     case resting
@@ -28,10 +28,10 @@ class TrainingSessionManager: ObservableObject {
     private(set) var arrangedExercises: [ArrangedExercise] = []
     
     /// Live Activity Properties
-    @Published var state: TraningSessionState = .notStarted
+    @Published var state: TrainingSessionState = .notStarted
     @Published var currentLiveActivityID: String = ""
     @Published var currentExercise: ArrangedExercise?
-    @Published private var totalExerciseCount: Int = 0
+    @Published var totalExerciseCount: Int = 0
     @Published private var currentStage: Int = 0
     @Published var currentProgress: Double = 0
     @Published var currentIndexOfSet: Int = 0
@@ -39,7 +39,7 @@ class TrainingSessionManager: ObservableObject {
     @Published var startTime: Date?
     @Published var restStartTime: Date?
     @Published var restIntervals: Double?
-    
+
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     static let shared = TrainingSessionManager()
@@ -79,7 +79,7 @@ class TrainingSessionManager: ObservableObject {
     
     /// Stop Training Session
     func stopTrainingSession() {
-        let newState: TraningSessionState = .aborted
+        let newState: TrainingSessionState = .aborted
 
         DispatchQueue.main.async {
             self.state = newState
@@ -121,7 +121,7 @@ class TrainingSessionManager: ObservableObject {
         /// Determine rest time is over or not
         guard Date.now >= restStartTime.addingTimeInterval(restInterval) else { return }
         
-        let newState: TraningSessionState = .training
+        let newState: TrainingSessionState = .training
         
         /// Reset rest time
         DispatchQueue.main.async {
@@ -227,10 +227,12 @@ class TrainingSessionManager: ObservableObject {
     func endRest() {
         let newRestStartTime: Date? = nil
         let newRestIntervals: Double? = nil
+        let newState: TrainingSessionState = .training
         
         DispatchQueue.main.async {
             self.restStartTime = newRestStartTime
             self.restIntervals = newRestIntervals
+            self.state = newState
         }
         
         if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
@@ -249,7 +251,7 @@ class TrainingSessionManager: ObservableObject {
     /// Next Set
     func nextSet() {
         /// indexOfSet increased
-        let newState: TraningSessionState = .resting
+        let newState: TrainingSessionState = .resting
         let newSetNumber = currentIndexOfSet + 1
         let newRestStartTime = Date.now
         let newRestIntervals = currentExercise?.restIntevals ?? 0
@@ -281,7 +283,7 @@ class TrainingSessionManager: ObservableObject {
     /// Next Exericse
     func nextExercise() {
         /// Go to next arranged exercise
-        let newState: TraningSessionState = .resting
+        let newState: TrainingSessionState = .resting
         let newStage = currentStage + 1
         let newIndexOfSet = 0
         let newExercise = arrangedExercises[newStage]

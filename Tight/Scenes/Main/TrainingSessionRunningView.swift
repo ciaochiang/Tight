@@ -48,7 +48,7 @@ struct TrainingSessionRunningView: View {
                                         restIntervals: trainingSessionManager.restIntervals)
                     }
 
-                    ExerciseInfoView(isResting: trainingSessionManager.restStartTime != nil,
+                    ExerciseInfoView(state: trainingSessionManager.state,
                                      exerciseName: trainingSessionManager.currentExercise?.exercise.name ?? "",
                                      weight: trainingSessionManager.currentExercise?.weight ?? 0,
                                      repetition: trainingSessionManager.currentExercise?.repetitions ?? 0)
@@ -59,9 +59,14 @@ struct TrainingSessionRunningView: View {
             }
             .padding(.horizontal)
             .padding(.top, 8)
+            .padding(.bottom, trainingSessionManager.totalExerciseCount > 1 ? 0 : 12)
             
-            StagesView(progress: trainingSessionManager.currentProgress)
+            /// Only display stage progress view arranged exercises more than `1`
+            if trainingSessionManager.totalExerciseCount > 1 {
+                StagesView(progress: trainingSessionManager.currentProgress)
+            }
         }
+        .background(Color.themeStyle.theme.background)
     }
     
     @ViewBuilder
@@ -124,17 +129,17 @@ struct TrainingSessionRunningView: View {
     }
     
     @ViewBuilder
-    func ExerciseInfoView(isResting: Bool, exerciseName: String, weight: Double, repetition: Double) -> some View {
+    func ExerciseInfoView(state: TrainingSessionState, exerciseName: String, weight: Double, repetition: Double) -> some View {
         VStack {
-            Text(isResting ? LocalizationProvider.breakTimeTitle.localizedString : exerciseName)
+            Text(state == .resting ? LocalizationProvider.breakTimeTitle.localizedString : exerciseName)
                 .font(.headline)
                 .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                 .minimumScaleFactor(0.8)
-                .foregroundColor(isResting ? Color.themeStyle.theme.primaryTextColor : Color.themeStyle.theme.accent.opacity(0.8))
+                .foregroundColor(state == .resting ? Color.themeStyle.theme.primaryTextColor : Color.themeStyle.theme.accent.opacity(0.8))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentTransition(.opacity)
             
-            Text(isResting ? LocalizationProvider.breakTimeSubtitle.localizedString : "\(Int(weight))kg x \(Int(repetition))")
+            Text(state == .resting ? LocalizationProvider.breakTimeSubtitle.localizedString : "\(Int(weight))kg x \(Int(repetition))")
                 .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
                 .font(.subheadline)
                 .minimumScaleFactor(0.8)
