@@ -294,15 +294,7 @@ struct PivotMainView: View {
                 Button(action: {
                     isArrangingExercise.toggle()
                 }) {
-                    if viewModel.selectedDate.isToday {
-                        Image(systemName: "plus")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 20, height: 20)
-                            .foregroundColor(.white)
-                            .padding(20)
-                    }
-                    else {
+                    if viewModel.currentPlan?.arrangedExercises.isEmpty == true || !viewModel.selectedDate.isToday {
                         Label("Add Exercise", systemImage: "plus")
                             .font(.headline)
                             .fontWeight(.semibold)
@@ -312,8 +304,16 @@ struct PivotMainView: View {
                             .contentShape(Rectangle())
                             .horizontalSpacing(.center)
                     }
+                    else {
+                        Image(systemName: "plus")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(.white)
+                            .padding(20)
+                    }
                 }
-                .frame(maxWidth: viewModel.selectedDate.isToday ? 80 : .infinity, alignment: .center)
+                .frame(maxWidth: viewModel.currentPlan?.arrangedExercises.isEmpty == true || !viewModel.selectedDate.isToday ? .infinity : 80, alignment: .center)
             }
             .transition(.move(edge: .bottom))
             .background(Color.themeStyle.theme.accent)
