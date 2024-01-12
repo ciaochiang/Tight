@@ -52,6 +52,22 @@
         }
       }
     },
+    "action_key_add_from_plan" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add from Plan"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "從計畫中加入"
+          }
+        }
+      }
+    },
     "action_key_close" : {
       "localizations" : {
         "en" : {
@@ -112,22 +128,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "編輯計畫"
-          }
-        }
-      }
-    },
-    "action_key_import_from_plans" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Import from Plans"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "從計畫中加入"
           }
         }
       }

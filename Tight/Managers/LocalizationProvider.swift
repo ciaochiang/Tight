@@ -44,7 +44,7 @@ enum LocalizationProvider {
     case add
     case addExercise
     case close
-    case importFromPlans
+    case addFromPlan
     case create
     case createNewPlan
     case editPlan
@@ -120,7 +120,7 @@ enum LocalizationProvider {
         case .add: return "action_key_add"
         case .addExercise: return "action_key_add_exercise"
         case .close: return "action_key_close"
-        case .importFromPlans: return "action_key_import_from_plans"
+        case .addFromPlan: return "action_key_add_from_plan"
         case .create: return "action_key_create"
         case .createNewPlan: return "action_key_create_new_plan"
         case .editPlan: return "action_key_edit_plan"

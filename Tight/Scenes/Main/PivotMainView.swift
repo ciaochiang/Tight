@@ -267,7 +267,8 @@ struct PivotMainView: View {
             Button(action: {
                 isImporting.toggle()
             }) {
-                Text(LocalizationProvider.importFromPlans.nameKey)
+                Text(LocalizationProvider.addFromPlan.nameKey)
+                    .fontWeight(.semibold)
                     .background(Color.themeStyle.theme.accent)
                     .foregroundColor(Color.themeStyle.theme.white)
                     .horizontalSpacing(.center)
@@ -275,7 +276,7 @@ struct PivotMainView: View {
             }
             .background(Color.themeStyle.theme.accent)
             .cornerRadius(8)
-            .padding(.horizontal, 64)
+            .padding(.horizontal, 88)
             .padding(.top, 16)
         }
     }

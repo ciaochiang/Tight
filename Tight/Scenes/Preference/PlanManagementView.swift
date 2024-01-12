@@ -48,6 +48,16 @@ struct PlanManagementView: View {
                     .presentationDetents([.height(120)])
                     .presentationCornerRadius(16)
             }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Label(LocalizationProvider.close.nameKey, systemImage: "xmark")
+                    }
+                    .tint(Color.themeStyle.theme.primary)
+                }
+            }
         }
     }
     
