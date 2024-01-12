@@ -37,7 +37,7 @@ struct EditPlanPresetView: View {
                 CreateArrangedExerciseView(plan: plan, incrementalOrderNumber: plan.arrangedExercises.count, completion: { _ in
                     exercises = plan.arrangedExercises.sorted { $0.order < $1.order }
                 })
-                    .presentationDetents([.height(400)])
+                    .presentationDetents([.height(460)])
                     .presentationCornerRadius(16)
             })
             .sheet(item: $exerciseToEdit) { exercise in
@@ -116,6 +116,7 @@ struct EditPlanPresetView: View {
                 isAdding.toggle()
             }) {
                 Text(LocalizationProvider.addExercise.nameKey)
+                    .fontWeight(.semibold)
                     .background(Color.themeStyle.theme.accent)
                     .foregroundColor(Color.themeStyle.theme.white)
                     .horizontalSpacing(.center)
@@ -123,7 +124,7 @@ struct EditPlanPresetView: View {
             }
             .background(Color.themeStyle.theme.accent)
             .cornerRadius(8)
-            .padding(.horizontal, 64)
+            .padding(.horizontal, 88)
             .padding(.top, 16)
         }
     }
