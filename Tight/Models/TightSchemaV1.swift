@@ -39,6 +39,9 @@ extension TightSchemaV1 {
         var tags: [String]
         var isPreset: Bool
         
+        @Relationship(deleteRule: .cascade)
+        var trainingLog: TrainingLog?
+        
         init(id: UUID = UUID(),
              name: String,
              startDate: Date,
@@ -48,7 +51,8 @@ extension TightSchemaV1 {
              updatedDate: Date,
              createdDate: Date,
              tags: [String],
-             isPreset: Bool) {
+             isPreset: Bool,
+             trainingLog: TrainingLog? = nil) {
             self.id = id
             self.name = name
             self.startDate = startDate
@@ -59,6 +63,7 @@ extension TightSchemaV1 {
             self.createdDate = createdDate
             self.tags = tags
             self.isPreset = isPreset
+            self.trainingLog = trainingLog
         }
     }
     
@@ -75,6 +80,8 @@ extension TightSchemaV1 {
         var order: Int
         var tags: [Int]
         var isCompleted: Bool
+        var startTime: Date?
+        var endTime: Date?
         
         init(id: UUID = UUID(),
              exercise: Exercise,
@@ -86,7 +93,9 @@ extension TightSchemaV1 {
              restIntevals: TimeInterval,
              order: Int,
              tags: [Int],
-             isCompleted: Bool) {
+             isCompleted: Bool, 
+             startTime: Date? = nil,
+             endTime: Date? = nil) {
             self.id = id
             self.exercise = exercise
             self.repetitions = repetitions
@@ -98,6 +107,8 @@ extension TightSchemaV1 {
             self.order = order
             self.tags = tags
             self.isCompleted = isCompleted
+            self.startTime = startTime
+            self.endTime = endTime
         }
     }
 
@@ -125,6 +136,21 @@ extension TightSchemaV1 {
             self.colourB = colourB
             self.colourA = colourA
             self.isInitial = isInitial
+        }
+    }
+    
+    @Model
+    class TrainingLog {
+        @Attribute(.unique) var id: UUID
+        var startTime: Date?
+        var endTime: Date?
+        
+        init(id: UUID, 
+             startTime: Date? = nil,
+             endTime: Date? = nil) {
+            self.id = id
+            self.startTime = startTime
+            self.endTime = endTime
         }
     }
 }
