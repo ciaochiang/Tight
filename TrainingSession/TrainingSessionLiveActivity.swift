@@ -37,8 +37,8 @@ struct CompleteSet: LiveActivityIntent {
 @available(iOS 16.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 struct SkipRest: LiveActivityIntent {
     
-    static var title: LocalizedStringResource = "Skip Current Rest"
-    static var description = IntentDescription("Skip rest and jump to next set")
+    static var title: LocalizedStringResource = "Skip Resting"
+    static var description = IntentDescription("Skip resting and go to next set")
     
     func perform() async throws -> some IntentResult {
         /// Update Database
@@ -51,7 +51,7 @@ struct SkipRest: LiveActivityIntent {
 struct StopTrainingSession: LiveActivityIntent {
     
     static var title: LocalizedStringResource = "Stop Training Session"
-    static var description = IntentDescription("Stop current training session and reset timer")
+    static var description = IntentDescription("Stop training session and reset session")
     
     func perform() async throws -> some IntentResult {
         /// Update Database

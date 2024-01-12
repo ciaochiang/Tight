@@ -132,8 +132,37 @@
         }
       }
     },
-    "Add Exercise" : {
-
+    "action_key_restart_training" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restart Training"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重新訓練"
+          }
+        }
+      }
+    },
+    "action_key_start_training" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Training"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開始訓練"
+          }
+        }
+      }
     },
     "app_name" : {
       "localizations" : {
@@ -1737,19 +1766,16 @@
         }
       }
     },
-    "Skip Current Rest" : {
+    "Skip Resting" : {
 
     },
-    "Skip rest and jump to next set" : {
-
-    },
-    "Start Training" : {
-
-    },
-    "Stop current training session and reset timer" : {
+    "Skip resting and go to next set" : {
 
     },
     "Stop Training Session" : {
+
+    },
+    "Stop training session and reset session" : {
 
     },
     "This is an example widget." : {

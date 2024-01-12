@@ -25,7 +25,9 @@ enum TrainingSessionState {
  */
 
 class TrainingSessionManager: ObservableObject {
+    private(set) var plan: Plan?
     private(set) var arrangedExercises: [ArrangedExercise] = []
+    private var currentRestTimeFrame: RestTimeFrame?
     
     /// Live Activity Properties
     @Published var state: TrainingSessionState = .notStarted
@@ -45,7 +47,7 @@ class TrainingSessionManager: ObservableObject {
     static let shared = TrainingSessionManager()
     
     /// Start Training Session
-    func startTrainingSession(arrangedExercises: [ArrangedExercise]) {
+    func startTrainingSession(plan: Plan?, arrangedExercises: [ArrangedExercise]) {
         /// NOTE: Do not use `reset` function here given that is async function
         self.currentExercise = nil
         self.startTime = nil
@@ -58,6 +60,7 @@ class TrainingSessionManager: ObservableObject {
         /// Ensure arranged exercise list is not empty
         guard arrangedExercises.isEmpty == false else { return }
         
+        self.plan = plan
         self.arrangedExercises = arrangedExercises
         self.totalExerciseCount = arrangedExercises.count
         
@@ -66,11 +69,22 @@ class TrainingSessionManager: ObservableObject {
         self.currentExercise = firstExercise
         self.currentSetsProgress = Double(currentIndexOfSet) / Double(firstExercise.sets)
         
+        /// - Create a training log if it's not existed or update existing one
+        /// - Set  `currentTime` to  current exercise's `startTime`
+        let currentTime = Date.now
+        if let trainingLog = plan?.trainingLog {
+            trainingLog.startTime = currentTime
+        } else {
+            let trainingLog = TrainingLog(startTime: currentTime)
+            plan?.trainingLog = trainingLog
+        }
+        currentExercise?.startTime = currentTime
+        
         /// Remove existing activity
         removeExistingAcitvity()
         
         /// Init start time and change state
-        startTime = Date.now
+        startTime = currentTime
         state = .training
         
         /// Add live activity
@@ -80,9 +94,15 @@ class TrainingSessionManager: ObservableObject {
     /// Stop Training Session
     func stopTrainingSession() {
         let newState: TrainingSessionState = .aborted
+        let currentTime = Date.now
 
         DispatchQueue.main.async {
             self.state = newState
+        }
+        
+        /// Update end time to training log
+        if let trainingLog = plan?.trainingLog {
+            trainingLog.endTime = currentTime
         }
         
         /// Reset
@@ -121,7 +141,14 @@ class TrainingSessionManager: ObservableObject {
         /// Determine rest time is over or not
         guard Date.now >= restStartTime.addingTimeInterval(restInterval) else { return }
         
+        let currentTime = Date.now
         let newState: TrainingSessionState = .training
+        
+        /// Set `endTime` to current rest time frame and save to `trainingLog`
+        currentRestTimeFrame?.endTime = currentTime
+        if let restTimeFrame = currentRestTimeFrame {
+            plan?.trainingLog?.restTimeFrames.append(restTimeFrame)
+        }
         
         /// Reset rest time
         DispatchQueue.main.async {
@@ -198,6 +225,10 @@ class TrainingSessionManager: ObservableObject {
 
     /// Done
     func done() {
+        /// Set `endTime` to `trainingLog`
+        let currentTime = Date.now
+        plan?.trainingLog?.endTime = currentTime
+        
         /// Reset
         reset()
         
@@ -225,9 +256,16 @@ class TrainingSessionManager: ObservableObject {
     
     /// Skip Rest
     func endRest() {
+        let currentTime = Date.now
         let newRestStartTime: Date? = nil
         let newRestIntervals: Double? = nil
         let newState: TrainingSessionState = .training
+        
+        /// Set `endTime` to current rest time frame and save to `trainingLog`
+        currentRestTimeFrame?.endTime = currentTime
+        if let restTimeFrame = currentRestTimeFrame {
+            plan?.trainingLog?.restTimeFrames.append(restTimeFrame)
+        }
         
         DispatchQueue.main.async {
             self.restStartTime = newRestStartTime
@@ -250,17 +288,21 @@ class TrainingSessionManager: ObservableObject {
     
     /// Next Set
     func nextSet() {
+        let currentTime = Date.now
+        
         /// indexOfSet increased
         let newState: TrainingSessionState = .resting
         let newSetNumber = currentIndexOfSet + 1
-        let newRestStartTime = Date.now
         let newRestIntervals = currentExercise?.restIntevals ?? 0
         let newSetsProgress = Double(newSetNumber) / Double(currentExercise?.sets ?? 0)
+        
+        /// Create new rest time frame and set `startTime`
+        currentRestTimeFrame = RestTimeFrame(startTime: currentTime)
         
         DispatchQueue.main.async {
             self.state = newState
             self.currentIndexOfSet = newSetNumber
-            self.restStartTime = newRestStartTime
+            self.restStartTime = currentTime
             self.restIntervals = newRestIntervals
             self.currentSetsProgress = newSetsProgress
         }
@@ -273,7 +315,7 @@ class TrainingSessionManager: ObservableObject {
                 /// Update activity info
                 var contentState = activity.content.state
                 contentState.indexOfSet = newSetNumber
-                contentState.restStartTime = newRestStartTime
+                contentState.restStartTime = currentTime
                 contentState.restIntervals = newRestIntervals
                 await activity.update(.init(state: contentState, staleDate: nil))
             }
@@ -286,7 +328,18 @@ class TrainingSessionManager: ObservableObject {
         let newState: TrainingSessionState = .resting
         let newStage = currentStage + 1
         let newIndexOfSet = 0
+        
+        /// Set `currentTime` to current exercise's `endTime`
+        let currentTime = Date.now
+        currentExercise?.endTime = currentTime
+        
+        /// Set `currentTime` to new current exercise's `startTime`
         let newExercise = arrangedExercises[newStage]
+        newExercise.startTime = currentTime
+        
+        /// Create new rest time frame and set `startTime`
+        currentRestTimeFrame = RestTimeFrame(startTime: currentTime)
+        
         let newRestStartTime = Date.now
         let newRestIntervals = currentExercise?.restIntevals ?? 0
         let newSetsProgress = 0.0

@@ -296,7 +296,7 @@ struct PivotMainView: View {
                     isArrangingExercise.toggle()
                 }) {
                     if viewModel.currentPlan?.arrangedExercises.isEmpty == true || !viewModel.selectedDate.isToday {
-                        Label("Add Exercise", systemImage: "plus")
+                        Label(LocalizationProvider.addExercise.nameKey, systemImage: "plus")
                             .font(.headline)
                             .fontWeight(.semibold)
                             .padding(.vertical, 20)
@@ -329,9 +329,12 @@ struct PivotMainView: View {
     @ViewBuilder
     func TrainingSessionStartButton() -> some View {
         Button(action: {
-            trainingSessionManager.startTrainingSession(arrangedExercises: viewModel.arrangedExercises)
+            trainingSessionManager.startTrainingSession(plan: viewModel.currentPlan, 
+                                                        arrangedExercises: viewModel.arrangedExercises)
         }) {
-            Label("Start Training", systemImage: "flame.fill")
+            Label(viewModel.currentPlan?.trainingLog != nil
+                  ? LocalizationProvider.restartTraining.nameKey
+                  : LocalizationProvider.startTraining.nameKey, systemImage: "flame.fill")
                 .horizontalSpacing(.center)
                 .font(.headline)
                 .fontWeight(.semibold)

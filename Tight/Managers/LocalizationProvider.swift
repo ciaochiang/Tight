@@ -48,6 +48,8 @@ enum LocalizationProvider {
     case create
     case createNewPlan
     case editPlan
+    case startTraining
+    case restartTraining
     
     ///  Exericse Glossary
     case sets
@@ -124,6 +126,8 @@ enum LocalizationProvider {
         case .create: return "action_key_create"
         case .createNewPlan: return "action_key_create_new_plan"
         case .editPlan: return "action_key_edit_plan"
+        case .startTraining: return "action_key_start_training"
+        case .restartTraining: return "action_key_restart_training"
             
         /// Exercise Glossary
         case .sets: return "exercise_glossary_sets"

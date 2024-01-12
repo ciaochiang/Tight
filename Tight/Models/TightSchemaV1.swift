@@ -12,6 +12,8 @@ import SwiftData
 typealias Plan = TightSchemaV1.Plan
 typealias ArrangedExercise = TightSchemaV1.ArrangedExercise
 typealias Tag = TightSchemaV1.Tag
+typealias TrainingLog = TightSchemaV1.TrainingLog
+typealias RestTimeFrame = TightSchemaV1.RestTimeFrame
 
 enum TightSchemaV1: VersionedSchema {
     static var models: [any PersistentModel.Type] {
@@ -51,8 +53,7 @@ extension TightSchemaV1 {
              updatedDate: Date,
              createdDate: Date,
              tags: [String],
-             isPreset: Bool,
-             trainingLog: TrainingLog? = nil) {
+             isPreset: Bool) {
             self.id = id
             self.name = name
             self.startDate = startDate
@@ -63,7 +64,6 @@ extension TightSchemaV1 {
             self.createdDate = createdDate
             self.tags = tags
             self.isPreset = isPreset
-            self.trainingLog = trainingLog
         }
     }
     
@@ -145,7 +145,25 @@ extension TightSchemaV1 {
         var startTime: Date?
         var endTime: Date?
         
-        init(id: UUID, 
+        @Relationship(deleteRule: .cascade)
+        var restTimeFrames = [RestTimeFrame]()
+        
+        init(id: UUID = UUID(),
+             startTime: Date? = nil,
+             endTime: Date? = nil) {
+            self.id = id
+            self.startTime = startTime
+            self.endTime = endTime
+        }
+    }
+    
+    @Model
+    class RestTimeFrame {
+        @Attribute(.unique) var id: UUID
+        var startTime: Date?
+        var endTime: Date?
+        
+        init(id: UUID = UUID(),
              startTime: Date? = nil,
              endTime: Date? = nil) {
             self.id = id
