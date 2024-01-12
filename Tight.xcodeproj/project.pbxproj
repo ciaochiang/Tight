@@ -68,7 +68,7 @@
 		E57FD7CC2B3DC6BE00696968 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E57FD7CB2B3DC6BE00696968 /* LaunchScreen.storyboard */; };
 		E57FD7CE2B3DD47600696968 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E57FD7CD2B3DD47600696968 /* GoogleService-Info.plist */; };
 		E59B08F82B41495000280FC4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B08F72B41495000280FC4 /* Constants.swift */; };
-		E59B08FD2B4292A900280FC4 /* ExerciseWeightSliderViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B08FC2B4292A900280FC4 /* ExerciseWeightSliderViewComponent.swift */; };
+		E59B08FD2B4292A900280FC4 /* ExerciseWeightViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B08FC2B4292A900280FC4 /* ExerciseWeightViewComponent.swift */; };
 		E59B08FF2B4594C000280FC4 /* TrainingSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B08FE2B4594C000280FC4 /* TrainingSessionManager.swift */; };
 		E5A2F32F2B4950C300735FC2 /* TrainingSessionAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A2F32E2B4950C300735FC2 /* TrainingSessionAttributes.swift */; };
 		E5A2F3302B4950C300735FC2 /* TrainingSessionAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A2F32E2B4950C300735FC2 /* TrainingSessionAttributes.swift */; };
@@ -182,7 +182,7 @@
 		E57FD7CB2B3DC6BE00696968 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E57FD7CD2B3DD47600696968 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E59B08F72B41495000280FC4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		E59B08FC2B4292A900280FC4 /* ExerciseWeightSliderViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseWeightSliderViewComponent.swift; sourceTree = "<group>"; };
+		E59B08FC2B4292A900280FC4 /* ExerciseWeightViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseWeightViewComponent.swift; sourceTree = "<group>"; };
 		E59B08FE2B4594C000280FC4 /* TrainingSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionManager.swift; sourceTree = "<group>"; };
 		E5A2F32E2B4950C300735FC2 /* TrainingSessionAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionAttributes.swift; sourceTree = "<group>"; };
 		E5A2F3312B49568A00735FC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -454,7 +454,7 @@
 				E57FD7BC2B3DB1E500696968 /* ExerciseSelectorViewComponent.swift */,
 				E57FD7BD2B3DB1E500696968 /* ExerciseSetsSliderViewComponent.swift */,
 				E509EA1F2B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift */,
-				E59B08FC2B4292A900280FC4 /* ExerciseWeightSliderViewComponent.swift */,
+				E59B08FC2B4292A900280FC4 /* ExerciseWeightViewComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -707,7 +707,7 @@
 				E57FD7712B3DAE0400696968 /* Error.swift in Sources */,
 				E5C1C6B82B4A5F3F0081B3EF /* TrainingSessionLiveActivity.swift in Sources */,
 				E57FD7AD2B3DB18C00696968 /* TagLayout.swift in Sources */,
-				E59B08FD2B4292A900280FC4 /* ExerciseWeightSliderViewComponent.swift in Sources */,
+				E59B08FD2B4292A900280FC4 /* ExerciseWeightViewComponent.swift in Sources */,
 				E562D6FB2B3DA34E000775B7 /* TightApp.swift in Sources */,
 				E57FD7BA2B3DB1DD00696968 /* CreateArrangedExerciseView.swift in Sources */,
 				E59B08FF2B4594C000280FC4 /* TrainingSessionManager.swift in Sources */,

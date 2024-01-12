@@ -47,7 +47,7 @@ struct CreateArrangedExerciseView: View {
             VStack(alignment: .leading, spacing: 24) {
                 HStack {
                     ExerciseSelectorViewComponent(isPresented: $isPresented, arrangedExericse: arrangedExercise)
-                    ExerciseWeightSliderViewComponent(arrangedExercise: arrangedExercise)
+                    ExerciseWeightViewComponent(arrangedExercise: arrangedExercise)
                 }.horizontalSpacing(.leading)
                 
                 Divider()

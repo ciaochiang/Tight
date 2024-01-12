@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ExerciseWeightSliderViewComponent: View {
+struct ExerciseWeightViewComponent: View {
     @Bindable var arrangedExercise: ArrangedExercise
     @State private var weightValue: Double?
     @AppStorage(Constants.DEFAULT_EXERCISE_WEIGHT_UNIT) private var defaultWeightUnit: Int = 0
@@ -23,14 +23,25 @@ struct ExerciseWeightSliderViewComponent: View {
                     .font(.subheadline)
                     .keyboardType(.numberPad)
                 
-                Text(WeightUnit(rawValue: defaultWeightUnit)?.nameKey ?? "")
+                Text(WeightUnit(rawValue: arrangedExercise.weightUnit)?.name ?? "")
                     .font(.subheadline)
                     .fontWeight(.semibold)
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        /// Change weight unit
+                        arrangedExercise.weightUnit = arrangedExercise.weightUnit == 0 ? 1 : 0
+                    }
+                    .onAppear {
+                        /// If it's creating new exercise, then setup default weight unit
+                        if arrangedExercise.exercise == .none {
+                            arrangedExercise.weightUnit = defaultWeightUnit
+                        }
+                    }
             }
         }
     }
 }
 
 #Preview {
-    ExerciseWeightSliderViewComponent(arrangedExercise: Mocks.mockArrangedExercise)
+    ExerciseWeightViewComponent(arrangedExercise: Mocks.mockArrangedExercise)
 }

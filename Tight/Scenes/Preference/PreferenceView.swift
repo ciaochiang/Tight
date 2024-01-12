@@ -12,11 +12,15 @@ enum WeightUnit: Int {
     case kilogram = 0
     case pound = 1
     
-    var nameKey: LocalizedStringKey {
+    var localizationValue: String.LocalizationValue {
         switch self {
         case .kilogram: return "exercise_weight_unit_kilogram"
         case .pound: return "exercise_weight_unit_pound"
         }
+    }
+    
+    var name: String {
+        String(localized: localizationValue)
     }
 }
 
@@ -87,7 +91,7 @@ struct PreferenceView: View {
             Text(LocalizationProvider.weightUnit.nameKey)
                 .frame(height: Constants.DEFAULT_LIST_ROW_HEIGHT)
             Spacer()
-            Text(WeightUnit(rawValue: defaultWeightUnit)?.nameKey ?? "")
+            Text(WeightUnit(rawValue: defaultWeightUnit)?.name ?? "")
                 .font(.caption)
                 .foregroundStyle(.gray)
                 .frame(height: Constants.DEFAULT_LIST_ROW_HEIGHT)
@@ -169,7 +173,7 @@ struct WeightUnitBottomSheetView: View {
                     isSheetPresented = false
                 }) {
                     HStack {
-                        Text(WeightUnit.kilogram.nameKey)
+                        Text(WeightUnit.kilogram.name)
                             .font(.callout)
                             .fontWeight(.semibold)
                             .foregroundColor(Color.themeStyle.theme.primary)
@@ -186,7 +190,7 @@ struct WeightUnitBottomSheetView: View {
                     isSheetPresented = false
                 }) {
                     HStack {
-                        Text(WeightUnit.pound.nameKey)
+                        Text(WeightUnit.pound.name)
                             .font(.callout)
                             .fontWeight(.semibold)
                             .foregroundColor(Color.themeStyle.theme.primary)

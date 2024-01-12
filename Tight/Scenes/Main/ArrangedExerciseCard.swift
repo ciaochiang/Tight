@@ -42,17 +42,33 @@ struct ArrangedExerciseCard: View {
     @ViewBuilder
     func ExerciseDetailsView() -> some View {
         HStack(alignment: .center, spacing: 16) {
-            Label("\(Int(exercise.repetitions))", systemImage: "repeat")
-                .font(.caption)
-                .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+            HStack {
+                Image(systemName: "figure.strengthtraining.traditional")
+                Text("\(String(format: "%1.f", exercise.weight)) \(WeightUnit(rawValue: exercise.weightUnit)?.name ?? "")")
+                    .font(.caption)
+                    .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+            }
             
-            Label("\(Int(exercise.sets))", systemImage: "square.stack.3d.down.right")
-                .font(.caption)
-                .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+            HStack {
+                Image(systemName: "repeat")
+                Text("\(Int(exercise.repetitions))")
+                    .font(.caption)
+                    .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+            }
             
-            Label(exercise.restIntevals.formatIntervalToMinutesSeconds, systemImage: "clock")
-                .font(.caption)
-                .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+            HStack {
+                Image(systemName: "square.stack.3d.down.right")
+                Text("\(Int(exercise.sets))")
+                    .font(.caption)
+                    .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+            }
+            
+            HStack {
+                Image(systemName: "clock")
+                Text(exercise.restIntevals.formatIntervalToMinutesSeconds)
+                    .font(.caption)
+                    .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+            }
         }
     }
     
