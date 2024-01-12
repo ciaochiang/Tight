@@ -180,6 +180,9 @@
         }
       }
     },
+    "Are your sure?" : {
+
+    },
     "Break Time is Over!" : {
 
     },
@@ -460,6 +463,38 @@
     },
     "Configuration" : {
 
+    },
+    "confirm_key_restart_training" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restart Training?"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重新訓練？"
+          }
+        }
+      }
+    },
+    "confirm_key_restart_training_description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This action will restart training and remove previous record"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "這個操作會重啟訓練並消除先前紀錄"
+          }
+        }
+      }
     },
     "Exercise ID" : {
 

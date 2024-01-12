@@ -51,6 +51,10 @@ enum LocalizationProvider {
     case startTraining
     case restartTraining
     
+    /// Confirmation
+    case confirmRestartTraining
+    case confirmRestartTrainingDescription
+    
     ///  Exericse Glossary
     case sets
     case repetitions
@@ -128,6 +132,10 @@ enum LocalizationProvider {
         case .editPlan: return "action_key_edit_plan"
         case .startTraining: return "action_key_start_training"
         case .restartTraining: return "action_key_restart_training"
+            
+        /// Confirmation
+        case .confirmRestartTraining: return "confirm_key_restart_training"
+        case .confirmRestartTrainingDescription: return "confirm_key_restart_training_description"
             
         /// Exercise Glossary
         case .sets: return "exercise_glossary_sets"

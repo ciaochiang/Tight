@@ -17,6 +17,7 @@ struct PivotMainView: View {
     @State private var isImporting: Bool = false
     @State private var exerciseToEdit: ArrangedExercise?
     @State private var showTrainingSessionRunningView: Bool = false
+    @State private var isPresentingConfirm: Bool = false
         
     /// Animation  namespace
     @Namespace private var animation
@@ -329,8 +330,14 @@ struct PivotMainView: View {
     @ViewBuilder
     func TrainingSessionStartButton() -> some View {
         Button(action: {
-            trainingSessionManager.startTrainingSession(plan: viewModel.currentPlan, 
-                                                        arrangedExercises: viewModel.arrangedExercises)
+            /// If user hasn't training yet, then start the training directly
+            if viewModel.currentPlan?.trainingLog == nil {
+                trainingSessionManager.startTrainingSession(plan: viewModel.currentPlan,
+                                                            arrangedExercises: viewModel.arrangedExercises)
+            } else {
+                /// Display confirmation dialog before `restart training`
+                isPresentingConfirm.toggle()
+            }
         }) {
             Label(viewModel.currentPlan?.trainingLog != nil
                   ? LocalizationProvider.restartTraining.nameKey
@@ -343,6 +350,15 @@ struct PivotMainView: View {
                 .background(Color.themeStyle.theme.accent)
         }
         .contentShape(Rectangle())
+        .confirmationDialog("Are your sure?", isPresented: $isPresentingConfirm) {
+            Button(LocalizationProvider.confirmRestartTraining.nameKey, role: .destructive) {
+                trainingSessionManager.startTrainingSession(plan: viewModel.currentPlan,
+                                                            arrangedExercises: viewModel.arrangedExercises)
+            }
+            .fontWeight(.semibold)
+        } message: {
+            Text(LocalizationProvider.confirmRestartTrainingDescription.nameKey)
+        }
     }
 }
 
