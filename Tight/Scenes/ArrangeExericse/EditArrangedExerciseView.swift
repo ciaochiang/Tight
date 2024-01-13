@@ -15,23 +15,43 @@ struct EditArrangedExerciseView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView(.vertical) {
-                VStack(alignment: .leading, spacing: 24) {
-                    HStack {
-                        ExerciseSelectorViewComponent(isPresented: $isPresented, arrangedExericse: arrangedExercise)
-                        ExerciseWeightViewComponent(arrangedExercise: arrangedExercise)
-                    }.horizontalSpacing(.leading)
-                    
-                    Divider()
-                    
-                    ExerciseRepetitionSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
-                    ExerciseSetsSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
-                    ExerciseRestIntervalSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
-                    ExerciseTagPickerViewComponent(arrangedExercise: arrangedExercise)
-                        .horizontalSpacing(.leading)
+            VStack {
+                ScrollView(.vertical) {
+                    VStack(alignment: .leading, spacing: 24) {
+                        HStack {
+                            ExerciseSelectorViewComponent(isPresented: $isPresented, arrangedExericse: arrangedExercise)
+                            ExerciseWeightViewComponent(arrangedExercise: arrangedExercise)
+                        }.horizontalSpacing(.leading)
+                        
+                        Divider()
+                        
+                        ExerciseRepetitionSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
+                        ExerciseSetsSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
+                        ExerciseRestIntervalSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
+                        ExerciseTagPickerViewComponent(arrangedExercise: arrangedExercise)
+                            .horizontalSpacing(.leading)
+                    }
+                }
+                .padding()
+
+                if !isPlanMode {
+                    Spacer()
+                    VStack {
+                        Button(action: {
+                            arrangedExercise.isCompleted.toggle()
+                            dismiss()
+                        }) {
+                            Label("Complete", systemImage: "checkmark.circle.fill")
+                                .foregroundStyle(Color.themeStyle.theme.white)
+                                .frame(maxWidth: .infinity)
+                                .fontWeight(.semibold)
+                                .contentShape(Rectangle())
+                                .padding(.vertical)
+                        }
+                    }
+                    .background(arrangedExercise.isCompleted ? Color.themeStyle.theme.secondaryAccent : Color.themeStyle.theme.black.opacity(0.4))
                 }
             }
-            .padding()
             .veriticalSpacing(.bottom)
             .sheet(isPresented: $isPresented, content: {
                 ExercisePickerView(title: LocalizationProvider.pickExercise.nameKey,
@@ -45,21 +65,7 @@ struct EditArrangedExerciseView: View {
             .navigationTitle(arrangedExercise.exercise.name)
             .navigationBarTitleDisplayMode(.inline)
             .background(Color.themeStyle.theme.background)
-            .toolbar {
-                if !isPlanMode {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button(action: {
-                            arrangedExercise.isCompleted.toggle()
-                            dismiss()
-                        }) {
-                            Image(systemName: arrangedExercise.isCompleted ? "checkmark.circle.fill" : "checkmark.circle")
-                                .symbolVariant(.fill)
-                        }
-                        .tint(arrangedExercise.isCompleted ? Color.themeStyle.theme.secondaryAccent : Color.gray)
-                    }
-                }
-
-                
+            .toolbar {                
                 ToolbarItem(placement: .topBarLeading) {
                     Button(action: {
                         dismiss()

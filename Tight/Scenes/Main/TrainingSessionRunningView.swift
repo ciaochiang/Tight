@@ -66,7 +66,7 @@ struct TrainingSessionRunningView: View {
                 StagesView(progress: trainingSessionManager.currentProgress)
             }
         }
-        .background(Color.themeStyle.theme.background)
+        .background(Color.themeStyle.theme.black.opacity(0.8))
     }
     
     @ViewBuilder

@@ -45,6 +45,7 @@ struct PivotMainView: View {
             }
             
             ControlPanelView()
+                .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: -1)
         }
         .background(Color.themeStyle.theme.background)
         .veriticalSpacing(.top)
@@ -309,9 +310,10 @@ struct PivotMainView: View {
                 /// Only dislay trainnin session button when the selected day is today.
                 if viewModel.selectedDate.isToday && viewModel.currentPlan?.arrangedExercises.isEmpty == false {
                     TrainingSessionStartButton()
-                        .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: -1)
+                    Rectangle().fill(Color.themeStyle.theme.white.opacity(0.3)).frame(width: 1, height: 32)
                 }
 
+                
                 Button(action: {
                     isArrangingExercise.toggle()
                 }) {
@@ -321,7 +323,6 @@ struct PivotMainView: View {
                             .fontWeight(.semibold)
                             .padding(.vertical, 20)
                             .foregroundColor(Color.themeStyle.theme.white)
-                            .background(Color.themeStyle.theme.accent)
                             .contentShape(Rectangle())
                             .horizontalSpacing(.center)
                     }
@@ -331,6 +332,7 @@ struct PivotMainView: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 20, height: 20)
                             .foregroundColor(.white)
+                            .contentShape(Rectangle())
                             .padding(20)
                     }
                 }
@@ -342,7 +344,6 @@ struct PivotMainView: View {
         else {
             TrainingSessionRunningView()
                 .transition(.move(edge: .bottom))
-                .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: -1)
         }
     }
     
@@ -366,7 +367,6 @@ struct PivotMainView: View {
                 .fontWeight(.semibold)
                 .padding(.vertical, 20)
                 .foregroundColor(Color.themeStyle.theme.white)
-                .background(Color.themeStyle.theme.accent)
         }
         .contentShape(Rectangle())
         .confirmationDialog("Are your sure?", isPresented: $isPresentingConfirm) {
