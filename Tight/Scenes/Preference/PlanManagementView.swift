@@ -49,13 +49,15 @@ struct PlanManagementView: View {
                     .presentationCornerRadius(16)
             }
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button(action: {
-                        dismiss()
-                    }) {
-                        Label(LocalizationProvider.close.nameKey, systemImage: "xmark")
+                if isImporting {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button(action: {
+                            dismiss()
+                        }) {
+                            Label(LocalizationProvider.close.nameKey, systemImage: "xmark")
+                        }
+                        .tint(Color.themeStyle.theme.primary)
                     }
-                    .tint(Color.themeStyle.theme.primary)
                 }
             }
         }

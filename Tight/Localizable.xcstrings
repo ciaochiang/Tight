@@ -1734,9 +1734,6 @@
         }
       }
     },
-    "Favorite Emoji:" : {
-
-    },
     "live_activity_key_abort_completion_message" : {
       "localizations" : {
         "en" : {
@@ -1894,9 +1891,6 @@
 
     },
     "Stop training session and reset session" : {
-
-    },
-    "Time:" : {
 
     }
   },
