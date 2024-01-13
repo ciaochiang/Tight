@@ -94,6 +94,22 @@
         }
       }
     },
+    "action_key_complete" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Complete"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完成"
+          }
+        }
+      }
+    },
     "action_key_create" : {
       "localizations" : {
         "en" : {
@@ -191,9 +207,6 @@
       }
     },
     "Are your sure?" : {
-
-    },
-    "Break Time is Over!" : {
 
     },
     "callout_key_start_adding_exercise_to_plan" : {
@@ -468,13 +481,7 @@
         }
       }
     },
-    "Complete" : {
-
-    },
     "Complete Current Exercise" : {
-
-    },
-    "Configuration" : {
 
     },
     "confirm_key_restart_training" : {
@@ -505,6 +512,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "這個操作會重啟訓練並消除先前紀錄"
+          }
+        }
+      }
+    },
+    "confirm_key_restart_training_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are Your Sure?"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你確定嗎？"
           }
         }
       }
@@ -1711,13 +1734,7 @@
         }
       }
     },
-    "Favorite Emoji" : {
-
-    },
     "Favorite Emoji:" : {
-
-    },
-    "Let's go for next set" : {
 
     },
     "live_activity_key_abort_completion_message" : {
@@ -1727,6 +1744,12 @@
             "state" : "translated",
             "value" : "Keep It Up! 🤙🏻"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "繼續保持！🤙🏻"
+          }
         }
       }
     },
@@ -1735,7 +1758,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stay hydrated"
+            "value" : "Take a Moment for You."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "讓自己喘口氣"
           }
         }
       }
@@ -1745,7 +1774,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Take a break!"
+            "value" : "Break Time!"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "休息時間!"
           }
         }
       }
@@ -1757,14 +1792,49 @@
             "state" : "translated",
             "value" : "Well Done!"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "做得好！"
+          }
         }
       }
     },
-    "live_activity_key_training_completed" : {
-
-    },
     "Mark current exercise as completed and start rest" : {
 
+    },
+    "notification_rest_time_done_description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rest time's done, and it's your time to shine. Keep pushing forward!"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "休息結束，現在是你閃耀的時刻，繼續前進吧！"
+          }
+        }
+      }
+    },
+    "notification_rest_time_done_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unleash Your Potential!"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "釋放你的潛力！"
+          }
+        }
+      }
     },
     "onboarding_key_notification_description" : {
       "localizations" : {
@@ -1824,9 +1894,6 @@
 
     },
     "Stop training session and reset session" : {
-
-    },
-    "This is an example widget." : {
 
     },
     "Time:" : {

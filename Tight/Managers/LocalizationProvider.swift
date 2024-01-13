@@ -50,8 +50,10 @@ enum LocalizationProvider {
     case editPlan
     case startTraining
     case restartTraining
+    case complete
     
     /// Confirmation
+    case confirmestartTrainingTitle
     case confirmRestartTraining
     case confirmRestartTrainingDescription
     
@@ -69,11 +71,14 @@ enum LocalizationProvider {
     case compoundOrFullBody
     
     /// Live Activity
-    case trainingCompleted
     case breakTimeTitle
     case breakTimeSubtitle
     case doneCompletionMessage
     case abortCompletionMessage
+    
+    /// Notification
+    case notificationRestTimeDoneTitle
+    case notificationRestTimeDoneDescription
     
     var localizedString: String {
         return String(localized: localizationValue)
@@ -83,10 +88,15 @@ enum LocalizationProvider {
         switch self {
         case .breakTimeTitle: return "live_activity_key_break_time_title"
         case .breakTimeSubtitle: return "live_activity_key_break_time_subtitle"
+        case .notificationRestTimeDoneTitle: return "notification_rest_time_done_title"
+        case .notificationRestTimeDoneDescription: return "notification_rest_time_done_description"
         default: return ""
         }
     }
-
+    
+    var stringValue: String {
+        String(localized: localizationValue)
+    }
     
     var nameKey: LocalizedStringKey {
         switch self {
@@ -132,8 +142,10 @@ enum LocalizationProvider {
         case .editPlan: return "action_key_edit_plan"
         case .startTraining: return "action_key_start_training"
         case .restartTraining: return "action_key_restart_training"
+        case .complete: return "action_key_complete"
             
         /// Confirmation
+        case .confirmestartTrainingTitle: return "confirm_key_restart_training_title"
         case .confirmRestartTraining: return "confirm_key_restart_training"
         case .confirmRestartTrainingDescription: return "confirm_key_restart_training_description"
             
@@ -151,11 +163,14 @@ enum LocalizationProvider {
         case .compoundOrFullBody: return "exercise_category_compound_or_fullbody"
             
         /// Live Acitvity
-        case .trainingCompleted: return "live_activity_key_training_completed"
         case .breakTimeTitle: return "live_activity_key_break_time_title"
         case .breakTimeSubtitle: return "live_activity_key_break_time_subtitle"
         case .doneCompletionMessage: return "live_activity_key_done_completion_message"
         case .abortCompletionMessage: return "live_activity_key_abort_completion_message"
+            
+        /// Notification
+        case .notificationRestTimeDoneTitle: return "notification_rest_time_done_title"
+        case .notificationRestTimeDoneDescription: return "notification_rest_time_done_description"
         }
     }
 }

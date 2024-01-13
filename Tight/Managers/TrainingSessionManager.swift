@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 import ActivityKit
-import BackgroundTasks
+import UserNotifications
 
 enum TrainingSessionState {
     case notStarted
@@ -28,6 +28,7 @@ class TrainingSessionManager: ObservableObject {
     private(set) var plan: Plan?
     private(set) var arrangedExercises: [ArrangedExercise] = []
     private var currentRestTimeFrame: RestTimeFrame?
+    private var logger = CustomLogger()
     
     /// Live Activity Properties
     @Published var state: TrainingSessionState = .notStarted
@@ -112,8 +113,10 @@ class TrainingSessionManager: ObservableObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
             self.state = .notStarted
         })
-        
         reset()
+        
+        /// Cancel scheduled notifications
+        cancelScheduledNotifications()
         
         /// Remove live activity
         if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
@@ -170,17 +173,18 @@ class TrainingSessionManager: ObservableObject {
                 contentState.restStartTime = nil
                 contentState.restIntervals = nil
 
-                /// If rest time up, then alerting, if not, then just normal update
-                let alertConfig = AlertConfiguration(
-                    title: "Break Time is Over!",
-                    body: "Let's go for next set",
-                    sound: .default
-                )
-                
+                /// Mark out temp, because it's causing duplicated notification with scheduled notification.
+//                /// If rest time up, then alerting, if not, then just normal update
+//                let alertConfig = AlertConfiguration(
+//                    title: "\(LocalizationProvider.notificationRestTimeDoneTitle.stringValue)",
+//                    body: "\(LocalizationProvider.notificationRestTimeDoneDescription.stringValue)",
+//                    sound: .default
+//                )
+//                
                 /// Vibrate
                 await UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                 
-                await activity.update(.init(state: contentState, staleDate: nil), alertConfiguration: alertConfig)
+                await activity.update(.init(state: contentState, staleDate: nil), alertConfiguration: nil)
             }
         }
     }
@@ -238,6 +242,9 @@ class TrainingSessionManager: ObservableObject {
             self.currentProgress = 1.0
         }
         
+        /// Cancel all scheduled notification
+        cancelScheduledNotifications()
+        
         /// Stop and Reset
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
             self.isRunning = false
@@ -281,6 +288,9 @@ class TrainingSessionManager: ObservableObject {
             plan?.trainingLog?.restTimeFrames.append(restTimeFrame)
         }
         
+        /// Cancel schedule notification
+        cancelScheduledNotifications()
+        
         DispatchQueue.main.async {
             self.restStartTime = newRestStartTime
             self.restIntervals = newRestIntervals
@@ -312,6 +322,9 @@ class TrainingSessionManager: ObservableObject {
         
         /// Create new rest time frame and set `startTime`
         currentRestTimeFrame = RestTimeFrame(startTime: currentTime)
+        
+        /// Schedule a rest time notification
+        scheduleNotification(timeInterval: newRestIntervals)
         
         DispatchQueue.main.async {
             self.state = newState
@@ -377,6 +390,9 @@ class TrainingSessionManager: ObservableObject {
         let newRestIntervals = currentExercise?.restIntevals ?? 0
         let newSetsProgress = 0.0
         let newProgress = Double(newStage) / Double(totalExerciseCount)
+        
+        /// Schedule rest time notification
+        scheduleNotification(timeInterval: newRestIntervals)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
             self.state = newState
@@ -455,5 +471,41 @@ extension TrainingSessionManager {
                 await activity.end(.init(state: finalState, staleDate: nil), dismissalPolicy: dismissalPolicy)
             }
         }
+    }
+}
+
+// MARK: Local Notification
+extension TrainingSessionManager {
+    func scheduleNotification(timeInterval: TimeInterval) {
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
+            if granted {
+                // Permission granted
+                let content = UNMutableNotificationContent()
+                content.title = LocalizationProvider.notificationRestTimeDoneTitle.stringValue
+                content.body = LocalizationProvider.notificationRestTimeDoneDescription.stringValue
+                content.sound = UNNotificationSound.default
+                
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: false)
+                
+                let request = UNNotificationRequest(identifier: Constants.NOTIFICATION_IDENTIFIER_TRAINING_SESSION, content: content, trigger: trigger)
+                
+                let center = UNUserNotificationCenter.current()
+                center.add(request) { (error) in
+                    if let error = error {
+                        // Handle any errors here.
+                        self.logger.log(error.localizedDescription, level: .error)
+                    }
+                }
+            } else if let error = error {
+                // Handle the case where permission is denied or there is an error.
+                self.logger.log(error.localizedDescription, level: .error)
+            }
+        }
+    }
+    
+    func cancelScheduledNotifications() {
+        let center = UNUserNotificationCenter.current()
+        center.removePendingNotificationRequests(withIdentifiers: [Constants.NOTIFICATION_IDENTIFIER_TRAINING_SESSION])
     }
 }

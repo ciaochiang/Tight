@@ -12,12 +12,13 @@
 		E509EA202B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E509EA1F2B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift */; };
 		E54420F82B4AD38F002C63BC /* LocalizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B700C02B40105E0080442D /* LocalizationProvider.swift */; };
 		E54420F92B4AD8EF002C63BC /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E5B700BE2B400B740080442D /* Localizable.xcstrings */; };
+		E553B9CF2B52BCED00BA0C61 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B08F72B41495000280FC4 /* Constants.swift */; };
+		E553B9D02B52C47400BA0C61 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7672B3DADCC00696968 /* Logger.swift */; };
 		E554FB932B4837FA007AB30F /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E554FB922B4837FA007AB30F /* WidgetKit.framework */; };
 		E554FB952B4837FA007AB30F /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E554FB942B4837FA007AB30F /* SwiftUI.framework */; };
 		E554FB982B4837FA007AB30F /* TrainingSessionBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E554FB972B4837FA007AB30F /* TrainingSessionBundle.swift */; };
 		E554FB9A2B4837FA007AB30F /* TrainingSessionLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E554FB992B4837FA007AB30F /* TrainingSessionLiveActivity.swift */; };
 		E554FB9C2B4837FA007AB30F /* TrainingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E554FB9B2B4837FA007AB30F /* TrainingSession.swift */; };
-		E554FB9E2B4837FA007AB30F /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E554FB9D2B4837FA007AB30F /* AppIntent.swift */; };
 		E554FBA02B4837FB007AB30F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E554FB9F2B4837FB007AB30F /* Assets.xcassets */; };
 		E554FBA42B4837FB007AB30F /* TrainingSessionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E554FB912B4837FA007AB30F /* TrainingSessionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E5578C6C2B4E8FB4004947F2 /* TrainingSessionRunningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5578C6B2B4E8FB4004947F2 /* TrainingSessionRunningView.swift */; };
@@ -130,7 +131,6 @@
 		E554FB972B4837FA007AB30F /* TrainingSessionBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionBundle.swift; sourceTree = "<group>"; };
 		E554FB992B4837FA007AB30F /* TrainingSessionLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionLiveActivity.swift; sourceTree = "<group>"; };
 		E554FB9B2B4837FA007AB30F /* TrainingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSession.swift; sourceTree = "<group>"; };
-		E554FB9D2B4837FA007AB30F /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
 		E554FB9F2B4837FB007AB30F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E554FBA12B4837FB007AB30F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5578C6B2B4E8FB4004947F2 /* TrainingSessionRunningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionRunningView.swift; sourceTree = "<group>"; };
@@ -232,7 +232,6 @@
 				E554FB972B4837FA007AB30F /* TrainingSessionBundle.swift */,
 				E554FB992B4837FA007AB30F /* TrainingSessionLiveActivity.swift */,
 				E554FB9B2B4837FA007AB30F /* TrainingSession.swift */,
-				E554FB9D2B4837FA007AB30F /* AppIntent.swift */,
 				E554FB9F2B4837FB007AB30F /* Assets.xcassets */,
 				E554FBA12B4837FB007AB30F /* Info.plist */,
 			);
@@ -668,12 +667,13 @@
 				E54420F82B4AD38F002C63BC /* LocalizationProvider.swift in Sources */,
 				E554FB982B4837FA007AB30F /* TrainingSessionBundle.swift in Sources */,
 				E5C1C6B62B4A5A5C0081B3EF /* TrainingSessionManager.swift in Sources */,
-				E554FB9E2B4837FA007AB30F /* AppIntent.swift in Sources */,
 				E5C1C6B72B4A5A780081B3EF /* Exercise.swift in Sources */,
 				E554FB9A2B4837FA007AB30F /* TrainingSessionLiveActivity.swift in Sources */,
 				E554FB9C2B4837FA007AB30F /* TrainingSession.swift in Sources */,
+				E553B9D02B52C47400BA0C61 /* Logger.swift in Sources */,
 				E5C1C6B22B4A59570081B3EF /* TightSchemaV1.swift in Sources */,
 				E5A2F3322B495DEB00735FC2 /* TimeInterval+Extension.swift in Sources */,
+				E553B9CF2B52BCED00BA0C61 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

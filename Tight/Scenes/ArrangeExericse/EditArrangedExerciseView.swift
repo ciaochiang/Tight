@@ -41,7 +41,7 @@ struct EditArrangedExerciseView: View {
                             arrangedExercise.isCompleted.toggle()
                             dismiss()
                         }) {
-                            Label("Complete", systemImage: "checkmark.circle.fill")
+                            Label(LocalizationProvider.complete.nameKey, systemImage: "checkmark.circle.fill")
                                 .foregroundStyle(Color.themeStyle.theme.white)
                                 .frame(maxWidth: .infinity)
                                 .fontWeight(.semibold)
@@ -65,7 +65,7 @@ struct EditArrangedExerciseView: View {
             .navigationTitle(arrangedExercise.exercise.name)
             .navigationBarTitleDisplayMode(.inline)
             .background(Color.themeStyle.theme.background)
-            .toolbar {                
+            .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button(action: {
                         dismiss()
