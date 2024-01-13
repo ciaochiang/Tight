@@ -329,6 +329,7 @@ class TrainingSessionManager: ObservableObject {
                 /// Update activity info
                 var contentState = activity.content.state
                 contentState.indexOfSet = newSetNumber
+                contentState.currentSetsProgress = newSetsProgress
                 contentState.restStartTime = currentTime
                 contentState.restIntervals = newRestIntervals
                 await activity.update(.init(state: contentState, staleDate: nil))
@@ -339,8 +340,21 @@ class TrainingSessionManager: ObservableObject {
     /// Next Exericse
     func nextExercise() {
         /// Update current exercise/set progress
+        let completedSetsProgress = 1.0
         DispatchQueue.main.async {
-            self.currentSetsProgress = 1.0
+            self.currentSetsProgress = completedSetsProgress
+            
+            /// Update Live Activity
+            if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
+                activity.id == self.currentLiveActivityID
+            }) {
+                Task {
+                    /// Update activity info
+                    var contentState = activity.content.state
+                    contentState.currentSetsProgress = completedSetsProgress
+                    await activity.update(.init(state: contentState, staleDate: nil))
+                }
+            }
         }
         
         /// Go to next arranged exercise
@@ -373,26 +387,27 @@ class TrainingSessionManager: ObservableObject {
             self.restIntervals = newRestIntervals
             self.currentSetsProgress = newSetsProgress
             self.currentProgress = newProgress
-        }
-        
-        /// Update Live Activity
-        if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
-            activity.id == currentLiveActivityID
-        }) {
-            Task {
-                /// Update activity info
-                var contentState = activity.content.state
-                contentState.currentStage = newStage
-                contentState.currentExerciseID = newExercise.id.uuidString
-                contentState.currentExerciseName = newExercise.exercise.name
-                contentState.currentStage = newStage
-                contentState.indexOfSet = newIndexOfSet
-                contentState.weight = newExercise.weight
-                contentState.repetition = newExercise.repetitions
-                contentState.restStartTime = newRestStartTime
-                contentState.restIntervals = newRestIntervals
-                
-                await activity.update(.init(state: contentState, staleDate: nil))
+            
+            /// Update Live Activity
+            if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
+                activity.id == self.currentLiveActivityID
+            }) {
+                Task {
+                    /// Update activity info
+                    var contentState = activity.content.state
+                    contentState.currentStage = newStage
+                    contentState.currentExerciseID = newExercise.id.uuidString
+                    contentState.currentExerciseName = newExercise.exercise.name
+                    contentState.currentStage = newStage
+                    contentState.indexOfSet = newIndexOfSet
+                    contentState.currentSetsProgress = newSetsProgress
+                    contentState.weight = newExercise.weight
+                    contentState.repetition = newExercise.repetitions
+                    contentState.restStartTime = newRestStartTime
+                    contentState.restIntervals = newRestIntervals
+                    
+                    await activity.update(.init(state: contentState, staleDate: nil))
+                }
             }
         }
     }
