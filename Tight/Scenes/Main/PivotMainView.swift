@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import SwiftData
+import Combine
 
 struct PivotMainView: View {
     @Environment(\.modelContext) var context
@@ -18,6 +19,7 @@ struct PivotMainView: View {
     @State private var exerciseToEdit: ArrangedExercise?
     @State private var showTrainingSessionRunningView: Bool = false
     @State private var isPresentingConfirm: Bool = false
+    @State private var isItemEditable: Bool = true
         
     /// Animation  namespace
     @Namespace private var animation
@@ -82,7 +84,18 @@ struct PivotMainView: View {
         .onChange(of: viewModel.selectedDate) { oldValue, newValue in
             /// Reload current plan when date changed
             viewModel.currentPlan = viewModel.getPlan(by: newValue)
+            
+            /// If the `selectedDay` is `today` and `trainingSessionManager` is `running`
+            /// then `disable` item editibility
+            let isSessionRunning = newValue.isToday && trainingSessionManager.isRunning
+            isItemEditable = !isSessionRunning
         }
+        .onChange(of: trainingSessionManager.isRunning, { oldValue, newValue in
+            /// If the `selectedDay` is `today` and `trainingSessionManager` is `running`
+            /// then `disable` item editibility
+            let isSessionRunning = viewModel.selectedDate.isToday && newValue == true
+            isItemEditable = !isSessionRunning
+        })
         .onReceive(trainingSessionManager.timer) { _ in
             trainingSessionManager.handleTimerAction()
         }
@@ -206,31 +219,37 @@ struct PivotMainView: View {
                     .veriticalSpacing(.center)
                     .listRowSeparator(.hidden)
                     .listRowInsets(EdgeInsets())
+                    .opacity(isItemEditable ? 1.0 : 0.4)
                     .swipeActions(edge: .trailing) {
-                        Button(action: {
-                            /// Delete items
-                            withAnimation {
-                                viewModel.deleteExercise(exercise: exercise)
+                        if isItemEditable {
+                            Button(action: {
+                                /// Delete items
+                                withAnimation {
+                                    viewModel.deleteExercise(exercise: exercise)
+                                }
+                            }) {
+                                Image(systemName: "trash")
+                                    .symbolVariant(/*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
                             }
-                        }) {
-                            Image(systemName: "trash")
-                                .symbolVariant(/*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
+                            .tint(Color.themeStyle.theme.accent)
                         }
-                        .tint(Color.themeStyle.theme.accent)
                     }
                     .swipeActions(edge: .leading) {
-                        Button(action: {
-                            /// Delete items
-                            exercise.isCompleted.toggle()
-                        }) {
-                            Image(systemName: "checkmark")
-                                .symbolVariant(/*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
+                        if isItemEditable {
+                            Button(action: {
+                                /// Delete items
+                                exercise.isCompleted.toggle()
+                            }) {
+                                Image(systemName: "checkmark")
+                                    .symbolVariant(/*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
+                            }
+                            .tint(exercise.isCompleted ? Color.themeStyle.theme.secondaryAccent : Color.themeStyle.theme.secondaryTextColor)
                         }
-                        .tint(exercise.isCompleted ? Color.themeStyle.theme.secondaryAccent : Color.themeStyle.theme.secondaryTextColor)
                     }
                     .onTapGesture {
                         exerciseToEdit = exercise
                     }
+                    .allowsHitTesting(isItemEditable)
             }
             .onMove(perform: { indexSet, newOffset in
                 viewModel.arrangedExercises.move(fromOffsets: indexSet, toOffset: newOffset)

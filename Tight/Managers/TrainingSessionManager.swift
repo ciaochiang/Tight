@@ -41,6 +41,7 @@ class TrainingSessionManager: ObservableObject {
     @Published var startTime: Date?
     @Published var restStartTime: Date?
     @Published var restIntervals: Double?
+    @Published var isRunning: Bool = false
 
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
@@ -56,6 +57,7 @@ class TrainingSessionManager: ObservableObject {
         self.currentStage = 0
         self.currentIndexOfSet = 0
         self.currentProgress = 0
+        self.isRunning = true
         
         /// Ensure arranged exercise list is not empty
         guard arrangedExercises.isEmpty == false else { return }
@@ -98,6 +100,7 @@ class TrainingSessionManager: ObservableObject {
 
         DispatchQueue.main.async {
             self.state = newState
+            self.isRunning = false
         }
         
         /// Update end time to training log
@@ -228,6 +231,10 @@ class TrainingSessionManager: ObservableObject {
         /// Set `endTime` to `trainingLog`
         let currentTime = Date.now
         plan?.trainingLog?.endTime = currentTime
+        
+        DispatchQueue.main.async {
+            self.isRunning = false
+        }
         
         /// Reset
         reset()
