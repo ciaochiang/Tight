@@ -232,12 +232,19 @@ class TrainingSessionManager: ObservableObject {
         let currentTime = Date.now
         plan?.trainingLog?.endTime = currentTime
         
+        /// Update current progress to completed
         DispatchQueue.main.async {
-            self.isRunning = false
+            self.currentSetsProgress = 1.0
+            self.currentProgress = 1.0
         }
         
-        /// Reset
-        reset()
+        /// Stop and Reset
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+            self.isRunning = false
+            
+            /// Reset
+            self.reset()
+        }
         
         /// Update Live Activity
         if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
@@ -331,6 +338,11 @@ class TrainingSessionManager: ObservableObject {
     
     /// Next Exericse
     func nextExercise() {
+        /// Update current exercise/set progress
+        DispatchQueue.main.async {
+            self.currentSetsProgress = 1.0
+        }
+        
         /// Go to next arranged exercise
         let newState: TrainingSessionState = .resting
         let newStage = currentStage + 1
@@ -352,7 +364,7 @@ class TrainingSessionManager: ObservableObject {
         let newSetsProgress = 0.0
         let newProgress = Double(newStage) / Double(totalExerciseCount)
         
-        DispatchQueue.main.async {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
             self.state = newState
             self.currentStage = newStage
             self.currentExercise = newExercise
