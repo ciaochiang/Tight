@@ -14,16 +14,10 @@ struct ArrangedExerciseCard: View {
   
     var body: some View {
         /// Content
-        HStack(spacing: 8) {
-            Rectangle()
-                .foregroundStyle(exercise.isCompleted ? Color.themeStyle.theme.secondaryAccent : Color.themeStyle.theme.secondaryTextColor)
-                .frame(width: 2)
-            
-            ExerciseView()
-                .frame(maxHeight: .infinity)
-        }
-        .horizontalSpacing(.leading)
-        .background(Color.themeStyle.theme.background)
+        ExerciseView()
+            .horizontalSpacing(.leading)
+            .padding(.leading, 4)
+            .background(Color.themeStyle.theme.background)
     }
     
     @ViewBuilder
@@ -85,8 +79,7 @@ struct ArrangedExerciseCard: View {
     func ExerciseNameView() -> some View {
         Text(exercise.exercise.name)
             .fontWeight(.semibold)
-            .foregroundStyle(exercise.isCompleted ? Color.themeStyle.theme.secondaryTextColor : Color.themeStyle.theme.primaryTextColor)
-            .strikethrough(exercise.isCompleted, color: Color.themeStyle.theme.secondaryTextColor)
+            .foregroundStyle(exercise.isCompleted ? Color.themeStyle.theme.secondaryAccent : Color.themeStyle.theme.primaryTextColor)
             .opacity(isItemEditable ? 1.0 : 0.4)
     }
     

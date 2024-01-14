@@ -17,13 +17,6 @@ struct TrainingSessionDailyReportView: View {
     
     var body: some View {
         LazyVStack(spacing: 20) {
-            Text("Summary")
-                .font(.title2)
-                .fontWeight(.bold)
-                .foregroundStyle(Color.themeStyle.theme.primary)
-                .horizontalSpacing(.leading)
-                .padding(.horizontal)
-            
             HStack {
                 MetricWidget(value: duration.formatIntervalToMinutesSeconds, name: "Duration")
                     .padding(.vertical)
@@ -42,7 +35,6 @@ struct TrainingSessionDailyReportView: View {
             .padding(.horizontal)
         }
         .padding(.vertical)
-        .padding(.bottom)
         .background(Color.themeStyle.theme.background)
         .horizontalSpacing(.center)
         .onAppear {

@@ -215,52 +215,68 @@ struct PivotMainView: View {
     func ArrangedExercisesView() -> some View {
         List {
             if let plan = viewModel.currentPlan, viewModel.currentPlan?.trainingLog != nil {
-                TrainingSessionDailyReportView(plan: plan)
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets())
+                Section {
+                    TrainingSessionDailyReportView(plan: plan)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets())
+                } header: {
+                    Text("Daily summary")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .foregroundStyle(Color.themeStyle.theme.primary)
+                        .horizontalSpacing(.leading)
+                }
             }
             
-            ForEach($viewModel.arrangedExercises, id: \.self) { $exercise in
-                ArrangedExerciseCard(exercise: $exercise, isItemEditable: $isItemEditable)
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets())
-                    .swipeActions(edge: .trailing) {
-                        if isItemEditable {
-                            Button(action: {
-                                /// Delete items
-                                withAnimation {
-                                    viewModel.deleteExercise(exercise: exercise)
+            Section {
+                ForEach($viewModel.arrangedExercises, id: \.self) { $exercise in
+                    ArrangedExerciseCard(exercise: $exercise, isItemEditable: $isItemEditable)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets())
+                        .swipeActions(edge: .trailing) {
+                            if isItemEditable {
+                                Button(action: {
+                                    /// Delete items
+                                    withAnimation {
+                                        viewModel.deleteExercise(exercise: exercise)
+                                    }
+                                }) {
+                                    Image(systemName: "trash")
+                                        .symbolVariant(/*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
                                 }
-                            }) {
-                                Image(systemName: "trash")
-                                    .symbolVariant(/*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
+                                .tint(Color.themeStyle.theme.accent)
                             }
-                            .tint(Color.themeStyle.theme.accent)
                         }
-                    }
-                    .swipeActions(edge: .leading) {
-                        if isItemEditable {
-                            Button(action: {
-                                /// Delete items
-                                exercise.isCompleted.toggle()
-                            }) {
-                                Image(systemName: "checkmark")
-                                    .symbolVariant(/*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
+                        .swipeActions(edge: .leading) {
+                            if isItemEditable {
+                                Button(action: {
+                                    /// Delete items
+                                    exercise.isCompleted.toggle()
+                                }) {
+                                    Image(systemName: "checkmark")
+                                        .symbolVariant(/*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
+                                }
+                                .tint(exercise.isCompleted ? Color.themeStyle.theme.secondaryAccent : Color.themeStyle.theme.secondaryTextColor)
                             }
-                            .tint(exercise.isCompleted ? Color.themeStyle.theme.secondaryAccent : Color.themeStyle.theme.secondaryTextColor)
                         }
-                    }
-                    .onTapGesture {
-                        exerciseToEdit = exercise
-                    }
-                    .allowsHitTesting(isItemEditable)
+                        .onTapGesture {
+                            exerciseToEdit = exercise
+                        }
+                        .allowsHitTesting(isItemEditable)
+                }
+                .onMove(perform: { indexSet, newOffset in
+                    viewModel.arrangedExercises.move(fromOffsets: indexSet, toOffset: newOffset)
+                    
+                    /// Update all order number
+                    viewModel.updateOrderNumbers()
+                })
+            } header: {
+                Text("Exercises")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .foregroundStyle(Color.themeStyle.theme.primary)
+                    .horizontalSpacing(.leading)
             }
-            .onMove(perform: { indexSet, newOffset in
-                viewModel.arrangedExercises.move(fromOffsets: indexSet, toOffset: newOffset)
-                
-                /// Update all order number
-                viewModel.updateOrderNumbers()
-            })
         }
         .padding(.top, 16)
         .listStyle(PlainListStyle())
