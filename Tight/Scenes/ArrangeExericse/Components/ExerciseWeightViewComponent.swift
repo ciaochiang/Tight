@@ -13,9 +13,9 @@ struct ExerciseWeightViewComponent: View {
     @AppStorage(Constants.DEFAULT_EXERCISE_WEIGHT_UNIT) private var defaultWeightUnit: Int = 0
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 8) {
             Text(LocalizationProvider.weight.nameKey)
-                .font(.caption)
+                .font(.subheadline)
                 .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
             
             HStack(alignment: .center, spacing: 8) {

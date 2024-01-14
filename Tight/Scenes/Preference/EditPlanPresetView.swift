@@ -13,6 +13,7 @@ struct EditPlanPresetView: View {
     @State private var isAdding: Bool = false
     @State private var exercises: [ArrangedExercise]
     @State private var exerciseToEdit: ArrangedExercise?
+    @State private var isItemEditable: Bool = true
     
     init(plan: Plan) {
         self.plan = plan
@@ -59,7 +60,7 @@ struct EditPlanPresetView: View {
     func ArrangedExercisesListView() -> some View {
         List {
             ForEach($exercises, id: \.self) { $exercise in
-                ArrangedExerciseCard(exercise: $exercise)
+                ArrangedExerciseCard(exercise: $exercise, isItemEditable: $isItemEditable)
                     .veriticalSpacing(.center)
                     .listRowSeparator(.hidden)
                     .listRowInsets(EdgeInsets())

@@ -15,14 +15,14 @@ struct TrainingSessionRunningView: View {
             HStack(spacing: 16) {
                 /// Sets Progress
                 Text("\(trainingSessionManager.exerciseSetIndex + 1)")
-                    .foregroundStyle(Color.themeStyle.theme.white.opacity(0.8))
+                    .foregroundStyle(Color.themeStyle.theme.primary.opacity(0.8))
                     .font(.title3)
                     .fontWeight(.semibold)
                     .overlay {
                         ZStack {
                             Circle()
                                 .stroke( // 1
-                                    Color.white.opacity(0.7),
+                                    Color.themeStyle.theme.primary.opacity(0.3),
                                     lineWidth: 2
                                 )
                                 .frame(width: 48, height: 48)
@@ -66,7 +66,7 @@ struct TrainingSessionRunningView: View {
                 StagesView(progress: trainingSessionManager.sessionProgress)
             }
         }
-        .background(Color.themeStyle.theme.black.opacity(0.8))
+        .background(Color.themeStyle.theme.background)
     }
     
     @ViewBuilder
@@ -126,6 +126,7 @@ struct TrainingSessionRunningView: View {
                 .cornerRadius(22)
             }
         }
+        .shadow(radius: 0)
     }
     
     @ViewBuilder
@@ -135,7 +136,7 @@ struct TrainingSessionRunningView: View {
                 .font(.headline)
                 .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                 .minimumScaleFactor(0.8)
-                .foregroundColor(state == .resting ? Color.themeStyle.theme.primaryTextColor : Color.themeStyle.theme.accent.opacity(0.8))
+                .foregroundColor(state == .resting ? Color.themeStyle.theme.primary.opacity(0.8) : Color.themeStyle.theme.accent)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentTransition(.opacity)
             
@@ -144,7 +145,7 @@ struct TrainingSessionRunningView: View {
                 .font(.subheadline)
                 .minimumScaleFactor(0.8)
                 .fontWeight(.semibold)
-                .foregroundColor(Color.white.opacity(0.8))
+                .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
                 .contentTransition(.opacity)
         }
     }
@@ -168,7 +169,7 @@ struct TrainingSessionRunningView: View {
                 .tracking(1.4)
                 .minimumScaleFactor(0.8)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundColor(Color.themeStyle.theme.white.opacity(0.8))
+                .foregroundColor(Color.themeStyle.theme.primary.opacity(0.8))
                 .contentTransition(.numericText())
         }
     }

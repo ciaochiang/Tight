@@ -14,11 +14,17 @@ struct CreatePlanView: View {
     @State private var planName: String = ""
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading, spacing: 28) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(LocalizationProvider.planName.nameKey)
+                    .font(.subheadline)
+                    .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
+                    .padding(.horizontal)
+                
                 PlanNameTextfieldView(name: $planName).horizontalSpacing(.leading)
                 CreateButtonView().horizontalSpacing(.leading)
+                    .padding(.horizontal)
+                    .padding(.top, 16)
             }
-            .padding()
             .veriticalSpacing(.bottom)
             .navigationTitle(LocalizationProvider.newPlan.nameKey)
             .navigationBarTitleDisplayMode(.inline)

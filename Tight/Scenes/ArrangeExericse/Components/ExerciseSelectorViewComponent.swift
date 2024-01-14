@@ -12,9 +12,9 @@ struct ExerciseSelectorViewComponent: View {
     @Bindable var arrangedExericse: ArrangedExercise
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 8) {
             Text(LocalizationProvider.exercise.nameKey)
-                .font(.caption)
+                .font(.subheadline)
                 .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
             
             Button(action: {

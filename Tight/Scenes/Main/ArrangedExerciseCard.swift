@@ -10,6 +10,7 @@ import SwiftData
 
 struct ArrangedExerciseCard: View {
     @Binding var exercise: ArrangedExercise
+    @Binding var isItemEditable: Bool
   
     var body: some View {
         /// Content
@@ -44,30 +45,38 @@ struct ArrangedExerciseCard: View {
         HStack(alignment: .center, spacing: 16) {
             HStack {
                 Image(systemName: "figure.strengthtraining.traditional")
+                    .opacity(isItemEditable ? 1.0 : 0.4)
                 Text("\(String(format: "%1.f", exercise.weight)) \(WeightUnit(rawValue: exercise.weightUnit)?.name ?? "")")
                     .font(.caption)
                     .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+                    .opacity(isItemEditable ? 1.0 : 0.4)
             }
             
             HStack {
                 Image(systemName: "repeat")
+                    .opacity(isItemEditable ? 1.0 : 0.4)
                 Text("\(Int(exercise.repetitions))")
                     .font(.caption)
                     .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+                    .opacity(isItemEditable ? 1.0 : 0.4)
             }
             
             HStack {
                 Image(systemName: "square.stack.3d.down.right")
+                    .opacity(isItemEditable ? 1.0 : 0.4)
                 Text("\(Int(exercise.sets))")
                     .font(.caption)
                     .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+                    .opacity(isItemEditable ? 1.0 : 0.4)
             }
             
             HStack {
                 Image(systemName: "clock")
+                    .opacity(isItemEditable ? 1.0 : 0.4)
                 Text(exercise.restIntevals.formatIntervalToMinutesSeconds)
                     .font(.caption)
                     .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+                    .opacity(isItemEditable ? 1.0 : 0.4)
             }
         }
     }
@@ -78,6 +87,7 @@ struct ArrangedExerciseCard: View {
             .fontWeight(.semibold)
             .foregroundStyle(exercise.isCompleted ? Color.themeStyle.theme.secondaryTextColor : Color.themeStyle.theme.primaryTextColor)
             .strikethrough(exercise.isCompleted, color: Color.themeStyle.theme.secondaryTextColor)
+            .opacity(isItemEditable ? 1.0 : 0.4)
     }
     
     @ViewBuilder
@@ -102,6 +112,6 @@ struct ArrangedExerciseCard: View {
 
 
 #Preview {
-    ArrangedExerciseCard(exercise: .constant(Mocks.mockArrangedExercise))
+    ArrangedExerciseCard(exercise: .constant(Mocks.mockArrangedExercise), isItemEditable: .constant(true))
 }
 

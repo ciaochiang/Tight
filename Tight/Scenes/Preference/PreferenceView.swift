@@ -92,8 +92,8 @@ struct PreferenceView: View {
                 .frame(height: Constants.DEFAULT_LIST_ROW_HEIGHT)
             Spacer()
             Text(WeightUnit(rawValue: defaultWeightUnit)?.name ?? "")
-                .font(.caption)
-                .foregroundStyle(.gray)
+                .font(.subheadline)
+                .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
                 .frame(height: Constants.DEFAULT_LIST_ROW_HEIGHT)
         }
         .contentShape(Rectangle())
@@ -109,8 +109,8 @@ struct PreferenceView: View {
                 Text(LocalizationProvider.repetitions.nameKey)
                 Spacer()
                 Text("\(Int(defaultRepetitions))")
-                    .font(.caption)
-                    .foregroundStyle(.gray)
+                    .font(.subheadline)
+                    .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
             }
                 .horizontalSpacing(.leading)
             Slider(value: $defaultRepetitions, in: 1...20, step: 1.0)
@@ -125,8 +125,8 @@ struct PreferenceView: View {
                 Text(LocalizationProvider.sets.nameKey)
                 Spacer()
                 Text("\(Int(defaultSets))")
-                    .font(.caption)
-                    .foregroundStyle(.gray)
+                    .font(.subheadline)
+                    .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
             }
                 .horizontalSpacing(.leading)
             Slider(value: $defaultSets, in: 1...6, step: 1.0)
@@ -141,8 +141,8 @@ struct PreferenceView: View {
                 Text(LocalizationProvider.restIntervals.nameKey)
                 Spacer()
                 Text(defaultRestIntervals.formatIntervalToMinutesSeconds)
-                    .font(.caption)
-                    .foregroundStyle(.gray)
+                    .font(.subheadline)
+                    .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
             }
                 .horizontalSpacing(.leading)
             Slider(value: $defaultRestIntervals, in: 0...180, step: 10.0)

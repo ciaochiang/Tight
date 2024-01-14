@@ -44,7 +44,7 @@ struct CreateArrangedExerciseView: View {
     
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading, spacing: 24) {
+            VStack(alignment: .leading, spacing: 20) {
                 HStack {
                     ExerciseSelectorViewComponent(isPresented: $isPresented, arrangedExericse: arrangedExercise)
                     ExerciseWeightViewComponent(arrangedExercise: arrangedExercise)

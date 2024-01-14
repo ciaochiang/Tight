@@ -30,7 +30,7 @@ struct PivotMainView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 0) {
             HeaderView()
             
             ///  Scheduled exercises
@@ -45,10 +45,12 @@ struct PivotMainView: View {
             }
             
             ControlPanelView()
+                /// This fix child view has parent view's shadow
+                /// Reference: https://stackoverflow.com/questions/58667109/subview-have-parents-shadow-even-with-a-background
+                .compositingGroup()
                 .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: -1)
         }
         .background(Color.themeStyle.theme.background)
-        .veriticalSpacing(.top)
         .onAppear(perform: {
             if viewModel.weeks.isEmpty {
                 viewModel.loadWeeks()
@@ -63,7 +65,7 @@ struct PivotMainView: View {
                                            completion: { _ in
                     viewModel.reloadArrangedExercises()
                 })
-                .presentationDetents([.fraction(0.7)])
+                .presentationDetents([.height(420)])
                 .presentationCornerRadius(16)
             }
         })
@@ -101,14 +103,8 @@ struct PivotMainView: View {
             trainingSessionManager.handleTimerAction()
         }
         .onChange(of: trainingSessionManager.startTime) { oldValue, newValue in
-            if newValue == nil {
-                withAnimation {
-                    showTrainingSessionRunningView = false
-                }
-            } else {
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    showTrainingSessionRunningView = true
-                }
+            withAnimation {
+                showTrainingSessionRunningView = newValue != nil
             }
         }
         .environmentObject(trainingSessionManager)
@@ -216,11 +212,9 @@ struct PivotMainView: View {
     func ArrangedExercisesView() -> some View {
         List {
             ForEach($viewModel.arrangedExercises, id: \.self) { $exercise in
-                ArrangedExerciseCard(exercise: $exercise)
-                    .veriticalSpacing(.center)
+                ArrangedExerciseCard(exercise: $exercise, isItemEditable: $isItemEditable)
                     .listRowSeparator(.hidden)
                     .listRowInsets(EdgeInsets())
-                    .opacity(isItemEditable ? 1.0 : 0.4)
                     .swipeActions(edge: .trailing) {
                         if isItemEditable {
                             Button(action: {
@@ -258,15 +252,6 @@ struct PivotMainView: View {
                 /// Update all order number
                 viewModel.updateOrderNumbers()
             })
-            
-            /// Bottom Placeholder
-            VStack { }
-            .frame(height: 80)
-            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
-            .background(Color.themeStyle.theme.background)
-            .listRowInsets(EdgeInsets())
-            .listRowSeparator(.hidden)
-
         }
         .padding(.top, 16)
         .listStyle(PlainListStyle())
@@ -333,7 +318,8 @@ struct PivotMainView: View {
                             .frame(width: 20, height: 20)
                             .foregroundColor(.white)
                             .contentShape(Rectangle())
-                            .padding(20)
+                            .horizontalSpacing(.center)
+                            .frame(height: 44)
                     }
                 }
                 .frame(maxWidth: viewModel.currentPlan?.arrangedExercises.isEmpty == true || !viewModel.selectedDate.isToday ? .infinity : 80, alignment: .center)

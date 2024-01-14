@@ -11,9 +11,9 @@ struct ExerciseSetsSliderViewComponent: View {
     @Bindable var arrangedExercise: ArrangedExercise
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 4) {
             Text(LocalizationProvider.sets.nameKey)
-                .font(.caption)
+                .font(.subheadline)
                 .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
             
             HStack(alignment: .center, spacing: 8) {

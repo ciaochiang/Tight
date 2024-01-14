@@ -78,7 +78,7 @@ class TrainingSessionManager: ObservableObject {
     /// `exerciseSetCompletionPercentage = Double(exerciseSetIndex) / Double(exercise.sets)`
     ///
     /// - Note: The value of this property ranges from 0.0 (no sets completed) to 1.0 (all sets completed).
-    @Published var exerciseSetCompletionProgress: Double = 0.0
+    @Published var exerciseSetCompletionProgress: CGFloat = 0.0
     
     // MARK: Rest Time
     /// Represents the start time of a rest interval during a training session.

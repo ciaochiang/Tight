@@ -14,11 +14,15 @@ struct EditPlanView: View {
     @State private var tags: [Tag] = []
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(LocalizationProvider.planName.nameKey)
+                    .font(.subheadline)
+                    .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
+                    .padding(.horizontal)
+                
                 PlanNameTextfieldView(name: $plan.name)
                     .horizontalSpacing(.leading)
             }
-            .padding()
             .veriticalSpacing(.bottom)
             .navigationTitle(LocalizationProvider.editPlan.nameKey)
             .navigationBarTitleDisplayMode(.inline)
@@ -54,10 +58,6 @@ struct PlanNameTextfieldView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(LocalizationProvider.planName.nameKey)
-                .font(.caption)
-                .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
-            
             TextField(LocalizationProvider.placeholderPlanNameTextfield.nameKey, text: $name)
                 .padding(.vertical, 12)
                 .padding(.horizontal, 16)
