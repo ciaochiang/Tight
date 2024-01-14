@@ -19,9 +19,7 @@ enum TightMigrationPlan: SchemaMigrationPlan {
     
     static var stages: [MigrationStage] {
         []
-    }
-    
-    static let migrateV1toV2 = MigrationStage.custom(fromVersion: TightSchemaV1.self, toVersion: TightSchemaV2.self, willMigrate: nil, didMigrate: nil)
+    }    
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {

@@ -8,17 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		E509EA1C2B3EA53A0025E76C /* TightSchemaV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = E509EA1B2B3EA53A0025E76C /* TightSchemaV1.swift */; };
-		E509EA1E2B3EA7EA0025E76C /* TightSchemaV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E509EA1D2B3EA7EA0025E76C /* TightSchemaV2.swift */; };
 		E509EA202B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E509EA1F2B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift */; };
 		E54420F82B4AD38F002C63BC /* LocalizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B700C02B40105E0080442D /* LocalizationProvider.swift */; };
 		E54420F92B4AD8EF002C63BC /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E5B700BE2B400B740080442D /* Localizable.xcstrings */; };
 		E553B9CF2B52BCED00BA0C61 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B08F72B41495000280FC4 /* Constants.swift */; };
 		E553B9D02B52C47400BA0C61 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7672B3DADCC00696968 /* Logger.swift */; };
+		E553B9D22B5395D900BA0C61 /* Date+ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553B9D12B5395D900BA0C61 /* Date+ExtensionTests.swift */; };
 		E554FB932B4837FA007AB30F /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E554FB922B4837FA007AB30F /* WidgetKit.framework */; };
 		E554FB952B4837FA007AB30F /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E554FB942B4837FA007AB30F /* SwiftUI.framework */; };
 		E554FB982B4837FA007AB30F /* TrainingSessionBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E554FB972B4837FA007AB30F /* TrainingSessionBundle.swift */; };
 		E554FB9A2B4837FA007AB30F /* TrainingSessionLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E554FB992B4837FA007AB30F /* TrainingSessionLiveActivity.swift */; };
-		E554FB9C2B4837FA007AB30F /* TrainingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E554FB9B2B4837FA007AB30F /* TrainingSession.swift */; };
 		E554FBA02B4837FB007AB30F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E554FB9F2B4837FB007AB30F /* Assets.xcassets */; };
 		E554FBA42B4837FB007AB30F /* TrainingSessionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E554FB912B4837FA007AB30F /* TrainingSessionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E5578C6C2B4E8FB4004947F2 /* TrainingSessionRunningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5578C6B2B4E8FB4004947F2 /* TrainingSessionRunningView.swift */; };
@@ -123,14 +122,13 @@
 
 /* Begin PBXFileReference section */
 		E509EA1B2B3EA53A0025E76C /* TightSchemaV1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TightSchemaV1.swift; sourceTree = "<group>"; };
-		E509EA1D2B3EA7EA0025E76C /* TightSchemaV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TightSchemaV2.swift; sourceTree = "<group>"; };
 		E509EA1F2B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseTagPickerViewComponent.swift; sourceTree = "<group>"; };
+		E553B9D12B5395D900BA0C61 /* Date+ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ExtensionTests.swift"; sourceTree = "<group>"; };
 		E554FB912B4837FA007AB30F /* TrainingSessionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TrainingSessionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E554FB922B4837FA007AB30F /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		E554FB942B4837FA007AB30F /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		E554FB972B4837FA007AB30F /* TrainingSessionBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionBundle.swift; sourceTree = "<group>"; };
 		E554FB992B4837FA007AB30F /* TrainingSessionLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionLiveActivity.swift; sourceTree = "<group>"; };
-		E554FB9B2B4837FA007AB30F /* TrainingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSession.swift; sourceTree = "<group>"; };
 		E554FB9F2B4837FB007AB30F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E554FBA12B4837FB007AB30F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5578C6B2B4E8FB4004947F2 /* TrainingSessionRunningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionRunningView.swift; sourceTree = "<group>"; };
@@ -231,7 +229,6 @@
 			children = (
 				E554FB972B4837FA007AB30F /* TrainingSessionBundle.swift */,
 				E554FB992B4837FA007AB30F /* TrainingSessionLiveActivity.swift */,
-				E554FB9B2B4837FA007AB30F /* TrainingSession.swift */,
 				E554FB9F2B4837FB007AB30F /* Assets.xcassets */,
 				E554FBA12B4837FB007AB30F /* Info.plist */,
 			);
@@ -291,6 +288,7 @@
 			isa = PBXGroup;
 			children = (
 				E562D70D2B3DA34F000775B7 /* TightTests.swift */,
+				E553B9D12B5395D900BA0C61 /* Date+ExtensionTests.swift */,
 			);
 			path = TightTests;
 			sourceTree = "<group>";
@@ -345,7 +343,6 @@
 			children = (
 				E57FD7842B3DAF7D00696968 /* Exercise.swift */,
 				E509EA1B2B3EA53A0025E76C /* TightSchemaV1.swift */,
-				E509EA1D2B3EA7EA0025E76C /* TightSchemaV2.swift */,
 				E5A2F32E2B4950C300735FC2 /* TrainingSessionAttributes.swift */,
 			);
 			path = Models;
@@ -669,7 +666,6 @@
 				E5C1C6B62B4A5A5C0081B3EF /* TrainingSessionManager.swift in Sources */,
 				E5C1C6B72B4A5A780081B3EF /* Exercise.swift in Sources */,
 				E554FB9A2B4837FA007AB30F /* TrainingSessionLiveActivity.swift in Sources */,
-				E554FB9C2B4837FA007AB30F /* TrainingSession.swift in Sources */,
 				E553B9D02B52C47400BA0C61 /* Logger.swift in Sources */,
 				E5C1C6B22B4A59570081B3EF /* TightSchemaV1.swift in Sources */,
 				E5A2F3322B495DEB00735FC2 /* TimeInterval+Extension.swift in Sources */,
@@ -696,7 +692,6 @@
 				E57FD7702B3DAE0400696968 /* OffsetKey.swift in Sources */,
 				E57FD7C62B3DB25200696968 /* UserPreference.swift in Sources */,
 				E57FD7AE2B3DB18C00696968 /* TagTextfieldView.swift in Sources */,
-				E509EA1E2B3EA7EA0025E76C /* TightSchemaV2.swift in Sources */,
 				E57FD7B92B3DB1DD00696968 /* EditArrangedExerciseView.swift in Sources */,
 				E5578C6C2B4E8FB4004947F2 /* TrainingSessionRunningView.swift in Sources */,
 				E57FD7B02B3DB18C00696968 /* PreferenceView.swift in Sources */,
@@ -736,6 +731,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E562D70E2B3DA34F000775B7 /* TightTests.swift in Sources */,
+				E553B9D22B5395D900BA0C61 /* Date+ExtensionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

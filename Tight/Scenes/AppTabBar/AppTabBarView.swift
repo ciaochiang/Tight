@@ -30,7 +30,7 @@ struct AppTabBarView: View {
             
             /// Create PreferenceViews
             PreferenceView().tabItem {
-                Label(LocalizationProvider.settings.nameKey, systemImage: TabBarItemType.more.iconName)
+                Label(LocalizationProvider.settings.nameKey, systemImage: TabBarItemType.setting.iconName)
             }
         }
         .toolbarBackground(Color.themeStyle.theme.background, for: .tabBar)

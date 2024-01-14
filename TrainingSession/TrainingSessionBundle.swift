@@ -11,7 +11,6 @@ import SwiftUI
 @main
 struct TrainingSessionBundle: WidgetBundle {
     var body: some Widget {
-//        TrainingSession()
         TrainingSessionLiveActivity()
     }
 }
