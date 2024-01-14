@@ -25,7 +25,7 @@ platform :ios do
   lane :beta do
     current_date = Time.now.strftime("%Y%m%d%H%M%S")
     increment_build_number(build_number: current_date)
-    build_app(scheme: "Tight")
+    build_app(scheme: "Tight", include_bitcode: true)
     app_store_connect_api_key(
       key_id: "QQT3769X94",
       issuer_id: "69a6de85-1535-47e3-e053-5b8c7c11a4d1",
