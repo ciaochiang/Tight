@@ -23,41 +23,103 @@ enum TrainingSessionState {
  - Based on  Arranged Exercises rest intervals
  -
  */
-
 class TrainingSessionManager: ObservableObject {
+    /// Singleton
+    static let shared = TrainingSessionManager()
+    
+    /// Timer
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
+    /// Common Properties
     private(set) var plan: Plan?
     private(set) var arrangedExercises: [ArrangedExercise] = []
     private var currentRestTimeFrame: RestTimeFrame?
     private var logger = CustomLogger()
-    
-    /// Live Activity Properties
     @Published var state: TrainingSessionState = .notStarted
-    @Published var currentLiveActivityID: String = ""
-    @Published var currentExercise: ArrangedExercise?
-    @Published var totalExerciseCount: Int = 0
-    @Published private var currentStage: Int = 0
-    @Published var currentProgress: Double = 0
-    @Published var currentIndexOfSet: Int = 0
-    @Published var currentSetsProgress: Double = 0.0
-    @Published var startTime: Date?
-    @Published var restStartTime: Date?
-    @Published var restIntervals: Double?
     @Published var isRunning: Bool = false
-
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-
-    static let shared = TrainingSessionManager()
     
-    /// Start Training Session
+    // MARK: Live Activity Properties
+    /// Stores the unique identifier of a live activity.
+    ///
+    /// The `liveActivityID` property is used to hold the unique identifier (ID) associated with a live activity or event. This ID can be utilized to uniquely identify and reference the live activity within your application.
+    ///
+    /// - Note: Initially, this property is set to an empty string (""). Ensure that it is assigned a valid ID when relevant.
+    @Published var liveActivityID: String = ""
+    
+    /// Represents the currently active or arranged exercise in the training session.
+    ///
+    /// The `currentExercise` property holds an instance of `ArrangedExercise`, which represents the exercise that is currently being performed or is scheduled to be performed next in the training session.
+    ///
+    /// - Note: This property may be `nil` if there are no exercises currently active or arranged in the session.
+    @Published var currentExercise: ArrangedExercise?
+    
+    /// The total number of exercises in the training session.
+    @Published var exerciseCount: Int = 0
+    
+    /// Training session's start time
+    @Published var startTime: Date?
+    
+    /// Current stage of whole training session
+    @Published var sessionStage: Int = 0
+    
+    /// Current progress value of training session
+    @Published var sessionProgress: Double = 0
+    
+    /// The index indicating the current set of exercises within the training session.
+    ///
+    /// This property represents the set of exercises currently being performed in a training session.
+    /// It starts at 0 for the first set and increments as the session progresses through different sets.
+    /// - Note: The value of this property should be non-negative.
+    @Published var exerciseSetIndex: Int = 0
+    
+    /// The percentage completion of sets in the current exercise.
+    ///
+    /// This property calculates the completion percentage based on the formula:
+    /// `exerciseSetCompletionPercentage = Double(exerciseSetIndex) / Double(exercise.sets)`
+    ///
+    /// - Note: The value of this property ranges from 0.0 (no sets completed) to 1.0 (all sets completed).
+    @Published var exerciseSetCompletionProgress: Double = 0.0
+    
+    // MARK: Rest Time
+    /// Represents the start time of a rest interval during a training session.
+    ///
+    /// The `restStartTime` property stores the timestamp indicating the start time of a rest period. It is `nil` when there is no ongoing rest period.
+    @Published var restStartTime: Date?
+
+    /// Represents the duration of rest intervals during a training session.
+    ///
+    /// The `restIntervals` property stores the duration, in seconds, of each rest interval. It is `nil` when there are no scheduled rest intervals.
+    @Published var restIntervals: Double?
+    
+    /// Starts a new training session with the given plan and arranged exercises.
+    ///
+    /// Use this function to initiate a training session by providing a training plan (`plan`) and a list of arranged exercises (`arrangedExercises`).
+    ///
+    /// - Parameters:
+    ///   - plan: The training plan associated with the session, or `nil` if not applicable.
+    ///   - arrangedExercises: An array of `ArrangedExercise` instances representing the exercises to be performed in the session.
+    ///
+    /// This function resets various session-related properties, initializes the session state, and prepares for the training session to begin. It ensures that the necessary information is set up for tracking and recording the session's progress and exercises.
+    ///
+    /// - Note: The `reset` function should not be used within this function, as it is asynchronous.
+    ///
+    /// - Precondition: The `arrangedExercises` array must not be empty.
+    ///
+    /// Example usage:
+    /// ```swift
+    /// let plan = ... // Provide a training plan, if available
+    /// let arrangedExercises = [...] // Provide an array of arranged exercises
+    /// startTrainingSession(plan: plan, arrangedExercises: arrangedExercises)
+    /// ```
     func startTrainingSession(plan: Plan?, arrangedExercises: [ArrangedExercise]) {
         /// NOTE: Do not use `reset` function here given that is async function
         self.currentExercise = nil
         self.startTime = nil
         self.restStartTime = nil
         self.restIntervals = 0
-        self.currentStage = 0
-        self.currentIndexOfSet = 0
-        self.currentProgress = 0
+        self.sessionStage = 0
+        self.exerciseSetIndex = 0
+        self.sessionProgress = 0
         self.isRunning = true
         
         /// Ensure arranged exercise list is not empty
@@ -65,12 +127,12 @@ class TrainingSessionManager: ObservableObject {
         
         self.plan = plan
         self.arrangedExercises = arrangedExercises
-        self.totalExerciseCount = arrangedExercises.count
+        self.exerciseCount = arrangedExercises.count
         
         /// Gete first exercise
-        let firstExercise = arrangedExercises[currentStage]
+        let firstExercise = arrangedExercises[sessionStage]
         self.currentExercise = firstExercise
-        self.currentSetsProgress = Double(currentIndexOfSet) / Double(firstExercise.sets)
+        self.exerciseSetCompletionProgress = Double(exerciseSetIndex) / Double(firstExercise.sets)
         
         /// - Create a training log if it's not existed or update existing one
         /// - Set  `currentTime` to  current exercise's `startTime`
@@ -94,7 +156,18 @@ class TrainingSessionManager: ObservableObject {
         addLiveAcitvity()
     }
     
-    /// Stop Training Session
+    /// Stops the current training session and performs necessary cleanup.
+    ///
+    /// Use this function to terminate an ongoing training session, update the session's end time, reset session-related properties, and cancel any scheduled notifications.
+    ///
+    /// This function transitions the training session state to "aborted," and after a brief delay (2 seconds), it resets the session state to "not started" using a background thread. It also updates the training log's end time, cancels any scheduled notifications, and handles the removal of a live activity if one is associated with the session.
+    ///
+    /// - Note: Ensure that you call this function when the training session needs to be stopped or aborted.
+    ///
+    /// Example usage:
+    /// ```swift
+    /// stopTrainingSession()
+    /// ```
     func stopTrainingSession() {
         let newState: TrainingSessionState = .aborted
         let currentTime = Date.now
@@ -120,7 +193,7 @@ class TrainingSessionManager: ObservableObject {
         
         /// Remove live activity
         if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
-            activity.id == currentLiveActivityID
+            activity.id == liveActivityID
         }) {
             Task {
                 /// Update activity info
@@ -139,7 +212,22 @@ class TrainingSessionManager: ObservableObject {
         }
     }
     
-    /// Handle function when timer tiggered it
+    /// Handles timer actions and manages training session state during rest periods.
+    ///
+    /// Use this function to check and manage the state of a training session's rest period timer. It verifies if the current time has exceeded the scheduled end time of the rest interval and, if so, performs actions such as updating the training log, resetting rest-related properties, and updating the associated activity.
+    ///
+    /// This function checks the following conditions:
+    /// - Whether `restStartTime` and `restIntervals` are valid values.
+    /// - Whether the current time has passed the scheduled end time of the rest interval.
+    ///
+    /// If these conditions are met, the function updates the training session state to "training," records the end time of the rest time frame in the training log, and resets the rest-related properties. It also triggers a vibration feedback and updates the associated activity's information.
+    ///
+    /// - Note: Call this function periodically or as needed to manage rest periods within the training session.
+    ///
+    /// Example usage:
+    /// ```swift
+    /// handleTimerAction()
+    /// ```
     func handleTimerAction() {
         /// Verify the date is over rest end time
         guard let restStartTime = restStartTime, let restInterval = restIntervals else { return }
@@ -165,31 +253,43 @@ class TrainingSessionManager: ObservableObject {
         
         ///  Update activity
         if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
-            activity.id == currentLiveActivityID
+            activity.id == liveActivityID
         }) {
             Task {
                 /// Update activity info
                 var contentState = activity.content.state
                 contentState.restStartTime = nil
                 contentState.restIntervals = nil
-
-                /// Mark out temp, because it's causing duplicated notification with scheduled notification.
-//                /// If rest time up, then alerting, if not, then just normal update
-//                let alertConfig = AlertConfiguration(
-//                    title: "\(LocalizationProvider.notificationRestTimeDoneTitle.stringValue)",
-//                    body: "\(LocalizationProvider.notificationRestTimeDoneDescription.stringValue)",
-//                    sound: .default
-//                )
-//                
+             
                 /// Vibrate
                 await UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                 
-                await activity.update(.init(state: contentState, staleDate: nil), alertConfiguration: nil)
+                await activity.update(.init(state: contentState, staleDate: nil))
             }
         }
     }
     
-    /// Complete current exercise
+    /// Completes the current set of the specified exercise and manages the training session progress.
+    ///
+    /// Use this function to mark the current set of a particular exercise as completed within a training session. It updates the progress of the session and handles scenarios such as moving to the next set of the same exercise or proceeding to the next exercise.
+    ///
+    /// - Parameters:
+    ///   - exerciseID: The unique identifier (UUID string) of the exercise to complete the set for.
+    ///
+    /// This function performs the following actions:
+    /// 1. Locates the corresponding exercise with the provided `exerciseID`.
+    /// 2. If the current set is the last set of the exercise, it marks the exercise as completed and determines the next action:
+    ///    - If there are more exercises in the session, it proceeds to the next exercise.
+    ///    - If there are no more exercises, it completes the entire training session.
+    /// 3. If the current set is not the last set, it advances to the next set of the same exercise.
+    ///
+    /// - Note: Call this function when a set of an exercise is completed during a training session to manage session progress and transitions.
+    ///
+    /// Example usage:
+    /// ```swift
+    /// let exerciseID = "12345-ABCDE-..."
+    /// completeCurrentSet(exerciseID: exerciseID)
+    /// ```
     func completeCurrentSet(exerciseID: String) {
         /// 1. Find the corresponding exercise
         guard let exercise = arrangedExercises.first(where: { $0.id.uuidString == exerciseID }) else { return }
@@ -199,12 +299,12 @@ class TrainingSessionManager: ObservableObject {
         /// - If there is more set of current exercise, then update the IndexOfSet number
         /// - If there is no more set, then mark it as completed and  jump to next exercise
         /// - If there is no next exercise, then complete the training session
-        if currentIndexOfSet >= Int(exercise.sets - 1) {
+        if exerciseSetIndex >= Int(exercise.sets - 1) {
             /// Sets are completed, mark exercise as completed and jump to next exercise
             exercise.isCompleted = true
             
             /// If there is more exercise, then `nextExercise`, else  `completeTrainingSession`
-            if currentStage + 1 >= arrangedExercises.count {
+            if sessionStage + 1 >= arrangedExercises.count {
                 /// Complete training session
                 done()
             }
@@ -225,8 +325,8 @@ class TrainingSessionManager: ObservableObject {
             self.startTime = nil
             self.restStartTime = nil
             self.restIntervals = 0
-            self.currentStage = 0
-            self.currentIndexOfSet = 0
+            self.sessionStage = 0
+            self.exerciseSetIndex = 0
         }
     }
 
@@ -238,8 +338,8 @@ class TrainingSessionManager: ObservableObject {
         
         /// Update current progress to completed
         DispatchQueue.main.async {
-            self.currentSetsProgress = 1.0
-            self.currentProgress = 1.0
+            self.exerciseSetCompletionProgress = 1.0
+            self.sessionProgress = 1.0
         }
         
         /// Cancel all scheduled notification
@@ -255,7 +355,7 @@ class TrainingSessionManager: ObservableObject {
         
         /// Update Live Activity
         if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
-            activity.id == currentLiveActivityID
+            activity.id == liveActivityID
         }) {
             Task {
                 /// Update activity info
@@ -298,7 +398,7 @@ class TrainingSessionManager: ObservableObject {
         }
         
         if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
-            activity.id == currentLiveActivityID
+            activity.id == liveActivityID
         }) {
             Task {
                 /// Update activity info
@@ -316,7 +416,7 @@ class TrainingSessionManager: ObservableObject {
         
         /// indexOfSet increased
         let newState: TrainingSessionState = .resting
-        let newSetNumber = currentIndexOfSet + 1
+        let newSetNumber = exerciseSetIndex + 1
         let newRestIntervals = currentExercise?.restIntevals ?? 0
         let newSetsProgress = Double(newSetNumber) / Double(currentExercise?.sets ?? 0)
         
@@ -328,15 +428,15 @@ class TrainingSessionManager: ObservableObject {
         
         DispatchQueue.main.async {
             self.state = newState
-            self.currentIndexOfSet = newSetNumber
+            self.exerciseSetIndex = newSetNumber
             self.restStartTime = currentTime
             self.restIntervals = newRestIntervals
-            self.currentSetsProgress = newSetsProgress
+            self.exerciseSetCompletionProgress = newSetsProgress
         }
         
         /// Update Live Activity
         if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
-            activity.id == currentLiveActivityID
+            activity.id == liveActivityID
         }) {
             Task {
                 /// Update activity info
@@ -355,11 +455,11 @@ class TrainingSessionManager: ObservableObject {
         /// Update current exercise/set progress
         let completedSetsProgress = 1.0
         DispatchQueue.main.async {
-            self.currentSetsProgress = completedSetsProgress
+            self.exerciseSetCompletionProgress = completedSetsProgress
             
             /// Update Live Activity
             if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
-                activity.id == self.currentLiveActivityID
+                activity.id == self.liveActivityID
             }) {
                 Task {
                     /// Update activity info
@@ -372,7 +472,7 @@ class TrainingSessionManager: ObservableObject {
         
         /// Go to next arranged exercise
         let newState: TrainingSessionState = .resting
-        let newStage = currentStage + 1
+        let newStage = sessionStage + 1
         let newIndexOfSet = 0
         
         /// Set `currentTime` to current exercise's `endTime`
@@ -389,24 +489,24 @@ class TrainingSessionManager: ObservableObject {
         let newRestStartTime = Date.now
         let newRestIntervals = currentExercise?.restIntevals ?? 0
         let newSetsProgress = 0.0
-        let newProgress = Double(newStage) / Double(totalExerciseCount)
+        let newProgress = Double(newStage) / Double(exerciseCount)
         
         /// Schedule rest time notification
         scheduleNotification(timeInterval: newRestIntervals)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
             self.state = newState
-            self.currentStage = newStage
+            self.sessionStage = newStage
             self.currentExercise = newExercise
-            self.currentIndexOfSet = newIndexOfSet
+            self.exerciseSetIndex = newIndexOfSet
             self.restStartTime = newRestStartTime
             self.restIntervals = newRestIntervals
-            self.currentSetsProgress = newSetsProgress
-            self.currentProgress = newProgress
+            self.exerciseSetCompletionProgress = newSetsProgress
+            self.sessionProgress = newProgress
             
             /// Update Live Activity
             if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
-                activity.id == self.currentLiveActivityID
+                activity.id == self.liveActivityID
             }) {
                 Task {
                     /// Update activity info
@@ -443,10 +543,10 @@ extension TrainingSessionManager {
                                                                   startTime: startTime ?? .now,
                                                                   restStartTime: nil,
                                                                   restIntervals: nil,
-                                                                  indexOfSet: currentIndexOfSet,
-                                                                  currentSetsProgress: currentSetsProgress,
-                                                                  totalExerciseCount: totalExerciseCount,
-                                                                  currentStage: currentStage, 
+                                                                  indexOfSet: exerciseSetIndex,
+                                                                  currentSetsProgress: exerciseSetCompletionProgress,
+                                                                  totalExerciseCount: exerciseCount,
+                                                                  currentStage: sessionStage,
                                                                   completionType: -1)
         
         do {
@@ -454,9 +554,9 @@ extension TrainingSessionManager {
                                                                            content: .init(state: initialState, staleDate: nil),
                                                                            pushType: nil)
             /// Storing current live activity id for updating activity
-            currentLiveActivityID = activity.id
+            liveActivityID = activity.id
         } catch {
-            print(error.localizedDescription)
+            logger.log(error.localizedDescription, level: .error)
         }
     }
     

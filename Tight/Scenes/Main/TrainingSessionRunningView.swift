@@ -14,7 +14,7 @@ struct TrainingSessionRunningView: View {
         VStack {
             HStack(spacing: 16) {
                 /// Sets Progress
-                Text("\(trainingSessionManager.currentIndexOfSet + 1)")
+                Text("\(trainingSessionManager.exerciseSetIndex + 1)")
                     .foregroundStyle(Color.themeStyle.theme.white.opacity(0.8))
                     .font(.title3)
                     .fontWeight(.semibold)
@@ -28,14 +28,14 @@ struct TrainingSessionRunningView: View {
                                 .frame(width: 48, height: 48)
                             
                             Circle()
-                                .trim(from: 0, to: trainingSessionManager.currentSetsProgress)
+                                .trim(from: 0, to: trainingSessionManager.exerciseSetCompletionProgress)
                                 .stroke( // 1
                                     Color.themeStyle.theme.accent,
                                     lineWidth: 4
                                 )
                                 .frame(width: 48, height: 48)
                                 .rotationEffect(.degrees(-90))
-                                .animation(.easeInOut, value: trainingSessionManager.currentSetsProgress)
+                                .animation(.easeInOut, value: trainingSessionManager.exerciseSetCompletionProgress)
                         }
                     }
                     .padding(.leading, 16)
@@ -59,11 +59,11 @@ struct TrainingSessionRunningView: View {
             }
             .padding(.horizontal)
             .padding(.top, 8)
-            .padding(.bottom, trainingSessionManager.totalExerciseCount > 1 ? 0 : 12)
+            .padding(.bottom, trainingSessionManager.exerciseCount > 1 ? 0 : 12)
             
             /// Only display stage progress view arranged exercises more than `1`
-            if trainingSessionManager.totalExerciseCount > 1 {
-                StagesView(progress: trainingSessionManager.currentProgress)
+            if trainingSessionManager.exerciseCount > 1 {
+                StagesView(progress: trainingSessionManager.sessionProgress)
             }
         }
         .background(Color.themeStyle.theme.black.opacity(0.8))
