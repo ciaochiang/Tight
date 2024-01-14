@@ -55,6 +55,9 @@ struct PivotMainView: View {
             if viewModel.weeks.isEmpty {
                 viewModel.loadWeeks()
             }
+            
+            let screenName = String(describing: PivotMainView.self)
+            AnalyticsHelper.logScreen(screenName: screenName, screenClass: screenName)
         })
         
         // MARK: Bottom Sheet

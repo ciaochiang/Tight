@@ -86,6 +86,10 @@ struct CreateArrangedExerciseView: View {
                 arrangedExercise.restIntevals = defaultRestIntervals
                 arrangedExercise.sets = defaultSets
                 arrangedExercise.repetitions = defaultRepetitions
+                
+                /// Analytics
+                let screenName = String(describing: CreateArrangedExerciseView.self)
+                AnalyticsHelper.logScreen(screenName: screenName, screenClass: screenName)
             }
         }
     }
@@ -109,6 +113,18 @@ struct CreateArrangedExerciseView: View {
         }
         .disabled(arrangedExercise.exercise == .none)
         .opacity(arrangedExercise.exercise == .none ? 0.5 : 1)
+    }
+    
+    func addExercise(_ arrangedExercise: ArrangedExercise) {
+        plan.arrangedExercises.append(arrangedExercise)
+
+        /// Analytics
+        AnalyticsHelper.logEvent(eventName: "create_arranged_exercise", parameters: [
+            "exercise_name": arrangedExercise.exercise.name,
+            "exercise_reps": arrangedExercise.repetitions,
+            "exercise_sets": arrangedExercise.sets,
+            "exercise_rest_intervals": arrangedExercise.restIntevals
+        ])
     }
 }
 

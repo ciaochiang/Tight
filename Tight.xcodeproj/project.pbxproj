@@ -14,6 +14,7 @@
 		E553B9CF2B52BCED00BA0C61 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B08F72B41495000280FC4 /* Constants.swift */; };
 		E553B9D02B52C47400BA0C61 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7672B3DADCC00696968 /* Logger.swift */; };
 		E553B9D22B5395D900BA0C61 /* Date+ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553B9D12B5395D900BA0C61 /* Date+ExtensionTests.swift */; };
+		E553B9D42B53BEF600BA0C61 /* AnalyticsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553B9D32B53BEF600BA0C61 /* AnalyticsHelper.swift */; };
 		E554FB932B4837FA007AB30F /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E554FB922B4837FA007AB30F /* WidgetKit.framework */; };
 		E554FB952B4837FA007AB30F /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E554FB942B4837FA007AB30F /* SwiftUI.framework */; };
 		E554FB982B4837FA007AB30F /* TrainingSessionBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E554FB972B4837FA007AB30F /* TrainingSessionBundle.swift */; };
@@ -124,6 +125,7 @@
 		E509EA1B2B3EA53A0025E76C /* TightSchemaV1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TightSchemaV1.swift; sourceTree = "<group>"; };
 		E509EA1F2B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseTagPickerViewComponent.swift; sourceTree = "<group>"; };
 		E553B9D12B5395D900BA0C61 /* Date+ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ExtensionTests.swift"; sourceTree = "<group>"; };
+		E553B9D32B53BEF600BA0C61 /* AnalyticsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsHelper.swift; sourceTree = "<group>"; };
 		E554FB912B4837FA007AB30F /* TrainingSessionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TrainingSessionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E554FB922B4837FA007AB30F /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		E554FB942B4837FA007AB30F /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -323,6 +325,7 @@
 				E57FD7972B3DB0ED00696968 /* TabBarItemType.swift */,
 				E57FD7C52B3DB25200696968 /* UserPreference.swift */,
 				E59B08F72B41495000280FC4 /* Constants.swift */,
+				E553B9D32B53BEF600BA0C61 /* AnalyticsHelper.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -679,6 +682,7 @@
 			files = (
 				E57FD7C32B3DB1E500696968 /* ExerciseRestIntervalSliderViewComponent.swift in Sources */,
 				E57FD7902B3DB04400696968 /* NotificationManager.swift in Sources */,
+				E553B9D42B53BEF600BA0C61 /* AnalyticsHelper.swift in Sources */,
 				E57FD7A32B3DB13F00696968 /* Color+Extension.swift in Sources */,
 				E57FD7AF2B3DB18C00696968 /* PlanManagementView.swift in Sources */,
 				E57FD7682B3DADCC00696968 /* Logger.swift in Sources */,
