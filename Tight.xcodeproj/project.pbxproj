@@ -15,6 +15,7 @@
 		E553B9D02B52C47400BA0C61 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7672B3DADCC00696968 /* Logger.swift */; };
 		E553B9D22B5395D900BA0C61 /* Date+ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553B9D12B5395D900BA0C61 /* Date+ExtensionTests.swift */; };
 		E553B9D42B53BEF600BA0C61 /* AnalyticsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553B9D32B53BEF600BA0C61 /* AnalyticsHelper.swift */; };
+		E553B9D62B53ED2600BA0C61 /* TrainingSessionDailyReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553B9D52B53ED2600BA0C61 /* TrainingSessionDailyReportView.swift */; };
 		E554FB932B4837FA007AB30F /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E554FB922B4837FA007AB30F /* WidgetKit.framework */; };
 		E554FB952B4837FA007AB30F /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E554FB942B4837FA007AB30F /* SwiftUI.framework */; };
 		E554FB982B4837FA007AB30F /* TrainingSessionBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E554FB972B4837FA007AB30F /* TrainingSessionBundle.swift */; };
@@ -126,6 +127,7 @@
 		E509EA1F2B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseTagPickerViewComponent.swift; sourceTree = "<group>"; };
 		E553B9D12B5395D900BA0C61 /* Date+ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ExtensionTests.swift"; sourceTree = "<group>"; };
 		E553B9D32B53BEF600BA0C61 /* AnalyticsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsHelper.swift; sourceTree = "<group>"; };
+		E553B9D52B53ED2600BA0C61 /* TrainingSessionDailyReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionDailyReportView.swift; sourceTree = "<group>"; };
 		E554FB912B4837FA007AB30F /* TrainingSessionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TrainingSessionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E554FB922B4837FA007AB30F /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		E554FB942B4837FA007AB30F /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -380,6 +382,7 @@
 				E57FD7922B3DB0BE00696968 /* PivotMainView.swift */,
 				E57FD7932B3DB0BE00696968 /* PivotMainViewModel.swift */,
 				E5578C6B2B4E8FB4004947F2 /* TrainingSessionRunningView.swift */,
+				E553B9D52B53ED2600BA0C61 /* TrainingSessionDailyReportView.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -705,6 +708,7 @@
 				E57FD7772B3DAE3B00696968 /* ExperiementsProvider.swift in Sources */,
 				E57FD7712B3DAE0400696968 /* Error.swift in Sources */,
 				E5C1C6B82B4A5F3F0081B3EF /* TrainingSessionLiveActivity.swift in Sources */,
+				E553B9D62B53ED2600BA0C61 /* TrainingSessionDailyReportView.swift in Sources */,
 				E57FD7AD2B3DB18C00696968 /* TagLayout.swift in Sources */,
 				E59B08FD2B4292A900280FC4 /* ExerciseWeightViewComponent.swift in Sources */,
 				E562D6FB2B3DA34E000775B7 /* TightApp.swift in Sources */,

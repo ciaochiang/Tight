@@ -45,8 +45,14 @@ extension TimeInterval {
     }
     
     var formatIntervalToMinutesSeconds: String {
+        let hours = Int(self / 3600)
         let minutes = Int(self) / 60
         let seconds = Int(self) % 60
-        return String(format: "%02d:%02d", minutes, seconds)
+        
+        if hours > 0 {
+            return String(format: "%02d:%02d", hours, minutes)
+        } else {
+            return String(format: "%02d:%02d", minutes, seconds)
+        }
     }
 }

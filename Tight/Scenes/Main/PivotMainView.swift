@@ -214,6 +214,12 @@ struct PivotMainView: View {
     @ViewBuilder
     func ArrangedExercisesView() -> some View {
         List {
+            if let plan = viewModel.currentPlan, viewModel.currentPlan?.trainingLog != nil {
+                TrainingSessionDailyReportView(plan: plan)
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets())
+            }
+            
             ForEach($viewModel.arrangedExercises, id: \.self) { $exercise in
                 ArrangedExerciseCard(exercise: $exercise, isItemEditable: $isItemEditable)
                     .listRowSeparator(.hidden)
