@@ -34,7 +34,7 @@ struct PivotMainView: View {
             HeaderView()
             
             ///  Scheduled exercises
-            if viewModel.currentPlan?.arrangedExercises.isEmpty == true {
+            if viewModel.currentPlan.arrangedExercises.isEmpty == true {
                 PlaceholderView()
                     .veriticalSpacing(.center)
                     .horizontalSpacing(.center)
@@ -62,15 +62,12 @@ struct PivotMainView: View {
         
         // MARK: Bottom Sheet
         .sheet(isPresented: $isArrangingExercise, content: {
-            if let plan = viewModel.currentPlan {
-                CreateArrangedExerciseView(plan: plan,
-                                           incrementalOrderNumber: plan.arrangedExercises.count,
-                                           completion: { _ in
-                    viewModel.reloadArrangedExercises()
-                })
-                .presentationDetents([.height(420)])
-                .presentationCornerRadius(16)
-            }
+            CreateArrangedExerciseView(plan: viewModel.currentPlan,
+                                       incrementalOrderNumber: viewModel.currentPlan.arrangedExercises.count,
+                                       completion: { _ in
+            })
+            .presentationDetents([.height(420)])
+            .presentationCornerRadius(16)
         })
         .sheet(item: $exerciseToEdit) { exercise in
             EditArrangedExerciseView(arrangedExercise: exercise)
@@ -82,14 +79,9 @@ struct PivotMainView: View {
                 viewModel.importExercises(from: plan)
             }
         })
-        
-        // MARK: Observer
-        .onChange(of: viewModel.currentPlan, { oldValue, newValue in
-            viewModel.reloadArrangedExercises()
-        })
         .onChange(of: viewModel.selectedDate) { oldValue, newValue in
             /// Reload current plan when date changed
-            viewModel.currentPlan = viewModel.getPlan(by: newValue)
+            viewModel.onSelectedDate(newValue)
             
             /// If the `selectedDay` is `today` and `trainingSessionManager` is `running`
             /// then `disable` item editibility
@@ -214,9 +206,9 @@ struct PivotMainView: View {
     @ViewBuilder
     func ArrangedExercisesView() -> some View {
         List {
-            if let plan = viewModel.currentPlan, viewModel.currentPlan?.trainingLog != nil {
+            if viewModel.currentPlan.trainingLog != nil {
                 Section {
-                    TrainingSessionDailyReportView(plan: plan)
+                    TrainingSessionDailyReportView(plan: viewModel.currentPlan)
                         .listRowSeparator(.hidden)
                         .listRowInsets(EdgeInsets())
                 } header: {
@@ -229,8 +221,8 @@ struct PivotMainView: View {
             }
             
             Section {
-                ForEach($viewModel.arrangedExercises, id: \.self) { $exercise in
-                    ArrangedExerciseCard(exercise: $exercise, isItemEditable: $isItemEditable)
+                ForEach(viewModel.currentPlan.arrangedExercises.sorted(by: { $0.order < $1.order }), id: \.self) { exercise in
+                    ArrangedExerciseCard(exercise: exercise, isItemEditable: $isItemEditable)
                         .listRowSeparator(.hidden)
                         .listRowInsets(EdgeInsets())
                         .swipeActions(edge: .trailing) {
@@ -265,10 +257,8 @@ struct PivotMainView: View {
                         .allowsHitTesting(isItemEditable)
                 }
                 .onMove(perform: { indexSet, newOffset in
-                    viewModel.arrangedExercises.move(fromOffsets: indexSet, toOffset: newOffset)
-                    
                     /// Update all order number
-                    viewModel.updateOrderNumbers()
+                    viewModel.updateOrderNumbers(from: indexSet, to: newOffset)
                 })
             } header: {
                 Text("Exercises")
@@ -318,7 +308,7 @@ struct PivotMainView: View {
             /// Show strat button
             HStack(spacing: 4) {
                 /// Only dislay trainnin session button when the selected day is today.
-                if viewModel.selectedDate.isToday && viewModel.currentPlan?.arrangedExercises.isEmpty == false {
+                if viewModel.selectedDate.isToday && viewModel.currentPlan.arrangedExercises.isEmpty == false {
                     TrainingSessionStartButton()
                     Rectangle().fill(Color.themeStyle.theme.white.opacity(0.3)).frame(width: 1, height: 32)
                 }
@@ -327,7 +317,7 @@ struct PivotMainView: View {
                 Button(action: {
                     isArrangingExercise.toggle()
                 }) {
-                    if viewModel.currentPlan?.arrangedExercises.isEmpty == true || !viewModel.selectedDate.isToday {
+                    if viewModel.currentPlan.arrangedExercises.isEmpty == true || !viewModel.selectedDate.isToday {
                         Label(LocalizationProvider.addExercise.nameKey, systemImage: "plus")
                             .font(.headline)
                             .fontWeight(.semibold)
@@ -347,7 +337,7 @@ struct PivotMainView: View {
                             .frame(height: 44)
                     }
                 }
-                .frame(maxWidth: viewModel.currentPlan?.arrangedExercises.isEmpty == true || !viewModel.selectedDate.isToday ? .infinity : 80, alignment: .center)
+                .frame(maxWidth: viewModel.currentPlan.arrangedExercises.isEmpty == true || !viewModel.selectedDate.isToday ? .infinity : 80, alignment: .center)
             }
             .transition(.move(edge: .bottom))
             .background(Color.themeStyle.theme.accent)
@@ -362,15 +352,15 @@ struct PivotMainView: View {
     func TrainingSessionStartButton() -> some View {
         Button(action: {
             /// If user hasn't training yet, then start the training directly
-            if viewModel.currentPlan?.trainingLog == nil {
+            if viewModel.currentPlan.trainingLog == nil {
                 trainingSessionManager.startTrainingSession(plan: viewModel.currentPlan,
-                                                            arrangedExercises: viewModel.arrangedExercises)
+                                                            arrangedExercises: viewModel.currentPlan.arrangedExercises)
             } else {
                 /// Display confirmation dialog before `restart training`
                 isPresentingConfirm.toggle()
             }
         }) {
-            Label(viewModel.currentPlan?.trainingLog != nil
+            Label(viewModel.currentPlan.trainingLog != nil
                   ? LocalizationProvider.restartTraining.nameKey
                   : LocalizationProvider.startTraining.nameKey, systemImage: "flame.fill")
                 .horizontalSpacing(.center)
@@ -383,7 +373,7 @@ struct PivotMainView: View {
         .confirmationDialog("Are your sure?", isPresented: $isPresentingConfirm) {
             Button(LocalizationProvider.confirmRestartTraining.nameKey, role: .destructive) {
                 trainingSessionManager.startTrainingSession(plan: viewModel.currentPlan,
-                                                            arrangedExercises: viewModel.arrangedExercises)
+                                                            arrangedExercises: viewModel.currentPlan.arrangedExercises)
             }
             .fontWeight(.semibold)
         } message: {
