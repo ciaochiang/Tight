@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct ArrangedExerciseCard: View {
-    @Binding var exercise: ArrangedExercise
+    @Bindable var exercise: ArrangedExercise
     @Binding var isItemEditable: Bool
   
     var body: some View {
@@ -105,6 +105,6 @@ struct ArrangedExerciseCard: View {
 
 
 #Preview {
-    ArrangedExerciseCard(exercise: .constant(Mocks.mockArrangedExercise), isItemEditable: .constant(true))
+    ArrangedExerciseCard(exercise: Mocks.mockArrangedExercise, isItemEditable: .constant(true))
 }
 

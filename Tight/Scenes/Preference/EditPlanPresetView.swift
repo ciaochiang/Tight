@@ -9,21 +9,20 @@ import SwiftUI
 import SwiftData
 
 struct EditPlanPresetView: View {
+    @Environment(\.modelContext) var context
     @Bindable var plan: Plan
     @State private var isAdding: Bool = false
-    @State private var exercises: [ArrangedExercise]
     @State private var exerciseToEdit: ArrangedExercise?
     @State private var isItemEditable: Bool = true
     
     init(plan: Plan) {
         self.plan = plan
-        _exercises = .init(wrappedValue: plan.arrangedExercises.sorted { $0.order < $1.order })
     }
     
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 8) {
-                if exercises.isEmpty {
+                if plan.arrangedExercises.isEmpty {
                     PlaceholderView()
                         .veriticalSpacing(.center)
                         .offset(y: -32)
@@ -36,7 +35,7 @@ struct EditPlanPresetView: View {
             .navigationTitle(plan.name)
             .sheet(isPresented: $isAdding, content: {
                 CreateArrangedExerciseView(plan: plan, incrementalOrderNumber: plan.arrangedExercises.count, completion: { _ in
-                    exercises = plan.arrangedExercises.sorted { $0.order < $1.order }
+
                 })
                     .presentationDetents([.height(460)])
                     .presentationCornerRadius(16)
@@ -59,8 +58,8 @@ struct EditPlanPresetView: View {
     @ViewBuilder
     func ArrangedExercisesListView() -> some View {
         List {
-            ForEach($exercises, id: \.self) { $exercise in
-                ArrangedExerciseCard(exercise: $exercise, isItemEditable: $isItemEditable)
+            ForEach(plan.arrangedExercises.sorted(by: { $0.order < $1.order }), id: \.self) { exercise in
+                ArrangedExerciseCard(exercise: exercise, isItemEditable: $isItemEditable)
                     .veriticalSpacing(.center)
                     .listRowSeparator(.hidden)
                     .listRowInsets(EdgeInsets())
@@ -68,16 +67,7 @@ struct EditPlanPresetView: View {
                         Button(action: {
                             /// Delete items
                             withAnimation {
-                                if let index = exercises.firstIndex(where: { $0 == exercise }) {
-                                    exercises.remove(at: index)
-                                }
-                                
-                                if let index = plan.arrangedExercises.firstIndex(where: { $0 == exercise }) {
-                                    plan.arrangedExercises.remove(at: index)
-                                }
-                                
-                                updateOrderNumbers()
-                                exercises = plan.arrangedExercises.sorted { $0.order < $1.order }
+                                deleteExericse(exercise)
                             }
                         }) {
                             Image(systemName: "trash")
@@ -90,10 +80,7 @@ struct EditPlanPresetView: View {
                     }
             }
             .onMove(perform: { indexSet, newOffset in
-                exercises.move(fromOffsets: indexSet, toOffset: newOffset)
-                
-                /// Update all order number
-                updateOrderNumbers()
+                updateOrderNumbers(from: indexSet, to: newOffset)
             })
         }
         .padding(.top, 16)
@@ -130,12 +117,45 @@ struct EditPlanPresetView: View {
         }
     }
     
-    func updateOrderNumbers() {
-        for i in 0..<exercises.count {
-            let exercise = exercises[i]
-            exercise.order = i
+    func updateOrderNumbers(from indexSet: IndexSet, to offset: Int) {
+        guard let itemIndex = indexSet.first else { return }
+            
+        var exercises = plan.arrangedExercises.sorted(by: { $0.order < $1.order })
+                
+        // Ensure that the provided offset is within a valid range
+        if offset < 0 || offset > exercises.count {
+            return
         }
         
+        // Remove the moved item from the exercises array
+        let movedExercise = exercises.remove(at: itemIndex)
+        
+        // Insert the moved item at the new position (offset)
+        
+        if offset > itemIndex  {
+            exercises.insert(movedExercise, at: offset - 1)
+        } else {
+            exercises.insert(movedExercise, at: offset)
+        }
+        
+        // Update the order numbers of all exercises in the updated array
+        for (index, exercise) in exercises.enumerated() {
+            exercise.order = index
+        }
+        
+        // Assign the updated exercises array back to your currentPlan
         plan.arrangedExercises = exercises
+    }
+    
+    func deleteExericse(_ exercise: ArrangedExercise) {
+        if let index = plan.arrangedExercises.firstIndex(where: { $0 == exercise }) {
+            plan.arrangedExercises.remove(at: index)
+            context.delete(exercise)
+        }
+
+        // Update the order numbers of all exercises in the updated array
+        for (index, exercise) in plan.arrangedExercises.enumerated() {
+            exercise.order = index
+        }
     }
 }

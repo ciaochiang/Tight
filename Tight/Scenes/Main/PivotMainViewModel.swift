@@ -13,37 +13,50 @@ class PivotMainViewModel: ObservableObject {
     var context: ModelContext
     var logger: CustomLogger
     @Published var selectedDate: Date
-    @Published var currentPlan: Plan?
-    
+    @Published var currentPlan: Plan
     @Published var createWeek: Bool = false
     @Published var weeks: [[Date.Weekday]] = []
     @Published var currentWeekIndex: Int = 1
     
-    @Published var arrangedExercises: [ArrangedExercise] = []
-
     init(context: ModelContext, logger: CustomLogger = CustomLogger(), currentDate: Date = .init()) {
         self.context = context
         self.logger = logger
         self.selectedDate = currentDate
-        self.currentPlan = getPlan(by: currentDate)
-        self.arrangedExercises = self.currentPlan?.arrangedExercises.sorted { $0.order < $1.order } ?? []
+        self.currentPlan = PivotMainViewModel.getPlan(context: context, by: currentDate)
     }
     
     func incrementOrderNumber() -> Int {
-        guard currentPlan?.arrangedExercises.isEmpty == false else {
-            return 0
-        }
-        
-        return currentPlan?.arrangedExercises.count ?? 0
+        return currentPlan.arrangedExercises.count
     }
     
-    func updateOrderNumbers() {
-        for i in 0..<arrangedExercises.count {
-            let exercise = arrangedExercises[i]
-            exercise.order = i
+    func updateOrderNumbers(from indexSet: IndexSet, to offset: Int) {
+        guard let itemIndex = indexSet.first else { return }
+            
+        var exercises = currentPlan.arrangedExercises.sorted(by: { $0.order < $1.order })
+                
+        // Ensure that the provided offset is within a valid range
+        if offset < 0 || offset > exercises.count {
+            return
         }
         
-        currentPlan?.arrangedExercises = arrangedExercises
+        // Remove the moved item from the exercises array
+        let movedExercise = exercises.remove(at: itemIndex)
+        
+        // Insert the moved item at the new position (offset)
+        
+        if offset > itemIndex  {
+            exercises.insert(movedExercise, at: offset - 1)
+        } else {
+            exercises.insert(movedExercise, at: offset)
+        }
+        
+        // Update the order numbers of all exercises in the updated array
+        for (index, exercise) in exercises.enumerated() {
+            exercise.order = index
+        }
+        
+        // Assign the updated exercises array back to your currentPlan
+        currentPlan.arrangedExercises = exercises
     }
     
     /// Load Weeks
@@ -61,26 +74,31 @@ class PivotMainViewModel: ObservableObject {
         }
     }
     
+    func onSelectedDate(_ date: Date) {
+        selectedDate = date
+        currentPlan = PivotMainViewModel.getPlan(context: context, by: date)
+    }
+    
     /// Get  plan by date
-    func getPlan(by date: Date) -> Plan {
-        if let plan = fetchPlan(by: date) {
+    static func getPlan(context: ModelContext, by date: Date) -> Plan {
+        if let plan = PivotMainViewModel.fetchPlan(context: context, by: date) {
             return plan
         }
         else {
-            let plan = createNewPlan(by: date)
+            let plan = PivotMainViewModel.createNewPlan(context: context, by: date)
             return plan
         }
     }
     
     /// Create new plan
-    func createNewPlan(by date: Date) -> Plan {
+    static func createNewPlan(context: ModelContext, by date: Date) -> Plan {
         let plan = Plan(name: "", startDate: date, repeats: [], duration: 0, updatedDate: .init(), createdDate: .init(), tags: [], isPreset: false)
         context.insert(plan)
         return plan
     }
     
     /// Get current plan by date
-    func fetchPlan(by date: Date) -> Plan? {
+    static func fetchPlan(context: ModelContext,by date: Date) -> Plan? {
         let calendar = Calendar.current
         let startDate = calendar.startOfDay(for: date)
         guard let endDate = calendar.date(byAdding: .day, value: 1, to: startDate) else { return nil }
@@ -94,6 +112,7 @@ class PivotMainViewModel: ObservableObject {
             return plans.first
         }
         catch {
+            let logger = CustomLogger()
             logger.log(error.localizedDescription, level: .error)
             return nil
         }
@@ -118,16 +137,15 @@ class PivotMainViewModel: ObservableObject {
     }
     
     func deleteExercise(exercise: ArrangedExercise) {
-        if let index = arrangedExercises.firstIndex(where: { $0 == exercise }) {
-            arrangedExercises.remove(at: index)
+        if let index = currentPlan.arrangedExercises.firstIndex(where: { $0 == exercise }) {
+            currentPlan.arrangedExercises.remove(at: index)
+            context.delete(exercise)
         }
-
-        updateOrderNumbers()
-        reloadArrangedExercises()
-    }
-    
-    func reloadArrangedExercises() {
-        arrangedExercises = currentPlan?.arrangedExercises.sorted { $0.order < $1.order } ?? []
+        
+        // Update the order numbers of all exercises in the updated array
+        for (index, exercise) in currentPlan.arrangedExercises.enumerated() {
+            exercise.order = index
+        }
     }
     
     /// Import exercises from plan
@@ -145,8 +163,7 @@ class PivotMainViewModel: ObservableObject {
                                                isCompleted: false)
             newExercises.append(newExercise)
         }
-        currentPlan?.arrangedExercises = newExercises
-        reloadArrangedExercises()
+        currentPlan.arrangedExercises = newExercises
     }
 }
 
