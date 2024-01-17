@@ -143,7 +143,7 @@ class PivotMainViewModel: ObservableObject {
         }
         
         // Update the order numbers of all exercises in the updated array
-        for (index, exercise) in currentPlan.arrangedExercises.enumerated() {
+        for (index, exercise) in currentPlan.arrangedExercises.sorted(by: { $0.order < $1.order }).enumerated() {
             exercise.order = index
         }
     }
@@ -163,7 +163,9 @@ class PivotMainViewModel: ObservableObject {
                                                isCompleted: false)
             newExercises.append(newExercise)
         }
-        currentPlan.arrangedExercises = newExercises
+        
+        currentPlan.arrangedExercises = newExercises.sorted(by: { $0.order < $1.order })
+        try? context.save()
     }
 }
 

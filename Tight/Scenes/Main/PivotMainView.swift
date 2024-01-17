@@ -221,7 +221,7 @@ struct PivotMainView: View {
             }
             
             Section {
-                ForEach(viewModel.currentPlan.arrangedExercises.sorted(by: { $0.order < $1.order }), id: \.self) { exercise in
+                ForEach(viewModel.currentPlan.arrangedExercises.sorted(by: { $0.order < $1.order })) { exercise in
                     ArrangedExerciseCard(exercise: exercise, isItemEditable: $isItemEditable)
                         .listRowSeparator(.hidden)
                         .listRowInsets(EdgeInsets())

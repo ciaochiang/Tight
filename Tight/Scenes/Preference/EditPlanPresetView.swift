@@ -58,7 +58,7 @@ struct EditPlanPresetView: View {
     @ViewBuilder
     func ArrangedExercisesListView() -> some View {
         List {
-            ForEach(plan.arrangedExercises.sorted(by: { $0.order < $1.order }), id: \.self) { exercise in
+            ForEach(plan.arrangedExercises.sorted(by: { $0.order < $1.order })) { exercise in
                 ArrangedExerciseCard(exercise: exercise, isItemEditable: $isItemEditable)
                     .veriticalSpacing(.center)
                     .listRowSeparator(.hidden)
@@ -154,7 +154,7 @@ struct EditPlanPresetView: View {
         }
 
         // Update the order numbers of all exercises in the updated array
-        for (index, exercise) in plan.arrangedExercises.enumerated() {
+        for (index, exercise) in plan.arrangedExercises.sorted(by: { $0.order < $1.order }).enumerated() {
             exercise.order = index
         }
     }
