@@ -77,30 +77,26 @@ struct TrainingSessionLiveActivity: Widget {
                         .padding(.vertical, 40)
                         .padding(.horizontal)
                 } else {
-                    HStack {
-                        ElapsedTimeView(context: context)
-                        Spacer()
+                    HStack(spacing: 16) {
                         SetsProgressView(context: context)
+                        ExerciseInfoView(context: context)
+                        ElapsedTimeView(context: context)
+                            .frame(width: 80)
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.top)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.vertical)
                     .padding(.horizontal)
-                    
-                    /// Only display when exercise count > 1
-                    if context.state.totalExerciseCount > 1 {
-                        StagesView(totalExerciseCount: context.state.totalExerciseCount,
-                                   currentStage: context.state.currentStage)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.horizontal)
-                    }
                     
                     ControlsView(context: context)
                         .padding(.horizontal)
-                        .padding(.bottom)
+                        .padding(.bottom, 4)
+                    
+                    LinearProgressView(progress: context.state.totoalProgress)
                 }
             }
             .frame(maxWidth: .infinity)
             .activitySystemActionForegroundColor(Color.themeStyle.theme.accent)
+            .background(Color.themeStyle.theme.background)
             
         } dynamicIsland: { context in
             DynamicIsland {
@@ -121,32 +117,21 @@ struct TrainingSessionLiveActivity: Widget {
                 }
                 
                 DynamicIslandExpandedRegion(.bottom) {
-                    if context.state.completionType > -1 {  /// -1 is initial state
-                        Text(context.state.completionType == 0
-                             ? LocalizationProvider.abortCompletionMessage.nameKey
-                             : LocalizationProvider.doneCompletionMessage.nameKey)
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.bottom)
-                    } else {
-                        VStack {
-                            /// Only display when exercise count > 1
-                            if context.state.totalExerciseCount > 1 {
-                                StagesView(totalExerciseCount: context.state.totalExerciseCount,
-                                           currentStage: context.state.currentStage)
-                                .padding(.vertical, 4)
-                            }
-
-                            ControlsView(context: context)
-                                .padding(.leading, 2)
-                        }
-                        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
+                    VStack {
+                        LinearProgressView(progress: context.state.totoalProgress)
+                        DynamicIslandExerciseInfoView(context: context)
+                            .padding(.bottom, 8)
+                        ControlsView(context: context)
                     }
+                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
                 }
             } compactLeading: {
-                Text(context.state.startTime, style: .timer)
-                    .contentTransition(.numericText())
+                HStack {
+                    CircularProgressView(progress: context.state.totoalProgress)
+                        .progressViewStyle(.circular)
+                    Text(context.state.startTime, style: .timer)
+                        .contentTransition(.numericText())
+                }
             } compactTrailing: {
                 SetsProgressView(context: context)
                     .frame(width: 24, height: 24)
@@ -172,22 +157,7 @@ struct TrainingSessionLiveActivity: Widget {
         VStack(spacing: 4) {
             if context.state.restStartTime != nil {
                 Text(LocalizationProvider.breakTimeTitle.nameKey)
-                    .font(.title2)
-                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                    .minimumScaleFactor(0.8)
-                    .foregroundColor(Color.themeStyle.theme.primaryTextColor)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Text(LocalizationProvider.breakTimeSubtitle.nameKey)
-                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
-                    .font(.subheadline)
-                    .minimumScaleFactor(0.8)
-                    .fontWeight(.semibold)
-                    .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
-            }
-            else {
-                Text(context.state.currentExerciseName)
-                    .font(.title2)
+                    .font(.headline)
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .minimumScaleFactor(0.8)
                     .foregroundColor(Color.themeStyle.theme.primaryTextColor)
@@ -195,12 +165,65 @@ struct TrainingSessionLiveActivity: Widget {
                 
                 Text("\(Int(context.state.weight))kg x \(Int(context.state.repetition))")
                     .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
-                    .font(.subheadline)
+                    .font(.footnote)
                     .minimumScaleFactor(0.8)
                     .fontWeight(.semibold)
                     .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
             }
+            else {
+                Text(context.state.currentExerciseName)
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.leading)
+                    .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Text("\(Int(context.state.weight))kg x \(Int(context.state.repetition))")
+                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
+                    .font(.subheadline)
+                    .minimumScaleFactor(0.8)
+                    .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
+            }
         }
+    }
+    
+    @ViewBuilder
+    func DynamicIslandExerciseInfoView(context: ActivityViewContext<TrainingSessionAttributes>) -> some View {
+        HStack(spacing: 4) {
+            if context.state.restStartTime != nil {
+                Text(LocalizationProvider.breakTimeTitle.nameKey)
+                    .font(.headline)
+                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                    .minimumScaleFactor(0.8)
+                    .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Text("\(Int(context.state.weight))kg x \(Int(context.state.repetition))")
+                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
+                    .font(.footnote)
+                    .minimumScaleFactor(0.8)
+                    .fontWeight(.semibold)
+                    .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
+            }
+            else {
+                Text(context.state.currentExerciseName)
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .lineLimit(nil)
+                    .multilineTextAlignment(.leading)
+                    .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                
+                Text("\(Int(context.state.weight))kg x \(Int(context.state.repetition))")
+                    .frame(maxWidth: 80, alignment: .trailing)
+                    .font(.subheadline)
+                    .minimumScaleFactor(0.8)
+                    .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
+            }
+        }
+        .frame(maxWidth: .infinity)
     }
     
     @ViewBuilder
@@ -213,8 +236,7 @@ struct TrainingSessionLiveActivity: Widget {
                     .fontWeight(.bold)
                     .tracking(1.4)
                     .minimumScaleFactor(0.8)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .foregroundColor(Color.blue)
+                    .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
                     .contentTransition(.numericText(countsDown: true))
             }
             else {
@@ -223,7 +245,6 @@ struct TrainingSessionLiveActivity: Widget {
                     .fontWeight(.bold)
                     .tracking(1.4)
                     .minimumScaleFactor(0.8)
-                    .frame(maxWidth: .infinity, alignment: .leading)
                     .foregroundColor(Color.themeStyle.theme.primaryTextColor)
                     .contentTransition(.numericText())
             }
@@ -233,58 +254,52 @@ struct TrainingSessionLiveActivity: Widget {
     @ViewBuilder
     func ControlsView(context: ActivityViewContext<TrainingSessionAttributes>) -> some View {
         HStack {
-            ExerciseInfoView(context: context)
-            Spacer()
-            
             Button(intent: StopTrainingSession()) {
                 Image(systemName: "stop.fill")
+                    .padding(.horizontal, 60)
+                    .padding(.vertical, 4)
             }
             .tint(Color.themeStyle.theme.accent)
+            
+            Spacer()
             
             if context.state.restStartTime != nil {
                 Button(intent: SkipRest()) {
                     Image(systemName: "chevron.forward.2")
+                        .padding(.horizontal, 60)
+                        .padding(.vertical, 4)
                 }
-                .tint(Color.blue)
+                .tint(Color.themeStyle.theme.secondaryTextColor)
             }
             else {
                 Button(intent: CompleteSet(id: context.state.currentExerciseID)) {
                     Image(systemName: "checkmark.square.fill")
+                        .padding(.horizontal, 60)
+                        .padding(.vertical, 4)
                 }
                 .tint(Color.themeStyle.theme.secondaryAccent)
             }
         }
     }
-
+    
     @ViewBuilder
-    func StagesView(totalExerciseCount: Int, currentStage: Int) -> some View {
-        GeometryReader(content: { geometry in
-            let progress = CGFloat(currentStage) / CGFloat(totalExerciseCount - 1)
-            
-            ZStack {
-                Rectangle()
-                    .fill(.white.opacity(0.3))
-                    .frame(height: 4)
-                    .padding(.horizontal, 4)
-                
-                Rectangle()
-                    .fill(Color.themeStyle.theme.accent)
-                    .frame(height: 4)
-                    .frame(width: (geometry.frame(in: .global).width * progress), alignment: .leading)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 4)
-                
-                HStack {
-                    ForEach(0..<totalExerciseCount, id: \.self) { i in
-                        BreathCircleView(isCurrentStage: i == currentStage, isPendingStage: i > currentStage)
-
-                        if i < totalExerciseCount - 1 {
-                            Spacer()
-                        }
-                    }
-                }
-            }
-        })
+    func LinearProgressView(progress: Double) -> some View {
+        ProgressView(value: progress)
+            .progressViewStyle(.linear)
+            .background(Color.white.opacity(0.7))
+            .tint(Color.themeStyle.theme.accent)
+            .animation(.easeInOut, value: progress)
+    }
+    
+    @ViewBuilder
+    func CircularProgressView(progress: Double) -> some View {
+        let percentage = progress * 100
+        
+        ProgressView(value: progress) {
+            Text(String(format: "%.0f", percentage))
+        }
+            .progressViewStyle(CircularProgressViewStyle(tint: Color.themeStyle.theme.accent))
+            .animation(.easeInOut, value: progress)
     }
 }
 
@@ -317,14 +332,13 @@ extension TrainingSessionAttributes {
 extension TrainingSessionAttributes.ContentState {
     fileprivate static var initial: TrainingSessionAttributes.ContentState {
         TrainingSessionAttributes.ContentState(currentExerciseID: "123",
-                                               currentExerciseName: "Bench Press",
+                                               currentExerciseName: "Bulgarian Split Squat",
                                                weight: 50,
                                                repetition: 10,
                                                startTime: .now,
                                                indexOfSet: 0,
                                                currentSetsProgress: 0.3,
-                                               totalExerciseCount: 3, 
-                                               currentStage: 1,
+                                               totoalProgress: 0.3,
                                                completionType: -1)
      }
      
@@ -336,8 +350,7 @@ extension TrainingSessionAttributes.ContentState {
                                                 startTime: .now,
                                                 indexOfSet: 0,
                                                 currentSetsProgress: 0.3,
-                                                totalExerciseCount: 3,
-                                                currentStage: 1,
+                                                totoalProgress: 0.3,
                                                 completionType: -1)
      }
 }

@@ -30,8 +30,7 @@ struct TrainingSessionAttributes: ActivityAttributes {
         var currentSetsProgress: Double
         
         ///  For total  progress
-        var totalExerciseCount: Int
-        var currentStage: Int
+        var totoalProgress: Double
         
         /// Completion
         var completionType: Int     /// 0: Abort 1: Done

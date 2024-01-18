@@ -245,10 +245,10 @@ struct PivotMainView: View {
                                     /// Delete items
                                     exercise.isCompleted.toggle()
                                 }) {
-                                    Image(systemName: "checkmark")
+                                    Image(systemName: "checkmark.circle.fill")
                                         .symbolVariant(/*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
                                 }
-                                .tint(exercise.isCompleted ? Color.themeStyle.theme.secondaryAccent : Color.themeStyle.theme.secondaryTextColor)
+                                .tint(exercise.isCompleted ? Color.themeStyle.theme.secondaryAccent : Color.themeStyle.theme.background)
                             }
                         }
                         .onTapGesture {

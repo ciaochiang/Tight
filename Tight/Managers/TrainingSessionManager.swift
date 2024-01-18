@@ -511,10 +511,9 @@ class TrainingSessionManager: ObservableObject {
                 Task {
                     /// Update activity info
                     var contentState = activity.content.state
-                    contentState.currentStage = newStage
                     contentState.currentExerciseID = newExercise.id.uuidString
                     contentState.currentExerciseName = newExercise.exercise.name
-                    contentState.currentStage = newStage
+                    contentState.totoalProgress = newProgress
                     contentState.indexOfSet = newIndexOfSet
                     contentState.currentSetsProgress = newSetsProgress
                     contentState.weight = newExercise.weight
@@ -545,8 +544,7 @@ extension TrainingSessionManager {
                                                                   restIntervals: nil,
                                                                   indexOfSet: exerciseSetIndex,
                                                                   currentSetsProgress: exerciseSetCompletionProgress,
-                                                                  totalExerciseCount: exerciseCount,
-                                                                  currentStage: sessionStage,
+                                                                  totoalProgress: 0,
                                                                   completionType: -1)
         
         do {

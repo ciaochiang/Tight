@@ -27,7 +27,7 @@ struct ArrangedExerciseCard: View {
             ExerciseDetailsView().horizontalSpacing(.leading)
             
             if !exercise.tags.isEmpty {
-                ExerciseTagsView().horizontalSpacing(.leading)
+                ExerciseTagsView().horizontalSpacing(.leading).padding(.top, 8)
             }
         }
         .horizontalSpacing(.leading)
@@ -39,37 +39,54 @@ struct ArrangedExerciseCard: View {
         HStack(alignment: .center, spacing: 16) {
             HStack {
                 Image(systemName: "figure.strengthtraining.traditional")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 16)
+                    .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
                     .opacity(isItemEditable ? 1.0 : 0.4)
+                    
                 Text("\(String(format: "%1.f", exercise.weight)) \(WeightUnit(rawValue: exercise.weightUnit)?.name ?? "")")
-                    .font(.caption)
-                    .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+                    .font(.footnote)
+                    .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
                     .opacity(isItemEditable ? 1.0 : 0.4)
             }
             
             HStack {
                 Image(systemName: "repeat")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 12)
+                    .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
                     .opacity(isItemEditable ? 1.0 : 0.4)
                 Text("\(Int(exercise.repetitions))")
-                    .font(.caption)
-                    .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+                    .font(.footnote)
+                    .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
                     .opacity(isItemEditable ? 1.0 : 0.4)
             }
             
             HStack {
                 Image(systemName: "square.stack.3d.down.right")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 18)
+                    .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
                     .opacity(isItemEditable ? 1.0 : 0.4)
                 Text("\(Int(exercise.sets))")
-                    .font(.caption)
-                    .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+                    .font(.footnote)
+                    .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
                     .opacity(isItemEditable ? 1.0 : 0.4)
             }
             
             HStack {
                 Image(systemName: "clock")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 14)
+                    .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
                     .opacity(isItemEditable ? 1.0 : 0.4)
                 Text(exercise.restIntevals.formatIntervalToMinutesSeconds)
-                    .font(.caption)
-                    .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+                    .font(.footnote)
+                    .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
                     .opacity(isItemEditable ? 1.0 : 0.4)
             }
         }
@@ -78,6 +95,7 @@ struct ArrangedExerciseCard: View {
     @ViewBuilder
     func ExerciseNameView() -> some View {
         Text(exercise.exercise.name)
+            .font(.headline)
             .fontWeight(.semibold)
             .foregroundStyle(exercise.isCompleted ? Color.themeStyle.theme.secondaryAccent : Color.themeStyle.theme.primaryTextColor)
             .opacity(isItemEditable ? 1.0 : 0.4)
@@ -89,8 +107,8 @@ struct ArrangedExerciseCard: View {
             ForEach(exercise.tags, id: \.self) { int in
                 VStack {
                     Text(ExerciseTag(rawValue: int)?.namekey ?? "")
-                        .font(.caption2)
-                        .fontWeight(.semibold)
+                        .font(.footnote)
+                        .fontWeight(.medium)
                         .background(.clear)
                         .padding(.vertical, 2)
                         .padding(.horizontal, 6)

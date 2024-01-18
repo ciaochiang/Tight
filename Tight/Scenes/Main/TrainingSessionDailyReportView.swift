@@ -58,9 +58,10 @@ struct TrainingSessionDailyReportView: View {
         VStack {
             Text(value)
                 .font(.headline.bold())
-                .foregroundStyle(Color.themeStyle.theme.primary)
+                .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
             Text(name)
                 .font(.footnote)
+                .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
         }
     }
     

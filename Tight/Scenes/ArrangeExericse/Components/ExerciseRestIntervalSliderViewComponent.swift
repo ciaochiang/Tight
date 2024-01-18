@@ -13,15 +13,15 @@ struct ExerciseRestIntervalSliderViewComponent: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(LocalizationProvider.restIntervals.nameKey)
-                .font(.subheadline)
+                .font(.footnote)
                 .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
             
             HStack(alignment: .center, spacing: 8) {
                 Text(arrangedExercise.restIntevals.formatIntervalToMinutesSeconds)
-                    .font(.subheadline)
+                    .font(.headline)
                     .fontWeight(.semibold)
                     .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
-                    .frame(width: 48, alignment: .leading)
+                    .frame(width: 52, alignment: .leading)
                 
                 Slider(value: $arrangedExercise.restIntevals, in: 30...180, step: 10.0)
                     .accentColor(Color.themeStyle.theme.accent)

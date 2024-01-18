@@ -14,7 +14,7 @@ struct ExerciseSelectorViewComponent: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(LocalizationProvider.exercise.nameKey)
-                .font(.subheadline)
+                .font(.footnote)
                 .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
             
             Button(action: {
@@ -22,7 +22,7 @@ struct ExerciseSelectorViewComponent: View {
                 isPresented.toggle()
             }) {
                 Text(arrangedExericse.exercise.name)
-                    .font(.subheadline)
+                    .font(.headline)
                     .fontWeight(.semibold)
                     .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
                     .frame(maxWidth: .infinity, alignment: .leading)

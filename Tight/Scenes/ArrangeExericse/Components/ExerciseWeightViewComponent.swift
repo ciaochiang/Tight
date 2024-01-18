@@ -15,16 +15,16 @@ struct ExerciseWeightViewComponent: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(LocalizationProvider.weight.nameKey)
-                .font(.subheadline)
+                .font(.footnote)
                 .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
             
             HStack(alignment: .center, spacing: 8) {
                 TextField("0", value: $arrangedExercise.weight, format: .number)
-                    .font(.subheadline)
+                    .font(.headline)
                     .keyboardType(.numberPad)
                 
                 Text(WeightUnit(rawValue: arrangedExercise.weightUnit)?.name ?? "")
-                    .font(.subheadline)
+                    .font(.headline)
                     .fontWeight(.semibold)
                     .contentShape(Rectangle())
                     .onTapGesture {
