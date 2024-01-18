@@ -28,6 +28,8 @@ enum LocalizationProvider {
     case notification
     case allowReceive
     case preferences
+    case volume
+    case duration
     
     /// Onboarding
     case onboardingWelcomeDescription
@@ -80,6 +82,10 @@ enum LocalizationProvider {
     case notificationRestTimeDoneTitle
     case notificationRestTimeDoneDescription
     
+    /// Section Header
+    case sectionDailySummary
+    case sectionExercises
+    
     var localizedString: String {
         return String(localized: localizationValue)
     }
@@ -119,6 +125,8 @@ enum LocalizationProvider {
         case .notification: return "common_key_notification"
         case .allowReceive: return "common_key_allow_receive"
         case .preferences: return "common_key_perferences"
+        case .volume: return "common_key_volume"
+        case .duration: return "common_key_duration"
             
             
         /// Onboarding
@@ -171,6 +179,10 @@ enum LocalizationProvider {
         /// Notification
         case .notificationRestTimeDoneTitle: return "notification_rest_time_done_title"
         case .notificationRestTimeDoneDescription: return "notification_rest_time_done_description"
+            
+        /// Section
+        case .sectionDailySummary: return "section_daily_summary"
+        case .sectionExercises: return "section_exercises"
         }
     }
 }

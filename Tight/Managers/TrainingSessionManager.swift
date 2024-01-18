@@ -137,12 +137,9 @@ class TrainingSessionManager: ObservableObject {
         /// - Create a training log if it's not existed or update existing one
         /// - Set  `currentTime` to  current exercise's `startTime`
         let currentTime = Date.now
-        if let trainingLog = plan?.trainingLog {
-            trainingLog.startTime = currentTime
-        } else {
-            let trainingLog = TrainingLog(startTime: currentTime)
-            plan?.trainingLog = trainingLog
-        }
+        let trainingLog = TrainingLog(startTime: currentTime)
+        trainingLog.startTime = currentTime
+        plan?.trainingLog = trainingLog
         currentExercise?.startTime = currentTime
         
         /// Remove existing activity

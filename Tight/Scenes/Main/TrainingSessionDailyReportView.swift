@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TrainingSessionDailyReportView: View {
     @Bindable var plan: Plan
+    @Binding var isDataChanged: Bool
     @State var duration: TimeInterval = 0
     @State var restIntervals: TimeInterval = 0
     @State var totalVolume: Measurement<UnitMass> = .init(value: 0, unit: .kilograms)
@@ -18,14 +19,14 @@ struct TrainingSessionDailyReportView: View {
     var body: some View {
         LazyVStack(spacing: 20) {
             HStack {
-                MetricWidget(value: duration.formatIntervalToMinutesSeconds, name: "Duration")
+                MetricWidget(value: duration.formatIntervalToMinutesSeconds, name: LocalizationProvider.duration.nameKey)
                     .padding(.vertical)
                     .horizontalSpacing(.center)
                 
-                MetricWidget(value: restIntervals.formatIntervalToMinutesSeconds, name: "Rest intervals")
+                MetricWidget(value: restIntervals.formatIntervalToMinutesSeconds, name: LocalizationProvider.restIntervals.nameKey)
                     .horizontalSpacing(.center)
                 
-                MetricWidget(value: "\(totalVolume.formmatedWeightValue(weightUnit: weightUnit))", name: "Volume")
+                MetricWidget(value: "\(totalVolume.formmatedWeightValue(weightUnit: weightUnit))", name: LocalizationProvider.volume.nameKey)
                     .horizontalSpacing(.center)
             }
             .background(Color.themeStyle.theme.secondaryBackground)
@@ -43,18 +44,27 @@ struct TrainingSessionDailyReportView: View {
                 weightUnit = unit
             }
             
-            calculateMetrics(plan: plan)
+            calculateTimeMetrics(plan: plan)
+            calculateVolumeMetric(plan: plan)
         }
         .onChange(of: plan) { oldValue, newValue in
-            calculateMetrics(plan: newValue)
+            calculateTimeMetrics(plan: plan)
+            calculateVolumeMetric(plan: plan)
         }
         .onChange(of: plan.trainingLog?.endTime) { oldValue, newValue in
-            calculateMetrics(plan: plan)
+            calculateTimeMetrics(plan: plan)
+            calculateVolumeMetric(plan: plan)
+        }
+        .onChange(of: isDataChanged) { oldValue, newValue in
+            if newValue {
+                calculateVolumeMetric(plan: plan)
+                isDataChanged = false
+            }
         }
     }
     
     @ViewBuilder
-    func MetricWidget(value: String, name: String) -> some View {
+    func MetricWidget(value: String, name: LocalizedStringKey) -> some View {
         VStack {
             Text(value)
                 .font(.headline.bold())
@@ -65,7 +75,7 @@ struct TrainingSessionDailyReportView: View {
         }
     }
     
-    func calculateMetrics(plan: Plan) {
+    func calculateTimeMetrics(plan: Plan) {
         /// Setup duration
         if let startTime = plan.trainingLog?.startTime, let endTime = plan.trainingLog?.endTime {
             self.duration = endTime.timeIntervalSince(startTime)
@@ -88,26 +98,28 @@ struct TrainingSessionDailyReportView: View {
         } else {
             self.restIntervals = 0
         }
-        
+    }
+    
+    func calculateVolumeMetric(plan: Plan) {
         /// Calculate total volume, use kg as base
-        var volumes: [Double] = []
+        var volumes: Measurement<UnitMass> = Measurement(value: 0, unit: UnitMass.kilograms)
         for exercise in plan.arrangedExercises {
             guard exercise.isCompleted else { continue }
             
             /// 0 is kilogram, 1 is pound
-            let weight = exercise.weightUnit == 0 ? exercise.weight : exercise.weight * 0.45359237
-            let volume = weight * exercise.sets * exercise.repetitions
-            volumes.append(volume)
+            let unit = exercise.weightUnit == 0 ? UnitMass.kilograms : UnitMass.pounds
+            let volume = exercise.weight * exercise.sets * exercise.repetitions
+            let measurmentValue = Measurement(value: volume, unit: unit)
+            volumes = volumes + measurmentValue
         }
-        
-        let totalVolumeKilograms = volumes.reduce(0, +)
-        let weightInKilogram = Measurement(value: totalVolumeKilograms, unit: UnitMass.kilograms)
-        totalVolume = weightInKilogram
+
+        totalVolume = volumes
     }
 }
 
 #Preview {
-    TrainingSessionDailyReportView(plan: Mocks.mockPlan)
+    @State var isDataChanged: Bool = false
+    return TrainingSessionDailyReportView(plan: Mocks.mockPlan, isDataChanged: $isDataChanged)
 }
 
 

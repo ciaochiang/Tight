@@ -14,6 +14,7 @@ struct EditPlanPresetView: View {
     @State private var isAdding: Bool = false
     @State private var exerciseToEdit: ArrangedExercise?
     @State private var isItemEditable: Bool = true
+    @State private var isDataChanged: Bool = false
     
     init(plan: Plan) {
         self.plan = plan
@@ -41,7 +42,7 @@ struct EditPlanPresetView: View {
                     .presentationCornerRadius(16)
             })
             .sheet(item: $exerciseToEdit) { exercise in
-                EditArrangedExerciseView(arrangedExercise: exercise, isPlanMode: true)
+                EditArrangedExerciseView(arrangedExercise: exercise, isDataChanged: $isDataChanged, isPlanMode: true)
                     .presentationDetents([.large])
                     .presentationCornerRadius(16)
             }

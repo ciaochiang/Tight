@@ -20,6 +20,7 @@ struct PivotMainView: View {
     @State private var showTrainingSessionRunningView: Bool = false
     @State private var isPresentingConfirm: Bool = false
     @State private var isItemEditable: Bool = true
+    @State private var isDataChanged: Bool = false
         
     /// Animation  namespace
     @Namespace private var animation
@@ -70,7 +71,7 @@ struct PivotMainView: View {
             .presentationCornerRadius(16)
         })
         .sheet(item: $exerciseToEdit) { exercise in
-            EditArrangedExerciseView(arrangedExercise: exercise)
+            EditArrangedExerciseView(arrangedExercise: exercise, isDataChanged: $isDataChanged)
                 .presentationDetents([.large])
                 .presentationCornerRadius(16)
         }
@@ -206,13 +207,13 @@ struct PivotMainView: View {
     @ViewBuilder
     func ArrangedExercisesView() -> some View {
         List {
-            if viewModel.currentPlan.trainingLog != nil {
+            if viewModel.showDailySummary {
                 Section {
-                    TrainingSessionDailyReportView(plan: viewModel.currentPlan)
+                    TrainingSessionDailyReportView(plan: viewModel.currentPlan, isDataChanged: $isDataChanged)
                         .listRowSeparator(.hidden)
                         .listRowInsets(EdgeInsets())
                 } header: {
-                    Text("Daily summary")
+                    Text(LocalizationProvider.sectionDailySummary.nameKey)
                         .font(.title)
                         .fontWeight(.bold)
                         .foregroundStyle(Color.themeStyle.theme.primary)
@@ -244,6 +245,7 @@ struct PivotMainView: View {
                                 Button(action: {
                                     /// Delete items
                                     exercise.isCompleted.toggle()
+                                    isDataChanged.toggle()
                                 }) {
                                     Image(systemName: "checkmark.circle.fill")
                                         .symbolVariant(/*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
@@ -261,7 +263,7 @@ struct PivotMainView: View {
                     viewModel.updateOrderNumbers(from: indexSet, to: newOffset)
                 })
             } header: {
-                Text("Exercises")
+                Text(LocalizationProvider.sectionExercises.nameKey)
                     .font(.title)
                     .fontWeight(.bold)
                     .foregroundStyle(Color.themeStyle.theme.primary)

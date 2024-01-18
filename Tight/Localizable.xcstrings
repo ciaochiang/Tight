@@ -257,6 +257,22 @@
         }
       }
     },
+    "common_key_duration" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duration"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "持續時間"
+          }
+        }
+      }
+    },
     "common_key_exercise" : {
       "localizations" : {
         "en" : {
@@ -481,6 +497,22 @@
         }
       }
     },
+    "common_key_volume" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volume"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "訓練量"
+          }
+        }
+      }
+    },
     "Complete Current Exercise" : {
 
     },
@@ -531,9 +563,6 @@
           }
         }
       }
-    },
-    "Daily summary" : {
-
     },
     "Exercise ID" : {
 
@@ -1737,9 +1766,6 @@
         }
       }
     },
-    "Exercises" : {
-
-    },
     "live_activity_key_abort_completion_message" : {
       "localizations" : {
         "en" : {
@@ -1883,6 +1909,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "例如: 上身, 燃脂.."
+          }
+        }
+      }
+    },
+    "section_daily_summary" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daily summary"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "每日摘要"
+          }
+        }
+      }
+    },
+    "section_exercises" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exercises"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "運動計畫"
           }
         }
       }

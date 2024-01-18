@@ -11,6 +11,7 @@ struct EditArrangedExerciseView: View {
     @Environment(\.dismiss) private var dismiss
     @Bindable var arrangedExercise: ArrangedExercise
     @State private var isPresented: Bool = false
+    @Binding var isDataChanged: Bool
     var isPlanMode: Bool = false
     
     var body: some View {
@@ -75,12 +76,28 @@ struct EditArrangedExerciseView: View {
                     .tint(Color.themeStyle.theme.primary)
                 }
             }
+            .onChange(of: arrangedExercise.weight) { oldValue, newValue in
+                if oldValue != newValue {
+                    isDataChanged.toggle()
+                }
+            }
+            .onChange(of: arrangedExercise.repetitions) { oldValue, newValue in
+                if oldValue != newValue {
+                    isDataChanged.toggle()
+                }
+            }
+            .onChange(of: arrangedExercise.sets) { oldValue, newValue in
+                if oldValue != newValue {
+                    isDataChanged.toggle()
+                }
+            }
         }
     }
 }
 
 
 #Preview {
+    @State var isDataChanged: Bool = false
     let previewContainer = PreviewContainer([ArrangedExercise.self])
-    return EditArrangedExerciseView(arrangedExercise: Mocks.mockArrangedExercise).modelContainer(previewContainer.container)
+    return EditArrangedExerciseView(arrangedExercise: Mocks.mockArrangedExercise, isDataChanged: $isDataChanged).modelContainer(previewContainer.container)
 }

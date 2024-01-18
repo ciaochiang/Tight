@@ -17,16 +17,22 @@ class PivotMainViewModel: ObservableObject {
     @Published var createWeek: Bool = false
     @Published var weeks: [[Date.Weekday]] = []
     @Published var currentWeekIndex: Int = 1
+    @Published var showDailySummary: Bool = false
     
     init(context: ModelContext, logger: CustomLogger = CustomLogger(), currentDate: Date = .init()) {
         self.context = context
         self.logger = logger
         self.selectedDate = currentDate
         self.currentPlan = PivotMainViewModel.getPlan(context: context, by: currentDate)
+        determineDailySummaryVisibility()
     }
     
     func incrementOrderNumber() -> Int {
         return currentPlan.arrangedExercises.count
+    }
+    
+    func determineDailySummaryVisibility() {
+        showDailySummary = currentPlan.trainingLog != nil || currentPlan.arrangedExercises.contains(where: { $0.isCompleted })
     }
     
     func updateOrderNumbers(from indexSet: IndexSet, to offset: Int) {
@@ -77,6 +83,7 @@ class PivotMainViewModel: ObservableObject {
     func onSelectedDate(_ date: Date) {
         selectedDate = date
         currentPlan = PivotMainViewModel.getPlan(context: context, by: date)
+        determineDailySummaryVisibility()
     }
     
     /// Get  plan by date
