@@ -129,7 +129,7 @@ extension Date {
         return fetchWeek(previousDate)
     }
     
-    struct Weekday: Identifiable {
+    struct Weekday: Identifiable, Equatable {
         var id: UUID = .init()
         var date: Date
     }

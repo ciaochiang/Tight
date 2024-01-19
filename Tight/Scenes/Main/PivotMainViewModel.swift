@@ -16,6 +16,7 @@ class PivotMainViewModel: ObservableObject {
     @Published var currentPlan: Plan
     @Published var createWeek: Bool = false
     @Published var weeks: [[Date.Weekday]] = []
+    @Published var plansOfWeeks: [Plan] = []
     @Published var currentWeekIndex: Int = 1
     @Published var showDailySummary: Bool = false
     
@@ -77,6 +78,30 @@ class PivotMainViewModel: ObservableObject {
         
         if let lastDate = currentWeek.last?.date {
             weeks.append(lastDate.createNextWeek())
+        }
+    }
+    
+    /// Load Plans of Weeks
+    func loadPlans(weeks: [[Date.Weekday]]) {
+        let dates = weeks.flatMap { $0.map { $0.date } }.sorted { $0 < $1 }
+        if let startDate = dates.first, let endDate = dates.last {
+            let plans = fetchPlans(context: context, startDate: startDate, endDate: endDate)
+            plansOfWeeks = plans
+        }
+    }
+    
+    func fetchPlans(context: ModelContext, startDate: Date, endDate: Date) -> [Plan] {
+        let fetchDescriptor = FetchDescriptor<Plan>(predicate: #Predicate<Plan> {
+            $0.startDate >= startDate && $0.startDate <= endDate && $0.isPreset == false
+        }, sortBy: [SortDescriptor(\.createdDate, order: .reverse)])
+        
+        do {
+            return try context.fetch(fetchDescriptor)
+        }
+        catch {
+            let logger = CustomLogger()
+            logger.log(error.localizedDescription, level: .error)
+            return []
         }
     }
     

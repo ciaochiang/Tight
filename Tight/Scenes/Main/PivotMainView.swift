@@ -103,6 +103,9 @@ struct PivotMainView: View {
                 showTrainingSessionRunningView = newValue != nil
             }
         }
+        .onChange(of: viewModel.weeks, { oldValue, newValue in
+            viewModel.loadPlans(weeks: newValue)
+        })
         .environmentObject(trainingSessionManager)
     }
     
@@ -175,6 +178,11 @@ struct PivotMainView: View {
                                     .frame(width: 5, height: 5)
                                     .veriticalSpacing(.bottom)
                                     .offset(y: 12)
+                            }
+                            
+                            if let plan = viewModel.plansOfWeeks.first(where: { $0.startDate == day.date }), plan.arrangedExercises.contains(where: { $0.isCompleted }) {
+                                Circle()
+                                    .stroke(Color.themeStyle.theme.accent, lineWidth: 2)
                             }
                         })
                         .background(.white.shadow(.drop(radius: 1)), in: .circle)
