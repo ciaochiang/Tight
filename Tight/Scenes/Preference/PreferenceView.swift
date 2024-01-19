@@ -30,7 +30,7 @@ struct PreferenceView: View {
     @AppStorage(Constants.DEFAULT_EXERCISE_REPETITIONS) var defaultRepetitions: Double = 10
     @AppStorage(Constants.DEFAULT_EXERCISE_REST_INTERVALS) var defaultRestIntervals: Double = 90
     @AppStorage(Constants.DEFAULT_EXERCISE_WEIGHT_UNIT) var defaultWeightUnit: Int = 0
-    @State private var isWeightUnitDialogPresented: Bool = false
+    @State private var unitSegementSelection: Int = 0
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -54,11 +54,6 @@ struct PreferenceView: View {
             .veriticalSpacing(.top)
             .navigationTitle(LocalizationProvider.settings.nameKey)
             .background(Color.themeStyle.theme.background)
-            .sheet(isPresented: $isWeightUnitDialogPresented) {
-                WeightUnitBottomSheetView(isSheetPresented: $isWeightUnitDialogPresented, weightUnit: $defaultWeightUnit)
-                    .background(.red)
-                    .presentationDetents([.height(180)])
-            }
         }
     }
     
@@ -67,6 +62,7 @@ struct PreferenceView: View {
         HStack {
             NavigationLink(destination: ExercisePickerView(title: LocalizationProvider.favorites.nameKey, isManaging: true, callback: nil)) {
                 Text(LocalizationProvider.favorites.nameKey)
+                    .font(.subheadline)
                     .frame(height: Constants.DEFAULT_LIST_ROW_HEIGHT)
                     .contentShape(Rectangle())
             }
@@ -79,6 +75,7 @@ struct PreferenceView: View {
         HStack {
             NavigationLink(destination: PlanManagementView()) {
                 Text(LocalizationProvider.plans.nameKey)
+                    .font(.subheadline)
                     .frame(height: Constants.DEFAULT_LIST_ROW_HEIGHT)
                     .contentShape(Rectangle())
             }
@@ -89,16 +86,18 @@ struct PreferenceView: View {
     func WeightUnitItem() -> some View {
         HStack {
             Text(LocalizationProvider.weightUnit.nameKey)
+                .font(.subheadline)
                 .frame(height: Constants.DEFAULT_LIST_ROW_HEIGHT)
             Spacer()
-            Text(WeightUnit(rawValue: defaultWeightUnit)?.name ?? "")
-                .font(.subheadline)
-                .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
-                .frame(height: Constants.DEFAULT_LIST_ROW_HEIGHT)
+            Picker("", selection: $unitSegementSelection) {
+                Text(WeightUnit.kilogram.name).tag(0)
+                Text(WeightUnit.pound.name).tag(1)
+            }
+            .frame(maxWidth: 120)
+            .pickerStyle(.segmented)
         }
-        .contentShape(Rectangle())
-        .onTapGesture {
-            isWeightUnitDialogPresented.toggle()
+        .onChange(of: unitSegementSelection) { oldValue, newValue in
+            defaultWeightUnit = newValue
         }
     }
     
@@ -107,6 +106,7 @@ struct PreferenceView: View {
         VStack(spacing: 8) {
             HStack {
                 Text(LocalizationProvider.repetitions.nameKey)
+                    .font(.subheadline)
                 Spacer()
                 Text("\(Int(defaultRepetitions))")
                     .font(.subheadline)
@@ -123,6 +123,7 @@ struct PreferenceView: View {
         VStack(spacing: 8) {
             HStack {
                 Text(LocalizationProvider.sets.nameKey)
+                    .font(.subheadline)
                 Spacer()
                 Text("\(Int(defaultSets))")
                     .font(.subheadline)
@@ -139,6 +140,7 @@ struct PreferenceView: View {
         VStack(spacing: 8) {
             HStack {
                 Text(LocalizationProvider.restIntervals.nameKey)
+                    .font(.subheadline)
                 Spacer()
                 Text(defaultRestIntervals.formatIntervalToMinutesSeconds)
                     .font(.subheadline)
@@ -155,68 +157,3 @@ struct PreferenceView: View {
     let previewContainer = PreviewContainer([Plan.self])
     return PreferenceView().modelContainer(previewContainer.container)
 }
-
-#Preview("test") {
-    WeightUnitBottomSheetView(isSheetPresented: .constant(true), weightUnit: .constant(0))
-}
-
-
-struct WeightUnitBottomSheetView: View {
-    @Binding var isSheetPresented: Bool
-    @Binding var weightUnit: Int
-
-    var body: some View {
-        NavigationStack {
-            VStack(spacing: 16) {
-                Button(action: {
-                    weightUnit = 0
-                    isSheetPresented = false
-                }) {
-                    HStack {
-                        Text(WeightUnit.kilogram.name)
-                            .font(.callout)
-                            .fontWeight(.semibold)
-                            .foregroundColor(Color.themeStyle.theme.primary)
-                        Spacer()
-                        Image(systemName: "checkmark").opacity(weightUnit == 0 ? 1 : 0)
-                    }
-                }
-                .horizontalSpacing(.leading)
-
-                Divider()
-                
-                Button(action: {
-                    weightUnit = 1
-                    isSheetPresented = false
-                }) {
-                    HStack {
-                        Text(WeightUnit.pound.name)
-                            .font(.callout)
-                            .fontWeight(.semibold)
-                            .foregroundColor(Color.themeStyle.theme.primary)
-                        Spacer()
-                        Image(systemName: "checkmark").opacity(weightUnit == 1 ? 1 : 0)
-                    }
-                }
-                .horizontalSpacing(.leading)
-            }
-            .navigationTitle(LocalizationProvider.weightUnit.nameKey)
-            .navigationBarTitleDisplayMode(.inline)
-            .veriticalSpacing(.bottom)
-            .padding()
-            .background(Color.themeStyle.theme.background)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button(action: {
-                        isSheetPresented = false
-                    }) {
-                        Image(systemName: "xmark")
-                    }
-                    .tint(Color.themeStyle.theme.primary)
-                }
-            }
-        }
-    }
-}
-
-
