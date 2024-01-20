@@ -67,7 +67,7 @@ struct PivotMainView: View {
                                        incrementalOrderNumber: viewModel.currentPlan.arrangedExercises.count,
                                        completion: { _ in
             })
-            .presentationDetents([.height(420)])
+            .presentationDetents([.large])
             .presentationCornerRadius(16)
         })
         .sheet(item: $exerciseToEdit) { exercise in
@@ -215,6 +215,7 @@ struct PivotMainView: View {
     @ViewBuilder
     func ArrangedExercisesView() -> some View {
         List {
+            /// Daily Summary Section
             if viewModel.showDailySummary {
                 Section {
                     TrainingSessionDailyReportView(plan: viewModel.currentPlan, isDataChanged: $isDataChanged)
@@ -226,9 +227,14 @@ struct PivotMainView: View {
                         .fontWeight(.bold)
                         .foregroundStyle(Color.themeStyle.theme.primary)
                         .horizontalSpacing(.leading)
+                        .padding(.leading)
                 }
+                .background(Color.themeStyle.theme.background)
+                .listRowSeparator(.hidden)
+                .listRowInsets(EdgeInsets())
             }
             
+            /// Arranged Exericses Section
             Section {
                 ForEach(viewModel.currentPlan.arrangedExercises.sorted(by: { $0.order < $1.order })) { exercise in
                     ArrangedExerciseCard(exercise: exercise, isItemEditable: $isItemEditable)
@@ -275,8 +281,12 @@ struct PivotMainView: View {
                     .font(.title)
                     .fontWeight(.bold)
                     .foregroundStyle(Color.themeStyle.theme.primary)
+                    .padding(.leading)
                     .horizontalSpacing(.leading)
             }
+            .background(Color.themeStyle.theme.background)
+            .listRowSeparator(.hidden)
+            .listRowInsets(EdgeInsets())
         }
         .padding(.top, 16)
         .listStyle(PlainListStyle())

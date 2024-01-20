@@ -108,13 +108,12 @@ struct ArrangedExerciseCard: View {
                 VStack {
                     Text(ExerciseTag(rawValue: int)?.namekey ?? "")
                         .font(.footnote)
-                        .fontWeight(.medium)
                         .background(.clear)
                         .padding(.vertical, 2)
                         .padding(.horizontal, 6)
-                        .foregroundColor(.white)
+                        .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
                 }
-                .background(Color.themeStyle.theme.accent)
+                .background(Color.themeStyle.theme.secondaryBackground.opacity(0.3))
                 .cornerRadius(4)
             }
         }

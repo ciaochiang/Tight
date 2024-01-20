@@ -15,6 +15,8 @@ struct CreateArrangedExerciseView: View {
     @AppStorage(Constants.DEFAULT_EXERCISE_SETS) private var defaultSets: Double = 3
     @AppStorage(Constants.DEFAULT_EXERCISE_REPETITIONS) private var defaultRepetitions: Double = 10
     @AppStorage(Constants.DEFAULT_EXERCISE_WEIGHT_UNIT) private var defaultWeightUnit: Int = 0
+    @State private var equipmentTags: [ExerciseTag] = []
+    @State private var platformTags: [ExerciseTag] = []
     
     @Bindable var plan: Plan
     @State private var arrangedExercise: ArrangedExercise
@@ -44,20 +46,34 @@ struct CreateArrangedExerciseView: View {
     
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading, spacing: 20) {
-                HStack {
-                    ExerciseSelectorViewComponent(isPresented: $isPresented, arrangedExericse: arrangedExercise)
-                    ExerciseWeightViewComponent(arrangedExercise: arrangedExercise)
-                }.horizontalSpacing(.leading)
-                
-                Divider()
+            VStack {
+                ScrollView(.vertical) {
+                    VStack(alignment: .leading, spacing: 20) {
+                        HStack {
+                            ExerciseSelectorViewComponent(isPresented: $isPresented, arrangedExericse: arrangedExercise)
+                            ExerciseWeightViewComponent(arrangedExercise: arrangedExercise)
+                        }.horizontalSpacing(.leading)
+                        
+                        Divider()
 
-                ExerciseRepetitionSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
-                ExerciseSetsSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
-                ExerciseRestIntervalSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
+                        ExerciseRepetitionSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
+                        ExerciseSetsSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
+                        ExerciseRestIntervalSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
+                        ExerciseTagPickerViewComponent(title: LocalizationProvider.equipment.nameKey,
+                                                       tags: $equipmentTags,
+                                                       arrangedExercise: arrangedExercise)
+                            .horizontalSpacing(.leading)
+                        ExerciseTagPickerViewComponent(title: LocalizationProvider.platform.nameKey,
+                                                       tags: $platformTags,
+                                                       arrangedExercise: arrangedExercise)
+                            .horizontalSpacing(.leading)
+                    }
+                }
+                .padding()
+
+                Spacer()
                 AddButtonView()
             }
-            .padding()
             .veriticalSpacing(.bottom)
             .sheet(isPresented: $isPresented, content: {
                 ExercisePickerView(title: LocalizationProvider.pickExercise.nameKey,
@@ -87,30 +103,41 @@ struct CreateArrangedExerciseView: View {
                 arrangedExercise.sets = defaultSets
                 arrangedExercise.repetitions = defaultRepetitions
                 
+                /// Load tags
+                equipmentTags = arrangedExercise.exercise.supportedTags
+                platformTags = arrangedExercise.exercise.platformTags
+                
                 /// Analytics
                 let screenName = String(describing: CreateArrangedExerciseView.self)
                 AnalyticsHelper.logScreen(screenName: screenName, screenClass: screenName)
             }
+            .onChange(of: arrangedExercise.exercise, { oldValue, newValue in
+                equipmentTags = newValue.supportedTags
+                platformTags = newValue.platformTags
+            })
         }
     }
     
     @ViewBuilder
     func AddButtonView() -> some View {
-        Button(action: {
-            /// Save arranged exercise
-            plan.arrangedExercises.append(arrangedExercise)
-            completion?(arrangedExercise)
-            dismiss()
-        }) {
-            Text(LocalizationProvider.add.nameKey)
-                .font(.title3)
-                .fontWeight(.semibold)
-                .textScale(.secondary)
-                .horizontalSpacing(.center)
-                .foregroundStyle(.white)
-                .padding(.vertical, 12)
-                .background(Color.themeStyle.theme.accent, in: .rect(cornerRadius: 10))
+        
+        VStack {
+            Button(action: {
+                /// Save arranged exercise
+                plan.arrangedExercises.append(arrangedExercise)
+                completion?(arrangedExercise)
+                dismiss()
+            }) {
+                Label(LocalizationProvider.add.nameKey, systemImage: "plus")
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                    .contentShape(Rectangle())
+                    .horizontalSpacing(.center)
+                    .foregroundStyle(Color.themeStyle.theme.white)
+                    .padding(.vertical)
+            }
         }
+        .background(Color.themeStyle.theme.accent)
         .disabled(arrangedExercise.exercise == .none)
         .opacity(arrangedExercise.exercise == .none ? 0.5 : 1)
     }

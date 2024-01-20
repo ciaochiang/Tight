@@ -30,6 +30,8 @@ enum LocalizationProvider {
     case preferences
     case volume
     case duration
+    case platform
+    case equipment
     
     /// Onboarding
     case onboardingWelcomeDescription
@@ -127,6 +129,8 @@ enum LocalizationProvider {
         case .preferences: return "common_key_perferences"
         case .volume: return "common_key_volume"
         case .duration: return "common_key_duration"
+        case .platform: return "common_key_platform"
+        case .equipment: return "common_key_equipment"
             
             
         /// Onboarding

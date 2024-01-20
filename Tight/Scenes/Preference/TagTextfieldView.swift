@@ -27,14 +27,14 @@ struct TagTestView: View {
 }
 
 struct ExerciseTagListView: View {
-    @State var allTags: [ExerciseTag] = ExerciseTag.allCases
+    @Binding var tags: [ExerciseTag]
     @Binding var selectedTags: [Int]
     var limit: Int = 3
 
     var body: some View {
         HStack {
             TagLayout(alignment: .leading) {
-                ForEach(allTags, id: \.self) { tag in
+                ForEach(tags, id: \.self) { tag in
                     VStack {
                         Text(tag.namekey)
                             .font(.caption)

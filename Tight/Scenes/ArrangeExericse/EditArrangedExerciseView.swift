@@ -13,6 +13,8 @@ struct EditArrangedExerciseView: View {
     @State private var isPresented: Bool = false
     @Binding var isDataChanged: Bool
     var isPlanMode: Bool = false
+    @State private var equipmentTags: [ExerciseTag] = []
+    @State private var platformTags: [ExerciseTag] = []
     
     var body: some View {
         NavigationStack {
@@ -29,7 +31,13 @@ struct EditArrangedExerciseView: View {
                         ExerciseRepetitionSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
                         ExerciseSetsSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
                         ExerciseRestIntervalSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
-                        ExerciseTagPickerViewComponent(arrangedExercise: arrangedExercise)
+                        ExerciseTagPickerViewComponent(title: LocalizationProvider.equipment.nameKey, 
+                                                       tags: $equipmentTags,
+                                                       arrangedExercise: arrangedExercise)
+                            .horizontalSpacing(.leading)
+                        ExerciseTagPickerViewComponent(title: LocalizationProvider.platform.nameKey, 
+                                                       tags: $platformTags,
+                                                       arrangedExercise: arrangedExercise)
                             .horizontalSpacing(.leading)
                     }
                 }
@@ -76,6 +84,26 @@ struct EditArrangedExerciseView: View {
                     .tint(Color.themeStyle.theme.primary)
                 }
             }
+            .onAppear {
+                equipmentTags = arrangedExercise.exercise.supportedTags
+                platformTags = arrangedExercise.exercise.platformTags
+            }
+            .onDisappear {
+                /// Remove unsupported tags when view disappeared
+                let validEquipementTags = arrangedExercise.exercise.supportedTags.filter { element in
+                    return arrangedExercise.tags.contains(where: { $0 == element.rawValue })
+                }
+                
+                let validPlatformTags = arrangedExercise.exercise.platformTags.filter { element in
+                    return arrangedExercise.tags.contains(where: { $0 == element.rawValue })
+                }
+                
+                arrangedExercise.tags = (validEquipementTags + validPlatformTags).map { $0.rawValue }
+            }
+            .onChange(of: arrangedExercise.exercise, { oldValue, newValue in
+                equipmentTags = newValue.supportedTags
+                platformTags = newValue.platformTags
+            })
             .onChange(of: arrangedExercise.weight) { oldValue, newValue in
                 if oldValue != newValue {
                     isDataChanged.toggle()
