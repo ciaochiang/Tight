@@ -94,6 +94,9 @@ struct PreferenceView: View {
                 Text(WeightUnit.pound.name).tag(1)
             }
             .frame(maxWidth: 120)
+            
+            /// Fix the issue that picker will block navigation link works
+            .contentShape(Rectangle())
             .pickerStyle(.segmented)
         }
         .onChange(of: unitSegementSelection) { oldValue, newValue in

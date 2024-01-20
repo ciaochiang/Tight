@@ -32,7 +32,6 @@ struct ExercisePickerView: View {
                     // Favorite Section
                     FavoriteExercisesView()
 
-                    
                     if upperBodyExercises.isEmpty == false {
                         UpperBodyExercisesView()
                     }

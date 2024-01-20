@@ -19,15 +19,23 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pws-lJ-0PH">
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="T" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-Yh-RWb">
-                                        <rect key="frame" x="0.0" y="337" width="393" height="64"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="T" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-Yh-RWb">
+                                        <rect key="frame" x="0.0" y="347.66666666666669" width="393" height="64"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="64" id="szc-wX-xu6"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="44"/>
                                         <color key="textColor" name="PrimaryTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" name="LaunchBackground"/>
+                                <constraints>
+                                    <constraint firstItem="GJd-Yh-RWb" firstAttribute="leading" secondItem="pws-lJ-0PH" secondAttribute="leading" id="2K5-Vq-BLb"/>
+                                    <constraint firstItem="GJd-Yh-RWb" firstAttribute="centerX" secondItem="pws-lJ-0PH" secondAttribute="centerX" id="Aja-yE-cdr"/>
+                                    <constraint firstAttribute="trailing" secondItem="GJd-Yh-RWb" secondAttribute="trailing" id="Rcd-Mw-L2N"/>
+                                    <constraint firstItem="GJd-Yh-RWb" firstAttribute="centerY" secondItem="pws-lJ-0PH" secondAttribute="centerY" id="xUI-yT-gRU"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
