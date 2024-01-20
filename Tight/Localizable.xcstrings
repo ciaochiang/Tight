@@ -72,7 +72,7 @@
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "從計畫中加入"
           }
         }
@@ -273,6 +273,22 @@
         }
       }
     },
+    "common_key_equipment" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Equipment"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "器材"
+          }
+        }
+      }
+    },
     "common_key_exercise" : {
       "localizations" : {
         "en" : {
@@ -461,6 +477,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "計畫管理"
+          }
+        }
+      }
+    },
+    "common_key_platform" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Platform"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "平台"
           }
         }
       }
@@ -1479,6 +1511,38 @@
         }
       }
     },
+    "exercise_tag_ab_roller" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ab Roller"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "腹肌滾輪"
+          }
+        }
+      }
+    },
+    "exercise_tag_ankle_weights" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ankle Weights"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "腳踝負重"
+          }
+        }
+      }
+    },
     "exercise_tag_key_barbell" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1734,6 +1798,310 @@
         }
       }
     },
+    "exercise_tag_machine_cable" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cable Machine"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "滑輪機"
+          }
+        }
+      }
+    },
+    "exercise_tag_machine_cable_cross_over" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cable Cross-Over Machine"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "繩索交叉訓練機"
+          }
+        }
+      }
+    },
+    "exercise_tag_machine_calf_raise" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calf Raise Machine"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "小腿舉重機"
+          }
+        }
+      }
+    },
+    "exercise_tag_machine_chest_fly" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chest Fly Machine"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "胸飛鳥機"
+          }
+        }
+      }
+    },
+    "exercise_tag_machine_glute_bridge" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glute Bridge Machine"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "臀橋機"
+          }
+        }
+      }
+    },
+    "exercise_tag_machine_hamstring_curl" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hamstring Curl Machine"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "後腿彎曲機"
+          }
+        }
+      }
+    },
+    "exercise_tag_machine_leg_extension" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leg Extension Machine"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "腿部伸展彎曲機"
+          }
+        }
+      }
+    },
+    "exercise_tag_machine_leg_press" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leg Press Machine"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "腿推機"
+          }
+        }
+      }
+    },
+    "exercise_tag_machine_rowing" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rowing Machine"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "划船機"
+          }
+        }
+      }
+    },
+    "exercise_tag_machine_smith" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Smith Machine"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "史密斯機"
+          }
+        }
+      }
+    },
+    "exercise_tag_parallel_bar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parallel Bar"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "平行雙槓"
+          }
+        }
+      }
+    },
+    "exercise_tag_pull_down_bar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pull-Down Bar"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下拉槓"
+          }
+        }
+      }
+    },
+    "exercise_tag_push_up_bar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Push-Up Bar"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "俯卧撑握把"
+          }
+        }
+      }
+    },
+    "exercise_tag_push_up_grips" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Push-Up Grips"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "俯卧撑握把"
+          }
+        }
+      }
+    },
+    "exercise_tag_pylo_box" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pylo Box"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "跳箱"
+          }
+        }
+      }
+    },
+    "exercise_tag_stability_ball" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stability Ball"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "穩定球"
+          }
+        }
+      }
+    },
+    "exercise_tag_weight_plates" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weight Plates"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "槓片"
+          }
+        }
+      }
+    },
+    "exercise_tag_yoga_blocks" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yoga Blocks"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "瑜珈磚"
+          }
+        }
+      }
+    },
+    "exercise_tag_yoga_mat" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yoga Mat"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "瑜珈墊"
+          }
+        }
+      }
+    },
     "exercise_weight_unit_kilogram" : {
       "localizations" : {
         "en" : {
@@ -1923,7 +2291,7 @@
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "每日摘要"
           }
         }
