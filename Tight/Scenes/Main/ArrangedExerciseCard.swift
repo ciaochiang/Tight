@@ -94,11 +94,18 @@ struct ArrangedExerciseCard: View {
     
     @ViewBuilder
     func ExerciseNameView() -> some View {
-        Text(exercise.exercise.name)
-            .font(.headline)
-            .fontWeight(.semibold)
-            .foregroundStyle(exercise.isCompleted ? Color.themeStyle.theme.secondaryAccent : Color.themeStyle.theme.primaryTextColor)
-            .opacity(isItemEditable ? 1.0 : 0.4)
+        HStack {
+            Rectangle()
+                .fill(exercise.isCompleted ? Color.themeStyle.theme.secondaryAccent : Color.themeStyle.theme.secondaryTextColor)
+                .frame(width: 3, height: 18)
+                .cornerRadius(2)
+            Text(exercise.exercise.name)
+                .font(.headline)
+                .fontWeight(.semibold)
+                .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
+                .opacity(isItemEditable ? 1.0 : 0.4)
+        }
+
     }
     
     @ViewBuilder
