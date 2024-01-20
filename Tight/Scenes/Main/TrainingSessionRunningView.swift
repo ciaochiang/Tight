@@ -25,7 +25,7 @@ struct TrainingSessionRunningView: View {
                                     Color.themeStyle.theme.primary.opacity(0.3),
                                     lineWidth: 2
                                 )
-                                .frame(width: 48, height: 48)
+                                .frame(width: 44, height: 44)
                             
                             Circle()
                                 .trim(from: 0, to: trainingSessionManager.exerciseSetCompletionProgress)
@@ -33,7 +33,7 @@ struct TrainingSessionRunningView: View {
                                     Color.themeStyle.theme.accent,
                                     lineWidth: 4
                                 )
-                                .frame(width: 48, height: 48)
+                                .frame(width: 44, height: 44)
                                 .rotationEffect(.degrees(-90))
                                 .animation(.easeInOut, value: trainingSessionManager.exerciseSetCompletionProgress)
                         }
@@ -133,18 +133,17 @@ struct TrainingSessionRunningView: View {
     func ExerciseInfoView(state: TrainingSessionState, exerciseName: String, weight: Double, repetition: Double) -> some View {
         VStack {
             Text(state == .resting ? LocalizationProvider.breakTimeTitle.localizedString : exerciseName)
-                .font(.headline)
-                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                .font(.subheadline)
+                .fontWeight(.semibold)
                 .minimumScaleFactor(0.8)
-                .foregroundColor(state == .resting ? Color.themeStyle.theme.primary.opacity(0.8) : Color.themeStyle.theme.accent)
+                .foregroundColor(Color.themeStyle.theme.primaryTextColor)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentTransition(.opacity)
             
             Text(state == .resting ? LocalizationProvider.breakTimeSubtitle.localizedString : "\(Int(weight))kg x \(Int(repetition))")
                 .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
-                .font(.subheadline)
+                .font(.footnote)
                 .minimumScaleFactor(0.8)
-                .fontWeight(.semibold)
                 .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
                 .contentTransition(.opacity)
         }
@@ -156,20 +155,20 @@ struct TrainingSessionRunningView: View {
             Text(timerInterval: restStartTime...restStartTime.addingTimeInterval(restIntervals), countsDown: true)
                 .font(.title2)
                 .fontWeight(.bold)
-                .tracking(1.4)
+                .tracking(2)
                 .minimumScaleFactor(0.8)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundColor(Color.blue)
+                .foregroundColor(Color.themeStyle.theme.secondaryAccent)
                 .contentTransition(.numericText(countsDown: true))
         }
         else {
             Text(startTime, style: .timer)
                 .font(.title2)
                 .fontWeight(.bold)
-                .tracking(1.4)
+                .tracking(2)
                 .minimumScaleFactor(0.8)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundColor(Color.themeStyle.theme.primary.opacity(0.8))
+                .foregroundColor(Color.themeStyle.theme.accent)
                 .contentTransition(.numericText())
         }
     }

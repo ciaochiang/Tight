@@ -200,7 +200,7 @@ fileprivate struct BackSpaceListenerTextField: UIViewRepresentable {
         @objc
         func textChange(textField: UITextField) {
             text = textField.text ?? ""
-            textField.textColor = isOverLimit ? .red : .tightPrimary
+            textField.textColor = isOverLimit ? .red : .primaryText
             
             /// Closing on Pressing Return Button
         }

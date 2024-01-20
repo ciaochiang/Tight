@@ -46,8 +46,7 @@ enum ColorThemeStyle {
 }
 
 struct ColorTheme {
-    let primary = Color("TightPrimaryColor")
-    let inversePrimary = Color("InversePrimaryColor")
+    let primary = Color("PrimaryTextColor")
     let white = Color.white
     let black = Color.black
     let accent = Color("AccentColor")

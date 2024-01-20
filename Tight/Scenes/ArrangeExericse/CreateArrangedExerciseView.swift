@@ -128,7 +128,7 @@ struct CreateArrangedExerciseView: View {
                 completion?(arrangedExercise)
                 dismiss()
             }) {
-                Label(LocalizationProvider.add.nameKey, systemImage: "plus")
+                Text(LocalizationProvider.add.nameKey)
                     .font(.headline)
                     .fontWeight(.semibold)
                     .contentShape(Rectangle())
