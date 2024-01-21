@@ -9,14 +9,7 @@ import Foundation
 import SwiftUI
 import ActivityKit
 import UserNotifications
-
-enum TrainingSessionState {
-    case notStarted
-    case training
-    case resting
-    case aborted
-    case finshed
-}
+import WatchConnectivity
 
 /**
  - Countdown timer
@@ -91,6 +84,8 @@ class TrainingSessionManager: ObservableObject {
     /// The `restIntervals` property stores the duration, in seconds, of each rest interval. It is `nil` when there are no scheduled rest intervals.
     @Published var restIntervals: Double?
     
+    @Published var contentState: TrainingSessionAttributes.ContentState?
+    
     /// Starts a new training session with the given plan and arranged exercises.
     ///
     /// Use this function to initiate a training session by providing a training plan (`plan`) and a list of arranged exercises (`arrangedExercises`).
@@ -151,6 +146,18 @@ class TrainingSessionManager: ObservableObject {
         
         /// Add live activity
         addLiveAcitvity()
+        
+        /// Send message to Watch
+        sendWatchMessage(message: ["state": state.rawValue,
+                                   "currentExerciseID": firstExercise.id.uuidString,
+                                   "exerciseName": firstExercise.exercise.name,
+                                   "startTime": startTime ?? .now,
+                                   "weight": firstExercise.weight,
+                                   "weightUnit": firstExercise.weightUnit,
+                                   "repetitions": firstExercise.repetitions,
+                                   "indexOfSet": exerciseSetIndex,
+                                   "currentSetsProgress": exerciseSetCompletionProgress
+                                  ])
     }
     
     /// Stops the current training session and performs necessary cleanup.
@@ -264,6 +271,12 @@ class TrainingSessionManager: ObservableObject {
                 await activity.update(.init(state: contentState, staleDate: nil))
             }
         }
+        
+        /// Send message to Watch
+        sendWatchMessage(message: ["state": newState.rawValue,
+                                   "restStartTime": Date.now,
+                                   "restIntervals": 0
+                                  ])
     }
     
     /// Completes the current set of the specified exercise and manages the training session progress.
@@ -317,7 +330,10 @@ class TrainingSessionManager: ObservableObject {
     
     /// Reset
     func reset() {
+        let newState: TrainingSessionState = .notStarted
+        
         DispatchQueue.main.async {
+            self.state = newState
             self.currentExercise = nil
             self.startTime = nil
             self.restStartTime = nil
@@ -325,6 +341,9 @@ class TrainingSessionManager: ObservableObject {
             self.sessionStage = 0
             self.exerciseSetIndex = 0
         }
+        
+        /// Send message to Watch
+        self.sendWatchMessage(message: ["state": newState.rawValue])
     }
 
     /// Done
@@ -332,11 +351,16 @@ class TrainingSessionManager: ObservableObject {
         /// Set `endTime` to `trainingLog`
         let currentTime = Date.now
         plan?.trainingLog?.endTime = currentTime
+        let newState: TrainingSessionState = .finshed
         
         /// Update current progress to completed
         DispatchQueue.main.async {
             self.exerciseSetCompletionProgress = 1.0
             self.sessionProgress = 1.0
+            self.state = newState
+            
+            /// Send message to Watch
+            self.sendWatchMessage(message: ["state": newState.rawValue, "currentSetsProgress": 1.0])
         }
         
         /// Cancel all scheduled notification
@@ -405,6 +429,12 @@ class TrainingSessionManager: ObservableObject {
                 await activity.update(.init(state: contentState, staleDate: nil))
             }
         }
+        
+        /// Send message to Watch
+        sendWatchMessage(message: ["state": newState.rawValue,
+                                   "restStartTime": Date.now,
+                                   "restIntervals": 0
+                                  ])
     }
     
     /// Next Set
@@ -445,6 +475,14 @@ class TrainingSessionManager: ObservableObject {
                 await activity.update(.init(state: contentState, staleDate: nil))
             }
         }
+        
+        /// Send message to Watch
+        sendWatchMessage(message: ["state": newState.rawValue,
+                                   "indexOfSet": newSetNumber,
+                                   "currentSetsProgress": newSetsProgress,
+                                   "restStartTime": currentTime,
+                                   "restIntervals": newRestIntervals
+                                  ])
     }
     
     /// Next Exericse
@@ -465,6 +503,9 @@ class TrainingSessionManager: ObservableObject {
                     await activity.update(.init(state: contentState, staleDate: nil))
                 }
             }
+            
+            /// Send message to Watch
+            self.sendWatchMessage(message: ["currentSetsProgress": completedSetsProgress])
         }
         
         /// Go to next arranged exercise
@@ -521,6 +562,33 @@ class TrainingSessionManager: ObservableObject {
                     await activity.update(.init(state: contentState, staleDate: nil))
                 }
             }
+            
+            /// Send message to Watch
+            self.sendWatchMessage(message: ["state": newState.rawValue,
+                                            "currentExerciseID": newExercise.id.uuidString,
+                                            "currentExerciseName": newExercise.exercise.name,
+                                            "totoalProgress": newProgress,
+                                            "indexOfSet": newIndexOfSet,
+                                            "currentSetsProgress": newSetsProgress,
+                                            "weight": newExercise.weight,
+                                            "weightUnit": newExercise.weightUnit,
+                                            "repetitions": newExercise.repetitions,
+                                            "restStartTime": newRestStartTime,
+                                            "restIntervals": newRestIntervals
+                                           ])
+        }
+        
+
+    }
+}
+
+// MARK: Watch Connectivity
+extension TrainingSessionManager {
+    func sendWatchMessage(message: [String: Any]) {
+        guard WCSession.default.isReachable else { return }
+        
+        WCSession.default.sendMessage(message, replyHandler: nil) { error in
+            print(error.localizedDescription)
         }
     }
 }
@@ -531,22 +599,24 @@ extension TrainingSessionManager {
     func addLiveAcitvity() {
         guard ActivityAuthorizationInfo().areActivitiesEnabled, let firstExercise = currentExercise else { return }
         
-        let trainingSessionAttributes = TrainingSessionAttributes(name: "TrainingSession")
-        let initialState = TrainingSessionAttributes.ContentState(currentExerciseID: firstExercise.id.uuidString,
-                                                                  currentExerciseName: firstExercise.exercise.name,
-                                                                  weight: firstExercise.weight,
-                                                                  repetition: firstExercise.repetitions,
-                                                                  startTime: startTime ?? .now,
-                                                                  restStartTime: nil,
-                                                                  restIntervals: nil,
-                                                                  indexOfSet: exerciseSetIndex,
-                                                                  currentSetsProgress: exerciseSetCompletionProgress,
-                                                                  totoalProgress: 0,
-                                                                  completionType: -1)
+        let trainingSessionAttributes = TrainingSessionAttributes()
+        contentState = TrainingSessionAttributes.ContentState(currentExerciseID: firstExercise.id.uuidString,
+                                                              currentExerciseName: firstExercise.exercise.name,
+                                                              weight: firstExercise.weight,
+                                                              repetition: firstExercise.repetitions,
+                                                              startTime: startTime ?? .now,
+                                                              restStartTime: nil,
+                                                              restIntervals: nil,
+                                                              indexOfSet: exerciseSetIndex,
+                                                              currentSetsProgress: exerciseSetCompletionProgress,
+                                                              totoalProgress: 0,
+                                                              completionType: -1)
+        
+        guard let contentState = contentState else { return }
         
         do {
             let activity = try Activity<TrainingSessionAttributes>.request(attributes: trainingSessionAttributes,
-                                                                           content: .init(state: initialState, staleDate: nil),
+                                                                           content: .init(state: contentState, staleDate: nil),
                                                                            pushType: nil)
             /// Storing current live activity id for updating activity
             liveActivityID = activity.id

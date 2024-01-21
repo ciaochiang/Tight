@@ -2324,6 +2324,22 @@
     },
     "Stop training session and reset session" : {
 
+    },
+    "watch_launch_heading" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Begin training by opening Tight on your phone."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "透過您的手機開啟 Tight 來開始訓練。"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

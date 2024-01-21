@@ -7,8 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E507EC2F2B5CE74D009F7094 /* TightWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E507EC2E2B5CE74D009F7094 /* TightWatchApp.swift */; };
+		E507EC312B5CE74D009F7094 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E507EC302B5CE74D009F7094 /* ContentView.swift */; };
+		E507EC332B5CE74F009F7094 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E507EC322B5CE74F009F7094 /* Assets.xcassets */; };
+		E507EC362B5CE74F009F7094 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E507EC352B5CE74F009F7094 /* Preview Assets.xcassets */; };
+		E507EC402B5CE74F009F7094 /* TightWatch_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E507EC3F2B5CE74F009F7094 /* TightWatch_Watch_AppTests.swift */; };
+		E507EC4A2B5CE74F009F7094 /* TightWatch_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E507EC492B5CE74F009F7094 /* TightWatch_Watch_AppUITests.swift */; };
+		E507EC4C2B5CE74F009F7094 /* TightWatch_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E507EC4B2B5CE74F009F7094 /* TightWatch_Watch_AppUITestsLaunchTests.swift */; };
+		E507EC4F2B5CE74F009F7094 /* Tight.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = E507EC2C2B5CE74D009F7094 /* Tight.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E509EA1C2B3EA53A0025E76C /* TightSchemaV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = E509EA1B2B3EA53A0025E76C /* TightSchemaV1.swift */; };
 		E509EA202B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E509EA1F2B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift */; };
+		E539351E2B5CF13500A8DD8C /* LocalizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B700C02B40105E0080442D /* LocalizationProvider.swift */; };
+		E539351F2B5CF13E00A8DD8C /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD79E2B3DB13F00696968 /* Color+Extension.swift */; };
+		E53935202B5CF16D00A8DD8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E562D7002B3DA34F000775B7 /* Assets.xcassets */; };
+		E53935232B5D4E7700A8DD8C /* WatchSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53935222B5D4E7700A8DD8C /* WatchSessionDelegate.swift */; };
 		E54420F82B4AD38F002C63BC /* LocalizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B700C02B40105E0080442D /* LocalizationProvider.swift */; };
 		E54420F92B4AD8EF002C63BC /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E5B700BE2B400B740080442D /* Localizable.xcstrings */; };
 		E553B9CF2B52BCED00BA0C61 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B08F72B41495000280FC4 /* Constants.swift */; };
@@ -29,6 +41,7 @@
 		E562D70E2B3DA34F000775B7 /* TightTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E562D70D2B3DA34F000775B7 /* TightTests.swift */; };
 		E562D7182B3DA34F000775B7 /* TightUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E562D7172B3DA34F000775B7 /* TightUITests.swift */; };
 		E562D71A2B3DA34F000775B7 /* TightUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E562D7192B3DA34F000775B7 /* TightUITestsLaunchTests.swift */; };
+		E57A88992B5D5EBB0040FCF5 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57A88982B5D5EBB0040FCF5 /* ContentViewModel.swift */; };
 		E57FD75D2B3DA3E400696968 /* GrowthBook-IOS in Frameworks */ = {isa = PBXBuildFile; productRef = E57FD75C2B3DA3E400696968 /* GrowthBook-IOS */; };
 		E57FD7632B3DAD3900696968 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E57FD7622B3DAD3900696968 /* FirebaseAnalytics */; };
 		E57FD7682B3DADCC00696968 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7672B3DADCC00696968 /* Logger.swift */; };
@@ -69,6 +82,7 @@
 		E57FD7C62B3DB25200696968 /* UserPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7C52B3DB25200696968 /* UserPreference.swift */; };
 		E57FD7CC2B3DC6BE00696968 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E57FD7CB2B3DC6BE00696968 /* LaunchScreen.storyboard */; };
 		E57FD7CE2B3DD47600696968 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E57FD7CD2B3DD47600696968 /* GoogleService-Info.plist */; };
+		E5986BCF2B5EC347003FAFC3 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E5B700BE2B400B740080442D /* Localizable.xcstrings */; };
 		E59B08F82B41495000280FC4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B08F72B41495000280FC4 /* Constants.swift */; };
 		E59B08FD2B4292A900280FC4 /* ExerciseWeightViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B08FC2B4292A900280FC4 /* ExerciseWeightViewComponent.swift */; };
 		E59B08FF2B4594C000280FC4 /* TrainingSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B08FE2B4594C000280FC4 /* TrainingSessionManager.swift */; };
@@ -76,6 +90,9 @@
 		E5A2F3302B4950C300735FC2 /* TrainingSessionAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A2F32E2B4950C300735FC2 /* TrainingSessionAttributes.swift */; };
 		E5A2F3322B495DEB00735FC2 /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD79A2B3DB13F00696968 /* TimeInterval+Extension.swift */; };
 		E5A2F3332B496ED100735FC2 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD79E2B3DB13F00696968 /* Color+Extension.swift */; };
+		E5B4B7D62B5E99F600A411E1 /* TrainingSessionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B4B7D52B5E99F600A411E1 /* TrainingSessionState.swift */; };
+		E5B4B7D72B5E99F600A411E1 /* TrainingSessionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B4B7D52B5E99F600A411E1 /* TrainingSessionState.swift */; };
+		E5B4B7D92B5E9ABA00A411E1 /* TrainingSessionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B4B7D52B5E99F600A411E1 /* TrainingSessionState.swift */; };
 		E5B700BF2B400B740080442D /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E5B700BE2B400B740080442D /* Localizable.xcstrings */; };
 		E5B700C12B40105E0080442D /* LocalizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B700C02B40105E0080442D /* LocalizationProvider.swift */; };
 		E5C1C6B22B4A59570081B3EF /* TightSchemaV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = E509EA1B2B3EA53A0025E76C /* TightSchemaV1.swift */; };
@@ -85,6 +102,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		E507EC3C2B5CE74F009F7094 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E562D6EF2B3DA34E000775B7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E507EC2B2B5CE74D009F7094;
+			remoteInfo = "TightWatch Watch App";
+		};
+		E507EC462B5CE74F009F7094 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E562D6EF2B3DA34E000775B7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E507EC2B2B5CE74D009F7094;
+			remoteInfo = "TightWatch Watch App";
+		};
+		E507EC4D2B5CE74F009F7094 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E562D6EF2B3DA34E000775B7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E507EC2B2B5CE74D009F7094;
+			remoteInfo = "TightWatch Watch App";
+		};
 		E554FBA22B4837FB007AB30F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E562D6EF2B3DA34E000775B7 /* Project object */;
@@ -109,6 +147,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		E507EC502B5CE74F009F7094 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				E507EC4F2B5CE74F009F7094 /* Tight.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E554FBA52B4837FC007AB30F /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -123,8 +172,19 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E507EC2C2B5CE74D009F7094 /* Tight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tight.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E507EC2E2B5CE74D009F7094 /* TightWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TightWatchApp.swift; sourceTree = "<group>"; };
+		E507EC302B5CE74D009F7094 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E507EC322B5CE74F009F7094 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E507EC352B5CE74F009F7094 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E507EC3B2B5CE74F009F7094 /* TightWatch Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TightWatch Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E507EC3F2B5CE74F009F7094 /* TightWatch_Watch_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TightWatch_Watch_AppTests.swift; sourceTree = "<group>"; };
+		E507EC452B5CE74F009F7094 /* TightWatch Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TightWatch Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E507EC492B5CE74F009F7094 /* TightWatch_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TightWatch_Watch_AppUITests.swift; sourceTree = "<group>"; };
+		E507EC4B2B5CE74F009F7094 /* TightWatch_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TightWatch_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E509EA1B2B3EA53A0025E76C /* TightSchemaV1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TightSchemaV1.swift; sourceTree = "<group>"; };
 		E509EA1F2B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseTagPickerViewComponent.swift; sourceTree = "<group>"; };
+		E53935222B5D4E7700A8DD8C /* WatchSessionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSessionDelegate.swift; sourceTree = "<group>"; };
 		E553B9D12B5395D900BA0C61 /* Date+ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ExtensionTests.swift"; sourceTree = "<group>"; };
 		E553B9D32B53BEF600BA0C61 /* AnalyticsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsHelper.swift; sourceTree = "<group>"; };
 		E553B9D52B53ED2600BA0C61 /* TrainingSessionDailyReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionDailyReportView.swift; sourceTree = "<group>"; };
@@ -145,6 +205,7 @@
 		E562D7132B3DA34F000775B7 /* TightUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TightUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E562D7172B3DA34F000775B7 /* TightUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TightUITests.swift; sourceTree = "<group>"; };
 		E562D7192B3DA34F000775B7 /* TightUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TightUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E57A88982B5D5EBB0040FCF5 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		E57FD7672B3DADCC00696968 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		E57FD76A2B3DAE0300696968 /* OffsetKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OffsetKey.swift; sourceTree = "<group>"; };
 		E57FD76B2B3DAE0300696968 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
@@ -188,11 +249,34 @@
 		E59B08FE2B4594C000280FC4 /* TrainingSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionManager.swift; sourceTree = "<group>"; };
 		E5A2F32E2B4950C300735FC2 /* TrainingSessionAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionAttributes.swift; sourceTree = "<group>"; };
 		E5A2F3312B49568A00735FC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		E5B4B7D52B5E99F600A411E1 /* TrainingSessionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionState.swift; sourceTree = "<group>"; };
+		E5B4B7DA2B5EB09900A411E1 /* TightWatch-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "TightWatch-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		E5B700BE2B400B740080442D /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		E5B700C02B40105E0080442D /* LocalizationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E507EC292B5CE74D009F7094 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E507EC382B5CE74F009F7094 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E507EC422B5CE74F009F7094 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E554FB8E2B4837FA007AB30F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -228,6 +312,52 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E507EC2D2B5CE74D009F7094 /* TightWatch Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				E5B4B7DA2B5EB09900A411E1 /* TightWatch-Watch-App-Info.plist */,
+				E507EC2E2B5CE74D009F7094 /* TightWatchApp.swift */,
+				E507EC302B5CE74D009F7094 /* ContentView.swift */,
+				E57A88982B5D5EBB0040FCF5 /* ContentViewModel.swift */,
+				E507EC322B5CE74F009F7094 /* Assets.xcassets */,
+				E507EC342B5CE74F009F7094 /* Preview Content */,
+			);
+			path = "TightWatch Watch App";
+			sourceTree = "<group>";
+		};
+		E507EC342B5CE74F009F7094 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				E507EC352B5CE74F009F7094 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		E507EC3E2B5CE74F009F7094 /* TightWatch Watch AppTests */ = {
+			isa = PBXGroup;
+			children = (
+				E507EC3F2B5CE74F009F7094 /* TightWatch_Watch_AppTests.swift */,
+			);
+			path = "TightWatch Watch AppTests";
+			sourceTree = "<group>";
+		};
+		E507EC482B5CE74F009F7094 /* TightWatch Watch AppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				E507EC492B5CE74F009F7094 /* TightWatch_Watch_AppUITests.swift */,
+				E507EC4B2B5CE74F009F7094 /* TightWatch_Watch_AppUITestsLaunchTests.swift */,
+			);
+			path = "TightWatch Watch AppUITests";
+			sourceTree = "<group>";
+		};
+		E53935212B5D4E6200A8DD8C /* Watch */ = {
+			isa = PBXGroup;
+			children = (
+				E53935222B5D4E7700A8DD8C /* WatchSessionDelegate.swift */,
+			);
+			path = Watch;
+			sourceTree = "<group>";
+		};
 		E554FB962B4837FA007AB30F /* TrainingSession */ = {
 			isa = PBXGroup;
 			children = (
@@ -246,6 +376,9 @@
 				E562D70C2B3DA34F000775B7 /* TightTests */,
 				E562D7162B3DA34F000775B7 /* TightUITests */,
 				E554FB962B4837FA007AB30F /* TrainingSession */,
+				E507EC2D2B5CE74D009F7094 /* TightWatch Watch App */,
+				E507EC3E2B5CE74F009F7094 /* TightWatch Watch AppTests */,
+				E507EC482B5CE74F009F7094 /* TightWatch Watch AppUITests */,
 				E562D6F82B3DA34E000775B7 /* Products */,
 				E57FD75F2B3DAD0300696968 /* Frameworks */,
 			);
@@ -258,6 +391,9 @@
 				E562D7092B3DA34F000775B7 /* TightTests.xctest */,
 				E562D7132B3DA34F000775B7 /* TightUITests.xctest */,
 				E554FB912B4837FA007AB30F /* TrainingSessionExtension.appex */,
+				E507EC2C2B5CE74D009F7094 /* Tight.app */,
+				E507EC3B2B5CE74F009F7094 /* TightWatch Watch AppTests.xctest */,
+				E507EC452B5CE74F009F7094 /* TightWatch Watch AppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -265,6 +401,7 @@
 		E562D6F92B3DA34E000775B7 /* Tight */ = {
 			isa = PBXGroup;
 			children = (
+				E53935212B5D4E6200A8DD8C /* Watch */,
 				E5A2F3312B49568A00735FC2 /* Info.plist */,
 				E562D6FA2B3DA34E000775B7 /* TightApp.swift */,
 				E57FD77F2B3DAE5B00696968 /* Scenes */,
@@ -339,6 +476,7 @@
 				E57FD78F2B3DB04400696968 /* NotificationManager.swift */,
 				E57FD7762B3DAE3B00696968 /* ExperiementsProvider.swift */,
 				E59B08FE2B4594C000280FC4 /* TrainingSessionManager.swift */,
+				E5B4B7D52B5E99F600A411E1 /* TrainingSessionState.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -464,6 +602,61 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		E507EC2B2B5CE74D009F7094 /* TightWatch Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E507EC572B5CE74F009F7094 /* Build configuration list for PBXNativeTarget "TightWatch Watch App" */;
+			buildPhases = (
+				E507EC282B5CE74D009F7094 /* Sources */,
+				E507EC292B5CE74D009F7094 /* Frameworks */,
+				E507EC2A2B5CE74D009F7094 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "TightWatch Watch App";
+			packageProductDependencies = (
+			);
+			productName = "TightWatch Watch App";
+			productReference = E507EC2C2B5CE74D009F7094 /* Tight.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E507EC3A2B5CE74F009F7094 /* TightWatch Watch AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E507EC582B5CE74F009F7094 /* Build configuration list for PBXNativeTarget "TightWatch Watch AppTests" */;
+			buildPhases = (
+				E507EC372B5CE74F009F7094 /* Sources */,
+				E507EC382B5CE74F009F7094 /* Frameworks */,
+				E507EC392B5CE74F009F7094 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E507EC3D2B5CE74F009F7094 /* PBXTargetDependency */,
+			);
+			name = "TightWatch Watch AppTests";
+			productName = "TightWatch Watch AppTests";
+			productReference = E507EC3B2B5CE74F009F7094 /* TightWatch Watch AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		E507EC442B5CE74F009F7094 /* TightWatch Watch AppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E507EC592B5CE74F009F7094 /* Build configuration list for PBXNativeTarget "TightWatch Watch AppUITests" */;
+			buildPhases = (
+				E507EC412B5CE74F009F7094 /* Sources */,
+				E507EC422B5CE74F009F7094 /* Frameworks */,
+				E507EC432B5CE74F009F7094 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E507EC472B5CE74F009F7094 /* PBXTargetDependency */,
+			);
+			name = "TightWatch Watch AppUITests";
+			productName = "TightWatch Watch AppUITests";
+			productReference = E507EC452B5CE74F009F7094 /* TightWatch Watch AppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		E554FB902B4837FA007AB30F /* TrainingSessionExtension */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E554FBA82B4837FC007AB30F /* Build configuration list for PBXNativeTarget "TrainingSessionExtension" */;
@@ -491,12 +684,14 @@
 				E562D6F42B3DA34E000775B7 /* Frameworks */,
 				E562D6F52B3DA34E000775B7 /* Resources */,
 				E554FBA52B4837FC007AB30F /* Embed Foundation Extensions */,
+				E507EC502B5CE74F009F7094 /* Embed Watch Content */,
 				E509EA212B3EF10E0025E76C /* Firebase */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				E554FBA32B4837FB007AB30F /* PBXTargetDependency */,
+				E507EC4E2B5CE74F009F7094 /* PBXTargetDependency */,
 			);
 			name = Tight;
 			packageProductDependencies = (
@@ -550,9 +745,20 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1510;
+				LastSwiftUpdateCheck = 1520;
 				LastUpgradeCheck = 1520;
 				TargetAttributes = {
+					E507EC2B2B5CE74D009F7094 = {
+						CreatedOnToolsVersion = 15.2;
+					};
+					E507EC3A2B5CE74F009F7094 = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = E507EC2B2B5CE74D009F7094;
+					};
+					E507EC442B5CE74F009F7094 = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = E507EC2B2B5CE74D009F7094;
+					};
 					E554FB902B4837FA007AB30F = {
 						CreatedOnToolsVersion = 15.1;
 					};
@@ -591,11 +797,39 @@
 				E562D7082B3DA34F000775B7 /* TightTests */,
 				E562D7122B3DA34F000775B7 /* TightUITests */,
 				E554FB902B4837FA007AB30F /* TrainingSessionExtension */,
+				E507EC2B2B5CE74D009F7094 /* TightWatch Watch App */,
+				E507EC3A2B5CE74F009F7094 /* TightWatch Watch AppTests */,
+				E507EC442B5CE74F009F7094 /* TightWatch Watch AppUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		E507EC2A2B5CE74D009F7094 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E507EC362B5CE74F009F7094 /* Preview Assets.xcassets in Resources */,
+				E53935202B5CF16D00A8DD8C /* Assets.xcassets in Resources */,
+				E5986BCF2B5EC347003FAFC3 /* Localizable.xcstrings in Resources */,
+				E507EC332B5CE74F009F7094 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E507EC392B5CE74F009F7094 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E507EC432B5CE74F009F7094 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E554FB8F2B4837FA007AB30F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -661,6 +895,36 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		E507EC282B5CE74D009F7094 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E5B4B7D72B5E99F600A411E1 /* TrainingSessionState.swift in Sources */,
+				E507EC312B5CE74D009F7094 /* ContentView.swift in Sources */,
+				E507EC2F2B5CE74D009F7094 /* TightWatchApp.swift in Sources */,
+				E539351E2B5CF13500A8DD8C /* LocalizationProvider.swift in Sources */,
+				E539351F2B5CF13E00A8DD8C /* Color+Extension.swift in Sources */,
+				E57A88992B5D5EBB0040FCF5 /* ContentViewModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E507EC372B5CE74F009F7094 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E507EC402B5CE74F009F7094 /* TightWatch_Watch_AppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E507EC412B5CE74F009F7094 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E507EC4A2B5CE74F009F7094 /* TightWatch_Watch_AppUITests.swift in Sources */,
+				E507EC4C2B5CE74F009F7094 /* TightWatch_Watch_AppUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E554FB8D2B4837FA007AB30F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -671,6 +935,7 @@
 				E554FB982B4837FA007AB30F /* TrainingSessionBundle.swift in Sources */,
 				E5C1C6B62B4A5A5C0081B3EF /* TrainingSessionManager.swift in Sources */,
 				E5C1C6B72B4A5A780081B3EF /* Exercise.swift in Sources */,
+				E5B4B7D92B5E9ABA00A411E1 /* TrainingSessionState.swift in Sources */,
 				E554FB9A2B4837FA007AB30F /* TrainingSessionLiveActivity.swift in Sources */,
 				E553B9D02B52C47400BA0C61 /* Logger.swift in Sources */,
 				E5C1C6B22B4A59570081B3EF /* TightSchemaV1.swift in Sources */,
@@ -689,6 +954,7 @@
 				E57FD7A32B3DB13F00696968 /* Color+Extension.swift in Sources */,
 				E57FD7AF2B3DB18C00696968 /* PlanManagementView.swift in Sources */,
 				E57FD7682B3DADCC00696968 /* Logger.swift in Sources */,
+				E53935232B5D4E7700A8DD8C /* WatchSessionDelegate.swift in Sources */,
 				E57FD7942B3DB0BE00696968 /* ArrangedExerciseCard.swift in Sources */,
 				E57FD7962B3DB0BE00696968 /* PivotMainViewModel.swift in Sources */,
 				E509EA202B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift in Sources */,
@@ -698,6 +964,7 @@
 				E59B08F82B41495000280FC4 /* Constants.swift in Sources */,
 				E57FD7702B3DAE0400696968 /* OffsetKey.swift in Sources */,
 				E57FD7C62B3DB25200696968 /* UserPreference.swift in Sources */,
+				E5B4B7D62B5E99F600A411E1 /* TrainingSessionState.swift in Sources */,
 				E57FD7AE2B3DB18C00696968 /* TagTextfieldView.swift in Sources */,
 				E57FD7B92B3DB1DD00696968 /* EditArrangedExerciseView.swift in Sources */,
 				E5578C6C2B4E8FB4004947F2 /* TrainingSessionRunningView.swift in Sources */,
@@ -755,6 +1022,21 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		E507EC3D2B5CE74F009F7094 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E507EC2B2B5CE74D009F7094 /* TightWatch Watch App */;
+			targetProxy = E507EC3C2B5CE74F009F7094 /* PBXContainerItemProxy */;
+		};
+		E507EC472B5CE74F009F7094 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E507EC2B2B5CE74D009F7094 /* TightWatch Watch App */;
+			targetProxy = E507EC462B5CE74F009F7094 /* PBXContainerItemProxy */;
+		};
+		E507EC4E2B5CE74F009F7094 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E507EC2B2B5CE74D009F7094 /* TightWatch Watch App */;
+			targetProxy = E507EC4D2B5CE74F009F7094 /* PBXContainerItemProxy */;
+		};
 		E554FBA32B4837FB007AB30F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E554FB902B4837FA007AB30F /* TrainingSessionExtension */;
@@ -773,6 +1055,148 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		E507EC512B5CE74F009F7094 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"TightWatch Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = RQ845TWDMJ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "TightWatch-Watch-App-Info.plist";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.tightlab.Tight;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tightlab.Tight.watchkitapp;
+				PRODUCT_NAME = Tight;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		E507EC522B5CE74F009F7094 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"TightWatch Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = RQ845TWDMJ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "TightWatch-Watch-App-Info.plist";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.tightlab.Tight;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tightlab.Tight.watchkitapp;
+				PRODUCT_NAME = Tight;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		E507EC532B5CE74F009F7094 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RQ845TWDMJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tightlab.TightWatch-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TightWatch Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TightWatch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Debug;
+		};
+		E507EC542B5CE74F009F7094 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RQ845TWDMJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tightlab.TightWatch-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TightWatch Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TightWatch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Release;
+		};
+		E507EC552B5CE74F009F7094 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RQ845TWDMJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tightlab.TightWatch-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "TightWatch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Debug;
+		};
+		E507EC562B5CE74F009F7094 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RQ845TWDMJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tightlab.TightWatch-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "TightWatch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Release;
+		};
 		E554FBA62B4837FC007AB30F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1125,6 +1549,33 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		E507EC572B5CE74F009F7094 /* Build configuration list for PBXNativeTarget "TightWatch Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E507EC512B5CE74F009F7094 /* Debug */,
+				E507EC522B5CE74F009F7094 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E507EC582B5CE74F009F7094 /* Build configuration list for PBXNativeTarget "TightWatch Watch AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E507EC532B5CE74F009F7094 /* Debug */,
+				E507EC542B5CE74F009F7094 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E507EC592B5CE74F009F7094 /* Build configuration list for PBXNativeTarget "TightWatch Watch AppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E507EC552B5CE74F009F7094 /* Debug */,
+				E507EC562B5CE74F009F7094 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E554FBA82B4837FC007AB30F /* Build configuration list for PBXNativeTarget "TrainingSessionExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
