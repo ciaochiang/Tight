@@ -34,8 +34,19 @@ struct TrainingSessionAttributes: ActivityAttributes {
         
         /// Completion
         var completionType: Int     /// 0: Abort 1: Done
+        
+        
+        func keyValuePairs() -> [String: Any] {
+            var keyValuePairs = [String: Any]()
+                
+            let mirror = Mirror(reflecting: self)
+            for (label, value) in mirror.children {
+                if let label = label {
+                    keyValuePairs[label] = value
+                }
+            }
+            
+            return keyValuePairs
+        }
     }
-
-    // Fixed non-changing properties about your activity go here!
-    var name: String
 }

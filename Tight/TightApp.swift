@@ -10,6 +10,7 @@ import SwiftData
 import FirebaseCore
 import BackgroundTasks
 import UIKit
+import WatchConnectivity
 
 // MARK: Migration Plan
 enum TightMigrationPlan: SchemaMigrationPlan {
@@ -23,9 +24,17 @@ enum TightMigrationPlan: SchemaMigrationPlan {
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
+    let watchSessionDelegate = WatchSessionDelegate()
+    
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
+        
+        /// Activate Watch
+        if WCSession.isSupported() {
+            WCSession.default.delegate = watchSessionDelegate
+            WCSession.default.activate()
+        }
         
         return true
     }

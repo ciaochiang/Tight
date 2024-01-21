@@ -55,4 +55,8 @@ struct ColorTheme {
     let secondaryAccent = Color("SecondaryAccentColor")
     let primaryTextColor = Color("PrimaryTextColor")
     let secondaryTextColor = Color("SecondaryTextColor")
+    
+    /// Watch
+    let watchPrimaryTextColor = Color("WatchPrimaryTextColor")
+    let watchSecondaryTextColor = Color("WatchSecondaryTextColor")
 }

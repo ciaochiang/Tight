@@ -325,7 +325,7 @@ struct BreathCircleView: View {
 
 extension TrainingSessionAttributes {
     fileprivate static var preview: TrainingSessionAttributes {
-        TrainingSessionAttributes(name: "World")
+        TrainingSessionAttributes()
     }
 }
 

@@ -88,6 +88,9 @@ enum LocalizationProvider {
     case sectionDailySummary
     case sectionExercises
     
+    /// Watch
+    case watchLaunchHeading
+    
     var localizedString: String {
         return String(localized: localizationValue)
     }
@@ -187,6 +190,9 @@ enum LocalizationProvider {
         /// Section
         case .sectionDailySummary: return "section_daily_summary"
         case .sectionExercises: return "section_exercises"
+            
+        /// Watch
+        case .watchLaunchHeading: return "watch_launch_heading"
         }
     }
 }
