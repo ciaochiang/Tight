@@ -16,6 +16,7 @@ struct TrainingSessionAttributes: ActivityAttributes {
         var currentExerciseID: String
         var currentExerciseName: String
         var weight: Double
+        var weightUnit: Int
         var repetition: Double
         
         /// For elapsed time

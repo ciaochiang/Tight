@@ -162,13 +162,6 @@ struct TrainingSessionLiveActivity: Widget {
                     .minimumScaleFactor(0.8)
                     .foregroundColor(Color.themeStyle.theme.primaryTextColor)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Text("\(Int(context.state.weight))kg x \(Int(context.state.repetition))")
-                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
-                    .font(.footnote)
-                    .minimumScaleFactor(0.8)
-                    .fontWeight(.semibold)
-                    .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
             }
             else {
                 Text(context.state.currentExerciseName)
@@ -178,11 +171,14 @@ struct TrainingSessionLiveActivity: Widget {
                     .multilineTextAlignment(.leading)
                     .foregroundColor(Color.themeStyle.theme.primaryTextColor)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Text("\(Int(context.state.weight))kg x \(Int(context.state.repetition))")
+            }
+            
+            if let weightUnit = WeightUnit(rawValue: context.state.weightUnit) {
+                Text("\(Int(context.state.weight))\(weightUnit.name) x \(Int(context.state.repetition))")
                     .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
-                    .font(.subheadline)
+                    .font(.footnote)
                     .minimumScaleFactor(0.8)
+                    .fontWeight(.semibold)
                     .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
             }
         }
@@ -198,13 +194,6 @@ struct TrainingSessionLiveActivity: Widget {
                     .minimumScaleFactor(0.8)
                     .foregroundColor(Color.themeStyle.theme.primaryTextColor)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Text("\(Int(context.state.weight))kg x \(Int(context.state.repetition))")
-                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
-                    .font(.footnote)
-                    .minimumScaleFactor(0.8)
-                    .fontWeight(.semibold)
-                    .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
             }
             else {
                 Text(context.state.currentExerciseName)
@@ -214,12 +203,14 @@ struct TrainingSessionLiveActivity: Widget {
                     .multilineTextAlignment(.leading)
                     .foregroundColor(Color.themeStyle.theme.primaryTextColor)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                
-                
-                Text("\(Int(context.state.weight))kg x \(Int(context.state.repetition))")
+            }
+            
+            if let weightUnit = WeightUnit(rawValue: context.state.weightUnit) {
+                Text("\(Int(context.state.weight))\(weightUnit.name) x \(Int(context.state.repetition))")
                     .frame(maxWidth: 80, alignment: .trailing)
-                    .font(.subheadline)
+                    .font(.footnote)
                     .minimumScaleFactor(0.8)
+                    .fontWeight(.semibold)
                     .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
             }
         }
@@ -277,7 +268,7 @@ struct TrainingSessionLiveActivity: Widget {
                         .padding(.horizontal, 60)
                         .padding(.vertical, 4)
                 }
-                .tint(Color.themeStyle.theme.secondaryAccent)
+                .tint(Color.themeStyle.theme.secondaryTextColor)
             }
         }
     }
@@ -332,8 +323,9 @@ extension TrainingSessionAttributes {
 extension TrainingSessionAttributes.ContentState {
     fileprivate static var initial: TrainingSessionAttributes.ContentState {
         TrainingSessionAttributes.ContentState(currentExerciseID: "123",
-                                               currentExerciseName: "Bulgarian Split Squat",
+                                               currentExerciseName: "Bench Press",
                                                weight: 50,
+                                               weightUnit: 0,
                                                repetition: 10,
                                                startTime: .now,
                                                indexOfSet: 0,
@@ -346,6 +338,7 @@ extension TrainingSessionAttributes.ContentState {
          TrainingSessionAttributes.ContentState(currentExerciseID: "234",
                                                 currentExerciseName: "Leg Extension",
                                                 weight: 50,
+                                                weightUnit: 0,
                                                 repetition: 10,
                                                 startTime: .now,
                                                 indexOfSet: 0,

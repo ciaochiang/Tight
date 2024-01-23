@@ -555,6 +555,7 @@ class TrainingSessionManager: ObservableObject {
                     contentState.indexOfSet = newIndexOfSet
                     contentState.currentSetsProgress = newSetsProgress
                     contentState.weight = newExercise.weight
+                    contentState.weightUnit = newExercise.weightUnit
                     contentState.repetition = newExercise.repetitions
                     contentState.restStartTime = newRestStartTime
                     contentState.restIntervals = newRestIntervals
@@ -603,6 +604,7 @@ extension TrainingSessionManager {
         contentState = TrainingSessionAttributes.ContentState(currentExerciseID: firstExercise.id.uuidString,
                                                               currentExerciseName: firstExercise.exercise.name,
                                                               weight: firstExercise.weight,
+                                                              weightUnit: firstExercise.weightUnit,
                                                               repetition: firstExercise.repetitions,
                                                               startTime: startTime ?? .now,
                                                               restStartTime: nil,

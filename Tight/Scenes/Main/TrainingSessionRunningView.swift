@@ -48,10 +48,14 @@ struct TrainingSessionRunningView: View {
                                         restIntervals: trainingSessionManager.restIntervals)
                     }
 
-                    ExerciseInfoView(state: trainingSessionManager.state,
-                                     exerciseName: trainingSessionManager.currentExercise?.exercise.name ?? "",
-                                     weight: trainingSessionManager.currentExercise?.weight ?? 0,
-                                     repetition: trainingSessionManager.currentExercise?.repetitions ?? 0)
+                    if let exercise = trainingSessionManager.currentExercise,
+                        let weightUnit = WeightUnit(rawValue: exercise.weightUnit) {
+                        ExerciseInfoView(state: trainingSessionManager.state,
+                                         exerciseName: exercise.exercise.name,
+                                         weight: exercise.weight,
+                                         weightUnit: weightUnit,
+                                         repetition: exercise.repetitions)
+                    }
                 }
                 .padding(.leading, 8)
                 
@@ -130,7 +134,7 @@ struct TrainingSessionRunningView: View {
     }
     
     @ViewBuilder
-    func ExerciseInfoView(state: TrainingSessionState, exerciseName: String, weight: Double, repetition: Double) -> some View {
+    func ExerciseInfoView(state: TrainingSessionState, exerciseName: String, weight: Double, weightUnit: WeightUnit, repetition: Double) -> some View {
         VStack {
             Text(state == .resting ? LocalizationProvider.breakTimeTitle.localizedString : exerciseName)
                 .font(.subheadline)
@@ -140,7 +144,7 @@ struct TrainingSessionRunningView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentTransition(.opacity)
             
-            Text(state == .resting ? LocalizationProvider.breakTimeSubtitle.localizedString : "\(Int(weight))kg x \(Int(repetition))")
+            Text(state == .resting ? LocalizationProvider.breakTimeSubtitle.localizedString : "\(Int(weight))\(weightUnit.name) x \(Int(repetition))")
                 .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
                 .font(.footnote)
                 .minimumScaleFactor(0.8)

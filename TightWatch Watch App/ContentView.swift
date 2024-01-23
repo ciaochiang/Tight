@@ -61,8 +61,10 @@ struct ContentView: View {
                         .foregroundStyle(Color.themeStyle.theme.watchPrimaryTextColor)
 
 
-                    if let weight = viewModel.weight, let reps = viewModel.repetitions {
-                        Text("\(Int(weight))kg x \(Int(reps))")
+                    if let weight = viewModel.weight,
+                        let weightUnit = viewModel.weightUnit,
+                        let reps = viewModel.repetitions {
+                        Text("\(Int(weight))\(weightUnit.name) x \(Int(reps))")
                             .font(.subheadline)
                             .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
                             .foregroundStyle(Color.themeStyle.theme.watchSecondaryTextColor)
