@@ -66,7 +66,8 @@ struct PreferenceView: View {
                     .frame(height: Constants.DEFAULT_LIST_ROW_HEIGHT)
                     .contentShape(Rectangle())
             }
-
+            .id(UUID()) /// Bug: https://forums.developer.apple.com/forums/thread/720096
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
     
@@ -78,7 +79,10 @@ struct PreferenceView: View {
                     .font(.subheadline)
                     .frame(height: Constants.DEFAULT_LIST_ROW_HEIGHT)
                     .contentShape(Rectangle())
+
             }
+            .id(UUID()) /// Bug: https://forums.developer.apple.com/forums/thread/720096
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
     

@@ -264,7 +264,7 @@ struct PivotMainView: View {
                                     Image(systemName: "checkmark.circle.fill")
                                         .symbolVariant(/*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
                                 }
-                                .tint(exercise.isCompleted ? Color.themeStyle.theme.secondaryAccent : Color.themeStyle.theme.background)
+                                .tint(exercise.isCompleted ? Color.themeStyle.theme.secondaryAccent : Color.themeStyle.theme.secondaryBackground)
                             }
                         }
                         .onTapGesture {
