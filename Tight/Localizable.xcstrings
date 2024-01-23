@@ -17,12 +17,12 @@
     "%lld" : {
 
     },
-    "%lldkg x %lld" : {
+    "%lld%@ x %lld" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%1$lldkg x %2$lld"
+            "value" : "%1$lld%2$@ x %3$lld"
           }
         }
       }

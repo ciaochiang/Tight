@@ -23,6 +23,9 @@
 		E53935232B5D4E7700A8DD8C /* WatchSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53935222B5D4E7700A8DD8C /* WatchSessionDelegate.swift */; };
 		E54420F82B4AD38F002C63BC /* LocalizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B700C02B40105E0080442D /* LocalizationProvider.swift */; };
 		E54420F92B4AD8EF002C63BC /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E5B700BE2B400B740080442D /* Localizable.xcstrings */; };
+		E55094442B60114A00C2C1EA /* WeightUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55094432B60114A00C2C1EA /* WeightUnit.swift */; };
+		E55094452B60114A00C2C1EA /* WeightUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55094432B60114A00C2C1EA /* WeightUnit.swift */; };
+		E55094462B60114A00C2C1EA /* WeightUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55094432B60114A00C2C1EA /* WeightUnit.swift */; };
 		E553B9CF2B52BCED00BA0C61 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B08F72B41495000280FC4 /* Constants.swift */; };
 		E553B9D02B52C47400BA0C61 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7672B3DADCC00696968 /* Logger.swift */; };
 		E553B9D22B5395D900BA0C61 /* Date+ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553B9D12B5395D900BA0C61 /* Date+ExtensionTests.swift */; };
@@ -185,6 +188,7 @@
 		E509EA1B2B3EA53A0025E76C /* TightSchemaV1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TightSchemaV1.swift; sourceTree = "<group>"; };
 		E509EA1F2B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseTagPickerViewComponent.swift; sourceTree = "<group>"; };
 		E53935222B5D4E7700A8DD8C /* WatchSessionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSessionDelegate.swift; sourceTree = "<group>"; };
+		E55094432B60114A00C2C1EA /* WeightUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightUnit.swift; sourceTree = "<group>"; };
 		E553B9D12B5395D900BA0C61 /* Date+ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ExtensionTests.swift"; sourceTree = "<group>"; };
 		E553B9D32B53BEF600BA0C61 /* AnalyticsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsHelper.swift; sourceTree = "<group>"; };
 		E553B9D52B53ED2600BA0C61 /* TrainingSessionDailyReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionDailyReportView.swift; sourceTree = "<group>"; };
@@ -465,6 +469,7 @@
 				E57FD7C52B3DB25200696968 /* UserPreference.swift */,
 				E59B08F72B41495000280FC4 /* Constants.swift */,
 				E553B9D32B53BEF600BA0C61 /* AnalyticsHelper.swift */,
+				E55094432B60114A00C2C1EA /* WeightUnit.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -900,6 +905,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5B4B7D72B5E99F600A411E1 /* TrainingSessionState.swift in Sources */,
+				E55094462B60114A00C2C1EA /* WeightUnit.swift in Sources */,
 				E507EC312B5CE74D009F7094 /* ContentView.swift in Sources */,
 				E507EC2F2B5CE74D009F7094 /* TightWatchApp.swift in Sources */,
 				E539351E2B5CF13500A8DD8C /* LocalizationProvider.swift in Sources */,
@@ -937,6 +943,7 @@
 				E5C1C6B72B4A5A780081B3EF /* Exercise.swift in Sources */,
 				E5B4B7D92B5E9ABA00A411E1 /* TrainingSessionState.swift in Sources */,
 				E554FB9A2B4837FA007AB30F /* TrainingSessionLiveActivity.swift in Sources */,
+				E55094452B60114A00C2C1EA /* WeightUnit.swift in Sources */,
 				E553B9D02B52C47400BA0C61 /* Logger.swift in Sources */,
 				E5C1C6B22B4A59570081B3EF /* TightSchemaV1.swift in Sources */,
 				E5A2F3322B495DEB00735FC2 /* TimeInterval+Extension.swift in Sources */,
@@ -961,6 +968,7 @@
 				E57FD7A22B3DB13F00696968 /* Date+Extension.swift in Sources */,
 				E57FD78A2B3DAFEB00696968 /* OnboardingView.swift in Sources */,
 				E57FD7952B3DB0BE00696968 /* PivotMainView.swift in Sources */,
+				E55094442B60114A00C2C1EA /* WeightUnit.swift in Sources */,
 				E59B08F82B41495000280FC4 /* Constants.swift in Sources */,
 				E57FD7702B3DAE0400696968 /* OffsetKey.swift in Sources */,
 				E57FD7C62B3DB25200696968 /* UserPreference.swift in Sources */,

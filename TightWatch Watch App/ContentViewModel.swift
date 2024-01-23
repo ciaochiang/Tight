@@ -15,7 +15,7 @@ class ContentViewModel: NSObject, ObservableObject {
     @Published var exerciseName: String?
     @Published var startTime: Date?
     @Published var weight: Double?
-    @Published var weightUnit: Int?
+    @Published var weightUnit: WeightUnit?
     @Published var repetitions: Double?
     
     /// For rest
@@ -108,7 +108,7 @@ extension ContentViewModel: WCSessionDelegate {
                 self.weight = weight
             }
             
-            if let weightUnit = message["weightUnit"] as? Int {
+            if let rawValue = message["weightUnit"] as? Int, let weightUnit = WeightUnit(rawValue: rawValue) {
                 self.weightUnit = weightUnit
             }
             
