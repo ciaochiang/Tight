@@ -31,7 +31,7 @@ platform :ios do
     )
 
     # start build app
-    build_app(scheme: "Tight", include_bitcode: true)
+    build_app(scheme: "Tight")
 
     # Connect to apple connect api
     app_store_connect_api_key(
