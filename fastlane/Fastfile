@@ -22,10 +22,18 @@ platform :ios do
     setup_circle_ci
   end
 
-  lane :beta do
+  lane :distribute do
+    # increment build number
     current_date = Time.now.strftime("%Y%m%d%H%M%S")
-    increment_build_number(build_number: current_date)
+    increment_build_number(
+      build_number: current_date, 
+      xcodeproj: "Tight.xcodeproj"
+    )
+
+    # start build app
     build_app(scheme: "Tight", include_bitcode: true)
+
+    # Connect to apple connect api
     app_store_connect_api_key(
       key_id: "QQT3769X94",
       issuer_id: "69a6de85-1535-47e3-e053-5b8c7c11a4d1",
@@ -34,6 +42,8 @@ platform :ios do
       duration: 1200, # optional (maximum 1200)
       in_house: false # optional but may be required if using match/sigh
     )
+
+    # upload to testflight
     upload_to_testflight
   end
 
