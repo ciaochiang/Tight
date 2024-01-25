@@ -374,7 +374,7 @@ struct PivotMainView: View {
             /// If user hasn't training yet, then start the training directly
             if viewModel.currentPlan.trainingLog == nil {
                 trainingSessionManager.startTrainingSession(plan: viewModel.currentPlan,
-                                                            arrangedExercises: viewModel.currentPlan.arrangedExercises)
+                                                            arrangedExercises: viewModel.currentPlan.arrangedExercises.sorted(by: { $0.order < $1.order }))
             } else {
                 /// Display confirmation dialog before `restart training`
                 isPresentingConfirm.toggle()

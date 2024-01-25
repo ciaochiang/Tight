@@ -108,6 +108,7 @@ class TrainingSessionManager: ObservableObject {
     /// ```
     func startTrainingSession(plan: Plan?, arrangedExercises: [ArrangedExercise]) {
         /// NOTE: Do not use `reset` function here given that is async function
+        self.arrangedExercises = []
         self.currentExercise = nil
         self.startTime = nil
         self.restStartTime = nil
@@ -116,16 +117,18 @@ class TrainingSessionManager: ObservableObject {
         self.exerciseSetIndex = 0
         self.sessionProgress = 0
         self.isRunning = true
-        
+                
         /// Ensure arranged exercise list is not empty
         guard arrangedExercises.isEmpty == false else { return }
         
+        let clonedArrangedExercise = arrangedExercises.sorted(by: { $0.order < $1.order })
+        
         self.plan = plan
-        self.arrangedExercises = arrangedExercises
-        self.exerciseCount = arrangedExercises.count
+        self.arrangedExercises = clonedArrangedExercise
+        self.exerciseCount = clonedArrangedExercise.count
         
         /// Gete first exercise
-        let firstExercise = arrangedExercises[sessionStage]
+        let firstExercise = clonedArrangedExercise[sessionStage]
         self.currentExercise = firstExercise
         self.exerciseSetCompletionProgress = Double(exerciseSetIndex) / Double(firstExercise.sets)
         
