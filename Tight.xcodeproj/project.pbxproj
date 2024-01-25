@@ -405,18 +405,18 @@
 		E562D6F92B3DA34E000775B7 /* Tight */ = {
 			isa = PBXGroup;
 			children = (
-				E53935212B5D4E6200A8DD8C /* Watch */,
-				E5A2F3312B49568A00735FC2 /* Info.plist */,
 				E562D6FA2B3DA34E000775B7 /* TightApp.swift */,
+				E5B700BE2B400B740080442D /* Localizable.xcstrings */,
+				E562D7002B3DA34F000775B7 /* Assets.xcassets */,
+				E5A2F3312B49568A00735FC2 /* Info.plist */,
+				E57FD7CD2B3DD47600696968 /* GoogleService-Info.plist */,
+				E53935212B5D4E6200A8DD8C /* Watch */,
 				E57FD77F2B3DAE5B00696968 /* Scenes */,
 				E57FD7782B3DAE4600696968 /* Models */,
 				E57FD7692B3DADD700696968 /* Managers */,
 				E57FD7992B3DB13200696968 /* Extensions */,
 				E57FD7642B3DAD6600696968 /* Utils */,
-				E562D7002B3DA34F000775B7 /* Assets.xcassets */,
-				E57FD7CD2B3DD47600696968 /* GoogleService-Info.plist */,
 				E562D7022B3DA34F000775B7 /* Preview Content */,
-				E5B700BE2B400B740080442D /* Localizable.xcstrings */,
 			);
 			path = Tight;
 			sourceTree = "<group>";

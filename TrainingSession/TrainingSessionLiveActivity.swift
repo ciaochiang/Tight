@@ -81,21 +81,18 @@ struct TrainingSessionLiveActivity: Widget {
                         SetsProgressView(context: context)
                         ExerciseInfoView(context: context)
                         ElapsedTimeView(context: context)
-                            .frame(width: 80)
                     }
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .padding(.vertical)
-                    .padding(.horizontal)
                     
                     ControlsView(context: context)
-                        .padding(.horizontal)
-                        .padding(.bottom, 4)
                     
                     LinearProgressView(progress: context.state.totoalProgress)
+                        .cornerRadius(6.0)
+                        .padding(.bottom, 4)
                 }
             }
-            .frame(maxWidth: .infinity)
+            .padding()
             .activitySystemActionForegroundColor(Color.themeStyle.theme.accent)
+            .activityBackgroundTint(Color.themeStyle.theme.background)
             .background(Color.themeStyle.theme.background)
             
         } dynamicIsland: { context in
@@ -226,7 +223,7 @@ struct TrainingSessionLiveActivity: Widget {
                     .font(.title)
                     .fontWeight(.bold)
                     .tracking(1.4)
-                    .minimumScaleFactor(0.8)
+                    .multilineTextAlignment(.trailing)
                     .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
                     .contentTransition(.numericText(countsDown: true))
             }
@@ -235,7 +232,7 @@ struct TrainingSessionLiveActivity: Widget {
                     .font(.title)
                     .fontWeight(.bold)
                     .tracking(1.4)
-                    .minimumScaleFactor(0.8)
+                    .multilineTextAlignment(.trailing)
                     .foregroundColor(Color.themeStyle.theme.primaryTextColor)
                     .contentTransition(.numericText())
             }
@@ -277,7 +274,7 @@ struct TrainingSessionLiveActivity: Widget {
     func LinearProgressView(progress: Double) -> some View {
         ProgressView(value: progress)
             .progressViewStyle(.linear)
-            .background(Color.white.opacity(0.7))
+            .background(Color.themeStyle.theme.secondaryBackground)
             .tint(Color.themeStyle.theme.accent)
             .animation(.easeInOut, value: progress)
     }
