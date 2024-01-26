@@ -35,12 +35,15 @@ class WatchSessionDelegate: NSObject, WCSessionDelegate {
     /// When watch is light out,  the reachability will be changed to `false`, when watch is light up, the reachaiiliby will be change to `true`
     /// use this timing to get current training session states from phone app.
     func sessionReachabilityDidChange(_ session: WCSession) {
-        guard session.isReachable, let exercise = TrainingSessionManager.shared.currentExercise else { return }
+        let trainingSessionManager = TrainingSessionManager.shared
+        guard session.isReachable,
+              let exercise = trainingSessionManager.currentExercise,
+                let startTime = trainingSessionManager.startTime else { return }
         
         session.sendMessage(["state": TrainingSessionManager.shared.state.rawValue,
                              "currentExerciseID": exercise.id.uuidString,
                              "exerciseName": exercise.exercise.name,
-                             "startTime": exercise.startTime ?? .now,
+                             "startTime": startTime,
                              "weight": exercise.weight,
                              "weightUnit": exercise.weightUnit,
                              "repetitions": exercise.repetitions,
