@@ -103,6 +103,7 @@ extension ContentViewModel: WKExtendedRuntimeSessionDelegate {
                 DispatchQueue.main.async {
                     self.restStartTime = nil
                     self.restIntervals = nil
+                    self.state = .training
                 }
             }
         })

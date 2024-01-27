@@ -10,6 +10,7 @@ import SwiftUI
 import ActivityKit
 import UserNotifications
 import WatchConnectivity
+import HealthKit
 
 /**
  - Countdown timer
@@ -350,10 +351,11 @@ class TrainingSessionManager: ObservableObject {
 
     /// Done
     func done() {
+        let newState: TrainingSessionState = .finshed
+
         /// Set `endTime` to `trainingLog`
         let currentTime = Date.now
         plan?.trainingLog?.endTime = currentTime
-        let newState: TrainingSessionState = .finshed
         
         /// Update current progress to completed
         DispatchQueue.main.async {
@@ -570,8 +572,6 @@ class TrainingSessionManager: ObservableObject {
                                             "restIntervals": newRestIntervals
                                            ])
         }
-        
-
     }
 }
 

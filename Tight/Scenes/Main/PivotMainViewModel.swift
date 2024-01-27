@@ -10,8 +10,8 @@ import SwiftUI
 import SwiftData
 
 class PivotMainViewModel: ObservableObject {
-    var context: ModelContext
-    var logger: CustomLogger
+    private var context: ModelContext
+    private var logger: CustomLogger
     @Published var selectedDate: Date
     @Published var currentPlan: Plan
     @Published var createWeek: Bool = false
@@ -20,7 +20,7 @@ class PivotMainViewModel: ObservableObject {
     @Published var currentWeekIndex: Int = 1
     @Published var showDailySummary: Bool = false
     
-    init(context: ModelContext, logger: CustomLogger = CustomLogger(), currentDate: Date = .init()) {
+    init(context: ModelContext, logger: CustomLogger, currentDate: Date) {
         self.context = context
         self.logger = logger
         self.selectedDate = currentDate

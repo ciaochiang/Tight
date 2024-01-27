@@ -31,7 +31,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
         
-        /// Activate Watch
+        /// Activate Watch App
         if WCSession.isSupported() {
             WCSession.default.delegate = watchSessionDelegate
             WCSession.default.activate()
