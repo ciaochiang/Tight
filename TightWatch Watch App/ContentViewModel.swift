@@ -8,6 +8,12 @@
 import Foundation
 import SwiftUI
 import WatchConnectivity
+import WatchKit
+
+/**
+ - NOTE: user WKExtendedRuntimeSession to monitor rest time
+ - SeeAlso: https://developer.apple.com/documentation/watchkit/using_extended_runtime_sessions
+ */
 
 class ContentViewModel: NSObject, ObservableObject {
     @Published var state: TrainingSessionState = .notStarted
@@ -31,7 +37,11 @@ class ContentViewModel: NSObject, ObservableObject {
     
     @Published var isInteractaable: Bool = true
     
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+
+    
+    /// Extended Run Time
+    private var session: WKExtendedRuntimeSession?
+    private var timer: Timer?
     
     override init() {
         super.init()
@@ -40,6 +50,19 @@ class ContentViewModel: NSObject, ObservableObject {
             WCSession.default.delegate = self
             WCSession.default.activate()
         }
+    }
+    
+    func startSession() {
+        guard session == nil else { return }
+        
+        /// Initi Extended Runtime Session
+        session = WKExtendedRuntimeSession()
+        session?.delegate = self
+        session?.start()
+    }
+    
+    func endSession() {
+        session?.invalidate()
     }
     
     func onClickComplete() {
@@ -55,6 +78,40 @@ class ContentViewModel: NSObject, ObservableObject {
     func onClickEnd() {
         isInteractaable = false
         sendAppMessage(message: ["action": "end"])
+    }
+}
+
+// MARK:
+extension ContentViewModel: WKExtendedRuntimeSessionDelegate {
+    func extendedRuntimeSession(_ extendedRuntimeSession: WKExtendedRuntimeSession, didInvalidateWith reason: WKExtendedRuntimeSessionInvalidationReason, error: Error?) {
+        print("session runtime invalidate reason: \(reason)")
+        
+        self.timer?.invalidate()
+        self.timer = nil
+        
+        if let error = error {
+            print("extended runtime session invalidate error: \(error.localizedDescription)")
+        }
+    }
+    
+    func extendedRuntimeSessionDidStart(_ extendedRuntimeSession: WKExtendedRuntimeSession) {
+        print("session runtime did start")
+        self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { _ in
+            /// Check whether the rest time is over
+            guard let restStartTime = self.restStartTime, let restIntervals = self.restIntervals else { return }
+            if Date.now >= restStartTime.addingTimeInterval(restIntervals) {
+                DispatchQueue.main.async {
+                    self.restStartTime = nil
+                    self.restIntervals = nil
+                }
+            }
+        })
+    }
+    
+    func extendedRuntimeSessionWillExpire(_ extendedRuntimeSession: WKExtendedRuntimeSession) {
+        print("session runtime will expire")
+        self.timer?.invalidate()
+        self.timer = nil
     }
 }
 

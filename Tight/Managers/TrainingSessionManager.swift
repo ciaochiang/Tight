@@ -184,6 +184,9 @@ class TrainingSessionManager: ObservableObject {
             self.isRunning = false
         }
         
+        /// Send message to Watch
+        self.sendWatchMessage(message: ["state": newState.rawValue])
+        
         /// Update end time to training log
         if let trainingLog = plan?.trainingLog {
             trainingLog.endTime = currentTime
