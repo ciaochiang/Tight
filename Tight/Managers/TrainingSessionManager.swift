@@ -202,9 +202,7 @@ class TrainingSessionManager: ObservableObject {
         cancelScheduledNotifications()
         
         /// Remove live activity
-        if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
-            activity.id == liveActivityID
-        }) {
+        if let activity = Activity<TrainingSessionAttributes>.activities.first {
             Task {
                 /// Update activity info
                 var contentState = activity.content.state
@@ -262,9 +260,7 @@ class TrainingSessionManager: ObservableObject {
         }
         
         ///  Update activity
-        if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
-            activity.id == liveActivityID
-        }) {
+        if let activity = Activity<TrainingSessionAttributes>.activities.first {
             Task {
                 /// Update activity info
                 var contentState = activity.content.state
@@ -381,9 +377,7 @@ class TrainingSessionManager: ObservableObject {
         }
         
         /// Update Live Activity
-        if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
-            activity.id == liveActivityID
-        }) {
+        if let activity = Activity<TrainingSessionAttributes>.activities.first {
             Task {
                 /// Update activity info
                 var contentState = activity.content.state
@@ -424,9 +418,7 @@ class TrainingSessionManager: ObservableObject {
             self.state = newState
         }
         
-        if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
-            activity.id == liveActivityID
-        }) {
+        if let activity = Activity<TrainingSessionAttributes>.activities.first {
             Task {
                 /// Update activity info
                 var contentState = activity.content.state
@@ -468,9 +460,7 @@ class TrainingSessionManager: ObservableObject {
         }
         
         /// Update Live Activity
-        if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
-            activity.id == liveActivityID
-        }) {
+        if let activity = Activity<TrainingSessionAttributes>.activities.first {
             Task {
                 /// Update activity info
                 var contentState = activity.content.state
@@ -499,9 +489,7 @@ class TrainingSessionManager: ObservableObject {
             self.exerciseSetCompletionProgress = completedSetsProgress
             
             /// Update Live Activity
-            if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
-                activity.id == self.liveActivityID
-            }) {
+            if let activity = Activity<TrainingSessionAttributes>.activities.first {
                 Task {
                     /// Update activity info
                     var contentState = activity.content.state
@@ -549,9 +537,7 @@ class TrainingSessionManager: ObservableObject {
             self.sessionProgress = newProgress
             
             /// Update Live Activity
-            if let activity = Activity.activities.first(where: { (activity: Activity<TrainingSessionAttributes>) in
-                activity.id == self.liveActivityID
-            }) {
+            if let activity = Activity<TrainingSessionAttributes>.activities.first {
                 Task {
                     /// Update activity info
                     var contentState = activity.content.state
@@ -635,13 +621,10 @@ extension TrainingSessionManager {
     
     /// Remove all existing live activity
     func removeExistingAcitvity() {
-        if let activity = Activity.activities.first(where: {(activity: Activity<TrainingSessionAttributes>) in
-                                                       return true
-        }) {
-            Task {
-                let dismissalPolicy: ActivityUIDismissalPolicy = .immediate
+        Task {
+           for activity in Activity<TrainingSessionAttributes>.activities {
                 let finalState = activity.content.state
-                await activity.end(.init(state: finalState, staleDate: nil), dismissalPolicy: dismissalPolicy)
+                await activity.end(.init(state: finalState, staleDate: nil), dismissalPolicy: .immediate)
             }
         }
     }

@@ -11,6 +11,7 @@ import FirebaseCore
 import BackgroundTasks
 import UIKit
 import WatchConnectivity
+import ActivityKit
 
 // MARK: Migration Plan
 enum TightMigrationPlan: SchemaMigrationPlan {
@@ -37,6 +38,21 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
         
         return true
+    }
+        
+    func applicationWillTerminate(_ application: UIApplication) {
+        /// Remove all existing live activity
+        /// SeeAlso: https://forums.developer.apple.com/forums/thread/732418
+        /// SeeAlso: https://www.reddit.com/r/iOSProgramming/comments/yci8o6/comment/k1onzhm/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+        let semaphore = DispatchSemaphore(value: 0)
+        Task.detached {
+            if let activity = Activity<TrainingSessionAttributes>.activities.first {
+                await activity.end(nil, dismissalPolicy: .immediate)
+            }
+            semaphore.signal()
+        }
+       
+        semaphore.wait()
     }
 }
 
