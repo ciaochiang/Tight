@@ -663,6 +663,7 @@ extension TrainingSessionManager {
                 content.title = LocalizationProvider.notificationRestTimeDoneTitle.stringValue
                 content.body = LocalizationProvider.notificationRestTimeDoneDescription.stringValue
                 content.sound = UNNotificationSound.default
+                content.interruptionLevel = .timeSensitive
                 
                 let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: false)
                 

@@ -41,6 +41,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
         
     func applicationWillTerminate(_ application: UIApplication) {
+        /// Cancel all scheduled local notification
+        TrainingSessionManager.shared.cancelScheduledNotifications()
+        
         /// Notify Watch app that the app is going to terminated
         if WCSession.default.isReachable {
             WCSession.default.sendMessage(["action": "end"], replyHandler: nil)
