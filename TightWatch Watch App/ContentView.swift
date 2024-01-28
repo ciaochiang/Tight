@@ -27,11 +27,11 @@ struct ContentView: View {
             }
             .onAppear {
                 /// Start session
-                viewModel.startSession()
+                viewModel.createWorkoutSession()
             }
             .onChange(of: viewModel.state) { oldValue, newValue in
                 if newValue == .aborted || newValue == .finshed {
-                    viewModel.endSession()
+                    viewModel.endWorkoutSession()
                 }
             }
         }

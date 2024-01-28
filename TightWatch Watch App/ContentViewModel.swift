@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import WatchConnectivity
 import WatchKit
+import HealthKit
 
 /**
  - NOTE: user WKExtendedRuntimeSession to monitor rest time
@@ -37,8 +38,10 @@ class ContentViewModel: NSObject, ObservableObject {
     
     @Published var isInteractaable: Bool = true
     
+    /// Health Kit
+    let healthStore = HKHealthStore()
+    private var workoutSession: HKWorkoutSession?
 
-    
     /// Extended Run Time
     private var session: WKExtendedRuntimeSession?
     private var timer: Timer?
@@ -50,19 +53,6 @@ class ContentViewModel: NSObject, ObservableObject {
             WCSession.default.delegate = self
             WCSession.default.activate()
         }
-    }
-    
-    func startSession() {
-        guard session == nil else { return }
-        
-        /// Initi Extended Runtime Session
-        session = WKExtendedRuntimeSession()
-        session?.delegate = self
-        session?.start()
-    }
-    
-    func endSession() {
-        session?.invalidate()
     }
     
     func onClickComplete() {
@@ -78,41 +68,9 @@ class ContentViewModel: NSObject, ObservableObject {
     func onClickEnd() {
         isInteractaable = false
         sendAppMessage(message: ["action": "end"])
-    }
-}
-
-// MARK:
-extension ContentViewModel: WKExtendedRuntimeSessionDelegate {
-    func extendedRuntimeSession(_ extendedRuntimeSession: WKExtendedRuntimeSession, didInvalidateWith reason: WKExtendedRuntimeSessionInvalidationReason, error: Error?) {
-        print("session runtime invalidate reason: \(reason)")
         
-        self.timer?.invalidate()
-        self.timer = nil
-        
-        if let error = error {
-            print("extended runtime session invalidate error: \(error.localizedDescription)")
-        }
-    }
-    
-    func extendedRuntimeSessionDidStart(_ extendedRuntimeSession: WKExtendedRuntimeSession) {
-        print("session runtime did start")
-        self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { _ in
-            /// Check whether the rest time is over
-            guard let restStartTime = self.restStartTime, let restIntervals = self.restIntervals else { return }
-            if Date.now >= restStartTime.addingTimeInterval(restIntervals) {
-                DispatchQueue.main.async {
-                    self.restStartTime = nil
-                    self.restIntervals = nil
-                    self.state = .training
-                }
-            }
-        })
-    }
-    
-    func extendedRuntimeSessionWillExpire(_ extendedRuntimeSession: WKExtendedRuntimeSession) {
-        print("session runtime will expire")
-        self.timer?.invalidate()
-        self.timer = nil
+        /// End Workout Session
+        endWorkoutSession()
     }
 }
 
@@ -124,6 +82,52 @@ extension ContentViewModel {
         WCSession.default.sendMessage(message, replyHandler: nil) { error in
             print(error.localizedDescription)
         }
+    }
+    
+    func createWorkoutSession() {
+        guard workoutSession == nil else { return }
+        
+        let workoutConfiguration = HKWorkoutConfiguration()
+        workoutConfiguration.activityType = .traditionalStrengthTraining
+        workoutConfiguration.locationType = .indoor
+
+        do {
+            workoutSession = try HKWorkoutSession(healthStore: healthStore, configuration: workoutConfiguration)
+            workoutSession?.prepare()
+            if let startTime = startTime {
+                workoutSession?.startActivity(with: startTime)
+                workoutSession?.startMirroringToCompanionDevice(completion: { isSucceed, error in
+                    if let error = error {
+                        print("workout session mirroring error: \(error.localizedDescription)")
+                    }
+                    
+                    print("workout session mirroring is success: \(isSucceed)")
+                })
+            }
+            
+            self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { _ in
+                /// Check whether the rest time is over
+                guard let restStartTime = self.restStartTime, let restIntervals = self.restIntervals else { return }
+                if Date.now >= restStartTime.addingTimeInterval(restIntervals) {
+                    DispatchQueue.main.async {
+                        self.restStartTime = nil
+                        self.restIntervals = nil
+                        self.state = .training
+                    }
+                }
+            })
+        } catch {
+            print("Error creating workout session: \(error.localizedDescription)")
+        }
+    }
+    
+    func endWorkoutSession() {
+        workoutSession?.end()
+        workoutSession = nil
+        
+        /// End Timer
+        self.timer?.invalidate()
+        self.timer = nil
     }
 }
 
@@ -137,7 +141,6 @@ extension ContentViewModel: WCSessionDelegate {
         processContextMessage(message: applicationContext)
     }
     
-    
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
         processContextMessage(message: message)
     }
@@ -148,6 +151,14 @@ extension ContentViewModel: WCSessionDelegate {
             
             if let stateRawValue = message["state"] as? Int, let state = TrainingSessionState(rawValue: stateRawValue) {
                 self.state = state
+                
+                switch state {
+                case .training:  
+                    self.createWorkoutSession()
+                case .aborted, .finshed:
+                    self.endWorkoutSession()
+                default: break
+                }
             }
             
             if let currentExerciseID = message["currentExerciseID"] as? String {
@@ -196,5 +207,54 @@ extension ContentViewModel: WCSessionDelegate {
                 self.totoalProgress = totoalProgress
             }
         }
+    }
+}
+
+// MARK: WKExtendRuntimeSession
+/**
+ Suspend to use at this moment given use HKWorkoutSession instead.
+ */
+extension ContentViewModel: WKExtendedRuntimeSessionDelegate {
+    func startExtendedRuntimeSession() {
+        guard session == nil else { return }
+        
+        /// Initi Extended Runtime Session
+        session = WKExtendedRuntimeSession()
+        session?.delegate = self
+        session?.start()
+    }
+    
+    func endExtendedRuntimeSession() {
+        session?.invalidate()
+    }
+    
+    func extendedRuntimeSession(_ extendedRuntimeSession: WKExtendedRuntimeSession, didInvalidateWith reason: WKExtendedRuntimeSessionInvalidationReason, error: Error?) {
+        print("session runtime invalidate reason: \(reason)")
+        
+        self.timer?.invalidate()
+        self.timer = nil
+        
+        if let error = error {
+            print("extended runtime session invalidate error: \(error.localizedDescription)")
+        }
+    }
+    
+    func extendedRuntimeSessionDidStart(_ extendedRuntimeSession: WKExtendedRuntimeSession) {
+        self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { _ in
+            /// Check whether the rest time is over
+            guard let restStartTime = self.restStartTime, let restIntervals = self.restIntervals else { return }
+            if Date.now >= restStartTime.addingTimeInterval(restIntervals) {
+                DispatchQueue.main.async {
+                    self.restStartTime = nil
+                    self.restIntervals = nil
+                    self.state = .training
+                }
+            }
+        })
+    }
+    
+    func extendedRuntimeSessionWillExpire(_ extendedRuntimeSession: WKExtendedRuntimeSession) {
+        self.timer?.invalidate()
+        self.timer = nil
     }
 }

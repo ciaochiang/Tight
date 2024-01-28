@@ -209,6 +209,8 @@
 		E562D7132B3DA34F000775B7 /* TightUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TightUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E562D7172B3DA34F000775B7 /* TightUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TightUITests.swift; sourceTree = "<group>"; };
 		E562D7192B3DA34F000775B7 /* TightUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TightUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E56C07A32B651B3B00A4AFA9 /* TightWatch Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TightWatch Watch App.entitlements"; sourceTree = "<group>"; };
+		E56C07A42B663D9100A4AFA9 /* Tight.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tight.entitlements; sourceTree = "<group>"; };
 		E57A88982B5D5EBB0040FCF5 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		E57FD7672B3DADCC00696968 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		E57FD76A2B3DAE0300696968 /* OffsetKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OffsetKey.swift; sourceTree = "<group>"; };
@@ -319,6 +321,7 @@
 		E507EC2D2B5CE74D009F7094 /* TightWatch Watch App */ = {
 			isa = PBXGroup;
 			children = (
+				E56C07A32B651B3B00A4AFA9 /* TightWatch Watch App.entitlements */,
 				E5B4B7DA2B5EB09900A411E1 /* TightWatch-Watch-App-Info.plist */,
 				E507EC2E2B5CE74D009F7094 /* TightWatchApp.swift */,
 				E507EC302B5CE74D009F7094 /* ContentView.swift */,
@@ -405,6 +408,7 @@
 		E562D6F92B3DA34E000775B7 /* Tight */ = {
 			isa = PBXGroup;
 			children = (
+				E56C07A42B663D9100A4AFA9 /* Tight.entitlements */,
 				E562D6FA2B3DA34E000775B7 /* TightApp.swift */,
 				E5B700BE2B400B740080442D /* Localizable.xcstrings */,
 				E562D7002B3DA34F000775B7 /* Assets.xcassets */,
@@ -1068,6 +1072,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "TightWatch Watch App/TightWatch Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20240125214526;
 				DEVELOPMENT_ASSET_PATHS = "\"TightWatch Watch App/Preview Content\"";
@@ -1098,6 +1103,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "TightWatch Watch App/TightWatch Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20240125214526;
 				DEVELOPMENT_ASSET_PATHS = "\"TightWatch Watch App/Preview Content\"";
@@ -1396,6 +1402,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Tight/Tight.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20240125214526;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -1439,6 +1446,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Tight/Tight.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20240125214526;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
