@@ -103,6 +103,13 @@ struct PivotMainView: View {
                 showTrainingSessionRunningView = newValue != nil
             }
         }
+        .onChange(of: trainingSessionManager.state, { oldValue, newValue in
+            if newValue == .training || newValue == .resting {
+                UIApplication.shared.isIdleTimerDisabled = true
+            } else {
+                UIApplication.shared.isIdleTimerDisabled = false
+            }
+        })
         .onChange(of: viewModel.weeks, { oldValue, newValue in
             viewModel.loadPlans(weeks: newValue)
         })
