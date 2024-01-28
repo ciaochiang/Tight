@@ -132,6 +132,11 @@ extension ContentViewModel {
         /// End Timer
         self.timer?.invalidate()
         self.timer = nil
+        
+        DispatchQueue.main.async {
+            self.state = .notStarted
+            self.restStartTime = nil
+        }
     }
 }
 
@@ -150,6 +155,13 @@ extension ContentViewModel: WCSessionDelegate {
     }
     
     func processContextMessage(message: [String: Any]) {
+        if let action = message["action"] as? String {
+            if action == "end" {
+                /// Stop the session
+                endWorkoutSession()
+            }
+        }
+        
         DispatchQueue.main.async {
             self.isInteractaable = true
             
