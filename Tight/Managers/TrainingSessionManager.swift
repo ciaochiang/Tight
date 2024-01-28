@@ -87,6 +87,9 @@ class TrainingSessionManager: ObservableObject {
     
     @Published var contentState: TrainingSessionAttributes.ContentState?
     
+    /// Health Kit
+    let healthStore = HKHealthStore()
+    
     /// Starts a new training session with the given plan and arranged exercises.
     ///
     /// Use this function to initiate a training session by providing a training plan (`plan`) and a list of arranged exercises (`arrangedExercises`).
