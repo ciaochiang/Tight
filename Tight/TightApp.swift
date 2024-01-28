@@ -41,16 +41,16 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
         
     func applicationWillTerminate(_ application: UIApplication) {
+        /// Notify Watch app that the app is going to terminated
+        if WCSession.default.isReachable {
+            WCSession.default.sendMessage(["action": "end"], replyHandler: nil)
+        }
+        
         /// Remove all existing live activity
         /// SeeAlso: https://forums.developer.apple.com/forums/thread/732418
         /// SeeAlso: https://www.reddit.com/r/iOSProgramming/comments/yci8o6/comment/k1onzhm/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
         let semaphore = DispatchSemaphore(value: 0)
         Task.detached {
-            /// Notify Watch app that the app is going to terminated
-            if WCSession.default.isReachable {
-                WCSession.default.sendMessage(["action": "end"], replyHandler: nil)
-            }
-            
             if let activity = Activity<TrainingSessionAttributes>.activities.first {
                 await activity.end(nil, dismissalPolicy: .immediate)
             }

@@ -44,6 +44,7 @@
 		E562D70E2B3DA34F000775B7 /* TightTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E562D70D2B3DA34F000775B7 /* TightTests.swift */; };
 		E562D7182B3DA34F000775B7 /* TightUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E562D7172B3DA34F000775B7 /* TightUITests.swift */; };
 		E562D71A2B3DA34F000775B7 /* TightUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E562D7192B3DA34F000775B7 /* TightUITestsLaunchTests.swift */; };
+		E56C07A62B667C0000A4AFA9 /* soundEffect.m4a in Resources */ = {isa = PBXBuildFile; fileRef = E56C07A52B667C0000A4AFA9 /* soundEffect.m4a */; };
 		E57A88992B5D5EBB0040FCF5 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57A88982B5D5EBB0040FCF5 /* ContentViewModel.swift */; };
 		E57FD75D2B3DA3E400696968 /* GrowthBook-IOS in Frameworks */ = {isa = PBXBuildFile; productRef = E57FD75C2B3DA3E400696968 /* GrowthBook-IOS */; };
 		E57FD7632B3DAD3900696968 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E57FD7622B3DAD3900696968 /* FirebaseAnalytics */; };
@@ -211,6 +212,7 @@
 		E562D7192B3DA34F000775B7 /* TightUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TightUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E56C07A32B651B3B00A4AFA9 /* TightWatch Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TightWatch Watch App.entitlements"; sourceTree = "<group>"; };
 		E56C07A42B663D9100A4AFA9 /* Tight.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tight.entitlements; sourceTree = "<group>"; };
+		E56C07A52B667C0000A4AFA9 /* soundEffect.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = soundEffect.m4a; sourceTree = "<group>"; };
 		E57A88982B5D5EBB0040FCF5 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		E57FD7672B3DADCC00696968 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		E57FD76A2B3DAE0300696968 /* OffsetKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OffsetKey.swift; sourceTree = "<group>"; };
@@ -414,6 +416,7 @@
 				E562D7002B3DA34F000775B7 /* Assets.xcassets */,
 				E5A2F3312B49568A00735FC2 /* Info.plist */,
 				E57FD7CD2B3DD47600696968 /* GoogleService-Info.plist */,
+				E56C07A52B667C0000A4AFA9 /* soundEffect.m4a */,
 				E53935212B5D4E6200A8DD8C /* Watch */,
 				E57FD77F2B3DAE5B00696968 /* Scenes */,
 				E57FD7782B3DAE4600696968 /* Models */,
@@ -853,6 +856,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E562D7042B3DA34F000775B7 /* Preview Assets.xcassets in Resources */,
+				E56C07A62B667C0000A4AFA9 /* soundEffect.m4a in Resources */,
 				E5B700BF2B400B740080442D /* Localizable.xcstrings in Resources */,
 				E57FD7CE2B3DD47600696968 /* GoogleService-Info.plist in Resources */,
 				E57FD7CC2B3DC6BE00696968 /* LaunchScreen.storyboard in Resources */,

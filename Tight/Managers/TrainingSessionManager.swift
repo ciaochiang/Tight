@@ -11,13 +11,14 @@ import ActivityKit
 import UserNotifications
 import WatchConnectivity
 import HealthKit
+import AVFoundation
 
 /**
  - Countdown timer
  - Based on  Arranged Exercises rest intervals
  -
  */
-class TrainingSessionManager: ObservableObject {
+class TrainingSessionManager: NSObject, ObservableObject {
     /// Singleton
     static let shared = TrainingSessionManager()
     
@@ -89,6 +90,23 @@ class TrainingSessionManager: ObservableObject {
     
     /// Health Kit
     let healthStore = HKHealthStore()
+    
+    /// Sound
+    private var audioPlayer: AVAudioPlayer?
+
+    
+    override init() {
+        super.init()
+        
+        if let soundURL = Bundle.main.url(forResource: "soundEffect", withExtension: "m4a") {
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
+                audioPlayer?.prepareToPlay()
+            } catch {
+                fatalError("Error initializing audio player: \(error.localizedDescription)")
+            }
+        }
+    }
     
     /// Starts a new training session with the given plan and arranged exercises.
     ///
@@ -247,6 +265,10 @@ class TrainingSessionManager: ObservableObject {
         /// Determine rest time is over or not
         guard Date.now >= restStartTime.addingTimeInterval(restInterval) else { return }
         
+        // Haptic Feedback
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        audioPlayer?.play()
+        
         let currentTime = Date.now
         let newState: TrainingSessionState = .training
         
@@ -270,9 +292,6 @@ class TrainingSessionManager: ObservableObject {
                 var contentState = activity.content.state
                 contentState.restStartTime = nil
                 contentState.restIntervals = nil
-             
-                /// Vibrate
-                await UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                 
                 await activity.update(.init(state: contentState, staleDate: nil))
             }
