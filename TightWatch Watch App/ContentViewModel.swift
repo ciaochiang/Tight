@@ -109,6 +109,10 @@ extension ContentViewModel {
                 /// Check whether the rest time is over
                 guard let restStartTime = self.restStartTime, let restIntervals = self.restIntervals else { return }
                 if Date.now >= restStartTime.addingTimeInterval(restIntervals) {
+                    
+                    /// Haptic Feedback
+                    WKInterfaceDevice.current().play(.notification)
+                    
                     DispatchQueue.main.async {
                         self.restStartTime = nil
                         self.restIntervals = nil
