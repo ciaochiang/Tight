@@ -107,7 +107,10 @@ extension ContentViewModel {
             
             self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { _ in
                 /// Check whether the rest time is over
-                guard let restStartTime = self.restStartTime, let restIntervals = self.restIntervals else { return }
+                guard let restStartTime = self.restStartTime, 
+                        let restIntervals = self.restIntervals,
+                        self.state == .resting else { return }
+                
                 if Date.now >= restStartTime.addingTimeInterval(restIntervals) {
                     
                     /// Haptic Feedback
