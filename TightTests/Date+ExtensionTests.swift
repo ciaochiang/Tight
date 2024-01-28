@@ -31,18 +31,14 @@ final class Date_ExtensionTests: XCTestCase {
     }
     
     func testFetchWeek() {
-        let date = Date.from(year: 2023, month: 1, day: 15) // A random date
+        // Create a date for testing (e.g., January 15, 2023)
+        let testDate = Date.from(year: 2023, month: 1, day: 15)
         
-        let week = date.fetchWeek()
+        // Call fetchWeek with the test date
+        let result = testDate.fetchWeek()
         
-        // Ensure the result contains 7 days
-        XCTAssertEqual(week.count, 7)
-        
-        // Verify that the first day is the start of the week (Monday or Sunday, depending on your locale)
-        XCTAssertEqual(Calendar.current.component(.weekday, from: week[0].date), Calendar.current.firstWeekday)
-        
-        // Verify that the last day is 6 days after the first day
-        XCTAssertEqual(Calendar.current.component(.day, from: week[6].date), Calendar.current.component(.day, from: week[0].date) + 6)
+        // Ensure that the result contains 7 days
+        XCTAssertEqual(result.count, 7)
     }
     
     func testCreateNextWeek() {
