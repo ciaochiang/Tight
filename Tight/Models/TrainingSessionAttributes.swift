@@ -10,32 +10,24 @@ import ActivityKit
 
 struct TrainingSessionAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
-        // Dynamic stateful properties about your activity go here!
+        var state: Int
+        var startTime: Date
         
         /// Exercise Info
         var currentExerciseID: String
-        var currentExerciseName: String
+        var exerciseName: String
         var weight: Double
         var weightUnit: Int
-        var repetition: Double
+        var repetitions: Double
         
-        /// For elapsed time
-        var startTime: Date
-        
-        /// For rest
+        /// Rest Time
         var restStartTime: Date?
-        var restIntervals: TimeInterval?
+        var restInterval: TimeInterval
         
-        /// For sets progress
+        /// Progress
         var indexOfSet: Int
-        var currentSetsProgress: Double
-        
-        ///  For total  progress
-        var totoalProgress: Double
-        
-        /// Completion
-        var completionType: Int     /// 0: Abort 1: Done
-        
+        var setsProgress: Double
+        var totalProgress: Double
         
         func keyValuePairs() -> [String: Any] {
             var keyValuePairs = [String: Any]()

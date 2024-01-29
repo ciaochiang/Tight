@@ -55,7 +55,7 @@ struct StopTrainingSession: LiveActivityIntent {
     
     func perform() async throws -> some IntentResult {
         /// Update Database
-        TrainingSessionManager.shared.stopTrainingSession()
+        TrainingSessionManager.shared.endSession()
         return .result()
     }
 }
@@ -67,28 +67,16 @@ struct TrainingSessionLiveActivity: Widget {
         ActivityConfiguration(for: TrainingSessionAttributes.self) { context in
             // Lock screen/banner UI goes here
             VStack(spacing: 16) {
-                if context.state.completionType > -1 {  /// -1 is initial state
-                    Text(context.state.completionType == 0
-                         ? LocalizationProvider.abortCompletionMessage.nameKey
-                         : LocalizationProvider.doneCompletionMessage.nameKey)
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.vertical, 40)
-                        .padding(.horizontal)
-                } else {
-                    HStack(spacing: 16) {
-                        SetsProgressView(context: context)
-                        ExerciseInfoView(context: context)
-                        ElapsedTimeView(context: context)
-                    }
-                    
-                    ControlsView(context: context)
-                    
-                    LinearProgressView(progress: context.state.totoalProgress)
-                        .cornerRadius(6.0)
-                        .padding(.bottom, 4)
+                HStack(spacing: 16) {
+                    SetsProgressView(context: context)
+                    ExerciseInfoView(context: context)
+                    ElapsedTimeView(context: context)
                 }
+                
+                ControlsView(context: context)
+                LinearProgressView(progress: context.state.totalProgress)
+                    .cornerRadius(6.0)
+                    .padding(.bottom, 4)
             }
             .padding()
             .activitySystemActionForegroundColor(Color.themeStyle.theme.accent)
@@ -115,7 +103,7 @@ struct TrainingSessionLiveActivity: Widget {
                 
                 DynamicIslandExpandedRegion(.bottom) {
                     VStack {
-                        LinearProgressView(progress: context.state.totoalProgress)
+                        LinearProgressView(progress: context.state.totalProgress)
                         DynamicIslandExerciseInfoView(context: context)
                             .padding(.bottom, 8)
                         ControlsView(context: context)
@@ -124,7 +112,7 @@ struct TrainingSessionLiveActivity: Widget {
                 }
             } compactLeading: {
                 HStack {
-                    CircularProgressView(progress: context.state.totoalProgress)
+                    CircularProgressView(progress: context.state.totalProgress)
                         .progressViewStyle(.circular)
                     Text(context.state.startTime, style: .timer)
                         .contentTransition(.numericText())
@@ -143,7 +131,7 @@ struct TrainingSessionLiveActivity: Widget {
     
     @ViewBuilder
     func SetsProgressView(context: ActivityViewContext<TrainingSessionAttributes>) -> some View {
-        ProgressView(value: context.state.currentSetsProgress) {
+        ProgressView(value: context.state.setsProgress) {
             Text("\(context.state.indexOfSet + 1)")
         }
         .progressViewStyle(CircularProgressViewStyle(tint: Color.themeStyle.theme.accent))
@@ -152,64 +140,42 @@ struct TrainingSessionLiveActivity: Widget {
     @ViewBuilder
     func ExerciseInfoView(context: ActivityViewContext<TrainingSessionAttributes>) -> some View {
         VStack(spacing: 4) {
-            if context.state.restStartTime != nil {
-                Text(LocalizationProvider.breakTimeTitle.nameKey)
-                    .font(.headline)
-                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                    .minimumScaleFactor(0.8)
-                    .foregroundColor(Color.themeStyle.theme.primaryTextColor)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-            else {
-                Text(context.state.currentExerciseName)
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .lineLimit(2)
-                    .multilineTextAlignment(.leading)
-                    .foregroundColor(Color.themeStyle.theme.primaryTextColor)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
+            Text(context.state.exerciseName)
+                .font(.headline)
+                .fontWeight(.bold)
+                .lineLimit(2)
+                .multilineTextAlignment(.leading)
+                .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+                .frame(maxWidth: .infinity, alignment: .leading)
             
-            if let weightUnit = WeightUnit(rawValue: context.state.weightUnit) {
-                Text("\(Int(context.state.weight))\(weightUnit.name) x \(Int(context.state.repetition))")
-                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
-                    .font(.footnote)
-                    .minimumScaleFactor(0.8)
-                    .fontWeight(.semibold)
-                    .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
-            }
+            let weightUnit = WeightUnit(rawValue: context.state.weightUnit) ?? .kilogram
+            Text("\(Int(context.state.weight))\(weightUnit.name) x \(Int(context.state.repetitions))")
+                .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
+                .font(.footnote)
+                .minimumScaleFactor(0.8)
+                .fontWeight(.semibold)
+                .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
         }
     }
     
     @ViewBuilder
     func DynamicIslandExerciseInfoView(context: ActivityViewContext<TrainingSessionAttributes>) -> some View {
         HStack(spacing: 4) {
-            if context.state.restStartTime != nil {
-                Text(LocalizationProvider.breakTimeTitle.nameKey)
-                    .font(.headline)
-                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                    .minimumScaleFactor(0.8)
-                    .foregroundColor(Color.themeStyle.theme.primaryTextColor)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-            else {
-                Text(context.state.currentExerciseName)
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .lineLimit(nil)
-                    .multilineTextAlignment(.leading)
-                    .foregroundColor(Color.themeStyle.theme.primaryTextColor)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
+            Text(context.state.exerciseName)
+                .font(.headline)
+                .fontWeight(.bold)
+                .lineLimit(nil)
+                .multilineTextAlignment(.leading)
+                .foregroundColor(Color.themeStyle.theme.primaryTextColor)
+                .frame(maxWidth: .infinity, alignment: .leading)
             
-            if let weightUnit = WeightUnit(rawValue: context.state.weightUnit) {
-                Text("\(Int(context.state.weight))\(weightUnit.name) x \(Int(context.state.repetition))")
-                    .frame(maxWidth: 80, alignment: .trailing)
-                    .font(.footnote)
-                    .minimumScaleFactor(0.8)
-                    .fontWeight(.semibold)
-                    .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
-            }
+            let weightUnit = WeightUnit(rawValue: context.state.weightUnit) ?? .kilogram
+            Text("\(Int(context.state.weight))\(weightUnit.name) x \(Int(context.state.repetitions))")
+                .frame(maxWidth: 80, alignment: .trailing)
+                .font(.footnote)
+                .minimumScaleFactor(0.8)
+                .fontWeight(.semibold)
+                .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
         }
         .frame(maxWidth: .infinity)
     }
@@ -217,15 +183,23 @@ struct TrainingSessionLiveActivity: Widget {
     @ViewBuilder
     func ElapsedTimeView(context: ActivityViewContext<TrainingSessionAttributes>) -> some View {
         VStack {
-            if let restStartTime = context.state.restStartTime,
-               let restIntervals = context.state.restIntervals {
-                Text(timerInterval: restStartTime...restStartTime.addingTimeInterval(restIntervals), countsDown: true)
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .tracking(1.4)
-                    .multilineTextAlignment(.trailing)
-                    .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
-                    .contentTransition(.numericText(countsDown: true))
+            if context.state.state == 2, let startTime = context.state.restStartTime {   /// Resting
+                let endTime = startTime.addingTimeInterval(context.state.restInterval)
+                HStack {
+                    Label {
+                        Text(timerInterval: startTime...endTime, countsDown: true)
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .multilineTextAlignment(.trailing)
+                            .foregroundColor(Color.themeStyle.theme.secondaryAccent)
+                            .contentTransition(.numericText(countsDown: true))
+                    } icon: {
+                        Image(systemName: "snowflake")
+                            .foregroundStyle(Color.themeStyle.theme.secondaryAccent)
+                            .offset(x: 44)
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .trailing)
             }
             else {
                 Text(context.state.startTime, style: .timer)
@@ -233,8 +207,8 @@ struct TrainingSessionLiveActivity: Widget {
                     .fontWeight(.bold)
                     .tracking(1.4)
                     .multilineTextAlignment(.trailing)
-                    .foregroundColor(Color.themeStyle.theme.primaryTextColor)
-                    .contentTransition(.numericText())
+                    .foregroundColor(Color.themeStyle.theme.accent)
+                    .contentTransition(.numericText(countsDown: false))
             }
         }
     }
@@ -251,7 +225,7 @@ struct TrainingSessionLiveActivity: Widget {
             
             Spacer()
             
-            if context.state.restStartTime != nil {
+            if context.state.state == 2 {   /// Resting
                 Button(intent: SkipRest()) {
                     Image(systemName: "chevron.forward.2")
                         .padding(.horizontal, 60)
@@ -319,29 +293,32 @@ extension TrainingSessionAttributes {
 
 extension TrainingSessionAttributes.ContentState {
     fileprivate static var initial: TrainingSessionAttributes.ContentState {
-        TrainingSessionAttributes.ContentState(currentExerciseID: "123",
-                                               currentExerciseName: "Bench Press",
+        TrainingSessionAttributes.ContentState(state: 2,
+                                               startTime: .now,
+                                               currentExerciseID: "123",
+                                               exerciseName: "Bench Press",
                                                weight: 50,
                                                weightUnit: 0,
-                                               repetition: 10,
-                                               startTime: .now,
+                                               repetitions: 10,
+                                               restStartTime: .now,
+                                               restInterval: 180,
                                                indexOfSet: 0,
-                                               currentSetsProgress: 0.3,
-                                               totoalProgress: 0.3,
-                                               completionType: -1)
+                                               setsProgress: 0.3,
+                                               totalProgress: 0.3)
      }
      
      fileprivate static var progressing: TrainingSessionAttributes.ContentState {
-         TrainingSessionAttributes.ContentState(currentExerciseID: "234",
-                                                currentExerciseName: "Leg Extension",
+         TrainingSessionAttributes.ContentState(state: 1,
+                                                startTime: .now,
+                                                currentExerciseID: "234",
+                                                exerciseName: "Leg Extension",
                                                 weight: 50,
                                                 weightUnit: 0,
-                                                repetition: 10,
-                                                startTime: .now,
+                                                repetitions: 10,
+                                                restInterval: 0,
                                                 indexOfSet: 0,
-                                                currentSetsProgress: 0.3,
-                                                totoalProgress: 0.3,
-                                                completionType: -1)
+                                                setsProgress: 0.3,
+                                                totalProgress: 0.3)
      }
 }
 

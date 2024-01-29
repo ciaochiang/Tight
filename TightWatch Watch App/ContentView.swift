@@ -30,7 +30,7 @@ struct ContentView: View {
                 viewModel.createWorkoutSession()
             }
             .onChange(of: viewModel.state) { oldValue, newValue in
-                if newValue == .aborted || newValue == .finshed {
+                if newValue == .notStarted {
                     viewModel.endWorkoutSession()
                 }
             }
@@ -49,26 +49,23 @@ struct ContentView: View {
     
     @ViewBuilder
     func ExerciseSetProgressView() -> some View {
-        if let indexOfSet = viewModel.indexOfSet,
-            let currentSetsProgress = viewModel.currentSetsProgress {
-            ProgressView(value: currentSetsProgress) {
-                Text("\(indexOfSet + 1)")
-            }
-            .progressViewStyle(CircularProgressViewStyle(tint: Color.themeStyle.theme.accent))
+        ProgressView(value: viewModel.setsProgress) {
+            Text("\(viewModel.indexOfSet + 1)")
         }
+        .progressViewStyle(CircularProgressViewStyle(tint: Color.themeStyle.theme.accent))
     }
     
     @ViewBuilder
     func ExerciseTimeView() -> some View {
-        if viewModel.state == .resting,
-           let restStartTime = viewModel.restStartTime,
-           let restIntervals = viewModel.restIntervals, restIntervals > 0 {
-            Text(timerInterval: restStartTime...restStartTime.addingTimeInterval(restIntervals), countsDown: true)
+        if viewModel.state == .resting {
+            let startTime = viewModel.restStartTime ?? .now
+            let endTime = startTime.addingTimeInterval(viewModel.restInterval)
+            Text(timerInterval: startTime...endTime, countsDown: true)
                 .font(.title)
                 .fontWeight(.bold)
                 .tracking(4.0)
                 .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .trailing)
-                .foregroundStyle(Color.themeStyle.theme.watchSecondaryTextColor)
+                .foregroundStyle(Color.themeStyle.theme.secondaryAccent)
                 .contentTransition(.numericText())
         }
         else if let startTime = viewModel.startTime {
@@ -78,7 +75,7 @@ struct ContentView: View {
                 .tracking(4.0)
                 .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .trailing)
                 .foregroundStyle(Color.themeStyle.theme.accent)
-                .contentTransition(.numericText())
+                .contentTransition(.numericText(countsDown: false))
         }
     }
     
@@ -95,14 +92,11 @@ struct ContentView: View {
                 .foregroundStyle(Color.themeStyle.theme.watchPrimaryTextColor)
 
 
-            if let weight = viewModel.weight,
-                let weightUnit = viewModel.weightUnit,
-                let reps = viewModel.repetitions {
-                Text("\(Int(weight))\(weightUnit.name) x \(Int(reps))")
-                    .font(.subheadline)
-                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
-                    .foregroundStyle(Color.themeStyle.theme.watchSecondaryTextColor)
-            }
+            let subHeadlineString = "\(Int(viewModel.weight))\(viewModel.weightUnit.name) x \(Int(viewModel.repetitions))"
+            Text(subHeadlineString)
+                .font(.subheadline)
+                .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
+                .foregroundStyle(Color.themeStyle.theme.watchSecondaryTextColor)
         }
     }
     

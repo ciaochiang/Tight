@@ -11,6 +11,4 @@ enum TrainingSessionState: Int {
     case notStarted = 0
     case training = 1
     case resting = 2
-    case aborted = 3
-    case finshed = 4
 }
