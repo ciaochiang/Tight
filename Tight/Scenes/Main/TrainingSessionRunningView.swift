@@ -14,7 +14,7 @@ struct TrainingSessionRunningView: View {
         VStack {
             HStack(spacing: 16) {
                 /// Sets Progress
-                Text("\(trainingSessionManager.exerciseSetIndex + 1)")
+                Text("\(trainingSessionManager.indexOfSet + 1)")
                     .foregroundStyle(Color.themeStyle.theme.primary.opacity(0.8))
                     .font(.title3)
                     .fontWeight(.semibold)
@@ -28,14 +28,14 @@ struct TrainingSessionRunningView: View {
                                 .frame(width: 44, height: 44)
                             
                             Circle()
-                                .trim(from: 0, to: trainingSessionManager.exerciseSetCompletionProgress)
+                                .trim(from: 0, to: trainingSessionManager.setsProgress)
                                 .stroke( // 1
                                     Color.themeStyle.theme.accent,
                                     lineWidth: 4
                                 )
                                 .frame(width: 44, height: 44)
                                 .rotationEffect(.degrees(-90))
-                                .animation(.easeInOut, value: trainingSessionManager.exerciseSetCompletionProgress)
+                                .animation(.easeInOut, value: trainingSessionManager.setsProgress)
                         }
                     }
                     .padding(.leading, 16)
@@ -45,7 +45,7 @@ struct TrainingSessionRunningView: View {
                     if let startTime = trainingSessionManager.startTime {
                         ElapsedTimeView(startTime: startTime,
                                         restStartTime: trainingSessionManager.restStartTime,
-                                        restIntervals: trainingSessionManager.restIntervals)
+                                        restIntervals: trainingSessionManager.restInterval)
                     }
 
                     if let exercise = trainingSessionManager.currentExercise,
@@ -67,7 +67,7 @@ struct TrainingSessionRunningView: View {
             
             /// Only display stage progress view arranged exercises more than `1`
             if trainingSessionManager.exerciseCount > 1 {
-                StagesView(progress: trainingSessionManager.sessionProgress)
+                StagesView(progress: trainingSessionManager.totalProgress)
             }
         }
         .background(Color.themeStyle.theme.background)
@@ -86,7 +86,7 @@ struct TrainingSessionRunningView: View {
         HStack(spacing: 16) {
             /// Stop Button
             Button(action: {
-                trainingSessionManager.stopTrainingSession()
+                trainingSessionManager.endSession()
             }) {
                 Image(systemName: "stop.fill")
                     .resizable()

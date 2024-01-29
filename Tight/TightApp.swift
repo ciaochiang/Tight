@@ -45,18 +45,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         } catch {
             print("Error setting up audio session: \(error.localizedDescription)")
         }
-        
+                
         return true
     }
         
     func applicationWillTerminate(_ application: UIApplication) {
-        /// Cancel all scheduled local notification
-        TrainingSessionManager.shared.cancelScheduledNotifications()
-        
-        /// Notify Watch app that the app is going to terminated
-        if WCSession.default.isReachable {
-            WCSession.default.sendMessage(["action": "end"], replyHandler: nil)
-        }
+        /// Invoke `endSession` through `TrainingSessionMananger`
+        TrainingSessionManager.shared.endSession()
         
         /// Remove all existing live activity
         /// SeeAlso: https://forums.developer.apple.com/forums/thread/732418

@@ -380,7 +380,7 @@ struct PivotMainView: View {
         Button(action: {
             /// If user hasn't training yet, then start the training directly
             if viewModel.currentPlan.trainingLog == nil {
-                trainingSessionManager.startTrainingSession(plan: viewModel.currentPlan,
+                trainingSessionManager.startSession(plan: viewModel.currentPlan,
                                                             arrangedExercises: viewModel.currentPlan.arrangedExercises.sorted(by: { $0.order < $1.order }))
             } else {
                 /// Display confirmation dialog before `restart training`
@@ -399,7 +399,7 @@ struct PivotMainView: View {
         .contentShape(Rectangle())
         .confirmationDialog("Are your sure?", isPresented: $isPresentingConfirm) {
             Button(LocalizationProvider.confirmRestartTraining.nameKey, role: .destructive) {
-                trainingSessionManager.startTrainingSession(plan: viewModel.currentPlan,
+                trainingSessionManager.startSession(plan: viewModel.currentPlan,
                                                             arrangedExercises: viewModel.currentPlan.arrangedExercises)
             }
             .fontWeight(.semibold)

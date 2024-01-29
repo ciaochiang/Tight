@@ -18,23 +18,20 @@ import HealthKit
 
 class ContentViewModel: NSObject, ObservableObject {
     @Published var state: TrainingSessionState = .notStarted
-    @Published var currentExerciseID: String?
     @Published var exerciseName: String?
     @Published var startTime: Date?
-    @Published var weight: Double?
-    @Published var weightUnit: WeightUnit?
-    @Published var repetitions: Double?
+    @Published var weight: Double = 0
+    @Published var weightUnit: WeightUnit = .kilogram
+    @Published var repetitions: Double = 0
     
-    /// For rest
+    /// Rest Time
     @Published var restStartTime: Date?
-    @Published var restIntervals: TimeInterval?
+    @Published var restInterval: TimeInterval = 0
     
-    /// For sets progress
-    @Published var indexOfSet: Int?
-    @Published var currentSetsProgress: Double?
-    
-    ///  For total  progress
-    @Published var totoalProgress: Double?
+    /// Progress
+    @Published var indexOfSet: Int = 0
+    @Published var setsProgress: Double = 0
+    @Published var totalProgress: Double = 0
     
     @Published var isInteractaable: Bool = true
     
@@ -107,18 +104,17 @@ extension ContentViewModel {
             
             self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { _ in
                 /// Check whether the rest time is over
-                guard let restStartTime = self.restStartTime, 
-                        let restIntervals = self.restIntervals,
+                guard let restStartTime = self.restStartTime,
                         self.state == .resting else { return }
                 
-                if Date.now >= restStartTime.addingTimeInterval(restIntervals) {
+                if Date.now >= restStartTime.addingTimeInterval(self.restInterval) {
                     
                     /// Haptic Feedback
                     WKInterfaceDevice.current().play(.notification)
                     
                     DispatchQueue.main.async {
                         self.restStartTime = nil
-                        self.restIntervals = nil
+                        self.restInterval = 0
                         self.state = .training
                     }
                 }
@@ -168,62 +164,60 @@ extension ContentViewModel: WCSessionDelegate {
         DispatchQueue.main.async {
             self.isInteractaable = true
             
-            if let stateRawValue = message["state"] as? Int, let state = TrainingSessionState(rawValue: stateRawValue) {
+            if let stateRawValue = message[TraningSessionAttributes.state.name] as? Int, let state = TrainingSessionState(rawValue: stateRawValue) {
                 self.state = state
                 
                 switch state {
-                case .training:  
-                    self.createWorkoutSession()
-                case .aborted, .finshed:
+                case .notStarted:
                     self.endWorkoutSession()
+                case .training:
+                    self.createWorkoutSession()
                 default: break
                 }
             }
             
-            if let currentExerciseID = message["currentExerciseID"] as? String {
-                self.currentExerciseID = currentExerciseID
-            }
-            
-            if let exerciseName = message["exerciseName"] as? String {
+            if let exerciseName = message[TraningSessionAttributes.exerciseName.name] as? String {
                 self.exerciseName = exerciseName
             }
             
-            if let startTime = message["startTime"] as? Date {
+            if let startTime = message[TraningSessionAttributes.startTime.name] as? Date {
                 self.startTime = startTime
             }
             
-            if let weight = message["weight"] as? Double {
+            if let weight = message[TraningSessionAttributes.weight.name] as? Double {
                 self.weight = weight
             }
             
-            if let rawValue = message["weightUnit"] as? Int, let weightUnit = WeightUnit(rawValue: rawValue) {
+            if let rawValue = message[TraningSessionAttributes.weightUnit.name] as? Int, let weightUnit = WeightUnit(rawValue: rawValue) {
                 self.weightUnit = weightUnit
             }
             
-            if let repetitions = message["repetitions"] as? Double {
+            if let repetitions = message[TraningSessionAttributes.repetitions.name] as? Double {
                 self.repetitions = repetitions
             }
             
-            if let restStartTime = message["restStartTime"] as? Date {
+            if let restStartTime = message[TraningSessionAttributes.restStartTime.name] as? Date {
                 self.restStartTime = restStartTime
             }
             
-            if let restIntervals = message["restIntervals"] as? TimeInterval {
-                self.restIntervals = restIntervals
+            if let restInterval = message[TraningSessionAttributes.restInterval.name] as? TimeInterval {
+                self.restInterval = restInterval
             }
             
-            if let indexOfSet = message["indexOfSet"] as? Int {
+            if let indexOfSet = message[TraningSessionAttributes.indexOfSet.name] as? Int {
                 self.indexOfSet = indexOfSet
             }
             
-            if let currentSetsProgress = message["currentSetsProgress"] as? Double {
+            if let setsProgress = message[TraningSessionAttributes.setsProgress.name] as? Double {
                 withAnimation {
-                    self.currentSetsProgress = currentSetsProgress
+                    self.setsProgress = setsProgress
                 }
             }
             
-            if let totoalProgress = message["totoalProgress"] as? Double {
-                self.totoalProgress = totoalProgress
+            if let totoalProgress = message[TraningSessionAttributes.totalProgress.name] as? Double {
+                withAnimation {
+                    self.totalProgress = totoalProgress
+                }
             }
         }
     }
@@ -261,11 +255,11 @@ extension ContentViewModel: WKExtendedRuntimeSessionDelegate {
     func extendedRuntimeSessionDidStart(_ extendedRuntimeSession: WKExtendedRuntimeSession) {
         self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { _ in
             /// Check whether the rest time is over
-            guard let restStartTime = self.restStartTime, let restIntervals = self.restIntervals else { return }
-            if Date.now >= restStartTime.addingTimeInterval(restIntervals) {
+            guard let restStartTime = self.restStartTime else { return }
+            if Date.now >= restStartTime.addingTimeInterval(self.restInterval) {
                 DispatchQueue.main.async {
                     self.restStartTime = nil
-                    self.restIntervals = nil
+                    self.restInterval = 0
                     self.state = .training
                 }
             }

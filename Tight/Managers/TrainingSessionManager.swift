@@ -8,10 +8,9 @@
 import Foundation
 import SwiftUI
 import ActivityKit
-import UserNotifications
-import WatchConnectivity
 import HealthKit
 import AVFoundation
+import Combine
 
 /**
  - Countdown timer
@@ -22,14 +21,16 @@ class TrainingSessionManager: NSObject, ObservableObject {
     /// Singleton
     static let shared = TrainingSessionManager()
     
-    /// Timer
+    let logger = CustomLogger()
+    private let healthStore = HKHealthStore()
+    var audioPlayer: AVAudioPlayer?
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     /// Common Properties
     private(set) var plan: Plan?
     private(set) var arrangedExercises: [ArrangedExercise] = []
     private var currentRestTimeFrame: RestTimeFrame?
-    private var logger = CustomLogger()
+    
     @Published var state: TrainingSessionState = .notStarted
     @Published var isRunning: Bool = false
     
@@ -48,24 +49,26 @@ class TrainingSessionManager: NSObject, ObservableObject {
     /// - Note: This property may be `nil` if there are no exercises currently active or arranged in the session.
     @Published var currentExercise: ArrangedExercise?
     
-    /// The total number of exercises in the training session.
-    @Published var exerciseCount: Int = 0
-    
     /// Training session's start time
     @Published var startTime: Date?
     
+    // MARK: Total Progress Properties
+    /// The total number of exercises in the training session.
+    @Published var exerciseCount: Int = 0
+    
     /// Current stage of whole training session
-    @Published var sessionStage: Int = 0
+    @Published var indexOfExercise: Int = 0
     
     /// Current progress value of training session
-    @Published var sessionProgress: Double = 0
+    @Published var totalProgress: Double = 0
     
+    // MARK: Sets Progress Properties
     /// The index indicating the current set of exercises within the training session.
     ///
     /// This property represents the set of exercises currently being performed in a training session.
     /// It starts at 0 for the first set and increments as the session progresses through different sets.
     /// - Note: The value of this property should be non-negative.
-    @Published var exerciseSetIndex: Int = 0
+    @Published var indexOfSet: Int = 0
     
     /// The percentage completion of sets in the current exercise.
     ///
@@ -73,9 +76,9 @@ class TrainingSessionManager: NSObject, ObservableObject {
     /// `exerciseSetCompletionPercentage = Double(exerciseSetIndex) / Double(exercise.sets)`
     ///
     /// - Note: The value of this property ranges from 0.0 (no sets completed) to 1.0 (all sets completed).
-    @Published var exerciseSetCompletionProgress: CGFloat = 0.0
+    @Published var setsProgress: CGFloat = 0.0
     
-    // MARK: Rest Time
+    // MARK: Rest Time Properties
     /// Represents the start time of a rest interval during a training session.
     ///
     /// The `restStartTime` property stores the timestamp indicating the start time of a rest period. It is `nil` when there is no ongoing rest period.
@@ -84,21 +87,28 @@ class TrainingSessionManager: NSObject, ObservableObject {
     /// Represents the duration of rest intervals during a training session.
     ///
     /// The `restIntervals` property stores the duration, in seconds, of each rest interval. It is `nil` when there are no scheduled rest intervals.
-    @Published var restIntervals: Double?
+    @Published var restInterval: Double = 0
     
+    
+    /// Live Activity Content State
     @Published var contentState: TrainingSessionAttributes.ContentState?
     
-    /// Health Kit
-    let healthStore = HKHealthStore()
-    
-    /// Sound
-    private var audioPlayer: AVAudioPlayer?
-
+    private var cancellables = Set<AnyCancellable>()
     
     override init() {
         super.init()
         
+        /// Load sound effect and prepare to play
         prepareSoundEffect()
+        
+        /// Create state observer
+        $state.sink { [weak self] newValue in
+            /// Change is running or not
+            DispatchQueue.main.async {
+                self?.isRunning = newValue != .notStarted
+            }
+        }
+        .store(in: &cancellables)
     }
     
     /// Starts a new training session with the given plan and arranged exercises.
@@ -121,61 +131,34 @@ class TrainingSessionManager: NSObject, ObservableObject {
     /// let arrangedExercises = [...] // Provide an array of arranged exercises
     /// startTrainingSession(plan: plan, arrangedExercises: arrangedExercises)
     /// ```
-    func startTrainingSession(plan: Plan?, arrangedExercises: [ArrangedExercise]) {
-        /// NOTE: Do not use `reset` function here given that is async function
-        self.arrangedExercises = []
-        self.currentExercise = nil
-        self.startTime = nil
-        self.restStartTime = nil
-        self.restIntervals = 0
-        self.sessionStage = 0
-        self.exerciseSetIndex = 0
-        self.sessionProgress = 0
-        self.isRunning = true
-                
+    func startSession(plan: Plan?, arrangedExercises: [ArrangedExercise]) {
         /// Ensure arranged exercise list is not empty
         guard arrangedExercises.isEmpty == false else { return }
         
         let clonedArrangedExercise = arrangedExercises.sorted(by: { $0.order < $1.order })
         
+        let currentTime = Date.now
         self.plan = plan
         self.arrangedExercises = clonedArrangedExercise
         self.exerciseCount = clonedArrangedExercise.count
         
-        /// Gete first exercise
-        let firstExercise = clonedArrangedExercise[sessionStage]
-        self.currentExercise = firstExercise
-        self.exerciseSetCompletionProgress = Double(exerciseSetIndex) / Double(firstExercise.sets)
+        /// Update state  start time and change state
+        state = .training
+        startTime = currentTime
         
-        /// - Create a training log if it's not existed or update existing one
-        /// - Set  `currentTime` to  current exercise's `startTime`
-        let currentTime = Date.now
-        let trainingLog = TrainingLog(startTime: currentTime)
-        trainingLog.startTime = currentTime
-        plan?.trainingLog = trainingLog
+        /// Get first exercise and update start time
+        let firstExercise = clonedArrangedExercise[indexOfExercise]
+        currentExercise = firstExercise
         currentExercise?.startTime = currentTime
         
-        /// Remove existing activity
-        removeExistingAcitvity()
-        
-        /// Init start time and change state
-        startTime = currentTime
-        state = .training
+        /// Create training log
+        createTrainingLog()
         
         /// Add live activity
-        addLiveAcitvity()
+        createLiveAcitvity()
         
-        /// Send message to Watch
-        sendWatchMessage(message: ["state": state.rawValue,
-                                   "currentExerciseID": firstExercise.id.uuidString,
-                                   "exerciseName": firstExercise.exercise.name,
-                                   "startTime": startTime ?? .now,
-                                   "weight": firstExercise.weight,
-                                   "weightUnit": firstExercise.weightUnit,
-                                   "repetitions": firstExercise.repetitions,
-                                   "indexOfSet": exerciseSetIndex,
-                                   "currentSetsProgress": exerciseSetCompletionProgress
-                                  ])
+        /// Update `Watch`
+        onUpdateWatch()
     }
     
     /// Stops the current training session and performs necessary cleanup.
@@ -190,48 +173,35 @@ class TrainingSessionManager: NSObject, ObservableObject {
     /// ```swift
     /// stopTrainingSession()
     /// ```
-    func stopTrainingSession() {
-        let newState: TrainingSessionState = .aborted
-        let currentTime = Date.now
-
-        DispatchQueue.main.async {
-            self.state = newState
-            self.isRunning = false
-        }
+    func endSession() {
+        /// Cancel all scheduled notification
+        cancelScheduledNotifications()
         
-        /// Send message to Watch
-        self.sendWatchMessage(message: ["state": newState.rawValue])
+        /// Dismiss Live Activity
+        dismissLiveActivity()
+        
+        /// Send end message to Watch
+        let state: TrainingSessionState = .notStarted
+        TTWCSession.shared.sendMessage([.action: "end", .state: state.rawValue])
         
         /// Update end time to training log
         if let trainingLog = plan?.trainingLog {
+            let currentTime = Date.now
             trainingLog.endTime = currentTime
         }
         
-        /// Reset
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-            self.state = .notStarted
-        })
-        reset()
-        
-        /// Cancel scheduled notifications
-        cancelScheduledNotifications()
-        
-        /// Remove live activity
-        if let activity = Activity<TrainingSessionAttributes>.activities.first {
-            Task {
-                /// Update activity info
-                var contentState = activity.content.state
-                contentState.completionType = 0
-                await activity.update(.init(state: contentState, staleDate: nil))
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    Task {
-                        let dismissalPolicy: ActivityUIDismissalPolicy = .immediate
-                        let finalState = activity.content.state
-                        await activity.end(.init(state: finalState, staleDate: nil), dismissalPolicy: dismissalPolicy)
-                    }
-                }
-            }
+        /// Reset Properties
+        DispatchQueue.main.async {
+            self.state = state
+            self.arrangedExercises = []
+            self.currentExercise = nil
+            self.startTime = nil
+            self.restStartTime = nil
+            self.restInterval = 0
+            self.indexOfExercise = 0
+            self.indexOfSet = 0
+            self.totalProgress = 0
+            self.setsProgress = 0
         }
     }
     
@@ -253,7 +223,7 @@ class TrainingSessionManager: NSObject, ObservableObject {
     /// ```
     func handleTimerAction() {
         /// Verify the date is over rest end time
-        guard let restStartTime = restStartTime, let restInterval = restIntervals else { return }
+        guard let restStartTime = restStartTime else { return }
         
         /// Determine rest time is over or not
         guard Date.now >= restStartTime.addingTimeInterval(restInterval) else { return }
@@ -275,26 +245,14 @@ class TrainingSessionManager: NSObject, ObservableObject {
         DispatchQueue.main.async {
             self.state = newState
             self.restStartTime = nil
-            self.restIntervals = nil
+            self.restInterval = 0
+            
+            /// Update `Live Activity`
+            self.onUpdateLiveActivity()
+            
+            /// Update `Watch`
+            self.onUpdateWatch()
         }
-        
-        ///  Update activity
-        if let activity = Activity<TrainingSessionAttributes>.activities.first {
-            Task {
-                /// Update activity info
-                var contentState = activity.content.state
-                contentState.restStartTime = nil
-                contentState.restIntervals = nil
-                
-                await activity.update(.init(state: contentState, staleDate: nil))
-            }
-        }
-        
-        /// Send message to Watch
-        sendWatchMessage(message: ["state": newState.rawValue,
-                                   "restStartTime": Date.now,
-                                   "restIntervals": 0
-                                  ])
     }
     
     /// Completes the current set of the specified exercise and manages the training session progress.
@@ -327,12 +285,12 @@ class TrainingSessionManager: NSObject, ObservableObject {
         /// - If there is more set of current exercise, then update the IndexOfSet number
         /// - If there is no more set, then mark it as completed and  jump to next exercise
         /// - If there is no next exercise, then complete the training session
-        if exerciseSetIndex >= Int(exercise.sets - 1) {
+        if indexOfSet >= Int(exercise.sets - 1) {
             /// Sets are completed, mark exercise as completed and jump to next exercise
             exercise.isCompleted = true
             
             /// If there is more exercise, then `nextExercise`, else  `completeTrainingSession`
-            if sessionStage + 1 >= arrangedExercises.count {
+            if indexOfExercise + 1 >= arrangedExercises.count {
                 /// Complete training session
                 done()
             }
@@ -345,71 +303,29 @@ class TrainingSessionManager: NSObject, ObservableObject {
             nextSet()
         }
     }
-    
-    /// Reset
-    func reset() {
-        let newState: TrainingSessionState = .notStarted
-        
-        DispatchQueue.main.async {
-            self.state = newState
-            self.currentExercise = nil
-            self.startTime = nil
-            self.restStartTime = nil
-            self.restIntervals = 0
-            self.sessionStage = 0
-            self.exerciseSetIndex = 0
-        }
-        
-        /// Send message to Watch
-        self.sendWatchMessage(message: ["state": newState.rawValue])
-    }
 
     /// Done
     func done() {
-        let newState: TrainingSessionState = .finshed
-
-        /// Set `endTime` to `trainingLog`
+        /// Update end time
         let currentTime = Date.now
         plan?.trainingLog?.endTime = currentTime
         
         /// Update current progress to completed
+        let progress: Double = 1.0
         DispatchQueue.main.async {
-            self.exerciseSetCompletionProgress = 1.0
-            self.sessionProgress = 1.0
-            self.state = newState
+            self.setsProgress = progress
+            self.totalProgress = progress
             
-            /// Send message to Watch
-            self.sendWatchMessage(message: ["state": newState.rawValue, "currentSetsProgress": 1.0])
+            /// Update `Live Activity`
+            self.onUpdateLiveActivity()
+            
+            /// Update `Watch`
+            self.onUpdateWatch()
         }
-        
-        /// Cancel all scheduled notification
-        cancelScheduledNotifications()
         
         /// Stop and Reset
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-            self.isRunning = false
-            
-            /// Reset
-            self.reset()
-        }
-        
-        /// Update Live Activity
-        if let activity = Activity<TrainingSessionAttributes>.activities.first {
-            Task {
-                /// Update activity info
-                var contentState = activity.content.state
-                contentState.completionType = 1
-                await activity.update(.init(state: contentState, staleDate: nil))
-                
-                /// Remove activity
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    Task {
-                        let dismissalPolicy: ActivityUIDismissalPolicy = .immediate
-                        let finalState = activity.content.state
-                        await activity.end(.init(state: finalState, staleDate: nil), dismissalPolicy: dismissalPolicy)
-                    }
-                }
-            }
+            self.endSession()
         }
     }
     
@@ -417,281 +333,151 @@ class TrainingSessionManager: NSObject, ObservableObject {
     func endRest() {
         let currentTime = Date.now
         let newRestStartTime: Date? = nil
-        let newRestIntervals: Double? = nil
+        let newRestIntervals: Double = 0
         let newState: TrainingSessionState = .training
         
-        /// Set `endTime` to current rest time frame and save to `trainingLog`
-        currentRestTimeFrame?.endTime = currentTime
-        if let restTimeFrame = currentRestTimeFrame {
-            plan?.trainingLog?.restTimeFrames.append(restTimeFrame)
+        /// Process task for rest time end
+        if let plan = plan, let restTimeFrame = currentRestTimeFrame {
+            onRestTimeEnd(currentTime: currentTime, plan: plan, restTimeFrame: restTimeFrame)
         }
-        
-        /// Cancel schedule notification
-        cancelScheduledNotifications()
         
         DispatchQueue.main.async {
             self.restStartTime = newRestStartTime
-            self.restIntervals = newRestIntervals
+            self.restInterval = newRestIntervals
             self.state = newState
+            
+            /// Update live activity
+            self.onUpdateLiveActivity()
+            
+            /// Update Watch
+            self.onUpdateWatch()
         }
-        
-        if let activity = Activity<TrainingSessionAttributes>.activities.first {
-            Task {
-                /// Update activity info
-                var contentState = activity.content.state
-                contentState.restStartTime = newRestStartTime
-                contentState.restIntervals = newRestIntervals
-                await activity.update(.init(state: contentState, staleDate: nil))
-            }
-        }
-        
-        /// Send message to Watch
-        sendWatchMessage(message: ["state": newState.rawValue,
-                                   "restStartTime": Date.now,
-                                   "restIntervals": 0
-                                  ])
     }
     
     /// Next Set
     func nextSet() {
         let currentTime = Date.now
         
-        /// indexOfSet increased
+        /// Init new values
         let newState: TrainingSessionState = .resting
-        let newSetNumber = exerciseSetIndex + 1
-        let newRestIntervals = currentExercise?.restIntevals ?? 0
-        let newSetsProgress = Double(newSetNumber) / Double(currentExercise?.sets ?? 0)
+        let newIndexOfSet = indexOfSet + 1
+        let newRestInterval = currentExercise?.restIntevals ?? 0
+        let newSetsProgress = Double(newIndexOfSet) / Double(currentExercise?.sets ?? 0)
         
-        /// Create new rest time frame and set `startTime`
-        currentRestTimeFrame = RestTimeFrame(startTime: currentTime)
-        
-        /// Schedule a rest time notification
-        scheduleNotification(timeInterval: newRestIntervals)
+        /// Process task for rest time start
+        currentRestTimeFrame = onRestTimeStart(currentTime: currentTime, restTimeInterval: newRestInterval)
         
         DispatchQueue.main.async {
             self.state = newState
-            self.exerciseSetIndex = newSetNumber
+            self.indexOfSet = newIndexOfSet
             self.restStartTime = currentTime
-            self.restIntervals = newRestIntervals
-            self.exerciseSetCompletionProgress = newSetsProgress
+            self.restInterval = newRestInterval
+            self.setsProgress = newSetsProgress
+            
+            /// Update Live Activity
+            self.onUpdateLiveActivity()
+            
+            /// Update Watch
+            self.onUpdateWatch()
         }
-        
-        /// Update Live Activity
-        if let activity = Activity<TrainingSessionAttributes>.activities.first {
-            Task {
-                /// Update activity info
-                var contentState = activity.content.state
-                contentState.indexOfSet = newSetNumber
-                contentState.currentSetsProgress = newSetsProgress
-                contentState.restStartTime = currentTime
-                contentState.restIntervals = newRestIntervals
-                await activity.update(.init(state: contentState, staleDate: nil))
-            }
-        }
-        
-        /// Send message to Watch
-        sendWatchMessage(message: ["state": newState.rawValue,
-                                   "indexOfSet": newSetNumber,
-                                   "currentSetsProgress": newSetsProgress,
-                                   "restStartTime": currentTime,
-                                   "restIntervals": newRestIntervals
-                                  ])
     }
     
     /// Next Exericse
     func nextExercise() {
-        /// Update current exercise/set progress
-        let completedSetsProgress = 1.0
-        DispatchQueue.main.async {
-            self.exerciseSetCompletionProgress = completedSetsProgress
-            
-            /// Update Live Activity
-            if let activity = Activity<TrainingSessionAttributes>.activities.first {
-                Task {
-                    /// Update activity info
-                    var contentState = activity.content.state
-                    contentState.currentSetsProgress = completedSetsProgress
-                    await activity.update(.init(state: contentState, staleDate: nil))
-                }
-            }
-            
-            /// Send message to Watch
-            self.sendWatchMessage(message: ["currentSetsProgress": completedSetsProgress])
-        }
+        /// Complete current exercise and update progress to 100%
+        onCurrentExerciseCompleted()
         
-        /// Go to next arranged exercise
+        /// Change state to `resting`
         let newState: TrainingSessionState = .resting
-        let newStage = sessionStage + 1
-        let newIndexOfSet = 0
-        
-        /// Set `currentTime` to current exercise's `endTime`
         let currentTime = Date.now
-        currentExercise?.endTime = currentTime
+        
+        /// New  progress
+        let newIndexOfExercise = indexOfExercise + 1
+        let newIndexOfSet = 0
+        let newSetsProgress = 0.0
         
         /// Set `currentTime` to new current exercise's `startTime`
-        let newExercise = arrangedExercises[newStage]
+        let newExercise = arrangedExercises[newIndexOfExercise]
         newExercise.startTime = currentTime
         
         /// Create new rest time frame and set `startTime`
-        currentRestTimeFrame = RestTimeFrame(startTime: currentTime)
+        let newRestInterval = newExercise.restIntevals
         
-        let newRestStartTime = Date.now
-        let newRestIntervals = currentExercise?.restIntevals ?? 0
-        let newSetsProgress = 0.0
-        let newProgress = Double(newStage) / Double(exerciseCount)
+        /// Create new rest time frame and set `startTime`
+        currentRestTimeFrame = onRestTimeStart(currentTime: currentTime, restTimeInterval: newRestInterval)
         
-        /// Schedule rest time notification
-        scheduleNotification(timeInterval: newRestIntervals)
-        
+        /// Wait for `0.7` secs and shift to next exercise
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
             self.state = newState
-            self.sessionStage = newStage
+            self.indexOfExercise = newIndexOfExercise
             self.currentExercise = newExercise
-            self.exerciseSetIndex = newIndexOfSet
-            self.restStartTime = newRestStartTime
-            self.restIntervals = newRestIntervals
-            self.exerciseSetCompletionProgress = newSetsProgress
-            self.sessionProgress = newProgress
+            self.indexOfSet = newIndexOfSet
+            self.restStartTime = currentTime
+            self.restInterval = newExercise.restIntevals
+            self.setsProgress = newSetsProgress
+            self.totalProgress = self.calculateProgress(index: newIndexOfExercise, totalCount: self.exerciseCount)
             
             /// Update Live Activity
-            if let activity = Activity<TrainingSessionAttributes>.activities.first {
-                Task {
-                    /// Update activity info
-                    var contentState = activity.content.state
-                    contentState.currentExerciseID = newExercise.id.uuidString
-                    contentState.currentExerciseName = newExercise.exercise.name
-                    contentState.totoalProgress = newProgress
-                    contentState.indexOfSet = newIndexOfSet
-                    contentState.currentSetsProgress = newSetsProgress
-                    contentState.weight = newExercise.weight
-                    contentState.weightUnit = newExercise.weightUnit
-                    contentState.repetition = newExercise.repetitions
-                    contentState.restStartTime = newRestStartTime
-                    contentState.restIntervals = newRestIntervals
-                    
-                    await activity.update(.init(state: contentState, staleDate: nil))
-                }
-            }
+            self.onUpdateLiveActivity()
             
             /// Send message to Watch
-            self.sendWatchMessage(message: ["state": newState.rawValue,
-                                            "currentExerciseID": newExercise.id.uuidString,
-                                            "currentExerciseName": newExercise.exercise.name,
-                                            "totoalProgress": newProgress,
-                                            "indexOfSet": newIndexOfSet,
-                                            "currentSetsProgress": newSetsProgress,
-                                            "weight": newExercise.weight,
-                                            "weightUnit": newExercise.weightUnit,
-                                            "repetitions": newExercise.repetitions,
-                                            "restStartTime": newRestStartTime,
-                                            "restIntervals": newRestIntervals
-                                           ])
+            self.onUpdateWatch()
         }
     }
 }
 
-// MARK: Watch Connectivity
+// MARK: Training Log
 extension TrainingSessionManager {
-    func sendWatchMessage(message: [String: Any]) {
-        guard WCSession.default.isReachable else { return }
-        
-        WCSession.default.sendMessage(message, replyHandler: nil) { error in
-            print(error.localizedDescription)
-        }
+    func createTrainingLog() {
+        /// - Create a training log if it's not existed or update existing one
+        /// - Set  `currentTime` to  current exercise's `startTime`
+        let currentTime = Date.now
+        let trainingLog = TrainingLog(startTime: currentTime)
+        trainingLog.startTime = currentTime
+        plan?.trainingLog = trainingLog
     }
 }
 
-// MARK: Live Activity
+// MARK: Rest Time Handler
 extension TrainingSessionManager {
-    /// Add live activity
-    func addLiveAcitvity() {
-        guard ActivityAuthorizationInfo().areActivitiesEnabled, let firstExercise = currentExercise else { return }
+    func onRestTimeStart(currentTime: Date, restTimeInterval: TimeInterval) -> RestTimeFrame {
+        /// Schedule a rest time notification
+        scheduleNotification(timeInterval: restTimeInterval)
         
-        let trainingSessionAttributes = TrainingSessionAttributes()
-        contentState = TrainingSessionAttributes.ContentState(currentExerciseID: firstExercise.id.uuidString,
-                                                              currentExerciseName: firstExercise.exercise.name,
-                                                              weight: firstExercise.weight,
-                                                              weightUnit: firstExercise.weightUnit,
-                                                              repetition: firstExercise.repetitions,
-                                                              startTime: startTime ?? .now,
-                                                              restStartTime: nil,
-                                                              restIntervals: nil,
-                                                              indexOfSet: exerciseSetIndex,
-                                                              currentSetsProgress: exerciseSetCompletionProgress,
-                                                              totoalProgress: 0,
-                                                              completionType: -1)
-        
-        guard let contentState = contentState else { return }
-        
-        do {
-            let activity = try Activity<TrainingSessionAttributes>.request(attributes: trainingSessionAttributes,
-                                                                           content: .init(state: contentState, staleDate: nil),
-                                                                           pushType: nil)
-            /// Storing current live activity id for updating activity
-            liveActivityID = activity.id
-        } catch {
-            logger.log(error.localizedDescription, level: .error)
-        }
+        return RestTimeFrame(startTime: currentTime)
     }
     
-    /// Remove all existing live activity
-    func removeExistingAcitvity() {
-        Task {
-           for activity in Activity<TrainingSessionAttributes>.activities {
-                let finalState = activity.content.state
-                await activity.end(.init(state: finalState, staleDate: nil), dismissalPolicy: .immediate)
-            }
-        }
+    func onRestTimeEnd(currentTime: Date, plan: Plan, restTimeFrame: RestTimeFrame) {
+        /// Set `endTime` to current rest time frame and save to `trainingLog`
+        restTimeFrame.endTime = currentTime
+        plan.trainingLog?.restTimeFrames.append(restTimeFrame)
+        
+        /// Cancel all scheduled notification
+        cancelScheduledNotifications()
     }
 }
 
-// MARK: Local Notification
+// MARK: Helper
 extension TrainingSessionManager {
-    func scheduleNotification(timeInterval: TimeInterval) {
-        let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
-            if granted {
-                // Permission granted
-                let content = UNMutableNotificationContent()
-                content.title = LocalizationProvider.notificationRestTimeDoneTitle.stringValue
-                content.body = LocalizationProvider.notificationRestTimeDoneDescription.stringValue
-                content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: "soundEffect.m4a"))
-                content.interruptionLevel = .timeSensitive
-                
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: false)
-                
-                let request = UNNotificationRequest(identifier: Constants.NOTIFICATION_IDENTIFIER_TRAINING_SESSION, content: content, trigger: trigger)
-                
-                let center = UNUserNotificationCenter.current()
-                center.add(request) { (error) in
-                    if let error = error {
-                        // Handle any errors here.
-                        self.logger.log(error.localizedDescription, level: .error)
-                    }
-                }
-            } else if let error = error {
-                // Handle the case where permission is denied or there is an error.
-                self.logger.log(error.localizedDescription, level: .error)
-            }
-        }
+    func calculateProgress(index: Int, totalCount: Int) -> Double {
+        return Double(index) / Double(totalCount - 1)
     }
     
-    func cancelScheduledNotifications() {
-        let center = UNUserNotificationCenter.current()
-        center.removePendingNotificationRequests(withIdentifiers: [Constants.NOTIFICATION_IDENTIFIER_TRAINING_SESSION])
-    }
-}
-
-// MARK: Audio
-extension TrainingSessionManager {
-    func prepareSoundEffect() {
-        guard let soundURL = Bundle.main.url(forResource: "soundEffect", withExtension: "m4a") else { return }
-             
-        do {
-           audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
-           audioPlayer?.prepareToPlay()
-        } catch {
-           fatalError("Error initializing audio player: \(error.localizedDescription)")
+    func onCurrentExerciseCompleted() {
+        /// Update `endTime` for current exercise
+        let currentTime = Date.now
+        currentExercise?.endTime = currentTime
+        
+        /// Update `progress`
+        let newSetsProgress = 1.0
+        DispatchQueue.main.async {
+            self.setsProgress = newSetsProgress
+            
+            /// Update `Live Activity`
+            self.onUpdateLiveActivity()
+            
+            /// Update `Watch`
+            self.onUpdateWatch()
         }
     }
 }
