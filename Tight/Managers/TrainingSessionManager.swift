@@ -98,14 +98,7 @@ class TrainingSessionManager: NSObject, ObservableObject {
     override init() {
         super.init()
         
-        if let soundURL = Bundle.main.url(forResource: "soundEffect", withExtension: "m4a") {
-            do {
-                audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
-                audioPlayer?.prepareToPlay()
-            } catch {
-                fatalError("Error initializing audio player: \(error.localizedDescription)")
-            }
-        }
+        prepareSoundEffect()
     }
     
     /// Starts a new training session with the given plan and arranged exercises.
@@ -686,5 +679,19 @@ extension TrainingSessionManager {
     func cancelScheduledNotifications() {
         let center = UNUserNotificationCenter.current()
         center.removePendingNotificationRequests(withIdentifiers: [Constants.NOTIFICATION_IDENTIFIER_TRAINING_SESSION])
+    }
+}
+
+// MARK: Audio
+extension TrainingSessionManager {
+    func prepareSoundEffect() {
+        guard let soundURL = Bundle.main.url(forResource: "soundEffect", withExtension: "m4a") else { return }
+             
+        do {
+           audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
+           audioPlayer?.prepareToPlay()
+        } catch {
+           fatalError("Error initializing audio player: \(error.localizedDescription)")
+        }
     }
 }

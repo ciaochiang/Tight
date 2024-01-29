@@ -12,6 +12,7 @@ import BackgroundTasks
 import UIKit
 import WatchConnectivity
 import ActivityKit
+import AVFoundation
 
 // MARK: Migration Plan
 enum TightMigrationPlan: SchemaMigrationPlan {
@@ -35,6 +36,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         if WCSession.isSupported() {
             WCSession.default.delegate = watchSessionDelegate
             WCSession.default.activate()
+        }
+        
+        /// Setup Audio Configuration
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.ambient, mode: .default, options: .mixWithOthers)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("Error setting up audio session: \(error.localizedDescription)")
         }
         
         return true
