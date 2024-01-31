@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 import ActivityKit
 import HealthKit
-import AVFoundation
 import Combine
 
 /**
@@ -23,7 +22,6 @@ class TrainingSessionManager: NSObject, ObservableObject {
     
     let logger = CustomLogger()
     private let healthStore = HKHealthStore()
-    var audioPlayer: AVAudioPlayer?
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     /// Common Properties
@@ -97,9 +95,6 @@ class TrainingSessionManager: NSObject, ObservableObject {
     
     override init() {
         super.init()
-        
-        /// Load sound effect and prepare to play
-        prepareSoundEffect()
         
         /// Create state observer
         $state.sink { [weak self] newValue in
@@ -230,7 +225,6 @@ class TrainingSessionManager: NSObject, ObservableObject {
         
         // Haptic Feedback
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-        audioPlayer?.play()
         
         let currentTime = Date.now
         let newState: TrainingSessionState = .training
