@@ -190,6 +190,7 @@ struct ExercisePickerView: View {
                         .foregroundColor(favorites.contains(exercise) ? .themeStyle.theme.accent : .themeStyle.theme.primary)
                         .frame(width: 40, height: 40)
                         .onTapGesture {
+                            handleFavoriteAction(exercise: exercise)
                         }
                 }
             }
