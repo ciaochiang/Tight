@@ -51,14 +51,14 @@ struct EditArrangedExerciseView: View {
                             dismiss()
                         }) {
                             Label(LocalizationProvider.complete.nameKey, systemImage: "checkmark.circle.fill")
-                                .foregroundStyle(Color.themeStyle.theme.white)
+                                .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
                                 .frame(maxWidth: .infinity)
                                 .fontWeight(.semibold)
                                 .contentShape(Rectangle())
                                 .padding(.vertical)
                         }
                     }
-                    .background(arrangedExercise.isCompleted ? Color.themeStyle.theme.secondaryAccent : Color.themeStyle.theme.black.opacity(0.4))
+                    .background(arrangedExercise.isCompleted ? Color.themeStyle.theme.accent : Color.themeStyle.theme.black.opacity(0.4))
                 }
             }
             .veriticalSpacing(.bottom)

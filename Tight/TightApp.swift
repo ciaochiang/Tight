@@ -32,6 +32,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
         
+        UNUserNotificationCenter.current().delegate = self
+        
         /// Activate Watch App
         if WCSession.isSupported() {
             WCSession.default.delegate = watchSessionDelegate
@@ -65,6 +67,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
        
         semaphore.wait()
+    }
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, 
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.banner, .badge, .list, .sound])
     }
 }
 

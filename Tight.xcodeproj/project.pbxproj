@@ -40,13 +40,13 @@
 		E554FBA02B4837FB007AB30F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E554FB9F2B4837FB007AB30F /* Assets.xcassets */; };
 		E554FBA42B4837FB007AB30F /* TrainingSessionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E554FB912B4837FA007AB30F /* TrainingSessionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E5578C6C2B4E8FB4004947F2 /* TrainingSessionRunningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5578C6B2B4E8FB4004947F2 /* TrainingSessionRunningView.swift */; };
+		E55F131A2B6A92250044FA65 /* notificationSound.caf in Resources */ = {isa = PBXBuildFile; fileRef = E55F13192B6A92240044FA65 /* notificationSound.caf */; };
 		E562D6FB2B3DA34E000775B7 /* TightApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E562D6FA2B3DA34E000775B7 /* TightApp.swift */; };
 		E562D7012B3DA34F000775B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E562D7002B3DA34F000775B7 /* Assets.xcassets */; };
 		E562D7042B3DA34F000775B7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E562D7032B3DA34F000775B7 /* Preview Assets.xcassets */; };
 		E562D70E2B3DA34F000775B7 /* TightTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E562D70D2B3DA34F000775B7 /* TightTests.swift */; };
 		E562D7182B3DA34F000775B7 /* TightUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E562D7172B3DA34F000775B7 /* TightUITests.swift */; };
 		E562D71A2B3DA34F000775B7 /* TightUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E562D7192B3DA34F000775B7 /* TightUITestsLaunchTests.swift */; };
-		E56C07A62B667C0000A4AFA9 /* soundEffect.m4a in Resources */ = {isa = PBXBuildFile; fileRef = E56C07A52B667C0000A4AFA9 /* soundEffect.m4a */; };
 		E57A88992B5D5EBB0040FCF5 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57A88982B5D5EBB0040FCF5 /* ContentViewModel.swift */; };
 		E57FD75D2B3DA3E400696968 /* GrowthBook-IOS in Frameworks */ = {isa = PBXBuildFile; productRef = E57FD75C2B3DA3E400696968 /* GrowthBook-IOS */; };
 		E57FD7632B3DAD3900696968 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E57FD7622B3DAD3900696968 /* FirebaseAnalytics */; };
@@ -114,8 +114,6 @@
 		E5E811252B67EB29005DB9A7 /* TraningSessionManager+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E811232B67EB24005DB9A7 /* TraningSessionManager+Notification.swift */; };
 		E5E811272B67EB8D005DB9A7 /* TrainingSessionManager+LiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E811262B67EB8D005DB9A7 /* TrainingSessionManager+LiveActivity.swift */; };
 		E5E811282B67EB90005DB9A7 /* TrainingSessionManager+LiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E811262B67EB8D005DB9A7 /* TrainingSessionManager+LiveActivity.swift */; };
-		E5E8112A2B67EC00005DB9A7 /* TrainingSessionManager+Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E811292B67EC00005DB9A7 /* TrainingSessionManager+Audio.swift */; };
-		E5E8112B2B67EC00005DB9A7 /* TrainingSessionManager+Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E811292B67EC00005DB9A7 /* TrainingSessionManager+Audio.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -215,6 +213,7 @@
 		E554FB9F2B4837FB007AB30F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E554FBA12B4837FB007AB30F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5578C6B2B4E8FB4004947F2 /* TrainingSessionRunningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionRunningView.swift; sourceTree = "<group>"; };
+		E55F13192B6A92240044FA65 /* notificationSound.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = notificationSound.caf; sourceTree = "<group>"; };
 		E562D6F72B3DA34E000775B7 /* Tight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E562D6FA2B3DA34E000775B7 /* TightApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TightApp.swift; sourceTree = "<group>"; };
 		E562D7002B3DA34F000775B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -226,7 +225,6 @@
 		E562D7192B3DA34F000775B7 /* TightUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TightUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E56C07A32B651B3B00A4AFA9 /* TightWatch Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TightWatch Watch App.entitlements"; sourceTree = "<group>"; };
 		E56C07A42B663D9100A4AFA9 /* Tight.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tight.entitlements; sourceTree = "<group>"; };
-		E56C07A52B667C0000A4AFA9 /* soundEffect.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = soundEffect.m4a; sourceTree = "<group>"; };
 		E57A88982B5D5EBB0040FCF5 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		E57FD7672B3DADCC00696968 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		E57FD76A2B3DAE0300696968 /* OffsetKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OffsetKey.swift; sourceTree = "<group>"; };
@@ -279,7 +277,6 @@
 		E5E8111F2B67E698005DB9A7 /* TTWCSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTWCSession.swift; sourceTree = "<group>"; };
 		E5E811232B67EB24005DB9A7 /* TraningSessionManager+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TraningSessionManager+Notification.swift"; sourceTree = "<group>"; };
 		E5E811262B67EB8D005DB9A7 /* TrainingSessionManager+LiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TrainingSessionManager+LiveActivity.swift"; sourceTree = "<group>"; };
-		E5E811292B67EC00005DB9A7 /* TrainingSessionManager+Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TrainingSessionManager+Audio.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -437,7 +434,7 @@
 				E562D7002B3DA34F000775B7 /* Assets.xcassets */,
 				E5A2F3312B49568A00735FC2 /* Info.plist */,
 				E57FD7CD2B3DD47600696968 /* GoogleService-Info.plist */,
-				E56C07A52B667C0000A4AFA9 /* soundEffect.m4a */,
+				E55F13192B6A92240044FA65 /* notificationSound.caf */,
 				E53935212B5D4E6200A8DD8C /* Watch */,
 				E57FD77F2B3DAE5B00696968 /* Scenes */,
 				E57FD7782B3DAE4600696968 /* Models */,
@@ -512,7 +509,6 @@
 				E5B4B7D52B5E99F600A411E1 /* TrainingSessionState.swift */,
 				E5E811232B67EB24005DB9A7 /* TraningSessionManager+Notification.swift */,
 				E5E811262B67EB8D005DB9A7 /* TrainingSessionManager+LiveActivity.swift */,
-				E5E811292B67EC00005DB9A7 /* TrainingSessionManager+Audio.swift */,
 				E5345B8E2B694BF300852E2F /* TrainingSessionManager+Watch.swift */,
 			);
 			path = Managers;
@@ -889,9 +885,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E562D7042B3DA34F000775B7 /* Preview Assets.xcassets in Resources */,
-				E56C07A62B667C0000A4AFA9 /* soundEffect.m4a in Resources */,
 				E5B700BF2B400B740080442D /* Localizable.xcstrings in Resources */,
 				E57FD7CE2B3DD47600696968 /* GoogleService-Info.plist in Resources */,
+				E55F131A2B6A92250044FA65 /* notificationSound.caf in Resources */,
 				E57FD7CC2B3DC6BE00696968 /* LaunchScreen.storyboard in Resources */,
 				E562D7012B3DA34F000775B7 /* Assets.xcassets in Resources */,
 			);
@@ -984,7 +980,6 @@
 				E5E811212B67E955005DB9A7 /* TTWCSession.swift in Sources */,
 				E5E811282B67EB90005DB9A7 /* TrainingSessionManager+LiveActivity.swift in Sources */,
 				E5C1C6B62B4A5A5C0081B3EF /* TrainingSessionManager.swift in Sources */,
-				E5E8112B2B67EC00005DB9A7 /* TrainingSessionManager+Audio.swift in Sources */,
 				E5C1C6B72B4A5A780081B3EF /* Exercise.swift in Sources */,
 				E5E811252B67EB29005DB9A7 /* TraningSessionManager+Notification.swift in Sources */,
 				E5B4B7D92B5E9ABA00A411E1 /* TrainingSessionState.swift in Sources */,
@@ -1004,7 +999,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E57FD7C32B3DB1E500696968 /* ExerciseRestIntervalSliderViewComponent.swift in Sources */,
-				E5E8112A2B67EC00005DB9A7 /* TrainingSessionManager+Audio.swift in Sources */,
 				E57FD7902B3DB04400696968 /* NotificationManager.swift in Sources */,
 				E553B9D42B53BEF600BA0C61 /* AnalyticsHelper.swift in Sources */,
 				E57FD7A32B3DB13F00696968 /* Color+Extension.swift in Sources */,

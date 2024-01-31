@@ -17,8 +17,11 @@ extension TrainingSessionManager {
                 let content = UNMutableNotificationContent()
                 content.title = LocalizationProvider.notificationRestTimeDoneTitle.stringValue
                 content.body = LocalizationProvider.notificationRestTimeDoneDescription.stringValue
-                content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: "soundEffect.m4a"))
                 content.interruptionLevel = .timeSensitive
+                
+                /// Custom sound
+                content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: "notificationSound.caf"))
+
                 
                 let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: false)
                 let request = UNNotificationRequest(identifier: Constants.NOTIFICATION_IDENTIFIER_TRAINING_SESSION, content: content, trigger: trigger)
