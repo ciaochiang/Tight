@@ -13,7 +13,7 @@ extension TrainingSessionManager {
                 
         /// Send message to Watch
         TTWCSession.shared.sendMessage([.state: content.state.rawValue,
-                                        .currentExerciseID: exercise.id.uuidString,
+                                        .exerciseID: exercise.id.uuidString,
                                         .exerciseName: exercise.exercise.name,
                                         .startTime: startTime,
                                         .weight: exercise.weight,

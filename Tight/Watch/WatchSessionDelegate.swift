@@ -12,7 +12,7 @@ class WatchSessionDelegate: NSObject, WCSessionDelegate {
         guard activationState == .activated, let exercise = TrainingSessionManager.shared.content.currentExercise else { return }
         
         TTWCSession.shared.updateApplicationContext([.state: TrainingSessionManager.shared.content.state.rawValue,
-                                                     .currentExerciseID: exercise.id.uuidString,
+                                                     .exerciseID: exercise.id.uuidString,
                                                      .exerciseName: exercise.exercise.name,
                                                      .weight: exercise.weight,
                                                      .weightUnit: exercise.weightUnit,
@@ -39,7 +39,7 @@ class WatchSessionDelegate: NSObject, WCSessionDelegate {
         
         /// Send message to Watch
         TTWCSession.shared.sendMessage([.state: TrainingSessionManager.shared.content.state.rawValue,
-                                        .currentExerciseID: exercise.id.uuidString,
+                                        .exerciseID: exercise.id.uuidString,
                                         .exerciseName: exercise.exercise.name,
                                         .startTime: startTime,
                                         .weight: exercise.weight,

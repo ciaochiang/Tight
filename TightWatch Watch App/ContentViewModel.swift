@@ -19,6 +19,7 @@ import HealthKit
 class ContentViewModel: NSObject, ObservableObject {
     @Published var state: TTSessionState = .notStarted
     @Published var exerciseName: String?
+    @Published var exerciseID: String?
     @Published var startTime: Date?
     @Published var weight: Double = 0
     @Published var weightUnit: WeightUnit = .kilogram
@@ -164,7 +165,7 @@ extension ContentViewModel: WCSessionDelegate {
         DispatchQueue.main.async {
             self.isInteractaable = true
             
-            if let stateRawValue = message[TraningSessionAttributes.state.name] as? Int, let state = TTSessionState(rawValue: stateRawValue) {
+            if let stateRawValue = message[TrainingSessionAttributes.state.name] as? Int, let state = TTSessionState(rawValue: stateRawValue) {
                 self.state = state
                 
                 switch state {
@@ -175,46 +176,45 @@ extension ContentViewModel: WCSessionDelegate {
                 default: break
                 }
             }
+        
+            self.exerciseName = message[TrainingSessionAttributes.exerciseName.name] as? String
+            self.exerciseID = message[TrainingSessionAttributes.exerciseID.name] as? String
             
-            if let exerciseName = message[TraningSessionAttributes.exerciseName.name] as? String {
-                self.exerciseName = exerciseName
-            }
-            
-            if let startTime = message[TraningSessionAttributes.startTime.name] as? Date {
+            if let startTime = message[TrainingSessionAttributes.startTime.name] as? Date {
                 self.startTime = startTime
             }
             
-            if let weight = message[TraningSessionAttributes.weight.name] as? Double {
+            if let weight = message[TrainingSessionAttributes.weight.name] as? Double {
                 self.weight = weight
             }
             
-            if let rawValue = message[TraningSessionAttributes.weightUnit.name] as? Int, let weightUnit = WeightUnit(rawValue: rawValue) {
+            if let rawValue = message[TrainingSessionAttributes.weightUnit.name] as? Int, let weightUnit = WeightUnit(rawValue: rawValue) {
                 self.weightUnit = weightUnit
             }
             
-            if let repetitions = message[TraningSessionAttributes.repetitions.name] as? Double {
+            if let repetitions = message[TrainingSessionAttributes.repetitions.name] as? Double {
                 self.repetitions = repetitions
             }
             
-            if let restStartTime = message[TraningSessionAttributes.restStartTime.name] as? Date {
+            if let restStartTime = message[TrainingSessionAttributes.restStartTime.name] as? Date {
                 self.restStartTime = restStartTime
             }
             
-            if let restInterval = message[TraningSessionAttributes.restInterval.name] as? TimeInterval {
+            if let restInterval = message[TrainingSessionAttributes.restInterval.name] as? TimeInterval {
                 self.restInterval = restInterval
             }
             
-            if let indexOfSet = message[TraningSessionAttributes.indexOfSet.name] as? Int {
+            if let indexOfSet = message[TrainingSessionAttributes.indexOfSet.name] as? Int {
                 self.indexOfSet = indexOfSet
             }
             
-            if let setsProgress = message[TraningSessionAttributes.setsProgress.name] as? Double {
+            if let setsProgress = message[TrainingSessionAttributes.setsProgress.name] as? Double {
                 withAnimation {
                     self.setsProgress = setsProgress
                 }
             }
             
-            if let totoalProgress = message[TraningSessionAttributes.totalProgress.name] as? Double {
+            if let totoalProgress = message[TrainingSessionAttributes.totalProgress.name] as? Double {
                 withAnimation {
                     self.totalProgress = totoalProgress
                 }

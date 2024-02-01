@@ -11,7 +11,7 @@ import WatchConnectivity
 class TTWCSession {
     static let shared = TTWCSession()
     
-    func sendMessage(_ message: [TraningSessionAttributes: Any]) {
+    func sendMessage(_ message: [TrainingSessionAttributes: Any]) {
         guard WCSession.default.isReachable else { return }
         
         let convertedMessage = message.reduce(into: [String: Any]()) { (result, entry) in
@@ -24,8 +24,8 @@ class TTWCSession {
         }
     }
     
-    func updateApplicationContext(_ message: [TraningSessionAttributes: Any]) {
-        do {            
+    func updateApplicationContext(_ message: [TrainingSessionAttributes: Any]) {
+        do {
             let convertedMessage = message.reduce(into: [String: Any]()) { (result, entry) in
                 let (key, value) = entry
                 result[key.name] = value
