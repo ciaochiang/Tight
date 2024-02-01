@@ -29,6 +29,7 @@
 		E507EC4F2B5CE74F009F7094 /* Tight.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = E507EC2C2B5CE74D009F7094 /* Tight.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E509EA1C2B3EA53A0025E76C /* TightSchemaV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = E509EA1B2B3EA53A0025E76C /* TightSchemaV1.swift */; };
 		E509EA202B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E509EA1F2B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift */; };
+		E512DEA12B6BE66800A6DFC7 /* LiveActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A2F32E2B4950C300735FC2 /* LiveActivityAttributes.swift */; };
 		E5345B8F2B694BF300852E2F /* TrainingSessionManager+Watch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5345B8E2B694BF300852E2F /* TrainingSessionManager+Watch.swift */; };
 		E5345B902B694BF300852E2F /* TrainingSessionManager+Watch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5345B8E2B694BF300852E2F /* TrainingSessionManager+Watch.swift */; };
 		E539351E2B5CF13500A8DD8C /* LocalizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B700C02B40105E0080442D /* LocalizationProvider.swift */; };
@@ -104,8 +105,7 @@
 		E59B08F82B41495000280FC4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B08F72B41495000280FC4 /* Constants.swift */; };
 		E59B08FD2B4292A900280FC4 /* ExerciseWeightViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B08FC2B4292A900280FC4 /* ExerciseWeightViewComponent.swift */; };
 		E59B08FF2B4594C000280FC4 /* TrainingSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B08FE2B4594C000280FC4 /* TrainingSessionManager.swift */; };
-		E5A2F32F2B4950C300735FC2 /* TrainingSessionAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A2F32E2B4950C300735FC2 /* TrainingSessionAttributes.swift */; };
-		E5A2F3302B4950C300735FC2 /* TrainingSessionAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A2F32E2B4950C300735FC2 /* TrainingSessionAttributes.swift */; };
+		E5A2F3302B4950C300735FC2 /* LiveActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A2F32E2B4950C300735FC2 /* LiveActivityAttributes.swift */; };
 		E5A2F3322B495DEB00735FC2 /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD79A2B3DB13F00696968 /* TimeInterval+Extension.swift */; };
 		E5A2F3332B496ED100735FC2 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD79E2B3DB13F00696968 /* Color+Extension.swift */; };
 		E5B4B7D62B5E99F600A411E1 /* TrainingSessionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B4B7D52B5E99F600A411E1 /* TrainingSessionState.swift */; };
@@ -283,7 +283,7 @@
 		E59B08F72B41495000280FC4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E59B08FC2B4292A900280FC4 /* ExerciseWeightViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseWeightViewComponent.swift; sourceTree = "<group>"; };
 		E59B08FE2B4594C000280FC4 /* TrainingSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionManager.swift; sourceTree = "<group>"; };
-		E5A2F32E2B4950C300735FC2 /* TrainingSessionAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionAttributes.swift; sourceTree = "<group>"; };
+		E5A2F32E2B4950C300735FC2 /* LiveActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityAttributes.swift; sourceTree = "<group>"; };
 		E5A2F3312B49568A00735FC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		E5B4B7D52B5E99F600A411E1 /* TrainingSessionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionState.swift; sourceTree = "<group>"; };
 		E5B4B7DA2B5EB09900A411E1 /* TightWatch-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "TightWatch-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -538,7 +538,7 @@
 			children = (
 				E57FD7842B3DAF7D00696968 /* Exercise.swift */,
 				E509EA1B2B3EA53A0025E76C /* TightSchemaV1.swift */,
-				E5A2F32E2B4950C300735FC2 /* TrainingSessionAttributes.swift */,
+				E5A2F32E2B4950C300735FC2 /* LiveActivityAttributes.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -997,7 +997,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5A2F3302B4950C300735FC2 /* TrainingSessionAttributes.swift in Sources */,
+				E5A2F3302B4950C300735FC2 /* LiveActivityAttributes.swift in Sources */,
 				C9C1F3372B6B624500141ECC /* TrainingSessionManager+TraningLog.swift in Sources */,
 				E5A2F3332B496ED100735FC2 /* Color+Extension.swift in Sources */,
 				C9C1F33A2B6B626B00141ECC /* TrainingSessionManager+RestTime.swift in Sources */,
@@ -1031,6 +1031,7 @@
 				E57FD7902B3DB04400696968 /* NotificationManager.swift in Sources */,
 				E553B9D42B53BEF600BA0C61 /* AnalyticsHelper.swift in Sources */,
 				E57FD7A32B3DB13F00696968 /* Color+Extension.swift in Sources */,
+				E512DEA12B6BE66800A6DFC7 /* LiveActivityAttributes.swift in Sources */,
 				E57FD7AF2B3DB18C00696968 /* PlanManagementView.swift in Sources */,
 				E57FD7682B3DADCC00696968 /* Logger.swift in Sources */,
 				E53935232B5D4E7700A8DD8C /* WatchSessionDelegate.swift in Sources */,
@@ -1052,7 +1053,6 @@
 				E57FD7B02B3DB18C00696968 /* PreferenceView.swift in Sources */,
 				E57FD78E2B3DB00900696968 /* AppTabBarView.swift in Sources */,
 				E57FD7892B3DAFEB00696968 /* OnboardingViewModel.swift in Sources */,
-				E5A2F32F2B4950C300735FC2 /* TrainingSessionAttributes.swift in Sources */,
 				E57FD7772B3DAE3B00696968 /* ExperiementsProvider.swift in Sources */,
 				E57FD7712B3DAE0400696968 /* Error.swift in Sources */,
 				E5E811242B67EB24005DB9A7 /* TraningSessionManager+Notification.swift in Sources */,

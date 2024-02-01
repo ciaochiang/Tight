@@ -1,5 +1,5 @@
 //
-//  TrainingSessionAttributes.swift
+//  LiveActivityAttributes.swift
 //  Tight
 //
 //  Created by Ciao Chiang on 2024/1/6.
@@ -8,7 +8,7 @@
 import Foundation
 import ActivityKit
 
-struct TrainingSessionAttributes: ActivityAttributes {
+struct LiveActivityAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
         var state: Int
         var startTime: Date

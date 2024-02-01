@@ -33,7 +33,7 @@ class TrainingSessionManager: NSObject, ObservableObject {
     @Published var content = TrainingSessionContent()
     
     /// Live Activity Content State
-    @Published var contentState: TrainingSessionAttributes.ContentState?
+    @Published var contentState: LiveActivityAttributes.ContentState?
     
     private var cancellables = Set<AnyCancellable>()
     

@@ -14,8 +14,8 @@ extension TrainingSessionManager {
     func createLiveAcitvity() {
         guard ActivityAuthorizationInfo().areActivitiesEnabled, let exercise = content.currentExercise, let startTime = content.startTime else { return }
         
-        let trainingSessionAttributes = TrainingSessionAttributes()
-        contentState = TrainingSessionAttributes.ContentState(state: content.state.rawValue,
+        let liveActivityAttributes = LiveActivityAttributes()
+        contentState = LiveActivityAttributes.ContentState(state: content.state.rawValue,
                                                               startTime: startTime,
                                                               currentExerciseID: exercise.id.uuidString,
                                                               exerciseName: exercise.exercise.name,
@@ -30,7 +30,7 @@ extension TrainingSessionManager {
         guard let contentState = contentState else { return }
         
         do {
-            let activity = try Activity<TrainingSessionAttributes>.request(attributes: trainingSessionAttributes,
+            let activity = try Activity<LiveActivityAttributes>.request(attributes: liveActivityAttributes,
                                                                            content: .init(state: contentState, staleDate: nil),
                                                                            pushType: nil)
             /// Storing current live activity id for updating activity
@@ -44,7 +44,7 @@ extension TrainingSessionManager {
     func onUpdateLiveActivity() {
         guard let exercise = content.currentExercise, let startTime = content.startTime else { return }
         
-        if let activity = Activity<TrainingSessionAttributes>.activities.first {
+        if let activity = Activity<LiveActivityAttributes>.activities.first {
             Task {
                 /// Update activity info
                 var contentState = activity.content.state
@@ -70,7 +70,7 @@ extension TrainingSessionManager {
     /// Remove all existing live activity
     func dismissLiveActivity() {
         Task {
-           for activity in Activity<TrainingSessionAttributes>.activities {
+           for activity in Activity<LiveActivityAttributes>.activities {
                 let finalState = activity.content.state
                 await activity.end(.init(state: finalState, staleDate: nil), dismissalPolicy: .immediate)
             }

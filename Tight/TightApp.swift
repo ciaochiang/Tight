@@ -64,7 +64,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         /// SeeAlso: https://www.reddit.com/r/iOSProgramming/comments/yci8o6/comment/k1onzhm/?utm_source=share&utm_medium=web3x&utm_name=oweb3xcss&utm_term=1&utm_content=share_button
         let semaphore = DispatchSemaphore(value: 0)
         Task.detached {
-            if let activity = Activity<TrainingSessionAttributes>.activities.first {
+            if let activity = Activity<LiveActivityAttributes>.activities.first {
                 await activity.end(nil, dismissalPolicy: .immediate)
             }
             semaphore.signal()

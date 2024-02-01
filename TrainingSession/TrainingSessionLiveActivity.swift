@@ -13,7 +13,7 @@ struct TrainingSessionLiveActivity: Widget {
     @State private var isAnimating: Bool = false
     
     var body: some WidgetConfiguration {
-        ActivityConfiguration(for: TrainingSessionAttributes.self) { context in
+        ActivityConfiguration(for: LiveActivityAttributes.self) { context in
             // Lock screen/banner UI goes here
             VStack(spacing: 16) {
                 HStack(spacing: 16) {
@@ -79,7 +79,7 @@ struct TrainingSessionLiveActivity: Widget {
     }
     
     @ViewBuilder
-    func SetsProgressView(context: ActivityViewContext<TrainingSessionAttributes>) -> some View {
+    func SetsProgressView(context: ActivityViewContext<LiveActivityAttributes>) -> some View {
         ProgressView(value: context.state.setsProgress) {
             Text("\(context.state.indexOfSet + 1)")
         }
@@ -87,7 +87,7 @@ struct TrainingSessionLiveActivity: Widget {
     }
     
     @ViewBuilder
-    func ExerciseInfoView(context: ActivityViewContext<TrainingSessionAttributes>) -> some View {
+    func ExerciseInfoView(context: ActivityViewContext<LiveActivityAttributes>) -> some View {
         VStack(spacing: 4) {
             Text(context.state.exerciseName)
                 .font(.headline)
@@ -109,7 +109,7 @@ struct TrainingSessionLiveActivity: Widget {
     }
     
     @ViewBuilder
-    func DynamicIslandExerciseInfoView(context: ActivityViewContext<TrainingSessionAttributes>) -> some View {
+    func DynamicIslandExerciseInfoView(context: ActivityViewContext<LiveActivityAttributes>) -> some View {
         HStack(spacing: 4) {
             Text(context.state.exerciseName)
                 .font(.headline)
@@ -131,7 +131,7 @@ struct TrainingSessionLiveActivity: Widget {
     }
     
     @ViewBuilder
-    func ElapsedTimeView(context: ActivityViewContext<TrainingSessionAttributes>) -> some View {
+    func ElapsedTimeView(context: ActivityViewContext<LiveActivityAttributes>) -> some View {
         VStack {
             Text(context.state.startTime, style: .timer)
                 .font(.title)
@@ -145,7 +145,7 @@ struct TrainingSessionLiveActivity: Widget {
     }
     
     @ViewBuilder
-    func RestTimeView(context: ActivityViewContext<TrainingSessionAttributes>) -> some View {
+    func RestTimeView(context: ActivityViewContext<LiveActivityAttributes>) -> some View {
         VStack {
             let startTime = context.state.startTime
             let endTime = startTime.addingTimeInterval(context.state.restInterval)
@@ -162,7 +162,7 @@ struct TrainingSessionLiveActivity: Widget {
     }
     
     @ViewBuilder
-    func ControlsView(context: ActivityViewContext<TrainingSessionAttributes>) -> some View {
+    func ControlsView(context: ActivityViewContext<LiveActivityAttributes>) -> some View {
         HStack {
             Button(intent: StopTrainingSession()) {
                 Image(systemName: "stop.fill")
@@ -233,15 +233,15 @@ struct BreathCircleView: View {
     }
 }
 
-extension TrainingSessionAttributes {
-    fileprivate static var preview: TrainingSessionAttributes {
-        TrainingSessionAttributes()
+extension LiveActivityAttributes {
+    fileprivate static var preview: LiveActivityAttributes {
+        LiveActivityAttributes()
     }
 }
 
-extension TrainingSessionAttributes.ContentState {
-    fileprivate static var initial: TrainingSessionAttributes.ContentState {
-        TrainingSessionAttributes.ContentState(state: 2,
+extension LiveActivityAttributes.ContentState {
+    fileprivate static var initial: LiveActivityAttributes.ContentState {
+        LiveActivityAttributes.ContentState(state: 2,
                                                startTime: .now,
                                                currentExerciseID: "123",
                                                exerciseName: "Bench Press gjfda afdsafafd",
@@ -255,8 +255,8 @@ extension TrainingSessionAttributes.ContentState {
                                                totalProgress: 0.3)
      }
      
-     fileprivate static var progressing: TrainingSessionAttributes.ContentState {
-         TrainingSessionAttributes.ContentState(state: 1,
+     fileprivate static var progressing: LiveActivityAttributes.ContentState {
+         LiveActivityAttributes.ContentState(state: 1,
                                                 startTime: .now,
                                                 currentExerciseID: "234",
                                                 exerciseName: "Leg Extension",
@@ -271,9 +271,9 @@ extension TrainingSessionAttributes.ContentState {
      }
 }
 
-#Preview("Notification", as: .content, using: TrainingSessionAttributes.preview) {
+#Preview("Notification", as: .content, using: LiveActivityAttributes.preview) {
    TrainingSessionLiveActivity()
 } contentStates: {
-    TrainingSessionAttributes.ContentState.initial
-    TrainingSessionAttributes.ContentState.progressing
+    LiveActivityAttributes.ContentState.initial
+    LiveActivityAttributes.ContentState.progressing
 }
