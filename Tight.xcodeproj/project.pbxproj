@@ -113,15 +113,15 @@
 		E5B4B7D92B5E9ABA00A411E1 /* TrainingSessionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B4B7D52B5E99F600A411E1 /* TrainingSessionState.swift */; };
 		E5B700BF2B400B740080442D /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E5B700BE2B400B740080442D /* Localizable.xcstrings */; };
 		E5B700C12B40105E0080442D /* LocalizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B700C02B40105E0080442D /* LocalizationProvider.swift */; };
-		E5BE1B492B69328300FDAD43 /* TraningSessionAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E8111D2B67E293005DB9A7 /* TraningSessionAttributes.swift */; };
+		E5BE1B492B69328300FDAD43 /* TrainingSessionAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E8111D2B67E293005DB9A7 /* TrainingSessionAttributes.swift */; };
 		E5C1C6B22B4A59570081B3EF /* TightSchemaV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = E509EA1B2B3EA53A0025E76C /* TightSchemaV1.swift */; };
 		E5C1C6B62B4A5A5C0081B3EF /* TrainingSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B08FE2B4594C000280FC4 /* TrainingSessionManager.swift */; };
 		E5C1C6B72B4A5A780081B3EF /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7842B3DAF7D00696968 /* Exercise.swift */; };
 		E5C1C6B82B4A5F3F0081B3EF /* TrainingSessionLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E554FB992B4837FA007AB30F /* TrainingSessionLiveActivity.swift */; };
-		E5E8111E2B67E293005DB9A7 /* TraningSessionAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E8111D2B67E293005DB9A7 /* TraningSessionAttributes.swift */; };
+		E5E8111E2B67E293005DB9A7 /* TrainingSessionAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E8111D2B67E293005DB9A7 /* TrainingSessionAttributes.swift */; };
 		E5E811202B67E698005DB9A7 /* TTWCSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E8111F2B67E698005DB9A7 /* TTWCSession.swift */; };
 		E5E811212B67E955005DB9A7 /* TTWCSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E8111F2B67E698005DB9A7 /* TTWCSession.swift */; };
-		E5E811222B67E965005DB9A7 /* TraningSessionAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E8111D2B67E293005DB9A7 /* TraningSessionAttributes.swift */; };
+		E5E811222B67E965005DB9A7 /* TrainingSessionAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E8111D2B67E293005DB9A7 /* TrainingSessionAttributes.swift */; };
 		E5E811242B67EB24005DB9A7 /* TraningSessionManager+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E811232B67EB24005DB9A7 /* TraningSessionManager+Notification.swift */; };
 		E5E811252B67EB29005DB9A7 /* TraningSessionManager+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E811232B67EB24005DB9A7 /* TraningSessionManager+Notification.swift */; };
 		E5E811272B67EB8D005DB9A7 /* TrainingSessionManager+LiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E811262B67EB8D005DB9A7 /* TrainingSessionManager+LiveActivity.swift */; };
@@ -289,7 +289,7 @@
 		E5B4B7DA2B5EB09900A411E1 /* TightWatch-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "TightWatch-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		E5B700BE2B400B740080442D /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		E5B700C02B40105E0080442D /* LocalizationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationProvider.swift; sourceTree = "<group>"; };
-		E5E8111D2B67E293005DB9A7 /* TraningSessionAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraningSessionAttributes.swift; sourceTree = "<group>"; };
+		E5E8111D2B67E293005DB9A7 /* TrainingSessionAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionAttributes.swift; sourceTree = "<group>"; };
 		E5E8111F2B67E698005DB9A7 /* TTWCSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTWCSession.swift; sourceTree = "<group>"; };
 		E5E811232B67EB24005DB9A7 /* TraningSessionManager+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TraningSessionManager+Notification.swift"; sourceTree = "<group>"; };
 		E5E811262B67EB8D005DB9A7 /* TrainingSessionManager+LiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TrainingSessionManager+LiveActivity.swift"; sourceTree = "<group>"; };
@@ -654,7 +654,7 @@
 		E5E8111C2B67E279005DB9A7 /* Traninig */ = {
 			isa = PBXGroup;
 			children = (
-				E5E8111D2B67E293005DB9A7 /* TraningSessionAttributes.swift */,
+				E5E8111D2B67E293005DB9A7 /* TrainingSessionAttributes.swift */,
 				C9C1F33D2B6B76F700141ECC /* TrainingSessionContent.swift */,
 			);
 			path = Traninig;
@@ -971,7 +971,7 @@
 				C9C1F33B2B6B74EF00141ECC /* TightSchemaV1.swift in Sources */,
 				E539351F2B5CF13E00A8DD8C /* Color+Extension.swift in Sources */,
 				E57A88992B5D5EBB0040FCF5 /* ContentViewModel.swift in Sources */,
-				E5BE1B492B69328300FDAD43 /* TraningSessionAttributes.swift in Sources */,
+				E5BE1B492B69328300FDAD43 /* TrainingSessionAttributes.swift in Sources */,
 				C9C1F3402B6B76F700141ECC /* TrainingSessionContent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1015,7 +1015,7 @@
 				E504A44F2B6BDAF000AD3CEA /* TraningSessionLiveActivityIntents.swift in Sources */,
 				E553B9D02B52C47400BA0C61 /* Logger.swift in Sources */,
 				E5C1C6B22B4A59570081B3EF /* TightSchemaV1.swift in Sources */,
-				E5E811222B67E965005DB9A7 /* TraningSessionAttributes.swift in Sources */,
+				E5E811222B67E965005DB9A7 /* TrainingSessionAttributes.swift in Sources */,
 				E5A2F3322B495DEB00735FC2 /* TimeInterval+Extension.swift in Sources */,
 				E5345B902B694BF300852E2F /* TrainingSessionManager+Watch.swift in Sources */,
 				E553B9CF2B52BCED00BA0C61 /* Constants.swift in Sources */,
@@ -1060,7 +1060,7 @@
 				E553B9D62B53ED2600BA0C61 /* TrainingSessionDailyReportView.swift in Sources */,
 				E57FD7AD2B3DB18C00696968 /* TagLayout.swift in Sources */,
 				E59B08FD2B4292A900280FC4 /* ExerciseWeightViewComponent.swift in Sources */,
-				E5E8111E2B67E293005DB9A7 /* TraningSessionAttributes.swift in Sources */,
+				E5E8111E2B67E293005DB9A7 /* TrainingSessionAttributes.swift in Sources */,
 				E562D6FB2B3DA34E000775B7 /* TightApp.swift in Sources */,
 				E57FD7BA2B3DB1DD00696968 /* CreateArrangedExerciseView.swift in Sources */,
 				E59B08FF2B4594C000280FC4 /* TrainingSessionManager.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  TraningSessionAttributes.swift
+//  TrainingSessionAttributes.swift
 //  Tight
 //
 //  Created by Ciao Chiang on 2024/1/29.
@@ -8,10 +8,10 @@
 import Foundation
 import SwiftUI
 
-enum TraningSessionAttributes {
+enum TrainingSessionAttributes {
     case action
     case state
-    case currentExerciseID
+    case exerciseID
     case exerciseName
     case startTime
     case restStartTime
