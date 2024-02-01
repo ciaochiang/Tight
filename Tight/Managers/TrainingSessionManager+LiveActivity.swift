@@ -12,20 +12,21 @@ import ActivityKit
 extension TrainingSessionManager {
     /// Add live activity
     func createLiveAcitvity() {
-        guard ActivityAuthorizationInfo().areActivitiesEnabled, let exercise = currentExercise, let startTime = startTime else { return }
+        guard ActivityAuthorizationInfo().areActivitiesEnabled, let exercise = content.currentExercise, let startTime = content.startTime else { return }
         
         let trainingSessionAttributes = TrainingSessionAttributes()
-        contentState = TrainingSessionAttributes.ContentState(state: state.rawValue,
+        contentState = TrainingSessionAttributes.ContentState(state: content.state.rawValue,
                                                               startTime: startTime,
                                                               currentExerciseID: exercise.id.uuidString,
                                                               exerciseName: exercise.exercise.name,
                                                               weight: exercise.weight,
                                                               weightUnit: exercise.weightUnit,
                                                               repetitions: exercise.repetitions,
-                                                              restInterval: restInterval,
-                                                              indexOfSet: indexOfSet,
-                                                              setsProgress: setsProgress,
-                                                              totalProgress: totalProgress)
+                                                              restStartTime: content.restStartTime ?? .now,
+                                                              restInterval: content.restInterval,
+                                                              indexOfSet: content.indexOfSet,
+                                                              setsProgress: content.setsProgress,
+                                                              totalProgress: content.totalProgress)
         guard let contentState = contentState else { return }
         
         do {
@@ -33,7 +34,7 @@ extension TrainingSessionManager {
                                                                            content: .init(state: contentState, staleDate: nil),
                                                                            pushType: nil)
             /// Storing current live activity id for updating activity
-            liveActivityID = activity.id
+            content.liveActivityID = activity.id
         } catch {
             logger.log(error.localizedDescription, level: .error)
         }
@@ -41,24 +42,24 @@ extension TrainingSessionManager {
     
     /// Update `Live Activity`
     func onUpdateLiveActivity() {
-        guard let exercise = currentExercise, let startTime = startTime else { return }
+        guard let exercise = content.currentExercise, let startTime = content.startTime else { return }
         
         if let activity = Activity<TrainingSessionAttributes>.activities.first {
             Task {
                 /// Update activity info
                 var contentState = activity.content.state
-                contentState.state = state.rawValue
+                contentState.state = content.state.rawValue
                 contentState.startTime = startTime
                 contentState.currentExerciseID = exercise.id.uuidString
                 contentState.exerciseName = exercise.exercise.name
-                contentState.totalProgress = totalProgress
-                contentState.indexOfSet = indexOfSet
-                contentState.setsProgress = setsProgress
+                contentState.totalProgress = content.totalProgress
+                contentState.indexOfSet = content.indexOfSet
+                contentState.setsProgress = content.setsProgress
                 contentState.weight = exercise.weight
                 contentState.weightUnit = exercise.weightUnit
                 contentState.repetitions = exercise.repetitions
-                contentState.restStartTime = restStartTime ?? .now
-                contentState.restInterval = restInterval
+                contentState.restStartTime = content.restStartTime ?? .now
+                contentState.restInterval = content.restInterval
                 
                 await activity.update(.init(state: contentState, staleDate: nil))
             }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum TrainingSessionState: Int {
+enum TTSessionState: Int, Codable {
     case notStarted = 0
     case training = 1
     case resting = 2

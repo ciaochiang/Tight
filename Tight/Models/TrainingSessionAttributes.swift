@@ -21,7 +21,7 @@ struct TrainingSessionAttributes: ActivityAttributes {
         var repetitions: Double
         
         /// Rest Time
-        var restStartTime: Date?
+        var restStartTime: Date
         var restInterval: TimeInterval
         
         /// Progress

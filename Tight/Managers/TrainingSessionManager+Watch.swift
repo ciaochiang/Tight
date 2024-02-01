@@ -9,21 +9,21 @@ import Foundation
 
 extension TrainingSessionManager {
     func onUpdateWatch() {
-        guard let exercise = currentExercise, let startTime = startTime else { return }
+        guard let exercise = content.currentExercise, let startTime = content.startTime else { return }
                 
         /// Send message to Watch
-        TTWCSession.shared.sendMessage([.state: state.rawValue,
+        TTWCSession.shared.sendMessage([.state: content.state.rawValue,
                                         .currentExerciseID: exercise.id.uuidString,
                                         .exerciseName: exercise.exercise.name,
                                         .startTime: startTime,
                                         .weight: exercise.weight,
                                         .weightUnit: exercise.weightUnit,
                                         .repetitions: exercise.repetitions,
-                                        .restStartTime: restStartTime ?? .now,
-                                        .restInterval: restInterval,
-                                        .indexOfSet: indexOfSet,
-                                        .setsProgress: setsProgress,
-                                        .totalProgress: totalProgress
+                                        .restStartTime: content.restStartTime ?? .now,
+                                        .restInterval: content.restInterval,
+                                        .indexOfSet: content.indexOfSet,
+                                        .setsProgress: content.setsProgress,
+                                        .totalProgress: content.totalProgress
                                        ])
     }
 }
