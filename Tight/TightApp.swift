@@ -8,7 +8,6 @@
 import SwiftUI
 import SwiftData
 import FirebaseCore
-import BackgroundTasks
 import UIKit
 import WatchConnectivity
 import ActivityKit
@@ -27,6 +26,8 @@ enum TightMigrationPlan: SchemaMigrationPlan {
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     let watchSessionDelegate = WatchSessionDelegate()
+    private var logger = CustomLogger()
+    @AppStorage(Constants.TRAINING_SESSION_CONTENT) private var sessionContent: Data?
     
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -45,7 +46,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             try AVAudioSession.sharedInstance().setCategory(.ambient, mode: .default, options: .mixWithOthers)
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
-            print("Error setting up audio session: \(error.localizedDescription)")
+            logger.log("Error setting up audio session: \(error.localizedDescription)", level: .error)
         }
                 
         return true
@@ -55,9 +56,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         /// Invoke `endSession` through `TrainingSessionMananger`
         TrainingSessionManager.shared.endSession()
         
+        ///  Clean up `UserDefautls` session content if the app is terminated.
+        sessionContent = nil
+        
         /// Remove all existing live activity
         /// SeeAlso: https://forums.developer.apple.com/forums/thread/732418
-        /// SeeAlso: https://www.reddit.com/r/iOSProgramming/comments/yci8o6/comment/k1onzhm/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+        /// SeeAlso: https://www.reddit.com/r/iOSProgramming/comments/yci8o6/comment/k1onzhm/?utm_source=share&utm_medium=web3x&utm_name=oweb3xcss&utm_term=1&utm_content=share_button
         let semaphore = DispatchSemaphore(value: 0)
         Task.detached {
             if let activity = Activity<TrainingSessionAttributes>.activities.first {
@@ -68,8 +72,20 @@ class AppDelegate: NSObject, UIApplicationDelegate {
        
         semaphore.wait()
     }
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        logger.log("app will enter foreground")
+    }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        logger.log("app did enter background")
+        
+        /// Store current training session
+        
+    }
 }
 
+// MARK: UNUserNotificationCenterDelegate
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, 
                                 willPresent notification: UNNotification,

@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct TrainingSessionRunningView: View {
+    @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject private var trainingSessionManager: TrainingSessionManager
     
     var body: some View {
         VStack {
             HStack(spacing: 16) {
                 /// Sets Progress
-                Text("\(trainingSessionManager.indexOfSet + 1)")
+                Text("\(trainingSessionManager.content.indexOfSet + 1)")
                     .foregroundStyle(Color.themeStyle.theme.primary.opacity(0.8))
                     .font(.title3)
                     .fontWeight(.semibold)
@@ -28,29 +29,29 @@ struct TrainingSessionRunningView: View {
                                 .frame(width: 44, height: 44)
                             
                             Circle()
-                                .trim(from: 0, to: trainingSessionManager.setsProgress)
+                                .trim(from: 0, to: trainingSessionManager.content.setsProgress)
                                 .stroke( // 1
                                     Color.themeStyle.theme.accent,
                                     lineWidth: 4
                                 )
                                 .frame(width: 44, height: 44)
                                 .rotationEffect(.degrees(-90))
-                                .animation(.easeInOut, value: trainingSessionManager.setsProgress)
+                                .animation(.easeInOut, value: trainingSessionManager.content.setsProgress)
                         }
                     }
                     .padding(.leading, 16)
                     .padding(.trailing, 8)
                 
                 VStack(spacing: 4) {
-                    if let startTime = trainingSessionManager.startTime {
+                    if let startTime = trainingSessionManager.content.startTime {
                         ElapsedTimeView(startTime: startTime,
-                                        restStartTime: trainingSessionManager.restStartTime,
-                                        restIntervals: trainingSessionManager.restInterval)
+                                        restStartTime: trainingSessionManager.content.restStartTime,
+                                        restIntervals: trainingSessionManager.content.restInterval)
                     }
 
-                    if let exercise = trainingSessionManager.currentExercise,
+                    if let exercise = trainingSessionManager.content.currentExercise,
                         let weightUnit = WeightUnit(rawValue: exercise.weightUnit) {
-                        ExerciseInfoView(state: trainingSessionManager.state,
+                        ExerciseInfoView(state: trainingSessionManager.content.state,
                                          exerciseName: exercise.exercise.name,
                                          weight: exercise.weight,
                                          weightUnit: weightUnit,
@@ -59,18 +60,36 @@ struct TrainingSessionRunningView: View {
                 }
                 .padding(.leading, 8)
                 
-                ControlsView(isResting: trainingSessionManager.restStartTime != nil)
+                ControlsView(isResting: trainingSessionManager.content.restStartTime != nil)
             }
             .padding(.horizontal)
             .padding(.top, 8)
-            .padding(.bottom, trainingSessionManager.exerciseCount > 1 ? 0 : 12)
+            .padding(.bottom, trainingSessionManager.content.exerciseCount > 1 ? 0 : 12)
             
             /// Only display stage progress view arranged exercises more than `1`
-            if trainingSessionManager.exerciseCount > 1 {
-                StagesView(progress: trainingSessionManager.totalProgress)
+            if trainingSessionManager.content.exerciseCount > 1 {
+                StagesView(progress: trainingSessionManager.content.totalProgress)
             }
         }
         .background(Color.themeStyle.theme.background)
+        .onChange(of: scenePhase) { oldValue, newValue in
+            switch newValue {
+            case .active:
+                /// App is in the background
+                print("enter foreground")
+                break
+            case .inactive:
+                /// App is transitioning between active and background states
+                print("app is transitioning")
+                break
+            case .background:
+                /// App is in the background
+                print("enter background")
+
+                break
+            @unknown default: break
+            }
+        }
     }
     
     @ViewBuilder
@@ -115,7 +134,7 @@ struct TrainingSessionRunningView: View {
             else {
                 /// Done Button
                 Button(action: {
-                    if let exerciseID = trainingSessionManager.currentExercise?.id {
+                    if let exerciseID = trainingSessionManager.content.currentExercise?.id {
                         trainingSessionManager.completeCurrentSet(exerciseID: exerciseID.uuidString)
                     }
                 }) {
@@ -134,7 +153,7 @@ struct TrainingSessionRunningView: View {
     }
     
     @ViewBuilder
-    func ExerciseInfoView(state: TrainingSessionState, exerciseName: String, weight: Double, weightUnit: WeightUnit, repetition: Double) -> some View {
+    func ExerciseInfoView(state: TTSessionState, exerciseName: String, weight: Double, weightUnit: WeightUnit, repetition: Double) -> some View {
         VStack {
             Text(state == .resting ? LocalizationProvider.breakTimeTitle.localizedString : exerciseName)
                 .font(.subheadline)

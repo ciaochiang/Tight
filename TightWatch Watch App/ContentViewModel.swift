@@ -17,7 +17,7 @@ import HealthKit
  */
 
 class ContentViewModel: NSObject, ObservableObject {
-    @Published var state: TrainingSessionState = .notStarted
+    @Published var state: TTSessionState = .notStarted
     @Published var exerciseName: String?
     @Published var startTime: Date?
     @Published var weight: Double = 0
@@ -164,7 +164,7 @@ extension ContentViewModel: WCSessionDelegate {
         DispatchQueue.main.async {
             self.isInteractaable = true
             
-            if let stateRawValue = message[TraningSessionAttributes.state.name] as? Int, let state = TrainingSessionState(rawValue: stateRawValue) {
+            if let stateRawValue = message[TraningSessionAttributes.state.name] as? Int, let state = TTSessionState(rawValue: stateRawValue) {
                 self.state = state
                 
                 switch state {

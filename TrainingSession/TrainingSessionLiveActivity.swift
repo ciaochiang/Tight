@@ -8,57 +8,6 @@
 import ActivityKit
 import WidgetKit
 import SwiftUI
-import AppIntents
-
-@available(iOS 16.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
-struct CompleteSet: LiveActivityIntent {
-    
-    static var title: LocalizedStringResource = "Complete Current Exercise"
-    static var description = IntentDescription("Mark current exercise as completed and start rest")
-    
-    @Parameter(title: "Exercise ID")
-    var id: String
-    
-    init() {
-        
-    }
-    
-    init(id: String) {
-        self.id = id
-    }
-    
-    func perform() async throws -> some IntentResult {
-        /// Update Database
-        TrainingSessionManager.shared.completeCurrentSet(exerciseID: id)
-        return .result()
-    }
-}
-
-@available(iOS 16.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
-struct SkipRest: LiveActivityIntent {
-    
-    static var title: LocalizedStringResource = "Skip Resting"
-    static var description = IntentDescription("Skip resting and go to next set")
-    
-    func perform() async throws -> some IntentResult {
-        /// Update Database
-        TrainingSessionManager.shared.endRest()
-        return .result()
-    }
-}
-
-@available(iOS 16.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
-struct StopTrainingSession: LiveActivityIntent {
-    
-    static var title: LocalizedStringResource = "Stop Training Session"
-    static var description = IntentDescription("Stop training session and reset session")
-    
-    func perform() async throws -> some IntentResult {
-        /// Update Database
-        TrainingSessionManager.shared.endSession()
-        return .result()
-    }
-}
 
 struct TrainingSessionLiveActivity: Widget {
     @State private var isAnimating: Bool = false
@@ -68,10 +17,11 @@ struct TrainingSessionLiveActivity: Widget {
             // Lock screen/banner UI goes here
             VStack(spacing: 16) {
                 HStack(spacing: 16) {
-                    SetsProgressView(context: context)
-                    ExerciseInfoView(context: context)
                     ElapsedTimeView(context: context)
+                    ExerciseInfoView(context: context)
+                    RestTimeView(context: context)
                 }
+                .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .center)
                 
                 ControlsView(context: context)
                 LinearProgressView(progress: context.state.totalProgress)
@@ -80,7 +30,6 @@ struct TrainingSessionLiveActivity: Widget {
             }
             .padding()
             .activitySystemActionForegroundColor(Color.themeStyle.theme.accent)
-            .activityBackgroundTint(Color.themeStyle.theme.background)
             .background(Color.themeStyle.theme.background)
             
         } dynamicIsland: { context in
@@ -143,15 +92,16 @@ struct TrainingSessionLiveActivity: Widget {
             Text(context.state.exerciseName)
                 .font(.headline)
                 .fontWeight(.bold)
+                .fixedSize(horizontal: false, vertical: true)
                 .lineLimit(2)
-                .multilineTextAlignment(.leading)
+                .multilineTextAlignment(.center)
                 .foregroundColor(Color.themeStyle.theme.primaryTextColor)
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(maxWidth: .infinity, alignment: .center)
             
             let weightUnit = WeightUnit(rawValue: context.state.weightUnit) ?? .kilogram
             Text("\(Int(context.state.weight))\(weightUnit.name) x \(Int(context.state.repetitions))")
-                .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
-                .font(.footnote)
+                .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .center)
+                .font(.subheadline)
                 .minimumScaleFactor(0.8)
                 .fontWeight(.semibold)
                 .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
@@ -183,34 +133,32 @@ struct TrainingSessionLiveActivity: Widget {
     @ViewBuilder
     func ElapsedTimeView(context: ActivityViewContext<TrainingSessionAttributes>) -> some View {
         VStack {
-            if context.state.state == 2, let startTime = context.state.restStartTime {   /// Resting
-                let endTime = startTime.addingTimeInterval(context.state.restInterval)
-                HStack {
-                    Label {
-                        Text(timerInterval: startTime...endTime, countsDown: true)
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .multilineTextAlignment(.trailing)
-                            .foregroundColor(Color.themeStyle.theme.secondaryAccent)
-                            .contentTransition(.numericText(countsDown: true))
-                    } icon: {
-                        Image(systemName: "snowflake")
-                            .foregroundStyle(Color.themeStyle.theme.secondaryAccent)
-                            .offset(x: 44)
-                    }
-                }
-                .frame(maxWidth: .infinity, alignment: .trailing)
-            }
-            else {
-                Text(context.state.startTime, style: .timer)
+            Text(context.state.startTime, style: .timer)
+                .font(.title)
+                .fontWeight(.bold)
+                .tracking(1.4)
+                .multilineTextAlignment(.leading)
+                .foregroundColor(Color.themeStyle.theme.accent)
+                .contentTransition(.numericText(countsDown: false))
+        }
+        .frame(maxWidth: 80)
+    }
+    
+    @ViewBuilder
+    func RestTimeView(context: ActivityViewContext<TrainingSessionAttributes>) -> some View {
+        VStack {
+            let startTime = context.state.startTime
+            let endTime = startTime.addingTimeInterval(context.state.restInterval)
+            HStack {
+                Text(timerInterval: startTime...endTime, countsDown: true)
                     .font(.title)
                     .fontWeight(.bold)
-                    .tracking(1.4)
                     .multilineTextAlignment(.trailing)
-                    .foregroundColor(Color.themeStyle.theme.accent)
-                    .contentTransition(.numericText(countsDown: false))
+                    .foregroundColor(Color.themeStyle.theme.secondaryAccent)
+                    .contentTransition(.numericText(countsDown: true))
             }
         }
+        .frame(maxWidth: 80)
     }
     
     @ViewBuilder
@@ -296,12 +244,12 @@ extension TrainingSessionAttributes.ContentState {
         TrainingSessionAttributes.ContentState(state: 2,
                                                startTime: .now,
                                                currentExerciseID: "123",
-                                               exerciseName: "Bench Press",
+                                               exerciseName: "Bench Press gjfda afdsafafd",
                                                weight: 50,
                                                weightUnit: 0,
                                                repetitions: 10,
                                                restStartTime: .now,
-                                               restInterval: 180,
+                                               restInterval: 2000,
                                                indexOfSet: 0,
                                                setsProgress: 0.3,
                                                totalProgress: 0.3)
@@ -315,6 +263,7 @@ extension TrainingSessionAttributes.ContentState {
                                                 weight: 50,
                                                 weightUnit: 0,
                                                 repetitions: 10,
+                                                restStartTime: .now,
                                                 restInterval: 0,
                                                 indexOfSet: 0,
                                                 setsProgress: 0.3,

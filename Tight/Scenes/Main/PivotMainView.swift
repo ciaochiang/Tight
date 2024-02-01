@@ -98,12 +98,12 @@ struct PivotMainView: View {
         .onReceive(trainingSessionManager.timer) { _ in
             trainingSessionManager.handleTimerAction()
         }
-        .onChange(of: trainingSessionManager.startTime) { oldValue, newValue in
+        .onChange(of: trainingSessionManager.content.startTime) { oldValue, newValue in
             withAnimation {
                 showTrainingSessionRunningView = newValue != nil
             }
         }
-        .onChange(of: trainingSessionManager.state, { oldValue, newValue in
+        .onChange(of: trainingSessionManager.content.state, { oldValue, newValue in
             if newValue == .training || newValue == .resting {
                 UIApplication.shared.isIdleTimerDisabled = true
             } else {

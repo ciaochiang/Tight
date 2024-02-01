@@ -17,6 +17,9 @@ struct Constants {
     static let DEFAULT_EXERCISE_WEIGHT: String = "DEFAULT_EXERCISE_WEIGHT"
     static let DEFAULT_EXERCISE_WEIGHT_UNIT: String = "DEFAULT_EXERCISE_WEIGHT_UNIT"
     
+    /// Traning Session
+    static let TRAINING_SESSION_CONTENT: String = "TRAINING_SESSION_CONTENT"
+    
     /// Notification
     static let NOTIFICATION_IDENTIFIER_TRAINING_SESSION: String = "com.tightlab.trainingSession.notification"
 }
