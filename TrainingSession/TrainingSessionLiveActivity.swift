@@ -30,6 +30,7 @@ struct TrainingSessionLiveActivity: Widget {
             }
             .padding()
             .activitySystemActionForegroundColor(Color.themeStyle.theme.accent)
+            .activityBackgroundTint(Color.themeStyle.theme.background)
             .background(Color.themeStyle.theme.background)
             
         } dynamicIsland: { context in
@@ -136,7 +137,7 @@ struct TrainingSessionLiveActivity: Widget {
             Text(context.state.startTime, style: .timer)
                 .font(.title)
                 .fontWeight(.bold)
-                .tracking(1.4)
+                .minimumScaleFactor(0.8)
                 .multilineTextAlignment(.leading)
                 .foregroundColor(Color.themeStyle.theme.accent)
                 .contentTransition(.numericText(countsDown: false))
@@ -153,6 +154,7 @@ struct TrainingSessionLiveActivity: Widget {
                 Text(timerInterval: startTime...endTime, countsDown: true)
                     .font(.title)
                     .fontWeight(.bold)
+                    .minimumScaleFactor(0.8)
                     .multilineTextAlignment(.trailing)
                     .foregroundColor(Color.themeStyle.theme.secondaryAccent)
                     .contentTransition(.numericText(countsDown: true))
