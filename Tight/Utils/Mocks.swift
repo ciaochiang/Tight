@@ -8,6 +8,7 @@
 import Foundation
 import HealthKit
 import CoreLocation
+import SwiftData
 
 class Mocks {
     static var logger: CustomLogger {
@@ -21,6 +22,17 @@ class Mocks {
     static var mockPlan: Plan {
         return .init(name: "Preview", startDate: .init(), repeats: [], duration: 0, updatedDate: .init(), createdDate: .init(), tags: [], isPreset: false)
     }
+    
+    static let container: ModelContainer = {
+        let schema = Schema([ArrangedExercise.self, Plan.self])
+        let configuratin = ModelConfiguration(isStoredInMemoryOnly: true)
+        
+        let container = try! ModelContainer(
+            for: schema,
+            migrationPlan: TightMigrationPlan.self,
+            configurations: [configuratin])
+        return container
+    }()
 
 }
 

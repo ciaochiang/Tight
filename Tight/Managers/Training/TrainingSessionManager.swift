@@ -10,6 +10,7 @@ import SwiftUI
 import ActivityKit
 import HealthKit
 import Combine
+import SwiftData
 
 /**
  - Countdown timer
@@ -17,11 +18,9 @@ import Combine
  -
  */
 class TrainingSessionManager: NSObject, ObservableObject {
-    /// Singleton
-    static let shared = TrainingSessionManager()
-    
-    let logger = CustomLogger()
     private let healthStore = HKHealthStore()
+    @EnvironmentObject var logger: CustomLogger
+    @Environment(\.modelContext) private var context
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     /// Common Properties

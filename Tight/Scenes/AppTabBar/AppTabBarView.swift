@@ -10,21 +10,15 @@ import SwiftData
 
 struct AppTabBarView: View {
     @Environment(\.modelContext) private var context: ModelContext
-    private var logger: CustomLogger
-    private var experimentsProvider: ExperiementsProvider
-    
-    init(logger: CustomLogger, experimentsProvider: ExperiementsProvider) {
-        self.logger = logger
-        self.experimentsProvider = experimentsProvider
-    }
+    @EnvironmentObject private var logger: CustomLogger
+    @EnvironmentObject private var experimentsProvider: ExperiementsProvider
     
     var body: some View {
         TabView {
             /// Create pivot main view
             let today = Date().today
-            let mainViewModel = PivotMainViewModel(context: context, logger: logger, currentDate: today)
-            PivotMainView(viewModel: mainViewModel,
-                          trainingSessionManager: TrainingSessionManager.shared).tabItem {
+            let mainViewModel = PivotMainViewModel(context: context, currentDate: today)
+            PivotMainView(viewModel: mainViewModel).tabItem {
                 Label(LocalizationProvider.plan.nameKey, systemImage: TabBarItemType.plan.iconName)
             }
             
@@ -46,6 +40,5 @@ struct AppTabBarView: View {
 
 #Preview {
     let previewContainer = PreviewContainer([ArrangedExercise.self, Plan.self])
-    return AppTabBarView(logger: Mocks.logger, experimentsProvider: Mocks.experimentProvider)
-        .modelContainer(previewContainer.container)
+    return AppTabBarView().modelContainer(previewContainer.container)
 }

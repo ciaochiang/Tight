@@ -5,11 +5,12 @@
 //  Created by Ciao Chiang on 2023/9/16.
 //
 
+import SwiftUI
 import UserNotifications
 
 class NotificationManager: ObservableObject {
-  @Published var isGranted: Bool = false
-    var logger = CustomLogger()
+    @Published var isGranted: Bool = false
+    @EnvironmentObject private var logger: CustomLogger
   
     func requestNotificationAuthorization(completion: @escaping (Bool) -> ()) {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in

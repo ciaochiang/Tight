@@ -11,7 +11,7 @@ import SwiftData
 
 class PivotMainViewModel: ObservableObject {
     private var context: ModelContext
-    private var logger: CustomLogger
+    @EnvironmentObject private var logger: CustomLogger
     @Published var selectedDate: Date
     @Published var currentPlan: Plan
     @Published var createWeek: Bool = false
@@ -20,9 +20,8 @@ class PivotMainViewModel: ObservableObject {
     @Published var currentWeekIndex: Int = 1
     @Published var showDailySummary: Bool = false
     
-    init(context: ModelContext, logger: CustomLogger, currentDate: Date) {
+    init(context: ModelContext, currentDate: Date) {
         self.context = context
-        self.logger = logger
         self.selectedDate = currentDate
         self.currentPlan = PivotMainViewModel.getPlan(context: context, by: currentDate)
         determineDailySummaryVisibility()

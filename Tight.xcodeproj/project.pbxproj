@@ -8,14 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		C9C1F3362B6B624500141ECC /* TrainingSessionManager+TraningLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C1F3352B6B624500141ECC /* TrainingSessionManager+TraningLog.swift */; };
-		C9C1F3372B6B624500141ECC /* TrainingSessionManager+TraningLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C1F3352B6B624500141ECC /* TrainingSessionManager+TraningLog.swift */; };
 		C9C1F3392B6B626B00141ECC /* TrainingSessionManager+RestTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C1F3382B6B626B00141ECC /* TrainingSessionManager+RestTime.swift */; };
-		C9C1F33A2B6B626B00141ECC /* TrainingSessionManager+RestTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C1F3382B6B626B00141ECC /* TrainingSessionManager+RestTime.swift */; };
 		C9C1F33B2B6B74EF00141ECC /* TightSchemaV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = E509EA1B2B3EA53A0025E76C /* TightSchemaV1.swift */; };
 		C9C1F33C2B6B750600141ECC /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7842B3DAF7D00696968 /* Exercise.swift */; };
 		C9C1F33E2B6B76F700141ECC /* TrainingSessionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C1F33D2B6B76F700141ECC /* TrainingSessionContent.swift */; };
-		C9C1F33F2B6B76F700141ECC /* TrainingSessionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C1F33D2B6B76F700141ECC /* TrainingSessionContent.swift */; };
-		C9C1F3402B6B76F700141ECC /* TrainingSessionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C1F33D2B6B76F700141ECC /* TrainingSessionContent.swift */; };
 		C9C1F3422B6CB7C900141ECC /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7672B3DADCC00696968 /* Logger.swift */; };
 		E504A44D2B6BD72F00AD3CEA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E562D7002B3DA34F000775B7 /* Assets.xcassets */; };
 		E504A44F2B6BDAF000AD3CEA /* TraningSessionLiveActivityIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E504A44E2B6BDAF000AD3CEA /* TraningSessionLiveActivityIntents.swift */; };
@@ -32,7 +28,6 @@
 		E509EA202B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E509EA1F2B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift */; };
 		E512DEA12B6BE66800A6DFC7 /* LiveActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A2F32E2B4950C300735FC2 /* LiveActivityAttributes.swift */; };
 		E5345B8F2B694BF300852E2F /* TrainingSessionManager+Watch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5345B8E2B694BF300852E2F /* TrainingSessionManager+Watch.swift */; };
-		E5345B902B694BF300852E2F /* TrainingSessionManager+Watch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5345B8E2B694BF300852E2F /* TrainingSessionManager+Watch.swift */; };
 		E539351E2B5CF13500A8DD8C /* LocalizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B700C02B40105E0080442D /* LocalizationProvider.swift */; };
 		E539351F2B5CF13E00A8DD8C /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD79E2B3DB13F00696968 /* Color+Extension.swift */; };
 		E53935202B5CF16D00A8DD8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E562D7002B3DA34F000775B7 /* Assets.xcassets */; };
@@ -116,17 +111,12 @@
 		E5B700C12B40105E0080442D /* LocalizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B700C02B40105E0080442D /* LocalizationProvider.swift */; };
 		E5BE1B492B69328300FDAD43 /* TrainingSessionAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E8111D2B67E293005DB9A7 /* TrainingSessionAttributes.swift */; };
 		E5C1C6B22B4A59570081B3EF /* TightSchemaV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = E509EA1B2B3EA53A0025E76C /* TightSchemaV1.swift */; };
-		E5C1C6B62B4A5A5C0081B3EF /* TrainingSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B08FE2B4594C000280FC4 /* TrainingSessionManager.swift */; };
 		E5C1C6B72B4A5A780081B3EF /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7842B3DAF7D00696968 /* Exercise.swift */; };
 		E5C1C6B82B4A5F3F0081B3EF /* TrainingSessionLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E554FB992B4837FA007AB30F /* TrainingSessionLiveActivity.swift */; };
 		E5E8111E2B67E293005DB9A7 /* TrainingSessionAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E8111D2B67E293005DB9A7 /* TrainingSessionAttributes.swift */; };
 		E5E811202B67E698005DB9A7 /* TTWCSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E8111F2B67E698005DB9A7 /* TTWCSession.swift */; };
-		E5E811212B67E955005DB9A7 /* TTWCSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E8111F2B67E698005DB9A7 /* TTWCSession.swift */; };
-		E5E811222B67E965005DB9A7 /* TrainingSessionAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E8111D2B67E293005DB9A7 /* TrainingSessionAttributes.swift */; };
 		E5E811242B67EB24005DB9A7 /* TraningSessionManager+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E811232B67EB24005DB9A7 /* TraningSessionManager+Notification.swift */; };
-		E5E811252B67EB29005DB9A7 /* TraningSessionManager+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E811232B67EB24005DB9A7 /* TraningSessionManager+Notification.swift */; };
 		E5E811272B67EB8D005DB9A7 /* TrainingSessionManager+LiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E811262B67EB8D005DB9A7 /* TrainingSessionManager+LiveActivity.swift */; };
-		E5E811282B67EB90005DB9A7 /* TrainingSessionManager+LiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E811262B67EB8D005DB9A7 /* TrainingSessionManager+LiveActivity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -974,7 +964,6 @@
 				E539351F2B5CF13E00A8DD8C /* Color+Extension.swift in Sources */,
 				E57A88992B5D5EBB0040FCF5 /* ContentViewModel.swift in Sources */,
 				E5BE1B492B69328300FDAD43 /* TrainingSessionAttributes.swift in Sources */,
-				C9C1F3402B6B76F700141ECC /* TrainingSessionContent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1000,26 +989,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5A2F3302B4950C300735FC2 /* LiveActivityAttributes.swift in Sources */,
-				C9C1F3372B6B624500141ECC /* TrainingSessionManager+TraningLog.swift in Sources */,
 				E5A2F3332B496ED100735FC2 /* Color+Extension.swift in Sources */,
-				C9C1F33A2B6B626B00141ECC /* TrainingSessionManager+RestTime.swift in Sources */,
 				E54420F82B4AD38F002C63BC /* LocalizationProvider.swift in Sources */,
 				E554FB982B4837FA007AB30F /* TrainingSessionBundle.swift in Sources */,
-				E5E811212B67E955005DB9A7 /* TTWCSession.swift in Sources */,
-				E5E811282B67EB90005DB9A7 /* TrainingSessionManager+LiveActivity.swift in Sources */,
-				E5C1C6B62B4A5A5C0081B3EF /* TrainingSessionManager.swift in Sources */,
 				E5C1C6B72B4A5A780081B3EF /* Exercise.swift in Sources */,
-				C9C1F33F2B6B76F700141ECC /* TrainingSessionContent.swift in Sources */,
-				E5E811252B67EB29005DB9A7 /* TraningSessionManager+Notification.swift in Sources */,
 				E5B4B7D92B5E9ABA00A411E1 /* TrainingSessionState.swift in Sources */,
 				E554FB9A2B4837FA007AB30F /* TrainingSessionLiveActivity.swift in Sources */,
 				E55094452B60114A00C2C1EA /* WeightUnit.swift in Sources */,
 				E504A44F2B6BDAF000AD3CEA /* TraningSessionLiveActivityIntents.swift in Sources */,
 				E553B9D02B52C47400BA0C61 /* Logger.swift in Sources */,
 				E5C1C6B22B4A59570081B3EF /* TightSchemaV1.swift in Sources */,
-				E5E811222B67E965005DB9A7 /* TrainingSessionAttributes.swift in Sources */,
 				E5A2F3322B495DEB00735FC2 /* TimeInterval+Extension.swift in Sources */,
-				E5345B902B694BF300852E2F /* TrainingSessionManager+Watch.swift in Sources */,
 				E553B9CF2B52BCED00BA0C61 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

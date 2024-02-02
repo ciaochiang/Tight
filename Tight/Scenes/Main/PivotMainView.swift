@@ -13,7 +13,7 @@ import Combine
 struct PivotMainView: View {
     @Environment(\.modelContext) var context
     @StateObject var viewModel: PivotMainViewModel
-    @StateObject var trainingSessionManager: TrainingSessionManager
+    @EnvironmentObject var trainingSessionManager: TrainingSessionManager
     @State private var isArrangingExercise: Bool = false
     @State private var isImporting: Bool = false
     @State private var exerciseToEdit: ArrangedExercise?
@@ -25,9 +25,8 @@ struct PivotMainView: View {
     /// Animation  namespace
     @Namespace private var animation
     
-    init(viewModel: PivotMainViewModel, trainingSessionManager: TrainingSessionManager) {
+    init(viewModel: PivotMainViewModel) {
         _viewModel = .init(wrappedValue: viewModel)
-        _trainingSessionManager = .init(wrappedValue: trainingSessionManager)
     }
     
     var body: some View {
@@ -412,8 +411,6 @@ struct PivotMainView: View {
 #Preview("Main Screen") {
     let previewContainer = PreviewContainer([ArrangedExercise.self, Plan.self])
     let context = ModelContext(previewContainer.container)
-    let viewModel = PivotMainViewModel(context: context, logger: Mocks.logger, currentDate: .init())
-    return PivotMainView(viewModel: viewModel,
-                         trainingSessionManager: TrainingSessionManager.shared).modelContext(context)
-    
+    let viewModel = PivotMainViewModel(context: context, currentDate: .init())
+    return PivotMainView(viewModel: viewModel).modelContext(context)
 }
