@@ -7,7 +7,7 @@
 
 import SwiftUI
 import SwiftData
-import FirebaseCore
+import Firebase
 import UIKit
 import WatchConnectivity
 import ActivityKit
