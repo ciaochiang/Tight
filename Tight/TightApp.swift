@@ -25,9 +25,21 @@ enum TightMigrationPlan: SchemaMigrationPlan {
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-    private let watchSessionDelegate = WatchSessionDelegate()
-    private lazy var logger = CustomLogger()
+    lazy var logger = CustomLogger()
+    lazy var trainingSessionManager = TrainingSessionManager()
     @AppStorage(Constants.TRAINING_SESSION_CONTENT) private var sessionContent: Data?
+    
+    /// Swift data
+    let container: ModelContainer = {
+        let schema = Schema([ArrangedExercise.self, Plan.self])
+        let configuratin = ModelConfiguration()
+        
+        let container = try! ModelContainer(
+            for: schema,
+            migrationPlan: TightMigrationPlan.self,
+            configurations: [configuratin])
+        return container
+    }()
     
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -37,7 +49,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         
         /// Activate Watch App
         if WCSession.isSupported() {
-            WCSession.default.delegate = watchSessionDelegate
+            WCSession.default.delegate = self
             WCSession.default.activate()
         }
         
@@ -48,13 +60,19 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         } catch {
             logger.log("Error setting up audio session: \(error.localizedDescription)", level: .error)
         }
+        
+        
+        /// Register notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(handleIntentCompleteNotification(_:)), name: .intentComplete, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleIntentSkipNotification(_:)), name: .intentSkip, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleIntentStopNotification(_:)), name: .intentStop, object: nil)
                 
         return true
     }
         
     func applicationWillTerminate(_ application: UIApplication) {
         /// Invoke `endSession` through `TrainingSessionMananger`
-        TrainingSessionManager.shared.endSession()
+        trainingSessionManager.endSession()
         
         ///  Clean up `UserDefautls` session content if the app is terminated.
         sessionContent = nil
@@ -83,6 +101,21 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         /// Store current training session
         
     }
+    
+    // MARK: Live Activity Intent
+    @objc func handleIntentCompleteNotification(_ notification: Notification) {
+        guard let exerciseID = notification.userInfo?["exerciseID"] as? String else { return }
+        
+        trainingSessionManager.completeCurrentSet(exerciseID: exerciseID)
+    }
+    
+    @objc func handleIntentSkipNotification(_ notification: Notification) {
+        trainingSessionManager.endRest()
+    }
+    
+    @objc func handleIntentStopNotification(_ notification: Notification) {
+        trainingSessionManager.endSession()
+    }
 }
 
 // MARK: UNUserNotificationCenterDelegate
@@ -98,30 +131,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 struct TightApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @AppStorage("IS_ONBOARDING_COMPLETED") var isOnboardingCompleted: Bool = false
-    private var logger = CustomLogger()
     private var experiementsProvider = ExperiementsProvider()
-    
-    /// Swift data
-    let container: ModelContainer = {
-        let schema = Schema([ArrangedExercise.self, Plan.self])
-        let configuratin = ModelConfiguration()
-        
-        let container = try! ModelContainer(
-            for: schema,
-            migrationPlan: TightMigrationPlan.self,
-            configurations: [configuratin])
-        return container
-    }()
-    
-    init() {
-        
-    }
 
     var body: some Scene {
         WindowGroup {
             if isOnboardingCompleted {
                 // Display to AppTabBar view
-                AppTabBarView(logger: logger, experimentsProvider: experiementsProvider)
+                AppTabBarView()
             } else {
                 let viewModel = OnboardingViewModel(isOnboardingCompleted: $isOnboardingCompleted)
                 OnboardingView(viewModel: viewModel)
@@ -133,8 +149,9 @@ struct TightApp: App {
             /// Store to user defaults
             UserDefaults.standard.setValue(newValue, forKey: "IS_ONBOARDING_COMPLETED")
         })
-        
-        /// Swift Data
-        .modelContainer(container)
+        .modelContainer(delegate.container)
+        .environmentObject(delegate.trainingSessionManager)
+        .environmentObject(delegate.logger)
+        .environmentObject(experiementsProvider)
     }
 }

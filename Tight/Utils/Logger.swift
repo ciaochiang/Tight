@@ -8,7 +8,7 @@
 import Foundation
 import os
 
-class CustomLogger {
+class CustomLogger: ObservableObject {
     var logger: Logger
     
     enum SubSystem {

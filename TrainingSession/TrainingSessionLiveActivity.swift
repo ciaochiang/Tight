@@ -182,7 +182,7 @@ struct TrainingSessionLiveActivity: Widget {
                 .tint(Color.themeStyle.theme.secondaryTextColor)
             }
             else {
-                Button(intent: CompleteSet(id: context.state.currentExerciseID)) {
+                Button(intent: CompleteSet(exerciseID: context.state.currentExerciseID)) {
                     Image(systemName: "checkmark.square.fill")
                         .padding(.horizontal, 60)
                         .padding(.vertical, 4)

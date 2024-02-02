@@ -7,21 +7,21 @@
 
 import WatchConnectivity
 
-class WatchSessionDelegate: NSObject, WCSessionDelegate {
+extension AppDelegate: WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        guard activationState == .activated, let exercise = TrainingSessionManager.shared.content.currentExercise else { return }
+        guard activationState == .activated, let exercise = trainingSessionManager.content.currentExercise else { return }
         
-        TTWCSession.shared.updateApplicationContext([.state: TrainingSessionManager.shared.content.state.rawValue,
+        TTWCSession.shared.updateApplicationContext([.state: trainingSessionManager.content.state.rawValue,
                                                      .exerciseID: exercise.id.uuidString,
                                                      .exerciseName: exercise.exercise.name,
                                                      .weight: exercise.weight,
                                                      .weightUnit: exercise.weightUnit,
                                                      .repetitions: exercise.repetitions,
-                                                     .restStartTime: TrainingSessionManager.shared.content.restStartTime ?? .now,
-                                                     .restInterval: TrainingSessionManager.shared.content.restInterval,
-                                                     .indexOfSet: TrainingSessionManager.shared.content.indexOfSet,
-                                                     .setsProgress: TrainingSessionManager.shared.content.setsProgress,
-                                                     .totalProgress: TrainingSessionManager.shared.content.totalProgress
+                                                     .restStartTime: trainingSessionManager.content.restStartTime ?? .now,
+                                                     .restInterval: trainingSessionManager.content.restInterval,
+                                                     .indexOfSet: trainingSessionManager.content.indexOfSet,
+                                                     .setsProgress: trainingSessionManager.content.setsProgress,
+                                                     .totalProgress: trainingSessionManager.content.totalProgress
         ])
     }
     
@@ -32,24 +32,23 @@ class WatchSessionDelegate: NSObject, WCSessionDelegate {
     /// When watch is light out,  the reachability will be changed to `false`, when watch is light up, the reachaiiliby will be change to `true`
     /// use this timing to get current training session states from phone app.
     func sessionReachabilityDidChange(_ session: WCSession) {
-        let trainingSessionManager = TrainingSessionManager.shared
         guard session.isReachable,
               let exercise = trainingSessionManager.content.currentExercise,
               let startTime = trainingSessionManager.content.startTime else { return }
         
         /// Send message to Watch
-        TTWCSession.shared.sendMessage([.state: TrainingSessionManager.shared.content.state.rawValue,
+        TTWCSession.shared.sendMessage([.state: trainingSessionManager.content.state.rawValue,
                                         .exerciseID: exercise.id.uuidString,
                                         .exerciseName: exercise.exercise.name,
                                         .startTime: startTime,
                                         .weight: exercise.weight,
                                         .weightUnit: exercise.weightUnit,
                                         .repetitions: exercise.repetitions,
-                                        .restStartTime: TrainingSessionManager.shared.content.restStartTime ?? .now,
-                                        .restInterval: TrainingSessionManager.shared.content.restInterval,
-                                        .indexOfSet: TrainingSessionManager.shared.content.indexOfSet,
-                                        .setsProgress: TrainingSessionManager.shared.content.setsProgress,
-                                        .totalProgress: TrainingSessionManager.shared.content.totalProgress
+                                        .restStartTime: trainingSessionManager.content.restStartTime ?? .now,
+                                        .restInterval: trainingSessionManager.content.restInterval,
+                                        .indexOfSet: trainingSessionManager.content.indexOfSet,
+                                        .setsProgress: trainingSessionManager.content.setsProgress,
+                                        .totalProgress: trainingSessionManager.content.totalProgress
                                        ])
     }
     
@@ -59,12 +58,12 @@ class WatchSessionDelegate: NSObject, WCSessionDelegate {
         switch action {
         case "complete":
             if let exerciseID = message[TrainingSessionAttributes.exerciseID.name] as? String {
-                TrainingSessionManager.shared.completeCurrentSet(exerciseID: exerciseID)
+                trainingSessionManager.completeCurrentSet(exerciseID: exerciseID)
             }
         case "skip":
-            TrainingSessionManager.shared.endRest()
+            trainingSessionManager.endRest()
         case "end":
-            TrainingSessionManager.shared.endSession()
+            trainingSessionManager.endSession()
         default: break
         }
     }
