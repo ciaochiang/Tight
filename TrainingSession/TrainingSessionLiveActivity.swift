@@ -99,7 +99,7 @@ struct TrainingSessionLiveActivity: Widget {
                 .foregroundColor(Color.themeStyle.theme.primaryTextColor)
                 .frame(maxWidth: .infinity, alignment: .center)
             
-            let weightUnit = WeightUnit(rawValue: context.state.weightUnit) ?? .kilogram
+            let weightUnit = WeightUnit(value: context.state.weightUnit)
             Text("\(Int(context.state.weight))\(weightUnit.name) x \(Int(context.state.repetitions))")
                 .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .center)
                 .font(.subheadline)
@@ -120,7 +120,7 @@ struct TrainingSessionLiveActivity: Widget {
                 .foregroundColor(Color.themeStyle.theme.primaryTextColor)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            let weightUnit = WeightUnit(rawValue: context.state.weightUnit) ?? .kilogram
+            let weightUnit = WeightUnit(value: context.state.weightUnit)
             Text("\(Int(context.state.weight))\(weightUnit.name) x \(Int(context.state.repetitions))")
                 .frame(maxWidth: 80, alignment: .trailing)
                 .font(.footnote)

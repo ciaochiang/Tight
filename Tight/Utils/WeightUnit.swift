@@ -11,6 +11,14 @@ enum WeightUnit: Int {
     case kilogram = 0
     case pound = 1
     
+    init(value: Int) {
+        switch value {
+        case 0: self = .kilogram
+        case 1: self = .pound
+        default: self = .kilogram
+        }
+    }
+    
     var localizationValue: String.LocalizationValue {
         switch self {
         case .kilogram: return "exercise_weight_unit_kilogram"

@@ -40,9 +40,7 @@ struct TrainingSessionDailyReportView: View {
         .horizontalSpacing(.center)
         .onAppear {
             /// Setup prefer weight unit
-            if let unit = WeightUnit(rawValue: defaultWeightUnit) {
-                weightUnit = unit
-            }
+            weightUnit = WeightUnit(value: defaultWeightUnit)
             
             calculateTimeMetrics(plan: plan)
             calculateVolumeMetric(plan: plan)

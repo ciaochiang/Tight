@@ -23,7 +23,8 @@ struct ExerciseWeightViewComponent: View {
                     .font(.headline)
                     .keyboardType(.numberPad)
                 
-                Text(WeightUnit(rawValue: arrangedExercise.weightUnit)?.name ?? "")
+                let weightUnit = WeightUnit(value: arrangedExercise.weightUnit)
+                Text(weightUnit.name)
                     .font(.headline)
                     .fontWeight(.semibold)
                     .contentShape(Rectangle())

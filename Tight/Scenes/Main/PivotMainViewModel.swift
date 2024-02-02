@@ -10,7 +10,7 @@ import SwiftUI
 import SwiftData
 
 class PivotMainViewModel: ObservableObject {
-    private var context: ModelContext
+    var context: ModelContext
     @EnvironmentObject private var logger: CustomLogger
     @Published var selectedDate: Date
     @Published var currentPlan: Plan

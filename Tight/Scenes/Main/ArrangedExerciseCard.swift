@@ -44,8 +44,9 @@ struct ArrangedExerciseCard: View {
                     .frame(height: 16)
                     .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
                     .opacity(isItemEditable ? 1.0 : 0.4)
-                    
-                Text("\(String(format: "%1.f", exercise.weight)) \(WeightUnit(rawValue: exercise.weightUnit)?.name ?? "")")
+                
+                let weightUnit = WeightUnit(value: exercise.weightUnit)
+                Text("\(String(format: "%1.f", exercise.weight)) \(weightUnit.name)")
                     .font(.footnote)
                     .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
                     .opacity(isItemEditable ? 1.0 : 0.4)

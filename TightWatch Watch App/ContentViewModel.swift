@@ -196,8 +196,8 @@ extension ContentViewModel: WCSessionDelegate {
                 self.weight = weight
             }
             
-            if let rawValue = message[TrainingSessionAttributes.weightUnit.name] as? Int, let weightUnit = WeightUnit(rawValue: rawValue) {
-                self.weightUnit = weightUnit
+            if let rawValue = message[TrainingSessionAttributes.weightUnit.name] as? Int {
+                self.weightUnit = WeightUnit(value: rawValue)
             }
             
             if let repetitions = message[TrainingSessionAttributes.repetitions.name] as? Double {

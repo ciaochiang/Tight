@@ -49,8 +49,8 @@ struct TrainingSessionRunningView: View {
                                         restIntervals: trainingSessionManager.content.restInterval)
                     }
 
-                    if let exercise = trainingSessionManager.content.currentExercise,
-                        let weightUnit = WeightUnit(rawValue: exercise.weightUnit) {
+                    if let exercise = trainingSessionManager.content.currentExercise {
+                        let weightUnit = WeightUnit(value: exercise.weightUnit)
                         ExerciseInfoView(state: trainingSessionManager.content.state,
                                          exerciseName: exercise.exercise.name,
                                          weight: exercise.weight,

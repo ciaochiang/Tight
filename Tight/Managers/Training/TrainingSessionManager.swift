@@ -20,7 +20,7 @@ import SwiftData
 class TrainingSessionManager: NSObject, ObservableObject {
     private let healthStore = HKHealthStore()
     @EnvironmentObject var logger: CustomLogger
-    @Environment(\.modelContext) private var context
+    var context: ModelContext?
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     /// Common Properties
@@ -47,6 +47,10 @@ class TrainingSessionManager: NSObject, ObservableObject {
             }
         }
         .store(in: &cancellables)
+    }
+    
+    func configure(modelContext: ModelContext) {
+        self.context = modelContext
     }
     
     func startSession(plan: Plan?, arrangedExercises: [ArrangedExercise]) {
@@ -137,7 +141,7 @@ class TrainingSessionManager: NSObject, ObservableObject {
     
     func completeCurrentSet(exerciseID: String) {
         /// 1. Find the corresponding exercise
-        guard let exercise = arrangedExercises.first(where: { $0.id.uuidString == exerciseID }) else { return }
+        guard let exercise = fetchArrangedExercise(by: exerciseID) else { return }
         
         /// 2.
         /// - Go rest
@@ -267,6 +271,26 @@ class TrainingSessionManager: NSObject, ObservableObject {
             
             /// Send message to Watch
             self.onUpdateWatch()
+        }
+    }
+}
+
+// MARK: Swift Data
+extension TrainingSessionManager {
+    func fetchArrangedExercise(by exerciseID: String) -> ArrangedExercise? {
+        guard let uuid = UUID(uuidString: exerciseID) else { return nil }
+        
+        let fetchDescriptor = FetchDescriptor<ArrangedExercise>(predicate: #Predicate<ArrangedExercise> { exercise in
+            return exercise.id == uuid
+        })
+        
+        do {
+            let exercises = try context?.fetch(fetchDescriptor)
+            return exercises?.first
+        }
+        catch {
+            logger.log(error.localizedDescription, level: .error)
+            return nil
         }
     }
 }

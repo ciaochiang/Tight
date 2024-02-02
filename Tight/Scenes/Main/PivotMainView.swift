@@ -52,6 +52,8 @@ struct PivotMainView: View {
         }
         .background(Color.themeStyle.theme.background)
         .onAppear(perform: {
+            trainingSessionManager.configure(modelContext: viewModel.context)
+            
             if viewModel.weeks.isEmpty {
                 viewModel.loadWeeks()
             }
