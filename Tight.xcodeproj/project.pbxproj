@@ -16,6 +16,7 @@
 		C9C1F33E2B6B76F700141ECC /* TrainingSessionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C1F33D2B6B76F700141ECC /* TrainingSessionContent.swift */; };
 		C9C1F33F2B6B76F700141ECC /* TrainingSessionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C1F33D2B6B76F700141ECC /* TrainingSessionContent.swift */; };
 		C9C1F3402B6B76F700141ECC /* TrainingSessionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C1F33D2B6B76F700141ECC /* TrainingSessionContent.swift */; };
+		C9C1F3422B6CB7C900141ECC /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7672B3DADCC00696968 /* Logger.swift */; };
 		E504A44D2B6BD72F00AD3CEA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E562D7002B3DA34F000775B7 /* Assets.xcassets */; };
 		E504A44F2B6BDAF000AD3CEA /* TraningSessionLiveActivityIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E504A44E2B6BDAF000AD3CEA /* TraningSessionLiveActivityIntents.swift */; };
 		E504A4502B6BDB2A00AD3CEA /* TraningSessionLiveActivityIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E504A44E2B6BDAF000AD3CEA /* TraningSessionLiveActivityIntents.swift */; };
@@ -352,6 +353,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C9C1F3412B6CB51000141ECC /* Training */ = {
+			isa = PBXGroup;
+			children = (
+				E5E8111D2B67E293005DB9A7 /* TrainingSessionAttributes.swift */,
+				E59B08FE2B4594C000280FC4 /* TrainingSessionManager.swift */,
+				E5B4B7D52B5E99F600A411E1 /* TrainingSessionState.swift */,
+				E5E811232B67EB24005DB9A7 /* TraningSessionManager+Notification.swift */,
+				E5E811262B67EB8D005DB9A7 /* TrainingSessionManager+LiveActivity.swift */,
+				E5345B8E2B694BF300852E2F /* TrainingSessionManager+Watch.swift */,
+				C9C1F3352B6B624500141ECC /* TrainingSessionManager+TraningLog.swift */,
+				C9C1F3382B6B626B00141ECC /* TrainingSessionManager+RestTime.swift */,
+			);
+			path = Training;
+			sourceTree = "<group>";
+		};
 		E507EC2D2B5CE74D009F7094 /* TightWatch Watch App */ = {
 			isa = PBXGroup;
 			children = (
@@ -444,7 +460,6 @@
 		E562D6F92B3DA34E000775B7 /* Tight */ = {
 			isa = PBXGroup;
 			children = (
-				E5E8111C2B67E279005DB9A7 /* Traninig */,
 				E56C07A42B663D9100A4AFA9 /* Tight.entitlements */,
 				E562D6FA2B3DA34E000775B7 /* TightApp.swift */,
 				E5B700BE2B400B740080442D /* Localizable.xcstrings */,
@@ -519,16 +534,10 @@
 		E57FD7692B3DADD700696968 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				C9C1F3412B6CB51000141ECC /* Training */,
 				E5B700C02B40105E0080442D /* LocalizationProvider.swift */,
 				E57FD78F2B3DB04400696968 /* NotificationManager.swift */,
 				E57FD7762B3DAE3B00696968 /* ExperiementsProvider.swift */,
-				E59B08FE2B4594C000280FC4 /* TrainingSessionManager.swift */,
-				E5B4B7D52B5E99F600A411E1 /* TrainingSessionState.swift */,
-				E5E811232B67EB24005DB9A7 /* TraningSessionManager+Notification.swift */,
-				E5E811262B67EB8D005DB9A7 /* TrainingSessionManager+LiveActivity.swift */,
-				E5345B8E2B694BF300852E2F /* TrainingSessionManager+Watch.swift */,
-				C9C1F3352B6B624500141ECC /* TrainingSessionManager+TraningLog.swift */,
-				C9C1F3382B6B626B00141ECC /* TrainingSessionManager+RestTime.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -539,6 +548,7 @@
 				E57FD7842B3DAF7D00696968 /* Exercise.swift */,
 				E509EA1B2B3EA53A0025E76C /* TightSchemaV1.swift */,
 				E5A2F32E2B4950C300735FC2 /* LiveActivityAttributes.swift */,
+				C9C1F33D2B6B76F700141ECC /* TrainingSessionContent.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -649,15 +659,6 @@
 				E59B08FC2B4292A900280FC4 /* ExerciseWeightViewComponent.swift */,
 			);
 			path = Components;
-			sourceTree = "<group>";
-		};
-		E5E8111C2B67E279005DB9A7 /* Traninig */ = {
-			isa = PBXGroup;
-			children = (
-				E5E8111D2B67E293005DB9A7 /* TrainingSessionAttributes.swift */,
-				C9C1F33D2B6B76F700141ECC /* TrainingSessionContent.swift */,
-			);
-			path = Traninig;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -969,6 +970,7 @@
 				E539351E2B5CF13500A8DD8C /* LocalizationProvider.swift in Sources */,
 				C9C1F33C2B6B750600141ECC /* Exercise.swift in Sources */,
 				C9C1F33B2B6B74EF00141ECC /* TightSchemaV1.swift in Sources */,
+				C9C1F3422B6CB7C900141ECC /* Logger.swift in Sources */,
 				E539351F2B5CF13E00A8DD8C /* Color+Extension.swift in Sources */,
 				E57A88992B5D5EBB0040FCF5 /* ContentViewModel.swift in Sources */,
 				E5BE1B492B69328300FDAD43 /* TrainingSessionAttributes.swift in Sources */,

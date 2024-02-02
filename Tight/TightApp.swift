@@ -25,8 +25,8 @@ enum TightMigrationPlan: SchemaMigrationPlan {
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-    let watchSessionDelegate = WatchSessionDelegate()
-    private var logger = CustomLogger()
+    private let watchSessionDelegate = WatchSessionDelegate()
+    private lazy var logger = CustomLogger()
     @AppStorage(Constants.TRAINING_SESSION_CONTENT) private var sessionContent: Data?
     
     func application(_ application: UIApplication,

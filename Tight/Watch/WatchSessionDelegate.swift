@@ -58,8 +58,8 @@ class WatchSessionDelegate: NSObject, WCSessionDelegate {
         
         switch action {
         case "complete":
-            if let exerciseID = TrainingSessionManager.shared.content.currentExercise?.id {
-                TrainingSessionManager.shared.completeCurrentSet(exerciseID: exerciseID.uuidString)
+            if let exerciseID = message[TrainingSessionAttributes.exerciseID.name] as? String {
+                TrainingSessionManager.shared.completeCurrentSet(exerciseID: exerciseID)
             }
         case "skip":
             TrainingSessionManager.shared.endRest()

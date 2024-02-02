@@ -38,6 +38,7 @@ class ContentViewModel: NSObject, ObservableObject {
     
     /// Health Kit
     let healthStore = HKHealthStore()
+    private lazy var logger = CustomLogger()
     private var workoutSession: HKWorkoutSession?
 
     /// Extended Run Time
@@ -55,17 +56,22 @@ class ContentViewModel: NSObject, ObservableObject {
     
     func onClickComplete() {
         isInteractaable = false
-        sendAppMessage(message: ["action": "complete"])
+        
+        /// Send message along with `ExerciseID` because of phone app may be idle and cannot get current exercise id from `TraniningSessionManager`
+        if let exerciseID = exerciseID {
+            sendAppMessage(message: [TrainingSessionAttributes.action.name: "complete",
+                                     TrainingSessionAttributes.exerciseID.name: exerciseID])
+        }
     }
     
     func onClickSkip() {
         isInteractaable = false
-        sendAppMessage(message: ["action": "skip"])
+        sendAppMessage(message: [TrainingSessionAttributes.action.name: "skip"])
     }
     
     func onClickEnd() {
         isInteractaable = false
-        sendAppMessage(message: ["action": "end"])
+        sendAppMessage(message: [TrainingSessionAttributes.action.name: "end"])
         
         /// End Workout Session
         endWorkoutSession()
@@ -96,10 +102,10 @@ extension ContentViewModel {
                 workoutSession?.startActivity(with: startTime)
                 workoutSession?.startMirroringToCompanionDevice(completion: { isSucceed, error in
                     if let error = error {
-                        print("workout session mirroring error: \(error.localizedDescription)")
+                        self.logger.log("workout session mirroring error: \(error.localizedDescription)", level: .error)
                     }
                     
-                    print("workout session mirroring is success: \(isSucceed)")
+                    self.logger.log("workout session mirroring is success: \(isSucceed)", level: .info)
                 })
             }
             
@@ -121,7 +127,7 @@ extension ContentViewModel {
                 }
             })
         } catch {
-            print("Error creating workout session: \(error.localizedDescription)")
+            logger.log("Error creating workout session: \(error.localizedDescription)", level: .error)
         }
     }
     
@@ -143,14 +149,16 @@ extension ContentViewModel {
 // MARK: WKSessionDelegate
 extension ContentViewModel: WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        print("did activate")
+        logger.log("wcsession is activated", level: .info)
     }
     
     func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
+        logger.log("wcsession is receievd application contenxt", level: .info)
         processContextMessage(message: applicationContext)
     }
     
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+        logger.log("wcsession is received message", level: .info)
         processContextMessage(message: message)
     }
     
@@ -242,13 +250,13 @@ extension ContentViewModel: WKExtendedRuntimeSessionDelegate {
     }
     
     func extendedRuntimeSession(_ extendedRuntimeSession: WKExtendedRuntimeSession, didInvalidateWith reason: WKExtendedRuntimeSessionInvalidationReason, error: Error?) {
-        print("session runtime invalidate reason: \(reason)")
+        logger.log("session runtime invalidate reason: \(reason)", level: .info)
         
         self.timer?.invalidate()
         self.timer = nil
         
         if let error = error {
-            print("extended runtime session invalidate error: \(error.localizedDescription)")
+            logger.log("extended runtime session invalidate error: \(error.localizedDescription)", level: .error)
         }
     }
     
