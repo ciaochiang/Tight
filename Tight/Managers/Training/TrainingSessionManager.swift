@@ -36,8 +36,12 @@ class TrainingSessionManager: NSObject, ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
+    let operationQueue = OperationQueue()
+    
     override init() {
         super.init()
+        /// Limit queue only can process 1 task at a time
+        operationQueue.maxConcurrentOperationCount = 1
         
         /// Create state observer
         $content.sink { [weak self] newValue in
@@ -150,7 +154,13 @@ class TrainingSessionManager: NSObject, ObservableObject {
         /// - If there is no next exercise, then complete the training session
         if content.indexOfSet >= Int(exercise.sets - 1) {
             /// Sets are completed, mark exercise as completed and jump to next exercise
-            exercise.isCompleted = true
+            let operation = BlockOperation {
+                DispatchQueue.main.async {
+                    exercise.isCompleted = true
+                    try? self.context?.save()
+                }
+            }
+            operationQueue.addOperation(operation)
             
             /// If there is more exercise, then `nextExercise`, else  `completeTrainingSession`
             if content.indexOfExercise + 1 >= arrangedExercises.count {
@@ -171,7 +181,12 @@ class TrainingSessionManager: NSObject, ObservableObject {
     func done() {
         /// Update end time
         let currentTime = Date.now
-        plan?.trainingLog?.endTime = currentTime
+        
+        let operation = BlockOperation {
+            self.plan?.trainingLog?.endTime = currentTime
+            try? self.context?.save()
+        }
+        operationQueue.addOperation(operation)
         
         /// Update current progress to completed
         let progress: Double = 1.0
