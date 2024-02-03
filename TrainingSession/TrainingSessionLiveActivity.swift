@@ -175,15 +175,8 @@ struct TrainingSessionLiveActivity: Widget {
             
             Spacer()
             
-            if context.state.state == 2 {   /// Resting
-                Button(intent: SkipRest()) {
-                    Image(systemName: "chevron.forward.2")
-                        .padding(.horizontal, 60)
-                        .padding(.vertical, 4)
-                }
-                .tint(Color.themeStyle.theme.secondaryTextColor)
-            }
-            else {
+            let restEndTime = context.state.restStartTime.addingTimeInterval(context.state.restInterval)
+            if context.state.state == 1 || Date.now > restEndTime {
                 Button(intent: CompleteSet(exerciseID: context.state.currentExerciseID)) {
                     Image(systemName: "checkmark.square.fill")
                         .padding(.horizontal, 60)
@@ -191,8 +184,16 @@ struct TrainingSessionLiveActivity: Widget {
                 }
                 .tint(Color.themeStyle.theme.secondaryTextColor)
             }
+            else {   /// Resting
+                Button(intent: SkipRest()) {
+                    Image(systemName: "chevron.forward.2")
+                        .padding(.horizontal, 60)
+                        .padding(.vertical, 4)
+                }
+                .tint(Color.themeStyle.theme.secondaryTextColor)
+            }
         }
-    }
+    }   
     
     @ViewBuilder
     func LinearProgressView(progress: Double) -> some View {
