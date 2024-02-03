@@ -148,7 +148,7 @@ struct TrainingSessionLiveActivity: Widget {
     @ViewBuilder
     func RestTimeView(context: ActivityViewContext<LiveActivityAttributes>) -> some View {
         VStack {
-            let startTime = context.state.startTime
+            let startTime = context.state.restStartTime
             let endTime = startTime.addingTimeInterval(context.state.restInterval)
             HStack {
                 Text(timerInterval: startTime...endTime, countsDown: true)

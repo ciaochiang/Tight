@@ -166,7 +166,6 @@ class TrainingSessionManager: NSObject, ObservableObject {
             let operation = BlockOperation {
                 DispatchQueue.main.async {
                     exercise.isCompleted = true
-                    try? self.context?.save()
                 }
             }
             operationQueue.addOperation(operation)
