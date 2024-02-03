@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TrainingSessionRunningView: View {
+struct TrainingSessionCollapsedView: View {
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject private var trainingSessionManager: TrainingSessionManager
     
@@ -198,6 +198,6 @@ struct TrainingSessionRunningView: View {
 }
 
 #Preview {
-    TrainingSessionRunningView()
+    TrainingSessionCollapsedView()
         .environmentObject(TrainingSessionManager())
 }

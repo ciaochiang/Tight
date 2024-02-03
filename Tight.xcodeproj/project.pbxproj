@@ -49,7 +49,8 @@
 		E554FB9A2B4837FA007AB30F /* TrainingSessionLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E554FB992B4837FA007AB30F /* TrainingSessionLiveActivity.swift */; };
 		E554FBA02B4837FB007AB30F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E554FB9F2B4837FB007AB30F /* Assets.xcassets */; };
 		E554FBA42B4837FB007AB30F /* TrainingSessionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E554FB912B4837FA007AB30F /* TrainingSessionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		E5578C6C2B4E8FB4004947F2 /* TrainingSessionRunningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5578C6B2B4E8FB4004947F2 /* TrainingSessionRunningView.swift */; };
+		E5578C6C2B4E8FB4004947F2 /* TrainingSessionCollapsedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5578C6B2B4E8FB4004947F2 /* TrainingSessionCollapsedView.swift */; };
+		E55B09612B6DE7EF006A174A /* TrainingSessionExtendedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55B09602B6DE7EF006A174A /* TrainingSessionExtendedView.swift */; };
 		E55F131A2B6A92250044FA65 /* notificationSound.caf in Resources */ = {isa = PBXBuildFile; fileRef = E55F13192B6A92240044FA65 /* notificationSound.caf */; };
 		E562D6FB2B3DA34E000775B7 /* TightApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E562D6FA2B3DA34E000775B7 /* TightApp.swift */; };
 		E562D7012B3DA34F000775B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E562D7002B3DA34F000775B7 /* Assets.xcassets */; };
@@ -220,7 +221,8 @@
 		E554FB992B4837FA007AB30F /* TrainingSessionLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionLiveActivity.swift; sourceTree = "<group>"; };
 		E554FB9F2B4837FB007AB30F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E554FBA12B4837FB007AB30F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E5578C6B2B4E8FB4004947F2 /* TrainingSessionRunningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionRunningView.swift; sourceTree = "<group>"; };
+		E5578C6B2B4E8FB4004947F2 /* TrainingSessionCollapsedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionCollapsedView.swift; sourceTree = "<group>"; };
+		E55B09602B6DE7EF006A174A /* TrainingSessionExtendedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionExtendedView.swift; sourceTree = "<group>"; };
 		E55F13192B6A92240044FA65 /* notificationSound.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = notificationSound.caf; sourceTree = "<group>"; };
 		E562D6F72B3DA34E000775B7 /* Tight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E562D6FA2B3DA34E000775B7 /* TightApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TightApp.swift; sourceTree = "<group>"; };
@@ -573,7 +575,8 @@
 				E57FD7912B3DB0BE00696968 /* ArrangedExerciseCard.swift */,
 				E57FD7922B3DB0BE00696968 /* PivotMainView.swift */,
 				E57FD7932B3DB0BE00696968 /* PivotMainViewModel.swift */,
-				E5578C6B2B4E8FB4004947F2 /* TrainingSessionRunningView.swift */,
+				E5578C6B2B4E8FB4004947F2 /* TrainingSessionCollapsedView.swift */,
+				E55B09602B6DE7EF006A174A /* TrainingSessionExtendedView.swift */,
 				E553B9D52B53ED2600BA0C61 /* TrainingSessionDailyReportView.swift */,
 			);
 			path = Main;
@@ -1034,7 +1037,8 @@
 				E5B4B7D62B5E99F600A411E1 /* TrainingSessionState.swift in Sources */,
 				E57FD7AE2B3DB18C00696968 /* TagTextfieldView.swift in Sources */,
 				E57FD7B92B3DB1DD00696968 /* EditArrangedExerciseView.swift in Sources */,
-				E5578C6C2B4E8FB4004947F2 /* TrainingSessionRunningView.swift in Sources */,
+				E5578C6C2B4E8FB4004947F2 /* TrainingSessionCollapsedView.swift in Sources */,
+				E55B09612B6DE7EF006A174A /* TrainingSessionExtendedView.swift in Sources */,
 				E57FD7B02B3DB18C00696968 /* PreferenceView.swift in Sources */,
 				E57FD78E2B3DB00900696968 /* AppTabBarView.swift in Sources */,
 				E57FD7892B3DAFEB00696968 /* OnboardingViewModel.swift in Sources */,

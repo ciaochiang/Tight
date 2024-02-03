@@ -11,7 +11,6 @@ import Firebase
 import UIKit
 import WatchConnectivity
 import ActivityKit
-import AVFoundation
 
 // MARK: Migration Plan
 enum TightMigrationPlan: SchemaMigrationPlan {
@@ -52,15 +51,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             WCSession.default.delegate = self
             WCSession.default.activate()
         }
-        
-        /// Setup Audio Configuration
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.ambient, mode: .default, options: .mixWithOthers)
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-            logger.log("Error setting up audio session: \(error.localizedDescription)", level: .error)
-        }
-        
         
         /// Register notifications
         NotificationCenter.default.addObserver(self, selector: #selector(handleIntentCompleteNotification(_:)), name: .intentComplete, object: nil)
