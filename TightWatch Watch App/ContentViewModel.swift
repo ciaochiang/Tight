@@ -197,6 +197,7 @@ extension ContentViewModel: WCSessionDelegate {
             }
             
             if let rawValue = message[TrainingSessionAttributes.weightUnit.name] as? Int {
+                DispatchQueue.main.async {}
                 self.weightUnit = WeightUnit(value: rawValue)
             }
             
