@@ -21,6 +21,7 @@ struct PivotMainView: View {
     @State private var isPresentingConfirm: Bool = false
     @State private var isItemEditable: Bool = true
     @State private var isDataChanged: Bool = false
+    @State private var isTrainingExtenedViewPresented: Bool = false
         
     /// Animation  namespace
     @Namespace private var animation
@@ -80,6 +81,9 @@ struct PivotMainView: View {
             PlanManagementView(isImporting: true) { plan in
                 viewModel.importExercises(from: plan)
             }
+        })
+        .fullScreenCover(isPresented: $isTrainingExtenedViewPresented, content: {
+            TrainingSessionExtendedView()
         })
         .onChange(of: viewModel.selectedDate) { oldValue, newValue in
             /// Reload current plan when date changed
@@ -371,7 +375,10 @@ struct PivotMainView: View {
             .background(Color.themeStyle.theme.accent)
         }
         else {
-            TrainingSessionRunningView()
+            TrainingSessionCollapsedView()
+                .onTapGesture {
+                    isTrainingExtenedViewPresented.toggle()
+                }
                 .transition(.move(edge: .bottom))
         }
     }
@@ -414,5 +421,7 @@ struct PivotMainView: View {
     let previewContainer = PreviewContainer([ArrangedExercise.self, Plan.self])
     let context = ModelContext(previewContainer.container)
     let viewModel = PivotMainViewModel(context: context, currentDate: .init())
-    return PivotMainView(viewModel: viewModel).modelContext(context)
+    return PivotMainView(viewModel: viewModel)
+        .modelContext(context)
+        .environmentObject(TrainingSessionManager())
 }
