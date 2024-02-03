@@ -18,7 +18,6 @@ import SwiftData
  -
  */
 class TrainingSessionManager: NSObject, ObservableObject {
-    private let healthStore = HKHealthStore()
     @EnvironmentObject var logger: CustomLogger
     var context: ModelContext?
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
