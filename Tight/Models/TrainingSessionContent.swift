@@ -66,7 +66,12 @@ struct TrainingSessionContent: Codable {
     
     
     func currentExerciseRestInterval() -> Double {
-        return currentExercise?.restIntevals ?? 0
+        if let restInterval = currentExercise?.restIntevals {
+            return restInterval.isNaN ? 0 : restInterval
+        }
+        else {
+            return 0
+        }
     }
     
     mutating func setCurrentExercise(_ exercise: ArrangedExercise) {

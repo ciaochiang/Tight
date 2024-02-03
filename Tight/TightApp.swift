@@ -96,15 +96,21 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     @objc func handleIntentCompleteNotification(_ notification: Notification) {
         guard let exerciseID = notification.userInfo?["exerciseID"] as? String else { return }
         
-        trainingSessionManager.completeCurrentSet(exerciseID: exerciseID)
+        DispatchQueue.main.async {
+            self.trainingSessionManager.completeCurrentSet(exerciseID: exerciseID)
+        }
     }
     
     @objc func handleIntentSkipNotification(_ notification: Notification) {
-        trainingSessionManager.endRest()
+        DispatchQueue.main.async {
+            self.trainingSessionManager.endRest()
+        }
     }
     
     @objc func handleIntentStopNotification(_ notification: Notification) {
-        trainingSessionManager.endSession()
+        DispatchQueue.main.async {
+            self.trainingSessionManager.endSession()
+        }
     }
 }
 

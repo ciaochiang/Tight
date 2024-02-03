@@ -29,10 +29,8 @@ struct TrainingSessionLiveActivity: Widget {
                     .padding(.bottom, 4)
             }
             .padding()
-            .activitySystemActionForegroundColor(Color.themeStyle.theme.accent)
             .activityBackgroundTint(Color.themeStyle.theme.background)
             .background(Color.themeStyle.theme.background)
-            
         } dynamicIsland: { context in
             DynamicIsland {
                 // Expanded UI goes here.  Compose the expanded UI through
