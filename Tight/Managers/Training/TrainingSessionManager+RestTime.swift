@@ -18,8 +18,11 @@ extension TrainingSessionManager {
     
     func onRestTimeEnd(currentTime: Date, plan: Plan, restTimeFrame: RestTimeFrame) {
         /// Set `endTime` to current rest time frame and save to `trainingLog`
-        restTimeFrame.endTime = currentTime
-        plan.trainingLog?.restTimeFrames.append(restTimeFrame)
+        let operation = BlockOperation {
+            restTimeFrame.endTime = currentTime
+            plan.trainingLog?.restTimeFrames.append(restTimeFrame)
+        }
+        operationQueue.addOperation(operation)
         
         /// Cancel all scheduled notification
         cancelScheduledNotifications()

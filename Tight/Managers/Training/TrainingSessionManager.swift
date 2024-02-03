@@ -74,7 +74,10 @@ class TrainingSessionManager: NSObject, ObservableObject {
         
         /// Get first exercise and update start time
         let firstExercise = clonedArrangedExercise[content.indexOfExercise]
-        firstExercise.startTime = currentTime
+        let operation = BlockOperation {
+            firstExercise.startTime = currentTime
+        }
+        operationQueue.addOperation(operation)
         content.setCurrentExercise(firstExercise)
         
         /// Create training log
@@ -100,8 +103,11 @@ class TrainingSessionManager: NSObject, ObservableObject {
         
         /// Update end time to training log
         if let trainingLog = plan?.trainingLog {
-            let currentTime = Date.now
-            trainingLog.endTime = currentTime
+            let operation = BlockOperation {
+                let currentTime = Date.now
+                trainingLog.endTime = currentTime
+            }
+            operationQueue.addOperation(operation)
         }
         
         /// Reset Properties
@@ -124,9 +130,12 @@ class TrainingSessionManager: NSObject, ObservableObject {
         let newState: TTSessionState = .training
         
         /// Set `endTime` to current rest time frame and save to `trainingLog`
-        currentRestTimeFrame?.endTime = currentTime
-        if let restTimeFrame = currentRestTimeFrame {
-            plan?.trainingLog?.restTimeFrames.append(restTimeFrame)
+        if let restTimeFrame = currentRestTimeFrame, let trainingLog = plan?.trainingLog {
+            let operation = BlockOperation {
+                restTimeFrame.endTime = currentTime
+                trainingLog.restTimeFrames.append(restTimeFrame)
+            }
+            operationQueue.addOperation(operation)
         }
         
         /// Reset rest time
