@@ -58,12 +58,18 @@ extension AppDelegate: WCSessionDelegate {
         switch action {
         case "complete":
             if let exerciseID = message[TrainingSessionAttributes.exerciseID.name] as? String {
-                trainingSessionManager.completeCurrentSet(exerciseID: exerciseID)
+                DispatchQueue.main.async {
+                    self.trainingSessionManager.completeCurrentSet(exerciseID: exerciseID)
+                }
             }
         case "skip":
-            trainingSessionManager.endRest()
+            DispatchQueue.main.async {
+                self.trainingSessionManager.endRest()
+            }
         case "end":
-            trainingSessionManager.endSession()
+            DispatchQueue.main.async {
+                self.trainingSessionManager.endSession()
+            }
         default: break
         }
     }

@@ -11,8 +11,8 @@ import ActivityKit
 // MARK: Live Activity
 extension TrainingSessionManager {
     /// Add live activity
-    func createLiveAcitvity() {
-        guard ActivityAuthorizationInfo().areActivitiesEnabled, let exercise = content.currentExercise, let startTime = content.startTime else { return }
+    func createLiveAcitvity(startTime: Date, exercise: ArrangedExercise) {
+        guard ActivityAuthorizationInfo().areActivitiesEnabled else { return }
         
         let liveActivityAttributes = LiveActivityAttributes()
         contentState = LiveActivityAttributes.ContentState(state: content.state.rawValue,
@@ -43,6 +43,31 @@ extension TrainingSessionManager {
     /// Update `Live Activity`
     func onUpdateLiveActivity() {
         guard let exercise = content.currentExercise, let startTime = content.startTime else { return }
+        guard let activity = Activity<LiveActivityAttributes>.activities.first else { return }
+        
+        Task {
+            /// Update activity info
+            var contentState = activity.content.state
+            contentState.state = content.state.rawValue
+            contentState.startTime = startTime
+            contentState.currentExerciseID = exercise.id.uuidString
+            contentState.exerciseName = exercise.exercise.name
+            contentState.totalProgress = content.totalProgress
+            contentState.indexOfSet = content.indexOfSet
+            contentState.setsProgress = content.setsProgress
+            contentState.weight = exercise.weight
+            contentState.weightUnit = exercise.weightUnit
+            contentState.repetitions = exercise.repetitions
+            contentState.restStartTime = content.restStartTime ?? .now
+            contentState.restInterval = content.restInterval
+            
+            await activity.update(.init(state: contentState, staleDate: nil))
+        }
+    }
+    
+    /// Update `Live Activity`
+    func onUpdateLiveActivity(content: TrainingSessionContent) {
+        guard let exercise = content.currentExercise, let startTime = content.startTime else { return }
         
         if let activity = Activity<LiveActivityAttributes>.activities.first {
             Task {
@@ -64,7 +89,6 @@ extension TrainingSessionManager {
                 await activity.update(.init(state: contentState, staleDate: nil))
             }
         }
-        
     }
     
     /// Remove all existing live activity

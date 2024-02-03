@@ -41,6 +41,8 @@ class TrainingSessionManager: NSObject, ObservableObject {
         super.init()
         /// Limit queue only can process 1 task at a time
         operationQueue.maxConcurrentOperationCount = 1
+        operationQueue.qualityOfService = .userInteractive
+        operationQueue.cancelAllOperations()
         
         /// Create state observer
         $content.sink { [weak self] newValue in
@@ -73,17 +75,14 @@ class TrainingSessionManager: NSObject, ObservableObject {
         
         /// Get first exercise and update start time
         let firstExercise = clonedArrangedExercise[content.indexOfExercise]
-        let operation = BlockOperation {
-            firstExercise.startTime = currentTime
-        }
-        operationQueue.addOperation(operation)
+        firstExercise.startTime = currentTime
         content.setCurrentExercise(firstExercise)
         
         /// Create training log
         createTrainingLog()
         
         /// Add live activity
-        createLiveAcitvity()
+        createLiveAcitvity(startTime: currentTime, exercise: firstExercise)
         
         /// Update `Watch`
         onUpdateWatch()
@@ -96,17 +95,17 @@ class TrainingSessionManager: NSObject, ObservableObject {
         /// Dismiss Live Activity
         dismissLiveActivity()
         
+        /// Cancel all operations
+        operationQueue.cancelAllOperations()
+        
         /// Send end message to Watch
         let state: TTSessionState = .notStarted
         TTWCSession.shared.sendMessage([.action: "end", .state: state.rawValue])
         
         /// Update end time to training log
         if let trainingLog = plan?.trainingLog {
-            let operation = BlockOperation {
-                let currentTime = Date.now
-                trainingLog.endTime = currentTime
-            }
-            operationQueue.addOperation(operation)
+            let currentTime = Date.now
+            trainingLog.endTime = currentTime
         }
         
         /// Reset Properties
@@ -130,11 +129,8 @@ class TrainingSessionManager: NSObject, ObservableObject {
         
         /// Set `endTime` to current rest time frame and save to `trainingLog`
         if let restTimeFrame = currentRestTimeFrame, let trainingLog = plan?.trainingLog {
-            let operation = BlockOperation {
-                restTimeFrame.endTime = currentTime
-                trainingLog.restTimeFrames.append(restTimeFrame)
-            }
-            operationQueue.addOperation(operation)
+            restTimeFrame.endTime = currentTime
+            trainingLog.restTimeFrames.append(restTimeFrame)
         }
         
         /// Reset rest time
@@ -161,26 +157,29 @@ class TrainingSessionManager: NSObject, ObservableObject {
         /// - If there is no more set, then mark it as completed and  jump to next exercise
         /// - If there is no next exercise, then complete the training session
         if content.indexOfSet >= Int(exercise.sets - 1) {
-            /// Sets are completed, mark exercise as completed and jump to next exercise
-            let operation = BlockOperation {
-                DispatchQueue.main.async {
-                    exercise.isCompleted = true
-                }
+            /// Complete current exercise and update progress to 100%
+            operationQueue.addOperation {
+                self.onCurrentExerciseCompleted(exercise: exercise)
             }
-            operationQueue.addOperation(operation)
             
             /// If there is more exercise, then `nextExercise`, else  `completeTrainingSession`
             if content.indexOfExercise + 1 >= arrangedExercises.count {
                 /// Complete training session
-                done()
+                operationQueue.addOperation {
+                    self.done()
+                }
             }
             else {
-                nextExercise()
+                operationQueue.addOperation {
+                    self.nextExercise()
+                }
             }
         }
         else {
             /// Keep current exercise and go to next set
-            nextSet()
+            operationQueue.addOperation {
+                self.nextSet()
+            }
         }
     }
 
@@ -188,12 +187,7 @@ class TrainingSessionManager: NSObject, ObservableObject {
     func done() {
         /// Update end time
         let currentTime = Date.now
-        
-        let operation = BlockOperation {
-            self.plan?.trainingLog?.endTime = currentTime
-            try? self.context?.save()
-        }
-        operationQueue.addOperation(operation)
+        plan?.trainingLog?.endTime = currentTime
         
         /// Update current progress to completed
         let progress: Double = 1.0
@@ -209,7 +203,7 @@ class TrainingSessionManager: NSObject, ObservableObject {
         }
         
         /// Stop and Reset
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.endSession()
         }
     }
@@ -252,18 +246,15 @@ class TrainingSessionManager: NSObject, ObservableObject {
             self.content.restInterval = newRestInterval
             
             /// Update Live Activity
-            self.onUpdateLiveActivity()
+            self.onUpdateLiveActivity(content: self.content)
             
             /// Update Watch
-            self.onUpdateWatch()
+            self.onUpdateWatch(content: self.content)
         }
     }
     
     /// Next Exericse
     func nextExercise() {
-        /// Complete current exercise and update progress to 100%
-        onCurrentExerciseCompleted()
-        
         /// Change state to `resting`
         let newState: TTSessionState = .resting
         let currentTime = Date.now
@@ -280,7 +271,7 @@ class TrainingSessionManager: NSObject, ObservableObject {
         currentRestTimeFrame = onRestTimeStart(currentTime: currentTime, restTimeInterval: newRestInterval)
         
         /// Wait for `0.7` secs and shift to next exercise
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.content.state = newState
             self.content.setCurrentExercise(newExercise)
             self.content.setIndexOfExercise(index: newIndexOfExercise)
@@ -300,6 +291,10 @@ class TrainingSessionManager: NSObject, ObservableObject {
 // MARK: Swift Data
 extension TrainingSessionManager {
     func fetchArrangedExercise(by exerciseID: String) -> ArrangedExercise? {
+        if let uuid = UUID(uuidString: exerciseID), let exercise = arrangedExercises.first(where: { $0.id == uuid }) {
+            return exercise
+        }
+        
         guard let uuid = UUID(uuidString: exerciseID) else { return nil }
         
         let fetchDescriptor = FetchDescriptor<ArrangedExercise>(predicate: #Predicate<ArrangedExercise> { exercise in
@@ -323,7 +318,10 @@ extension TrainingSessionManager {
         return Double(index) / Double(totalCount - 1)
     }
     
-    func onCurrentExerciseCompleted() {
+    func onCurrentExerciseCompleted(exercise: ArrangedExercise) {
+        /// Sets are completed, mark exercise as completed and jump to next exercise
+        exercise.isCompleted = true
+        
         /// Update `endTime` for current exercise
         let currentTime = Date.now
         content.currentExercise?.endTime = currentTime
