@@ -23,7 +23,7 @@ struct EditPlanPresetView: View {
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 8) {
-                if plan.arrangedExercises.isEmpty {
+                if plan.alleExercises().isEmpty == true {
                     PlaceholderView()
                         .veriticalSpacing(.center)
                         .offset(y: -32)
@@ -35,7 +35,8 @@ struct EditPlanPresetView: View {
             .veriticalSpacing(.top)
             .navigationTitle(plan.name)
             .sheet(isPresented: $isAdding, content: {
-                CreateArrangedExerciseView(plan: plan, incrementalOrderNumber: plan.arrangedExercises.count, completion: { _ in
+                let orderNumer = plan.alleExercises().count
+                CreateArrangedExerciseView(plan: plan, incrementalOrderNumber: orderNumer, completion: { _ in
 
                 })
                     .presentationDetents([.height(460)])
@@ -59,7 +60,8 @@ struct EditPlanPresetView: View {
     @ViewBuilder
     func ArrangedExercisesListView() -> some View {
         List {
-            ForEach(plan.arrangedExercises.sorted(by: { $0.order < $1.order })) { exercise in
+            let exercises = plan.alleExercises()
+            ForEach(exercises) { exercise in
                 ArrangedExerciseCard(exercise: exercise, isItemEditable: $isItemEditable)
                     .veriticalSpacing(.center)
                     .listRowSeparator(.hidden)
@@ -121,7 +123,7 @@ struct EditPlanPresetView: View {
     func updateOrderNumbers(from indexSet: IndexSet, to offset: Int) {
         guard let itemIndex = indexSet.first else { return }
             
-        var exercises = plan.arrangedExercises.sorted(by: { $0.order < $1.order })
+        var exercises = plan.alleExercises()
                 
         // Ensure that the provided offset is within a valid range
         if offset < 0 || offset > exercises.count {
@@ -149,13 +151,14 @@ struct EditPlanPresetView: View {
     }
     
     func deleteExericse(_ exercise: ArrangedExercise) {
-        if let index = plan.arrangedExercises.firstIndex(where: { $0 == exercise }) {
-            plan.arrangedExercises.remove(at: index)
+        if let index = plan.arrangedExercises?.firstIndex(where: { $0 == exercise }) {
+            plan.arrangedExercises?.remove(at: index)
             context.delete(exercise)
         }
 
         // Update the order numbers of all exercises in the updated array
-        for (index, exercise) in plan.arrangedExercises.sorted(by: { $0.order < $1.order }).enumerated() {
+        let sortedExercises = plan.alleExercises()
+        for (index, exercise) in sortedExercises.enumerated() {
             exercise.order = index
         }
     }

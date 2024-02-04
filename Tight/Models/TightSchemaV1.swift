@@ -26,22 +26,22 @@ enum TightSchemaV1: VersionedSchema {
 extension TightSchemaV1 {
     @Model
     class Plan {
-        @Attribute(.unique) var id: UUID
-        var name: String
+        var id: UUID = UUID()
+        var name: String = ""
         
-        @Relationship(deleteRule: .cascade)
-        var arrangedExercises = [ArrangedExercise]()
+        @Relationship(deleteRule: .cascade, inverse: \ArrangedExercise.plan)
+        var arrangedExercises: [ArrangedExercise]?
         
-        var startDate: Date
+        var startDate: Date = Date.now
         var endDate: Date?
-        var repeats: [Int]
-        var duration: TimeInterval
-        var updatedDate: Date
-        var createdDate: Date
-        var tags: [String]
-        var isPreset: Bool
+        var repeats: [Int] = []
+        var duration: TimeInterval = 0
+        var updatedDate: Date = Date.now
+        var createdDate: Date = Date.now
+        var tags: [String] = []
+        var isPreset: Bool = false
         
-        @Relationship(deleteRule: .cascade)
+        @Relationship(deleteRule: .cascade, inverse: \TrainingLog.plan)
         var trainingLog: TrainingLog?
         
         init(id: UUID = UUID(),
@@ -65,29 +65,36 @@ extension TightSchemaV1 {
             self.tags = tags
             self.isPreset = isPreset
         }
+        
+        func alleExercises() -> [ArrangedExercise] {
+            return arrangedExercises?.sorted(by: { $0.order < $1.order }) ?? []
+        }
     }
     
     @Model
     class ArrangedExercise {
-        @Attribute(.unique) var id: UUID
-        var exercise: Exercise
-        var repetitions: Double
+        var id: UUID = UUID()
+        var exercise: Exercise = Exercise.none
+        var repetitions: Double = 0
         
         /// Deprecated
-        var sets: Double
+        var sets: Double = 0
         
-        @Relationship(deleteRule: .cascade)
-        var customSets = [Set]()
+        @Relationship(deleteRule: .cascade, inverse: \Set.arrangedExercise)
+        var customSets: [Set]?
         
-        var weight: Double
+        var weight: Double = 0
         var weightUnit: Int = 0
-        var durationOfSet: TimeInterval
-        var restIntevals: TimeInterval
-        var order: Int
-        var tags: [Int]
-        var isCompleted: Bool
+        var durationOfSet: TimeInterval = 0
+        var restIntevals: TimeInterval = 0
+        var order: Int = 0
+        var tags: [Int] = []
+        var isCompleted: Bool = false
         var startTime: Date?
         var endTime: Date?
+        
+        /// Inverse
+        var plan: Plan?
         
         init(id: UUID = UUID(),
              exercise: Exercise,
@@ -120,14 +127,17 @@ extension TightSchemaV1 {
     
     @Model
     class Set {
-        @Attribute(.unique) var id: UUID
-        var weight: Double
-        var weightUnit: Int
-        var repetitions: Double
-        var isCompleted: Bool
+        var id: UUID = UUID()
+        var weight: Double = 0
+        var weightUnit: Int = 0
+        var repetitions: Double = 0
+        var isCompleted: Bool = false
         var startTime: Date?
         var endTime: Date?
-        var createdTime: Date
+        var createdTime: Date = Date.now
+        
+        /// Inverse
+        var arrangedExercise: ArrangedExercise?
         
         init(id: UUID = UUID(),
              weight: Double,
@@ -150,13 +160,13 @@ extension TightSchemaV1 {
 
     @Model
     class Tag {
-        @Attribute(.unique) var id: UUID
-        var name: String
-        var colourR: Double
-        var colourG: Double
-        var colourB: Double
-        var colourA: Double
-        var isInitial: Bool
+        var id: UUID = UUID()
+        var name: String = ""
+        var colourR: Double = 0
+        var colourG: Double = 0
+        var colourB: Double = 0
+        var colourA: Double = 0
+        var isInitial: Bool = false
         
         init(id: UUID = UUID(),
              name: String,
@@ -177,12 +187,15 @@ extension TightSchemaV1 {
     
     @Model
     class TrainingLog {
-        @Attribute(.unique) var id: UUID
+        var id: UUID = UUID()
         var startTime: Date?
         var endTime: Date?
         
-        @Relationship(deleteRule: .cascade)
-        var restTimeFrames = [RestTimeFrame]()
+        /// Inverse
+        var plan: Plan?
+        
+        @Relationship(deleteRule: .cascade, inverse: \RestTimeFrame.trainingLog)
+        var restTimeFrames: [RestTimeFrame]?
         
         init(id: UUID = UUID(),
              startTime: Date? = nil,
@@ -195,9 +208,12 @@ extension TightSchemaV1 {
     
     @Model
     class RestTimeFrame {
-        @Attribute(.unique) var id: UUID
+        var id: UUID = UUID()
         var startTime: Date?
         var endTime: Date?
+        
+        /// Inverse
+        var trainingLog: TrainingLog?
         
         init(id: UUID = UUID(),
              startTime: Date? = nil,

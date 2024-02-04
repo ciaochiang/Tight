@@ -81,27 +81,32 @@ struct TrainingSessionDailyReportView: View {
             self.duration = 0
         }
         
+        guard let trainingLog = plan.trainingLog else {
+            self.restIntervals = 0
+            return
+        }
+        
         /// Setup rest intervals
-        if let trainingLog = plan.trainingLog {
-            var intervals: [TimeInterval] = []
-            for timeFrame in trainingLog.restTimeFrames {
+        var intervals: [TimeInterval] = []
+        if let restFrames = trainingLog.restTimeFrames {
+            for timeFrame in restFrames {
                 if let startTime = timeFrame.startTime, let endTime = timeFrame.endTime {
                     let interval = endTime.timeIntervalSince(startTime)
                     intervals.append(interval)
                 }
-                
             }
-            let totalTimeInterval = intervals.reduce(0, +)
-            self.restIntervals = totalTimeInterval
-        } else {
-            self.restIntervals = 0
         }
+
+        let totalTimeInterval = intervals.reduce(0, +)
+        self.restIntervals = totalTimeInterval
     }
     
     func calculateVolumeMetric(plan: Plan) {
+        guard let exercises = plan.arrangedExercises else { return }
+        
         /// Calculate total volume, use kg as base
         var volumes: Measurement<UnitMass> = Measurement(value: 0, unit: UnitMass.kilograms)
-        for exercise in plan.arrangedExercises {
+        for exercise in exercises {
             guard exercise.isCompleted else { continue }
             
             /// 0 is kilogram, 1 is pound
@@ -110,7 +115,7 @@ struct TrainingSessionDailyReportView: View {
             let measurmentValue = Measurement(value: volume, unit: unit)
             volumes = volumes + measurmentValue
         }
-
+        
         totalVolume = volumes
     }
 }
