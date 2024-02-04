@@ -17,7 +17,7 @@ typealias RestTimeFrame = TightSchemaV1.RestTimeFrame
 
 enum TightSchemaV1: VersionedSchema {
     static var models: [any PersistentModel.Type] {
-        [Plan.self, ArrangedExercise.self, Tag.self]
+        [Plan.self, ArrangedExercise.self, Set.self, Tag.self, TrainingLog.self, RestTimeFrame.self]
     }
     
     static var versionIdentifier: Schema.Version = .init(1, 0, 0)
@@ -72,7 +72,13 @@ extension TightSchemaV1 {
         @Attribute(.unique) var id: UUID
         var exercise: Exercise
         var repetitions: Double
+        
+        /// Deprecated
         var sets: Double
+        
+        @Relationship(deleteRule: .cascade)
+        var customSets = [Set]()
+        
         var weight: Double
         var weightUnit: Int = 0
         var durationOfSet: TimeInterval
@@ -109,6 +115,36 @@ extension TightSchemaV1 {
             self.isCompleted = isCompleted
             self.startTime = startTime
             self.endTime = endTime
+        }
+    }
+    
+    @Model
+    class Set {
+        @Attribute(.unique) var id: UUID
+        var weight: Double
+        var weightUnit: Int
+        var repetitions: Double
+        var isCompleted: Bool
+        var startTime: Date?
+        var endTime: Date?
+        var createdTime: Date
+        
+        init(id: UUID = UUID(),
+             weight: Double,
+             weightUnit: Int,
+             repetitions: Double,
+             isCompleted: Bool,
+             startTime: Date? = nil,
+             endTime: Date? = nil, 
+             createdTime: Date = .now) {
+            self.id = id
+            self.weight = weight
+            self.weightUnit = weightUnit
+            self.repetitions = repetitions
+            self.isCompleted = isCompleted
+            self.startTime = startTime
+            self.endTime = endTime
+            self.createdTime = createdTime
         }
     }
 

@@ -20,7 +20,7 @@ enum TightMigrationPlan: SchemaMigrationPlan {
     
     static var stages: [MigrationStage] {
         []
-    }    
+    }
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
