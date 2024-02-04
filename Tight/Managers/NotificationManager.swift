@@ -10,7 +10,7 @@ import UserNotifications
 
 class NotificationManager: ObservableObject {
     @Published var isGranted: Bool = false
-    @EnvironmentObject private var logger: CustomLogger
+    private var logger = CustomLogger()
   
     func requestNotificationAuthorization(completion: @escaping (Bool) -> ()) {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in

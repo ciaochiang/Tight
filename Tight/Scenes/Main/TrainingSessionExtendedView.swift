@@ -112,6 +112,7 @@ struct TrainingSessionExtendedView: View {
         ProgressView(value: progress)
             .progressViewStyle(.linear)
             .background(Color.white.opacity(0.7))
+            .cornerRadius(2.0)
             .animation(.easeInOut, value: progress)
     }
     
