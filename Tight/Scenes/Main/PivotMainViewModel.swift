@@ -28,7 +28,7 @@ class PivotMainViewModel: ObservableObject {
     }
     
     func determineDailySummaryVisibility() {
-        showDailySummary = currentPlan.trainingLog != nil || currentPlan.arrangedExercises.contains(where: { $0.isCompleted })
+        showDailySummary = currentPlan.trainingLog != nil || currentPlan.alleExercises().contains(where: { $0.isCompleted })
     }
 }
 
@@ -143,13 +143,14 @@ extension PivotMainViewModel {
 // MARK: Exercise
 extension PivotMainViewModel {
     func deleteExercise(exercise: ArrangedExercise) {
-        if let index = currentPlan.arrangedExercises.firstIndex(where: { $0 == exercise }) {
-            currentPlan.arrangedExercises.remove(at: index)
+        if let index = currentPlan.arrangedExercises?.firstIndex(where: { $0 == exercise }) {
+            currentPlan.arrangedExercises?.remove(at: index)
             context.delete(exercise)
         }
         
         // Update the order numbers of all exercises in the updated array
-        for (index, exercise) in currentPlan.arrangedExercises.sorted(by: { $0.order < $1.order }).enumerated() {
+        let sortedExercises = currentPlan.alleExercises()
+        for (index, exercise) in sortedExercises.enumerated() {
             exercise.order = index
         }
     }
@@ -157,7 +158,7 @@ extension PivotMainViewModel {
     /// Import exercises from plan
     func importExercises(from plan: Plan) {
         var newExercises: [ArrangedExercise] = []
-        for exercise in plan.arrangedExercises {
+        for exercise in plan.arrangedExercises ?? [] {
             let newExercise = ArrangedExercise(exercise: exercise.exercise,
                                                repetitions: exercise.repetitions,
                                                sets: exercise.sets,
@@ -178,13 +179,13 @@ extension PivotMainViewModel {
 // MARK: - Sorting
 extension PivotMainViewModel {
     func incrementOrderNumber() -> Int {
-        return currentPlan.arrangedExercises.count
+        return currentPlan.alleExercises().count
     }
     
     func updateOrderNumbers(from indexSet: IndexSet, to offset: Int) {
         guard let itemIndex = indexSet.first else { return }
             
-        var exercises = currentPlan.arrangedExercises.sorted(by: { $0.order < $1.order })
+        var exercises = currentPlan.alleExercises()
                 
         // Ensure that the provided offset is within a valid range
         if offset < 0 || offset > exercises.count {
@@ -195,12 +196,7 @@ extension PivotMainViewModel {
         let movedExercise = exercises.remove(at: itemIndex)
         
         // Insert the moved item at the new position (offset)
-        
-        if offset > itemIndex  {
-            exercises.insert(movedExercise, at: offset - 1)
-        } else {
-            exercises.insert(movedExercise, at: offset)
-        }
+        exercises.insert(movedExercise, at: offset > itemIndex ? offset - 1 : offset)
         
         // Update the order numbers of all exercises in the updated array
         for (index, exercise) in exercises.enumerated() {

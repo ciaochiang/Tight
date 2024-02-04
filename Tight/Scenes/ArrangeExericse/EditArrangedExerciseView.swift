@@ -51,7 +51,7 @@ struct EditArrangedExerciseView: View {
                             dismiss()
                         }) {
                             Label(LocalizationProvider.complete.nameKey, systemImage: "checkmark.circle.fill")
-                                .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
+                                .foregroundStyle(Color.white)
                                 .frame(maxWidth: .infinity)
                                 .fontWeight(.semibold)
                                 .contentShape(Rectangle())

@@ -1488,6 +1488,8 @@
 				INFOPLIST_FILE = Tight/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Tight;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to your health data to provide you with personalized health insights and services.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We need permission to update your health data to track your progress and improve your health outcomes.";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1532,6 +1534,8 @@
 				INFOPLIST_FILE = Tight/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Tight;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to your health data to provide you with personalized health insights and services.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We need permission to update your health data to track your progress and improve your health outcomes.";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

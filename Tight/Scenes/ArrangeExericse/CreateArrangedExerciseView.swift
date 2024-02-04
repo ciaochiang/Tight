@@ -124,7 +124,7 @@ struct CreateArrangedExerciseView: View {
         VStack {
             Button(action: {
                 /// Save arranged exercise
-                plan.arrangedExercises.append(arrangedExercise)
+                plan.arrangedExercises?.append(arrangedExercise)
                 completion?(arrangedExercise)
                 dismiss()
             }) {
@@ -143,7 +143,7 @@ struct CreateArrangedExerciseView: View {
     }
     
     func addExercise(_ arrangedExercise: ArrangedExercise) {
-        plan.arrangedExercises.append(arrangedExercise)
+        plan.arrangedExercises?.append(arrangedExercise)
 
         /// Analytics
         AnalyticsHelper.logEvent(eventName: "create_arranged_exercise", parameters: [

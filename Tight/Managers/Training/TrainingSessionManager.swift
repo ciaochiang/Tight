@@ -130,7 +130,7 @@ class TrainingSessionManager: NSObject, ObservableObject {
         /// Set `endTime` to current rest time frame and save to `trainingLog`
         if let restTimeFrame = currentRestTimeFrame, let trainingLog = plan?.trainingLog {
             restTimeFrame.endTime = currentTime
-            trainingLog.restTimeFrames.append(restTimeFrame)
+            trainingLog.restTimeFrames?.append(restTimeFrame)
         }
         
         /// Reset rest time

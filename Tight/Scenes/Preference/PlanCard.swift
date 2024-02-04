@@ -48,7 +48,8 @@ struct PlanCard: View {
     @ViewBuilder
     func PlanDetailsView() -> some View {
         HStack(alignment: .center, spacing: 16) {
-            Label("\(Int(plan.arrangedExercises.count))", systemImage: "list.dash")
+            let count = plan.alleExercises().count
+            Label("\(Int(count))", systemImage: "list.dash")
                 .font(.caption)
                 .foregroundColor(Color.themeStyle.theme.primaryTextColor)
         }
