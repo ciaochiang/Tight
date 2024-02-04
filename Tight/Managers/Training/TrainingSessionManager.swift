@@ -212,16 +212,23 @@ class TrainingSessionManager: NSObject, ObservableObject {
             onRestTimeEnd(currentTime: Date.now, plan: plan, restTimeFrame: restTimeFrame)
         }
         
-        DispatchQueue.main.async {
-            self.content.restStartTime = nil
-            self.content.restInterval = 0
-            self.content.state = .training
-            
-            /// Update live activity
-            self.onUpdateLiveActivity()
-            
-            /// Update Watch
-            self.onUpdateWatch()
+        var newContent = content
+        newContent.restStartTime = nil
+        newContent.restInterval = 0
+        newContent.state = .resting
+        
+        /// Update Watch
+        onUpdateWatch(content: newContent)
+        
+        operationQueue.addOperation {
+            DispatchQueue.main.async {
+                self.content.restStartTime = nil
+                self.content.restInterval = 0
+                self.content.state = .training
+                
+                /// Update live activity
+                self.onUpdateLiveActivity()
+            }
         }
     }
     
@@ -253,7 +260,7 @@ class TrainingSessionManager: NSObject, ObservableObject {
                 self.content.restInterval = newRestInterval
                 
                 /// Update Live Activity
-                self.onUpdateLiveActivity(content: self.content)
+                self.onUpdateLiveActivity()
             }
         }
     }
