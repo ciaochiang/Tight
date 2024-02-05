@@ -59,6 +59,28 @@ extension Date {
         return (start: startDate, end: endDate)
     }
     
+    var startOfMonth: Date {
+        let calendar = Calendar.current
+
+        // Get the start date of the current month
+        if let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: self)) {
+            return startOfMonth
+        } else {
+            return .now
+        }
+    }
+    
+    var endOfMonth: Date {
+        let calendar = Calendar.current
+                
+        // Get the end date of the current month
+        if let endOfMonth = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startOfMonth) {
+            return endOfMonth
+        }
+        
+        return .now
+    }
+    
     func format(_ format: String) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format

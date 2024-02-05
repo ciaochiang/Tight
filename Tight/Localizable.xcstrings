@@ -321,6 +321,22 @@
         }
       }
     },
+    "common_key_insight" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insight"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "分析"
+          }
+        }
+      }
+    },
     "common_key_new_plan" : {
       "localizations" : {
         "en" : {
@@ -595,6 +611,9 @@
           }
         }
       }
+    },
+    "Day" : {
+
     },
     "Exercise ID" : {
 
@@ -2340,6 +2359,12 @@
           }
         }
       }
+    },
+    "Weight" : {
+
+    },
+    "WeightLow" : {
+
     }
   },
   "version" : "1.0"
