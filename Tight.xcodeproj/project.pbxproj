@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C93154602B71ED6400018271 /* InsightHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C931545F2B71ED6400018271 /* InsightHomeViewModel.swift */; };
 		C93E94102B6CF2C100693DF8 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C93E940F2B6CF2C100693DF8 /* FirebaseCrashlytics */; };
+		C93E94132B70D6C100693DF8 /* InsightHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93E94122B70D6C100693DF8 /* InsightHomeView.swift */; };
+		C93E94152B70D88900693DF8 /* InsightManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93E94142B70D88900693DF8 /* InsightManager.swift */; };
+		C93E94172B70DCFC00693DF8 /* PersistentStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93E94162B70DCFC00693DF8 /* PersistentStoreManager.swift */; };
+		C93E94192B70DFAD00693DF8 /* InsightChartCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93E94182B70DFAD00693DF8 /* InsightChartCardView.swift */; };
 		C9C1F3362B6B624500141ECC /* TrainingSessionManager+TraningLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C1F3352B6B624500141ECC /* TrainingSessionManager+TraningLog.swift */; };
 		C9C1F3392B6B626B00141ECC /* TrainingSessionManager+RestTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C1F3382B6B626B00141ECC /* TrainingSessionManager+RestTime.swift */; };
 		C9C1F33B2B6B74EF00141ECC /* TightSchemaV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = E509EA1B2B3EA53A0025E76C /* TightSchemaV1.swift */; };
@@ -192,6 +197,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C931545F2B71ED6400018271 /* InsightHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightHomeViewModel.swift; sourceTree = "<group>"; };
+		C93E94122B70D6C100693DF8 /* InsightHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightHomeView.swift; sourceTree = "<group>"; };
+		C93E94142B70D88900693DF8 /* InsightManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightManager.swift; sourceTree = "<group>"; };
+		C93E94162B70DCFC00693DF8 /* PersistentStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentStoreManager.swift; sourceTree = "<group>"; };
+		C93E94182B70DFAD00693DF8 /* InsightChartCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightChartCardView.swift; sourceTree = "<group>"; };
 		C9C1F3352B6B624500141ECC /* TrainingSessionManager+TraningLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TrainingSessionManager+TraningLog.swift"; sourceTree = "<group>"; };
 		C9C1F3382B6B626B00141ECC /* TrainingSessionManager+RestTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TrainingSessionManager+RestTime.swift"; sourceTree = "<group>"; };
 		C9C1F33D2B6B76F700141ECC /* TrainingSessionContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionContent.swift; sourceTree = "<group>"; };
@@ -347,6 +357,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C93E94112B70D6A600693DF8 /* Insight */ = {
+			isa = PBXGroup;
+			children = (
+				C93E94122B70D6C100693DF8 /* InsightHomeView.swift */,
+				C931545F2B71ED6400018271 /* InsightHomeViewModel.swift */,
+				C93E94182B70DFAD00693DF8 /* InsightChartCardView.swift */,
+			);
+			path = Insight;
+			sourceTree = "<group>";
+		};
 		C9C1F3412B6CB51000141ECC /* Training */ = {
 			isa = PBXGroup;
 			children = (
@@ -532,6 +552,8 @@
 				E5B700C02B40105E0080442D /* LocalizationProvider.swift */,
 				E57FD78F2B3DB04400696968 /* NotificationManager.swift */,
 				E57FD7762B3DAE3B00696968 /* ExperiementsProvider.swift */,
+				C93E94142B70D88900693DF8 /* InsightManager.swift */,
+				C93E94162B70DCFC00693DF8 /* PersistentStoreManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -550,6 +572,7 @@
 		E57FD77F2B3DAE5B00696968 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				C93E94112B70D6A600693DF8 /* Insight */,
 				E57FD7CA2B3DC6AA00696968 /* Launch */,
 				E57FD7B52B3DB1AE00696968 /* ArrangeExericse */,
 				E57FD7A42B3DB17600696968 /* Preference */,
@@ -1048,6 +1071,7 @@
 				E5C1C6B82B4A5F3F0081B3EF /* TrainingSessionLiveActivity.swift in Sources */,
 				E553B9D62B53ED2600BA0C61 /* TrainingSessionDailyReportView.swift in Sources */,
 				E57FD7AD2B3DB18C00696968 /* TagLayout.swift in Sources */,
+				C93E94132B70D6C100693DF8 /* InsightHomeView.swift in Sources */,
 				E59B08FD2B4292A900280FC4 /* ExerciseWeightViewComponent.swift in Sources */,
 				E5E8111E2B67E293005DB9A7 /* TrainingSessionAttributes.swift in Sources */,
 				E562D6FB2B3DA34E000775B7 /* TightApp.swift in Sources */,
@@ -1057,21 +1081,25 @@
 				E57FD7C22B3DB1E500696968 /* ExerciseSetsSliderViewComponent.swift in Sources */,
 				E57FD7852B3DAF7D00696968 /* Exercise.swift in Sources */,
 				E57FD7982B3DB0ED00696968 /* TabBarItemType.swift in Sources */,
+				C93E94192B70DFAD00693DF8 /* InsightChartCardView.swift in Sources */,
 				E57FD7C42B3DB1E500696968 /* ExercisePickerView.swift in Sources */,
 				E504A4502B6BDB2A00AD3CEA /* TraningSessionLiveActivityIntents.swift in Sources */,
 				E57FD7C02B3DB1E500696968 /* ExerciseRepetitionSliderViewComponent.swift in Sources */,
 				E57FD7732B3DAE0400696968 /* MockLocations.swift in Sources */,
+				C93E94172B70DCFC00693DF8 /* PersistentStoreManager.swift in Sources */,
 				E57FD7B22B3DB18C00696968 /* EditPlanPresetView.swift in Sources */,
 				E57FD7B42B3DB18C00696968 /* EditPlanView.swift in Sources */,
 				E57FD7C12B3DB1E500696968 /* ExerciseSelectorViewComponent.swift in Sources */,
 				E57FD7A02B3DB13F00696968 /* View+Extension.swift in Sources */,
 				E57FD7B32B3DB18C00696968 /* CreatePlanView.swift in Sources */,
 				E5E811202B67E698005DB9A7 /* TTWCSession.swift in Sources */,
+				C93154602B71ED6400018271 /* InsightHomeViewModel.swift in Sources */,
 				E57FD7752B3DAE0400696968 /* PreviewContainer.swift in Sources */,
 				E5B700C12B40105E0080442D /* LocalizationProvider.swift in Sources */,
 				C9C1F3392B6B626B00141ECC /* TrainingSessionManager+RestTime.swift in Sources */,
 				C9C1F33E2B6B76F700141ECC /* TrainingSessionContent.swift in Sources */,
 				E57FD7722B3DAE0400696968 /* Mocks.swift in Sources */,
+				C93E94152B70D88900693DF8 /* InsightManager.swift in Sources */,
 				E57FD7B12B3DB18C00696968 /* PlanCard.swift in Sources */,
 				E5345B8F2B694BF300852E2F /* TrainingSessionManager+Watch.swift in Sources */,
 				E57FD79F2B3DB13F00696968 /* TimeInterval+Extension.swift in Sources */,
