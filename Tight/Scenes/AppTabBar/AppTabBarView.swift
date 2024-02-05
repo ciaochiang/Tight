@@ -22,6 +22,10 @@ struct AppTabBarView: View {
                 Label(LocalizationProvider.plan.nameKey, systemImage: TabBarItemType.plan.iconName)
             }
             
+            InsightHomeView().tabItem {
+                Label(LocalizationProvider.insight.nameKey, systemImage: TabBarItemType.insight.iconName)
+            }
+                        
             /// Create PreferenceViews
             PreferenceView().tabItem {
                 Label(LocalizationProvider.settings.nameKey, systemImage: TabBarItemType.setting.iconName)
@@ -40,5 +44,9 @@ struct AppTabBarView: View {
 
 #Preview {
     let previewContainer = PreviewContainer([ArrangedExercise.self, Plan.self])
-    return AppTabBarView().modelContainer(previewContainer.container)
+    return AppTabBarView()
+        .modelContainer(previewContainer.container)
+        .environmentObject(ExperiementsProvider())
+        .environmentObject(TrainingSessionManager())
+        .environmentObject(Mocks.logger)
 }

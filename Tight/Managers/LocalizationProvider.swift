@@ -15,6 +15,7 @@ enum LocalizationProvider {
     /// Common
     case tags
     case exercise
+    case insight
     case settings
     case favorites
     case noFavorites
@@ -117,6 +118,7 @@ enum LocalizationProvider {
         /// Common
         case .tags: return "common_key_tags"
         case .exercise: return "common_key_exercise"
+        case .insight: return "common_key_insight"
         case .settings: return "common_key_settings"
         case .favorites: return "common_key_favorites"
         case .noFavorites: return "common_key_no_favorites"
