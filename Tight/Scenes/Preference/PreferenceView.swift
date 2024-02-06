@@ -20,16 +20,24 @@ struct PreferenceView: View {
         NavigationStack(path: $path) {
             VStack {
                 List {
-                    Section(LocalizationProvider.exercise.nameKey) {
-                        FavoriteExeriesView()
-                        PlanManagementItem()
+                    Section("") {
+                        Group {
+                            FavoriteExeriesView()
+                            PlanManagementItem()
+                        }
                     }
                     
-                    Section(LocalizationProvider.preferences.nameKey) {
-                        WeightUnitItem()
-                        RepetitionsSliderItem().padding(.top, 8)
-                        SetsSliderItem().padding(.top, 8)
-                        RestIntervalSliderItem().padding(.top, 8)
+                    Section {
+                        Group {
+                            WeightUnitItem()
+                            RepetitionsSliderItem().padding(.top, 8)
+                            SetsSliderItem().padding(.top, 8)
+                            RestIntervalSliderItem().padding(.top, 8)
+                        }
+                    }
+                    
+                    Section {
+                        LanguageView()
                     }
                 }
                 .listStyle(DefaultListStyle())
@@ -43,31 +51,27 @@ struct PreferenceView: View {
     
     @ViewBuilder
     func FavoriteExeriesView() -> some View {
-        HStack {
-            NavigationLink(destination: ExercisePickerView(title: LocalizationProvider.favorites.nameKey, isManaging: true, callback: nil)) {
-                Text(LocalizationProvider.favorites.nameKey)
-                    .font(.subheadline)
-                    .frame(height: Constants.DEFAULT_LIST_ROW_HEIGHT)
-                    .contentShape(Rectangle())
-            }
-            .id(UUID()) /// Bug: https://forums.developer.apple.com/forums/thread/720096
-            .frame(maxWidth: .infinity, alignment: .leading)
+        NavigationLink(destination: ExercisePickerView(title: LocalizationProvider.favorites.nameKey, isManaging: true, callback: nil)) {
+            Text(LocalizationProvider.favorites.nameKey)
+                .font(.subheadline)
+                .frame(height: Constants.DEFAULT_LIST_ROW_HEIGHT)
+                .contentShape(Rectangle())
         }
+        .id(UUID()) /// Bug: https://forums.developer.apple.com/forums/thread/720096
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     @ViewBuilder
     func PlanManagementItem() -> some View {
-        HStack {
-            NavigationLink(destination: PlanManagementView()) {
-                Text(LocalizationProvider.plans.nameKey)
-                    .font(.subheadline)
-                    .frame(height: Constants.DEFAULT_LIST_ROW_HEIGHT)
-                    .contentShape(Rectangle())
+        NavigationLink(destination: PlanManagementView()) {
+            Text(LocalizationProvider.plans.nameKey)
+                .font(.subheadline)
+                .frame(height: Constants.DEFAULT_LIST_ROW_HEIGHT)
+                .contentShape(Rectangle())
 
-            }
-            .id(UUID()) /// Bug: https://forums.developer.apple.com/forums/thread/720096
-            .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .id(UUID()) /// Bug: https://forums.developer.apple.com/forums/thread/720096
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     @ViewBuilder
@@ -130,7 +134,7 @@ struct PreferenceView: View {
     func RestIntervalSliderItem() -> some View {
         VStack(spacing: 8) {
             HStack {
-                Text(LocalizationProvider.restIntervals.nameKey)
+                Text(LocalizationProvider.restInterval.nameKey)
                     .font(.subheadline)
                 Spacer()
                 Text(defaultRestIntervals.formatIntervalToMinutesSeconds)
@@ -140,6 +144,24 @@ struct PreferenceView: View {
                 .horizontalSpacing(.leading)
             Slider(value: $defaultRestIntervals, in: 0...180, step: 10.0)
                 .accentColor(Color.themeStyle.theme.accent)
+        }
+    }
+    
+    @ViewBuilder
+    func LanguageView() -> some View {
+        HStack {
+            Text(LocalizationProvider.language.nameKey)
+                .font(.subheadline)
+            Spacer()
+//            Text(Locale.preferredLanguages.first ?? "en")
+//                .font(.subheadline)
+//                .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
+        }
+        .frame(height: Constants.DEFAULT_LIST_ROW_HEIGHT)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else { return }
+            UIApplication.shared.open(settingsURL)
         }
     }
 }

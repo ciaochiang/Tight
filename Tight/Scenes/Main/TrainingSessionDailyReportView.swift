@@ -23,7 +23,7 @@ struct TrainingSessionDailyReportView: View {
                     .padding(.vertical)
                     .horizontalSpacing(.center)
                 
-                MetricWidget(value: restIntervals.formatIntervalToMinutesSeconds, name: LocalizationProvider.restIntervals.nameKey)
+                MetricWidget(value: restIntervals.formatIntervalToMinutesSeconds, name: LocalizationProvider.restInterval.nameKey)
                     .horizontalSpacing(.center)
                 
                 MetricWidget(value: "\(totalVolume.formmatedWeightValue(weightUnit: weightUnit))", name: LocalizationProvider.volume.nameKey)

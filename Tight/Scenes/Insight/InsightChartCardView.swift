@@ -10,12 +10,12 @@ import Charts
 
 struct InsightChartCardView: View {
     private var plans: [Plan] = []
-    private var execicse: Exercise = .none
+    private var exercise: Exercise = .none
     @AppStorage(Constants.DEFAULT_EXERCISE_WEIGHT_UNIT) private var defaultWeightUnit: Int = 0
     @State var dataSet: [InsightData] = []
     
     init(execicse: Exercise = .benchPress, plans: [Plan] = []) {
-        self.execicse = execicse
+        self.exercise = execicse
         self.plans = plans
     }
     
@@ -23,7 +23,7 @@ struct InsightChartCardView: View {
         LazyVStack {
             LazyVStack {
                 VStack {
-                    Text(execicse.name)
+                    Text(exercise.name)
                         .font(.headline)
                         .fontWeight(.semibold)
                         .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
@@ -38,6 +38,8 @@ struct InsightChartCardView: View {
                     )
                     .lineStyle(.init(lineWidth: 3, lineCap: .round))
                     .interpolationMethod(.linear)
+                    .accessibilityLabel(exercise.name)
+                    .accessibilityValue("\($0.weight) \(WeightUnit(value: defaultWeightUnit).name)")
                     .symbol {
                         Circle()
                             .fill(Color.themeStyle.theme.accent)
@@ -60,7 +62,7 @@ struct InsightChartCardView: View {
                     AxisMarks(preset: .aligned, position: .trailing)
                 }
                 .chartPlotStyle{plotArea in
-                    plotArea.frame(maxWidth: .infinity, minHeight: 40, maxHeight: 60)
+                    plotArea.frame(maxWidth: .infinity, minHeight: 60, maxHeight: 80)
                 }
                 .foregroundStyle(Color.themeStyle.theme.accent)
                 .padding(.horizontal)
@@ -72,7 +74,7 @@ struct InsightChartCardView: View {
         .cornerRadius(16.0)
         .onAppear {
             DispatchQueue.global().async {
-                let processedDataSet = self.processData(exercise: execicse, plans: plans)
+                let processedDataSet = self.processData(exercise: exercise, plans: plans)
                 DispatchQueue.main.async {
                     withAnimation {
                         self.dataSet = processedDataSet

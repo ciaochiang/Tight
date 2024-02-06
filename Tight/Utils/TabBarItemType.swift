@@ -9,21 +9,13 @@ import SwiftUI
 
 enum TabBarItemType: Hashable {
     case plan
-    case insight
+    case trend
     case setting
     
     var iconName: String {
         switch self {
-        case .plan: return "checklist"
-        case .insight: return "chart.bar"
-        case .setting: return "gear"
-        }
-    }
-    
-    var selectedIconName: String {
-        switch self {
-        case .plan: return "house.fill"
-        case .insight: return "chart.bar.fill"
+        case .plan: return "list.dash"
+        case .trend: return "chart.line.uptrend.xyaxis"
         case .setting: return "gear"
         }
     }
@@ -31,7 +23,7 @@ enum TabBarItemType: Hashable {
     var title: String {
         switch self {
         case .plan: return "Checklist"
-        case .insight: return "Insight"
+        case .trend: return "Insight"
         case .setting: return "gear"
         }
     }

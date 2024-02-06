@@ -33,6 +33,7 @@ enum LocalizationProvider {
     case duration
     case platform
     case equipment
+    case language
     
     /// Onboarding
     case onboardingWelcomeDescription
@@ -65,7 +66,7 @@ enum LocalizationProvider {
     ///  Exericse Glossary
     case sets
     case repetitions
-    case restIntervals
+    case restInterval
     case weight
     case weightUnit
     
@@ -136,6 +137,7 @@ enum LocalizationProvider {
         case .duration: return "common_key_duration"
         case .platform: return "common_key_platform"
         case .equipment: return "common_key_equipment"
+        case .language: return "common_key_language"
             
             
         /// Onboarding
@@ -169,7 +171,7 @@ enum LocalizationProvider {
         /// Exercise Glossary
         case .sets: return "exercise_glossary_sets"
         case .repetitions: return "exercise_glossary_repetitions"
-        case .restIntervals: return "exercise_glossary_rest_intervals"
+        case .restInterval: return "exercise_glossary_rest_interval"
         case .weight: return "exercise_glossary_weight"
         case .weightUnit: return "exercise_glossary_weight_unit"
             
