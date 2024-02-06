@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ExercisePickerView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var context
     
     let title: LocalizedStringKey
     var isManaging: Bool = false

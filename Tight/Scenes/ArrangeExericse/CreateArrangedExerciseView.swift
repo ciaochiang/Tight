@@ -59,14 +59,17 @@ struct CreateArrangedExerciseView: View {
                         ExerciseRepetitionSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
                         ExerciseSetsSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
                         ExerciseRestIntervalSliderViewComponent(arrangedExercise: arrangedExercise).horizontalSpacing(.leading)
-                        ExerciseTagPickerViewComponent(title: LocalizationProvider.equipment.nameKey,
-                                                       tags: $equipmentTags,
-                                                       arrangedExercise: arrangedExercise)
-                            .horizontalSpacing(.leading)
-                        ExerciseTagPickerViewComponent(title: LocalizationProvider.platform.nameKey,
-                                                       tags: $platformTags,
-                                                       arrangedExercise: arrangedExercise)
-                            .horizontalSpacing(.leading)
+                        
+                        if arrangedExercise.exercise != .none {
+                            ExerciseTagPickerViewComponent(title: LocalizationProvider.equipment.nameKey,
+                                                           tags: $equipmentTags,
+                                                           arrangedExercise: arrangedExercise)
+                                .horizontalSpacing(.leading)
+                            ExerciseTagPickerViewComponent(title: LocalizationProvider.platform.nameKey,
+                                                           tags: $platformTags,
+                                                           arrangedExercise: arrangedExercise)
+                                .horizontalSpacing(.leading)
+                        }
                     }
                 }
                 .padding()

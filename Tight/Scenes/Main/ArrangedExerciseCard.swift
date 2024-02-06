@@ -97,13 +97,13 @@ struct ArrangedExerciseCard: View {
     func ExerciseNameView() -> some View {
         HStack {
             Rectangle()
-                .fill(exercise.isCompleted ? Color.themeStyle.theme.secondaryAccent : Color.themeStyle.theme.secondaryTextColor)
+                .fill(exercise.isCompleted ? Color.themeStyle.theme.accent : Color.themeStyle.theme.secondaryTextColor.opacity(0.7))
                 .frame(width: 3, height: 18)
                 .cornerRadius(2)
             Text(exercise.exercise.name)
                 .font(.headline)
                 .fontWeight(.semibold)
-                .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
+                .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
                 .opacity(isItemEditable ? 1.0 : 0.4)
         }
 

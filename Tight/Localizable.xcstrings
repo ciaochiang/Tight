@@ -14,6 +14,16 @@
         }
       }
     },
+    "%lf %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lf %2$@"
+          }
+        }
+      }
+    },
     "%lld" : {
 
     },
@@ -333,6 +343,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "分析"
+          }
+        }
+      }
+    },
+    "common_key_language" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Language"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "語言"
           }
         }
       }
@@ -698,12 +724,12 @@
         }
       }
     },
-    "exercise_glossary_rest_intervals" : {
+    "exercise_glossary_rest_interval" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rest Intervals"
+            "value" : "Rest Interval"
           }
         },
         "zh-Hant" : {

@@ -239,7 +239,7 @@ struct PivotMainView: View {
                     Text(LocalizationProvider.sectionDailySummary.nameKey)
                         .font(.title)
                         .fontWeight(.bold)
-                        .foregroundStyle(Color.themeStyle.theme.primary)
+                        .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
                         .horizontalSpacing(.leading)
                         .padding(.leading)
                 }
@@ -295,7 +295,7 @@ struct PivotMainView: View {
                 Text(LocalizationProvider.sectionExercises.nameKey)
                     .font(.title)
                     .fontWeight(.bold)
-                    .foregroundStyle(Color.themeStyle.theme.primary)
+                    .foregroundStyle(Color.themeStyle.theme.primaryTextColor)
                     .padding(.leading)
                     .horizontalSpacing(.leading)
             }

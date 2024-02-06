@@ -12,9 +12,11 @@ struct AppTabBarView: View {
     @Environment(\.modelContext) private var context: ModelContext
     @EnvironmentObject private var logger: CustomLogger
     @EnvironmentObject private var experimentsProvider: ExperiementsProvider
+    @State private var selection: Int = 0
+    
     
     var body: some View {
-        TabView {
+        TabView(selection: $selection) {
             /// Create pivot main view
             let today = Date().today
             let mainViewModel = PivotMainViewModel(context: context, currentDate: today)
@@ -23,7 +25,7 @@ struct AppTabBarView: View {
             }
             
             InsightHomeView().tabItem {
-                Label(LocalizationProvider.insight.nameKey, systemImage: TabBarItemType.insight.iconName)
+                Label(LocalizationProvider.insight.nameKey, systemImage: TabBarItemType.trend.iconName)
             }
                         
             /// Create PreferenceViews
