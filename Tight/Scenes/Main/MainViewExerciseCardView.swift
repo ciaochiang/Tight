@@ -1,5 +1,5 @@
 //
-//  ArrangedExerciseCard.swift
+//  MainViewExerciseCardView.swift
 //  Motic
 //
 //  Created by Ciao Chiang on 2023/12/24.
@@ -8,34 +8,39 @@
 import SwiftUI
 import SwiftData
 
-struct ArrangedExerciseCard: View {
+struct MainViewExerciseCardView: View {
     @Bindable var exercise: ArrangedExercise
     @Binding var isItemEditable: Bool
   
     var body: some View {
         /// Content
-        ExerciseView()
-            .horizontalSpacing(.leading)
-            .padding(.leading, 4)
-            .background(Color.themeStyle.theme.background)
-    }
-    
-    @ViewBuilder
-    func ExerciseView() -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            ExerciseNameView()
-            ExerciseDetailsView().horizontalSpacing(.leading)
+            ExerciseNameView(name: exercise.exercise.name, 
+                             isCompleted: exercise.isCompleted,
+                             isItemEditable: isItemEditable)
+            ExerciseDetailsView(weight: exercise.weight, 
+                                weightUnit: exercise.weightUnit,
+                                repetitions: exercise.repetitions,
+                                sets: exercise.sets,
+                                restInterval: exercise.restIntevals,
+                                isItemEditable: isItemEditable).horizontalSpacing(.leading)
             
             if !exercise.tags.isEmpty {
-                ExerciseTagsView().horizontalSpacing(.leading).padding(.top, 8)
+                ExerciseTagsView(tags: exercise.tags).horizontalSpacing(.leading).padding(.top, 8)
             }
         }
         .horizontalSpacing(.leading)
         .padding()
+        .background(Color.themeStyle.theme.background)
     }
     
     @ViewBuilder
-    func ExerciseDetailsView() -> some View {
+    func ExerciseDetailsView(weight: Double, 
+                             weightUnit: Int,
+                             repetitions: Double,
+                             sets: Double,
+                             restInterval: TimeInterval,
+                             isItemEditable: Bool) -> some View {
         HStack(alignment: .center, spacing: 16) {
             HStack {
                 Image(systemName: "figure.strengthtraining.traditional")
@@ -45,8 +50,8 @@ struct ArrangedExerciseCard: View {
                     .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
                     .opacity(isItemEditable ? 1.0 : 0.4)
                 
-                let weightUnit = WeightUnit(value: exercise.weightUnit)
-                Text("\(String(format: "%1.f", exercise.weight)) \(weightUnit.name)")
+                let weightUnit = WeightUnit(value: weightUnit)
+                Text("\(String(format: "%1.f", weight)) \(weightUnit.name)")
                     .font(.footnote)
                     .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
                     .opacity(isItemEditable ? 1.0 : 0.4)
@@ -59,7 +64,7 @@ struct ArrangedExerciseCard: View {
                     .frame(height: 12)
                     .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
                     .opacity(isItemEditable ? 1.0 : 0.4)
-                Text("\(Int(exercise.repetitions))")
+                Text("\(Int(repetitions))")
                     .font(.footnote)
                     .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
                     .opacity(isItemEditable ? 1.0 : 0.4)
@@ -72,7 +77,7 @@ struct ArrangedExerciseCard: View {
                     .frame(height: 18)
                     .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
                     .opacity(isItemEditable ? 1.0 : 0.4)
-                Text("\(Int(exercise.sets))")
+                Text("\(Int(sets))")
                     .font(.footnote)
                     .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
                     .opacity(isItemEditable ? 1.0 : 0.4)
@@ -85,7 +90,7 @@ struct ArrangedExerciseCard: View {
                     .frame(height: 14)
                     .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
                     .opacity(isItemEditable ? 1.0 : 0.4)
-                Text(exercise.restIntevals.formatIntervalToMinutesSeconds)
+                Text(restInterval.formatIntervalToMinutesSeconds)
                     .font(.footnote)
                     .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
                     .opacity(isItemEditable ? 1.0 : 0.4)
@@ -94,25 +99,24 @@ struct ArrangedExerciseCard: View {
     }
     
     @ViewBuilder
-    func ExerciseNameView() -> some View {
+    func ExerciseNameView(name: String, isCompleted: Bool, isItemEditable: Bool) -> some View {
         HStack {
             Rectangle()
-                .fill(exercise.isCompleted ? Color.themeStyle.theme.accent : Color.themeStyle.theme.secondaryTextColor.opacity(0.7))
+                .fill(isCompleted ? Color.themeStyle.theme.accent : Color.themeStyle.theme.secondaryTextColor.opacity(0.7))
                 .frame(width: 3, height: 18)
                 .cornerRadius(2)
-            Text(exercise.exercise.name)
+            Text(name)
                 .font(.headline)
                 .fontWeight(.semibold)
                 .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
                 .opacity(isItemEditable ? 1.0 : 0.4)
         }
-
     }
     
     @ViewBuilder
-    func ExerciseTagsView() -> some View {
+    func ExerciseTagsView(tags: [Int]) -> some View {
         HStack(spacing: 8) {
-            ForEach(exercise.tags, id: \.self) { int in
+            ForEach(tags, id: \.self) { int in
                 VStack {
                     Text(ExerciseTag(rawValue: int)?.namekey ?? "")
                         .font(.footnote)
@@ -130,6 +134,6 @@ struct ArrangedExerciseCard: View {
 
 
 #Preview {
-    ArrangedExerciseCard(exercise: Mocks.mockArrangedExercise, isItemEditable: .constant(true))
+    MainViewExerciseCardView(exercise: Mocks.mockArrangedExercise, isItemEditable: .constant(true))
 }
 

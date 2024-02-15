@@ -19,8 +19,8 @@ struct AppTabBarView: View {
         TabView(selection: $selection) {
             /// Create pivot main view
             let today = Date().today
-            let mainViewModel = PivotMainViewModel(context: context, currentDate: today)
-            PivotMainView(viewModel: mainViewModel).tabItem {
+            let mainViewModel = MainViewModel(context: context, currentDate: today)
+            MainView(viewModel: mainViewModel).tabItem {
                 Label(LocalizationProvider.plan.nameKey, systemImage: TabBarItemType.plan.iconName)
             }.tag(0)
             

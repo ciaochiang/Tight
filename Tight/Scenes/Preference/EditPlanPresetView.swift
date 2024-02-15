@@ -62,7 +62,7 @@ struct EditPlanPresetView: View {
         List {
             let exercises = plan.alleExercises()
             ForEach(exercises) { exercise in
-                ArrangedExerciseCard(exercise: exercise, isItemEditable: $isItemEditable)
+                MainViewExerciseCardView(exercise: exercise, isItemEditable: $isItemEditable)
                     .veriticalSpacing(.center)
                     .listRowSeparator(.hidden)
                     .listRowInsets(EdgeInsets())

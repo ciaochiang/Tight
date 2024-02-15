@@ -1,5 +1,5 @@
 //
-//  PivotMainViewModel.swift
+//  MainViewModel.swift
 //  Motic
 //
 //  Created by Ciao Chiang on 2023/12/20.
@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import SwiftData
 
-class PivotMainViewModel: ObservableObject {
+class MainViewModel: ObservableObject {
     var context: ModelContext
     @EnvironmentObject private var logger: CustomLogger
     @Published var selectedDate: Date
@@ -23,7 +23,7 @@ class PivotMainViewModel: ObservableObject {
     init(context: ModelContext, currentDate: Date) {
         self.context = context
         self.selectedDate = currentDate
-        self.currentPlan = PivotMainViewModel.getPlan(context: context, by: currentDate)
+        self.currentPlan = MainViewModel.getPlan(context: context, by: currentDate)
         determineDailySummaryVisibility()
     }
     
@@ -33,14 +33,14 @@ class PivotMainViewModel: ObservableObject {
 }
 
 // MARK: Plan
-extension PivotMainViewModel {
+extension MainViewModel {
     /// Get  plan by date
     static func getPlan(context: ModelContext, by date: Date) -> Plan {
-        if let plan = PivotMainViewModel.fetchPlan(context: context, by: date) {
+        if let plan = MainViewModel.fetchPlan(context: context, by: date) {
             return plan
         }
         else {
-            let plan = PivotMainViewModel.createNewPlan(context: context, by: date)
+            let plan = MainViewModel.createNewPlan(context: context, by: date)
             return plan
         }
     }
@@ -99,7 +99,7 @@ extension PivotMainViewModel {
 }
 
 // MARK: Calendar
-extension PivotMainViewModel {
+extension MainViewModel {
     /// Load Weeks
     func loadWeeks() {
         let currentWeek = Date().fetchWeek()
@@ -117,7 +117,7 @@ extension PivotMainViewModel {
     
     func onSelectedDate(_ date: Date) {
         selectedDate = date
-        currentPlan = PivotMainViewModel.getPlan(context: context, by: date)
+        currentPlan = MainViewModel.getPlan(context: context, by: date)
         determineDailySummaryVisibility()
     }
     
@@ -141,7 +141,7 @@ extension PivotMainViewModel {
 }
 
 // MARK: Exercise
-extension PivotMainViewModel {
+extension MainViewModel {
     func deleteExercise(exercise: ArrangedExercise) {
         if let index = currentPlan.arrangedExercises?.firstIndex(where: { $0 == exercise }) {
             currentPlan.arrangedExercises?.remove(at: index)
@@ -177,7 +177,7 @@ extension PivotMainViewModel {
 }
 
 // MARK: - Sorting
-extension PivotMainViewModel {
+extension MainViewModel {
     func incrementOrderNumber() -> Int {
         return currentPlan.alleExercises().count
     }

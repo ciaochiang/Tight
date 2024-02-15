@@ -23,6 +23,21 @@ class Mocks {
         return .init(name: "Preview", startDate: .init(), repeats: [], duration: 0, updatedDate: .init(), createdDate: .init(), tags: [], isPreset: false)
     }
     
+    static var trainingContent: TrainingSessionContent {
+        return .init(state: .training, 
+                     liveActivityID: "",
+                     currentExercise: Mocks.mockArrangedExercise,
+                     exerciseID: nil,
+                     startTime: .now,
+                     exerciseCount: 4,
+                     indexOfExercise: 2,
+                     totalProgress: 30,
+                     indexOfSet: 1,
+                     setsProgress: 50,
+                     restStartTime: nil,
+                     restInterval: 0)
+    }
+    
     static let container: ModelContainer = {
         let schema = Schema([ArrangedExercise.self, Plan.self])
         let configuratin = ModelConfiguration(isStoredInMemoryOnly: true)

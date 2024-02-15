@@ -77,9 +77,9 @@
 		E57FD78A2B3DAFEB00696968 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7882B3DAFEB00696968 /* OnboardingView.swift */; };
 		E57FD78E2B3DB00900696968 /* AppTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD78D2B3DB00900696968 /* AppTabBarView.swift */; };
 		E57FD7902B3DB04400696968 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD78F2B3DB04400696968 /* NotificationManager.swift */; };
-		E57FD7942B3DB0BE00696968 /* ArrangedExerciseCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7912B3DB0BE00696968 /* ArrangedExerciseCard.swift */; };
-		E57FD7952B3DB0BE00696968 /* PivotMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7922B3DB0BE00696968 /* PivotMainView.swift */; };
-		E57FD7962B3DB0BE00696968 /* PivotMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7932B3DB0BE00696968 /* PivotMainViewModel.swift */; };
+		E57FD7942B3DB0BE00696968 /* MainViewExerciseCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7912B3DB0BE00696968 /* MainViewExerciseCardView.swift */; };
+		E57FD7952B3DB0BE00696968 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7922B3DB0BE00696968 /* MainView.swift */; };
+		E57FD7962B3DB0BE00696968 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7932B3DB0BE00696968 /* MainViewModel.swift */; };
 		E57FD7982B3DB0ED00696968 /* TabBarItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7972B3DB0ED00696968 /* TabBarItemType.swift */; };
 		E57FD79F2B3DB13F00696968 /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD79A2B3DB13F00696968 /* TimeInterval+Extension.swift */; };
 		E57FD7A02B3DB13F00696968 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD79B2B3DB13F00696968 /* View+Extension.swift */; };
@@ -119,6 +119,7 @@
 		E5C1C6B22B4A59570081B3EF /* TightSchemaV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = E509EA1B2B3EA53A0025E76C /* TightSchemaV1.swift */; };
 		E5C1C6B72B4A5A780081B3EF /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7842B3DAF7D00696968 /* Exercise.swift */; };
 		E5C1C6B82B4A5F3F0081B3EF /* TrainingSessionLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E554FB992B4837FA007AB30F /* TrainingSessionLiveActivity.swift */; };
+		E5E35E312B81A1BA0042DDC3 /* Measurement+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E35E302B81A1BA0042DDC3 /* Measurement+Extension.swift */; };
 		E5E8111E2B67E293005DB9A7 /* TrainingSessionAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E8111D2B67E293005DB9A7 /* TrainingSessionAttributes.swift */; };
 		E5E811202B67E698005DB9A7 /* TTWCSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E8111F2B67E698005DB9A7 /* TTWCSession.swift */; };
 		E5E811242B67EB24005DB9A7 /* TraningSessionManager+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E811232B67EB24005DB9A7 /* TraningSessionManager+Notification.swift */; };
@@ -256,9 +257,9 @@
 		E57FD7882B3DAFEB00696968 /* OnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		E57FD78D2B3DB00900696968 /* AppTabBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppTabBarView.swift; sourceTree = "<group>"; };
 		E57FD78F2B3DB04400696968 /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
-		E57FD7912B3DB0BE00696968 /* ArrangedExerciseCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrangedExerciseCard.swift; sourceTree = "<group>"; };
-		E57FD7922B3DB0BE00696968 /* PivotMainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PivotMainView.swift; sourceTree = "<group>"; };
-		E57FD7932B3DB0BE00696968 /* PivotMainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PivotMainViewModel.swift; sourceTree = "<group>"; };
+		E57FD7912B3DB0BE00696968 /* MainViewExerciseCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewExerciseCardView.swift; sourceTree = "<group>"; };
+		E57FD7922B3DB0BE00696968 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		E57FD7932B3DB0BE00696968 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		E57FD7972B3DB0ED00696968 /* TabBarItemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItemType.swift; sourceTree = "<group>"; };
 		E57FD79A2B3DB13F00696968 /* TimeInterval+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Extension.swift"; sourceTree = "<group>"; };
 		E57FD79B2B3DB13F00696968 /* View+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
@@ -291,6 +292,7 @@
 		E5B4B7DA2B5EB09900A411E1 /* TightWatch-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "TightWatch-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		E5B700BE2B400B740080442D /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		E5B700C02B40105E0080442D /* LocalizationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationProvider.swift; sourceTree = "<group>"; };
+		E5E35E302B81A1BA0042DDC3 /* Measurement+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Measurement+Extension.swift"; sourceTree = "<group>"; };
 		E5E8111D2B67E293005DB9A7 /* TrainingSessionAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionAttributes.swift; sourceTree = "<group>"; };
 		E5E8111F2B67E698005DB9A7 /* TTWCSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTWCSession.swift; sourceTree = "<group>"; };
 		E5E811232B67EB24005DB9A7 /* TraningSessionManager+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TraningSessionManager+Notification.swift"; sourceTree = "<group>"; };
@@ -439,6 +441,16 @@
 			path = TrainingSession;
 			sourceTree = "<group>";
 		};
+		E557F7F92B7E4BEE00F48235 /* TrainingSession */ = {
+			isa = PBXGroup;
+			children = (
+				E5578C6B2B4E8FB4004947F2 /* TrainingSessionCollapsedView.swift */,
+				E553B9D52B53ED2600BA0C61 /* TrainingSessionDailyReportView.swift */,
+				E55B09602B6DE7EF006A174A /* TrainingSessionExtendedView.swift */,
+			);
+			path = TrainingSession;
+			sourceTree = "<group>";
+		};
 		E562D6EE2B3DA34E000775B7 = {
 			isa = PBXGroup;
 			children = (
@@ -569,12 +581,12 @@
 		E57FD77F2B3DAE5B00696968 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				E57FD78B2B3DAFF100696968 /* Main */,
 				C93E94112B70D6A600693DF8 /* Insight */,
 				E57FD7CA2B3DC6AA00696968 /* Launch */,
 				E57FD7B52B3DB1AE00696968 /* ArrangeExericse */,
 				E57FD7A42B3DB17600696968 /* Preference */,
 				E57FD78C2B3DAFFF00696968 /* AppTabBar */,
-				E57FD78B2B3DAFF100696968 /* Main */,
 				E57FD7862B3DAFDC00696968 /* Onboarding */,
 			);
 			path = Scenes;
@@ -592,12 +604,10 @@
 		E57FD78B2B3DAFF100696968 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				E57FD7912B3DB0BE00696968 /* ArrangedExerciseCard.swift */,
-				E57FD7922B3DB0BE00696968 /* PivotMainView.swift */,
-				E57FD7932B3DB0BE00696968 /* PivotMainViewModel.swift */,
-				E5578C6B2B4E8FB4004947F2 /* TrainingSessionCollapsedView.swift */,
-				E55B09602B6DE7EF006A174A /* TrainingSessionExtendedView.swift */,
-				E553B9D52B53ED2600BA0C61 /* TrainingSessionDailyReportView.swift */,
+				E557F7F92B7E4BEE00F48235 /* TrainingSession */,
+				E57FD7912B3DB0BE00696968 /* MainViewExerciseCardView.swift */,
+				E57FD7922B3DB0BE00696968 /* MainView.swift */,
+				E57FD7932B3DB0BE00696968 /* MainViewModel.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -617,6 +627,7 @@
 				E57FD79D2B3DB13F00696968 /* Date+Extension.swift */,
 				E57FD79A2B3DB13F00696968 /* TimeInterval+Extension.swift */,
 				E57FD79B2B3DB13F00696968 /* View+Extension.swift */,
+				E5E35E302B81A1BA0042DDC3 /* Measurement+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1043,13 +1054,13 @@
 				E57FD7AF2B3DB18C00696968 /* PlanManagementView.swift in Sources */,
 				E57FD7682B3DADCC00696968 /* Logger.swift in Sources */,
 				E53935232B5D4E7700A8DD8C /* WatchSessionDelegate.swift in Sources */,
-				E57FD7942B3DB0BE00696968 /* ArrangedExerciseCard.swift in Sources */,
-				E57FD7962B3DB0BE00696968 /* PivotMainViewModel.swift in Sources */,
+				E57FD7942B3DB0BE00696968 /* MainViewExerciseCardView.swift in Sources */,
+				E57FD7962B3DB0BE00696968 /* MainViewModel.swift in Sources */,
 				E509EA202B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift in Sources */,
 				E57FD7A22B3DB13F00696968 /* Date+Extension.swift in Sources */,
 				E5E811272B67EB8D005DB9A7 /* TrainingSessionManager+LiveActivity.swift in Sources */,
 				E57FD78A2B3DAFEB00696968 /* OnboardingView.swift in Sources */,
-				E57FD7952B3DB0BE00696968 /* PivotMainView.swift in Sources */,
+				E57FD7952B3DB0BE00696968 /* MainView.swift in Sources */,
 				E55094442B60114A00C2C1EA /* WeightUnit.swift in Sources */,
 				E59B08F82B41495000280FC4 /* Constants.swift in Sources */,
 				E57FD7702B3DAE0400696968 /* OffsetKey.swift in Sources */,
@@ -1084,6 +1095,7 @@
 				E57FD7C02B3DB1E500696968 /* ExerciseRepetitionSliderViewComponent.swift in Sources */,
 				E57FD7732B3DAE0400696968 /* MockLocations.swift in Sources */,
 				C93E94172B70DCFC00693DF8 /* PersistentStoreManager.swift in Sources */,
+				E5E35E312B81A1BA0042DDC3 /* Measurement+Extension.swift in Sources */,
 				E57FD7B22B3DB18C00696968 /* EditPlanPresetView.swift in Sources */,
 				E57FD7B42B3DB18C00696968 /* EditPlanView.swift in Sources */,
 				E57FD7C12B3DB1E500696968 /* ExerciseSelectorViewComponent.swift in Sources */,
