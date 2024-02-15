@@ -1,5 +1,5 @@
 //
-//  TrainingSessionRunningView.swift
+//  TrainingSessionCollapsedView.swift
 //  Tight
 //
 //  Created by Ciao Chiang on 2024/1/10.
@@ -8,50 +8,29 @@
 import SwiftUI
 
 struct TrainingSessionCollapsedView: View {
-    @Environment(\.scenePhase) private var scenePhase
+    @Binding var content: TrainingSessionContent
     @EnvironmentObject private var trainingSessionManager: TrainingSessionManager
+    @EnvironmentObject private var logger: CustomLogger
     
     var body: some View {
         VStack {
             HStack(spacing: 16) {
                 /// Sets Progress
-                Text("\(trainingSessionManager.content.indexOfSet + 1)")
-                    .foregroundStyle(Color.themeStyle.theme.primary.opacity(0.8))
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .overlay {
-                        ZStack {
-                            Circle()
-                                .stroke( // 1
-                                    Color.themeStyle.theme.primary.opacity(0.3),
-                                    lineWidth: 2
-                                )
-                                .frame(width: 44, height: 44)
-                            
-                            Circle()
-                                .trim(from: 0, to: trainingSessionManager.content.setsProgress)
-                                .stroke( // 1
-                                    Color.themeStyle.theme.accent,
-                                    lineWidth: 4
-                                )
-                                .frame(width: 44, height: 44)
-                                .rotationEffect(.degrees(-90))
-                                .animation(.easeInOut, value: trainingSessionManager.content.setsProgress)
-                        }
-                    }
+                SetsProgressView(currentIndexOfSet: content.indexOfSet + 1,
+                                 setsProgrss: content.setsProgress)
                     .padding(.leading, 16)
                     .padding(.trailing, 8)
                 
                 VStack(spacing: 4) {
-                    if let startTime = trainingSessionManager.content.startTime {
+                    if let startTime = content.startTime {
                         ElapsedTimeView(startTime: startTime,
-                                        restStartTime: trainingSessionManager.content.restStartTime,
-                                        restIntervals: trainingSessionManager.content.restInterval)
+                                        restStartTime: content.restStartTime,
+                                        restIntervals: content.restInterval)
                     }
 
-                    if let exercise = trainingSessionManager.content.currentExercise {
+                    if let exercise = content.currentExercise {
                         let weightUnit = WeightUnit(value: exercise.weightUnit)
-                        ExerciseInfoView(state: trainingSessionManager.content.state,
+                        ExerciseInfoView(state: content.state,
                                          exerciseName: exercise.exercise.name,
                                          weight: exercise.weight,
                                          weightUnit: weightUnit,
@@ -60,36 +39,46 @@ struct TrainingSessionCollapsedView: View {
                 }
                 .padding(.leading, 8)
                 
-                ControlsView(isResting: trainingSessionManager.content.restStartTime != nil)
+                ControlsView(isResting: content.restStartTime != nil)
             }
             .padding(.horizontal)
             .padding(.top, 8)
-            .padding(.bottom, trainingSessionManager.content.exerciseCount > 1 ? 0 : 12)
+            .padding(.bottom, content.exerciseCount > 1 ? 0 : 12)
             
             /// Only display stage progress view arranged exercises more than `1`
-            if trainingSessionManager.content.exerciseCount > 1 {
-                StagesView(progress: trainingSessionManager.content.totalProgress)
+            if content.exerciseCount > 1 {
+                StagesView(progress: content.totalProgress)
             }
         }
         .background(Color.themeStyle.theme.background)
-        .onChange(of: scenePhase) { oldValue, newValue in
-            switch newValue {
-            case .active:
-                /// App is in the background
-                print("enter foreground")
-                break
-            case .inactive:
-                /// App is transitioning between active and background states
-                print("app is transitioning")
-                break
-            case .background:
-                /// App is in the background
-                print("enter background")
-
-                break
-            @unknown default: break
+    }
+    
+    @ViewBuilder
+    func SetsProgressView(currentIndexOfSet: Int, setsProgrss: Double) -> some View {
+        Text("\(currentIndexOfSet)")
+            .foregroundStyle(Color.themeStyle.theme.primary.opacity(0.8))
+            .font(.title3)
+            .fontWeight(.semibold)
+            .overlay {
+                ZStack {
+                    Circle()
+                        .stroke(
+                            Color.themeStyle.theme.primary.opacity(0.3),
+                            lineWidth: 2
+                        )
+                        .frame(width: 44, height: 44)
+                    
+                    Circle()
+                        .trim(from: 0, to: setsProgrss)
+                        .stroke(
+                            Color.themeStyle.theme.accent,
+                            lineWidth: 4
+                        )
+                        .frame(width: 44, height: 44)
+                        .rotationEffect(.degrees(-90))
+                        .animation(.easeInOut, value: setsProgrss)
+                }
             }
-        }
     }
     
     @ViewBuilder
@@ -134,8 +123,10 @@ struct TrainingSessionCollapsedView: View {
             else {
                 /// Done Button
                 Button(action: {
-                    if let exerciseID = trainingSessionManager.content.currentExercise?.id {
+                    if let exerciseID = content.currentExercise?.id {
                         trainingSessionManager.completeCurrentSet(exerciseID: exerciseID.uuidString)
+                    } else {
+                        logger.log("\(CustomError.missingRequiredParameter)", level: .error)
                     }
                 }) {
                     Image(systemName: "checkmark")
@@ -155,7 +146,7 @@ struct TrainingSessionCollapsedView: View {
     @ViewBuilder
     func ExerciseInfoView(state: TTSessionState, exerciseName: String, weight: Double, weightUnit: WeightUnit, repetition: Double) -> some View {
         VStack {
-            Text(state == .resting ? LocalizationProvider.breakTimeTitle.localizedString : exerciseName)
+            Text(exerciseName)
                 .font(.subheadline)
                 .fontWeight(.semibold)
                 .minimumScaleFactor(0.8)
@@ -163,7 +154,7 @@ struct TrainingSessionCollapsedView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentTransition(.opacity)
             
-            Text(state == .resting ? LocalizationProvider.breakTimeSubtitle.localizedString : "\(Int(weight))\(weightUnit.name) x \(Int(repetition))")
+            Text("\(Int(weight))\(weightUnit.name) x \(Int(repetition))")
                 .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
                 .font(.footnote)
                 .minimumScaleFactor(0.8)
@@ -198,6 +189,7 @@ struct TrainingSessionCollapsedView: View {
 }
 
 #Preview {
-    TrainingSessionCollapsedView()
+    @State var content = Mocks.trainingContent
+    return TrainingSessionCollapsedView(content: $content)
         .environmentObject(TrainingSessionManager())
 }

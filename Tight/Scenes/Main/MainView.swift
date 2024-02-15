@@ -1,5 +1,5 @@
 //
-//  PivotMainView.swift
+//  MainView.swift
 //  Motic
 //
 //  Created by Ciao Chiang on 2023/12/20.
@@ -10,9 +10,9 @@ import SwiftUI
 import SwiftData
 import Combine
 
-struct PivotMainView: View {
+struct MainView: View {
     @Environment(\.modelContext) var context
-    @StateObject var viewModel: PivotMainViewModel
+    @StateObject var viewModel: MainViewModel
     @EnvironmentObject var trainingSessionManager: TrainingSessionManager
     @State private var isArrangingExercise: Bool = false
     @State private var isImporting: Bool = false
@@ -26,7 +26,7 @@ struct PivotMainView: View {
     /// Animation  namespace
     @Namespace private var animation
     
-    init(viewModel: PivotMainViewModel) {
+    init(viewModel: MainViewModel) {
         _viewModel = .init(wrappedValue: viewModel)
     }
     
@@ -59,7 +59,7 @@ struct PivotMainView: View {
                 viewModel.loadWeeks()
             }
             
-            let screenName = String(describing: PivotMainView.self)
+            let screenName = String(describing: MainView.self)
             AnalyticsHelper.logScreen(screenName: screenName, screenClass: screenName)
         })
         
@@ -84,7 +84,7 @@ struct PivotMainView: View {
             }
         })
         .fullScreenCover(isPresented: $isTrainingExtenedViewPresented, content: {
-            TrainingSessionExtendedView()
+            TrainingSessionExtendedView(content: $trainingSessionManager.content)
         })
         .onChange(of: viewModel.selectedDate) { oldValue, newValue in
             /// Reload current plan when date changed
@@ -252,7 +252,7 @@ struct PivotMainView: View {
             Section {
                 let exercises = viewModel.currentPlan.alleExercises()
                 ForEach(exercises) { exercise in
-                    ArrangedExerciseCard(exercise: exercise, isItemEditable: $isItemEditable)
+                    MainViewExerciseCardView(exercise: exercise, isItemEditable: $isItemEditable)
                         .listRowSeparator(.hidden)
                         .listRowInsets(EdgeInsets())
                         .swipeActions(edge: .trailing) {
@@ -378,7 +378,7 @@ struct PivotMainView: View {
             .background(Color.themeStyle.theme.accent)
         }
         else {
-            TrainingSessionCollapsedView()
+            TrainingSessionCollapsedView(content: $trainingSessionManager.content)
                 .onTapGesture {
                     isTrainingExtenedViewPresented.toggle()
                 }
@@ -426,8 +426,8 @@ struct PivotMainView: View {
 #Preview("Main Screen") {
     let previewContainer = PreviewContainer([ArrangedExercise.self, Plan.self])
     let context = ModelContext(previewContainer.container)
-    let viewModel = PivotMainViewModel(context: context, currentDate: .init())
-    return PivotMainView(viewModel: viewModel)
+    let viewModel = MainViewModel(context: context, currentDate: .init())
+    return MainView(viewModel: viewModel)
         .modelContext(context)
         .environmentObject(TrainingSessionManager())
 }

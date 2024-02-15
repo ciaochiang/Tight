@@ -93,7 +93,32 @@ struct TrainingSessionContent: Codable {
         totalProgress = Double(index) / Double(exerciseCount)
     }
     
-    init() {}
+    init(state: TTSessionState = .notStarted,
+         liveActivityID: String = "",
+         currentExercise: ArrangedExercise? = nil,
+         exerciseID: String? = nil,
+         startTime: Date? = nil,
+         exerciseCount: Int = 0,
+         indexOfExercise: Int = 0,
+         totalProgress: Double = 0,
+         indexOfSet: Int = 0,
+         setsProgress: Double = 0,
+         restStartTime: Date? = nil,
+         restInterval: Double = 0) {
+        
+        self.state = state
+        self.liveActivityID = liveActivityID
+        self.currentExercise = currentExercise
+        self.exerciseID = exerciseID
+        self.startTime = startTime
+        self.exerciseCount = exerciseCount
+        self.indexOfExercise = indexOfExercise
+        self.totalProgress = totalProgress
+        self.indexOfSet = indexOfSet
+        self.setsProgress = setsProgress
+        self.restStartTime = restStartTime
+        self.restInterval = restInterval
+    }
     
     // Implement the encode(to:) method to customize encoding
     func encode(to encoder: Encoder) throws {

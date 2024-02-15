@@ -124,15 +124,3 @@ struct TrainingSessionDailyReportView: View {
     @State var isDataChanged: Bool = false
     return TrainingSessionDailyReportView(plan: Mocks.mockPlan, isDataChanged: $isDataChanged)
 }
-
-
-extension Measurement<UnitMass> {
-    func formmatedWeightValue(weightUnit: WeightUnit) -> String {
-        let formatter = MeasurementFormatter()
-        formatter.unitOptions = .providedUnit
-        formatter.numberFormatter.maximumFractionDigits = 1
-        
-        let value = weightUnit == .kilogram ? self : self.converted(to: .pounds)
-        return formatter.string(from: value)
-    }
-}

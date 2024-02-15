@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TrainingSessionExtendedView: View {
+    @Binding var content: TrainingSessionContent
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var trainingSessionManager: TrainingSessionManager
     
@@ -15,18 +16,18 @@ struct TrainingSessionExtendedView: View {
         NavigationStack {
             VStack {
                 VStack {
-                    if let startTime = trainingSessionManager.content.startTime {
-                        ElapsedTimeView(state: trainingSessionManager.content.state, 
+                    if let startTime = content.startTime {
+                        ElapsedTimeView(state: content.state,
                                         startTime: startTime,
-                                        restStartTime: trainingSessionManager.content.restStartTime,
-                                        restIntervals: trainingSessionManager.content.restInterval)
+                                        restStartTime: content.restStartTime,
+                                        restIntervals: content.restInterval)
                         .frame(height: 80)
                     }
                     
-                    SetsProgressView()
+                    SetsProgressView(indexOfSet: content.indexOfSet, setsProgress: content.setsProgress)
                         .frame(maxHeight: .infinity, alignment: .center)
                     
-                    if let exercise = trainingSessionManager.content.currentExercise {
+                    if let exercise = content.currentExercise {
                         let weightUnit = WeightUnit(value: exercise.weightUnit)
                         ExerciseInfoView(exerciseName: exercise.exercise.name,
                                          weight: exercise.weight,
@@ -35,15 +36,15 @@ struct TrainingSessionExtendedView: View {
                         .padding(.bottom)
                     }
                     
-                    TotalProgressView(progress: trainingSessionManager.content.totalProgress)
+                    TotalProgressView(progress: content.totalProgress)
                         .padding(.bottom, 32)
                         .padding(.horizontal)
-                    ControlsView(state: trainingSessionManager.content.state)
+                    ControlsView(state: content.state, exerciseID: content.exerciseID)
                         .padding(.bottom, 32)
                 }
                 .padding()
             }
-            .onChange(of: trainingSessionManager.content.state, { oldValue, newValue in
+            .onChange(of: content.state, { oldValue, newValue in
                 if newValue == .notStarted {
                     DispatchQueue.main.async {
                         self.dismiss()
@@ -117,7 +118,7 @@ struct TrainingSessionExtendedView: View {
     }
     
     @ViewBuilder
-    func ControlsView(state: TTSessionState) -> some View {
+    func ControlsView(state: TTSessionState, exerciseID: String?) -> some View {
         HStack {
             Button(action: {
                 trainingSessionManager.endSession()
@@ -149,7 +150,7 @@ struct TrainingSessionExtendedView: View {
             else {
                 /// Done Button
                 Button(action: {
-                    if let exerciseID = trainingSessionManager.content.exerciseID {
+                    if let exerciseID = exerciseID {
                         trainingSessionManager.completeCurrentSet(exerciseID: exerciseID)
                     }
                 }) {
@@ -167,37 +168,36 @@ struct TrainingSessionExtendedView: View {
     }
     
     @ViewBuilder
-    func SetsProgressView() -> some View {
-        VStack {
-            Text("\(trainingSessionManager.content.indexOfSet + 1)")
-                .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
-                .font(.system(size: 72))
-                .fontWeight(.semibold)
-                .overlay {
-                    ZStack {
-                        Circle()
-                            .stroke( // 1
-                                Color.themeStyle.theme.primary.opacity(0.3),
-                                lineWidth: 10
-                            )
-                            .frame(width: 132, height: 132)
-                        
-                        Circle()
-                            .trim(from: 0, to: trainingSessionManager.content.setsProgress)
-                            .stroke( // 1
-                                Color.themeStyle.theme.accent,
-                                lineWidth: 10
-                            )
-                            .frame(width: 132, height: 132)
-                            .rotationEffect(.degrees(-90))
-                            .animation(.easeInOut, value: trainingSessionManager.content.setsProgress)
-                    }
+    func SetsProgressView(indexOfSet: Int, setsProgress: Double) -> some View {
+        Text("\(indexOfSet + 1)")
+            .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
+            .font(.system(size: 72))
+            .fontWeight(.semibold)
+            .overlay {
+                ZStack {
+                    Circle()
+                        .stroke(
+                            Color.themeStyle.theme.primary.opacity(0.3),
+                            lineWidth: 10
+                        )
+                        .frame(width: 132, height: 132)
+                    
+                    Circle()
+                        .trim(from: 0, to: setsProgress)
+                        .stroke(
+                            Color.themeStyle.theme.accent,
+                            lineWidth: 10
+                        )
+                        .frame(width: 132, height: 132)
+                        .rotationEffect(.degrees(-90))
+                        .animation(.easeInOut, value: setsProgress)
                 }
-        }
+            }
     }
 }
 
 #Preview {
-    TrainingSessionExtendedView()
+    @State var content = Mocks.trainingContent
+    return TrainingSessionExtendedView(content: $content)
         .environmentObject(TrainingSessionManager())
 }
