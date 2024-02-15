@@ -22,16 +22,16 @@ struct AppTabBarView: View {
             let mainViewModel = PivotMainViewModel(context: context, currentDate: today)
             PivotMainView(viewModel: mainViewModel).tabItem {
                 Label(LocalizationProvider.plan.nameKey, systemImage: TabBarItemType.plan.iconName)
-            }
+            }.tag(0)
             
             InsightHomeView().tabItem {
                 Label(LocalizationProvider.insight.nameKey, systemImage: TabBarItemType.trend.iconName)
-            }
+            }.tag(1)
                         
             /// Create PreferenceViews
             PreferenceView().tabItem {
                 Label(LocalizationProvider.settings.nameKey, systemImage: TabBarItemType.setting.iconName)
-            }
+            }.tag(2)
         }
         .toolbarBackground(Color.themeStyle.theme.background, for: .tabBar)
         .onAppear {

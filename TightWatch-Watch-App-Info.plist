@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSHealthShareUsageDescription</key>
-	<string>We need access to your health data to provide you with personalized health insights and services.</string>
-	<key>NSHealthUpdateUsageDescription</key>
-	<string>We need permission to update your health data to track your progress and improve your health outcomes.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
