@@ -11,7 +11,7 @@ import SwiftData
 
 class PersistentStoreManager {
     static let shared = PersistentStoreManager()
-    @EnvironmentObject private var logger: CustomLogger
+    private var logger: TTLogger = TTLogger()
     
     func fetchPlans(context: ModelContext, startDate: Date, endDate: Date) -> [Plan] {
         let fetchDescriptor = FetchDescriptor<Plan>(predicate: #Predicate<Plan> {

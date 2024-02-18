@@ -17,16 +17,23 @@ struct TrainingSessionExtendedView: View {
             VStack {
                 VStack {
                     if let startTime = content.startTime {
-                        ElapsedTimeView(state: content.state,
-                                        startTime: startTime,
-                                        restStartTime: content.restStartTime,
-                                        restIntervals: content.restInterval)
+                        TimerView(startTime: startTime,
+                                  restStartTime: content.restStartTime,
+                                  restInterval: content.restInterval,
+                                  isCountDown: content.state == .resting)
+                        .font(.system(size: 100))
+                        .tracking(5.0)
                         .frame(height: 80)
                     }
                     
-                    SetsProgressView(indexOfSet: content.indexOfSet, setsProgress: content.setsProgress)
-                        .frame(maxHeight: .infinity, alignment: .center)
-                    
+                    CircularProgressView(content: "\(content.indexOfSet + 1)", 
+                                         progress: content.setsProgress, font: .system(size: 72), 
+                                         lineWidth: 10,
+                                         width: 132,
+                                         height: 132)
+                    .frame(maxHeight: .infinity, alignment: .center)
+
+                                        
                     if let exercise = content.currentExercise {
                         let weightUnit = WeightUnit(value: exercise.weightUnit)
                         ExerciseInfoView(exerciseName: exercise.exercise.name,
@@ -36,7 +43,8 @@ struct TrainingSessionExtendedView: View {
                         .padding(.bottom)
                     }
                     
-                    TotalProgressView(progress: content.totalProgress)
+                    LinearProgressView(progress: content.totalProgress)
+                        .cornerRadius(2.0)
                         .padding(.bottom, 32)
                         .padding(.horizontal)
                     ControlsView(state: content.state, exerciseID: content.exerciseID)
@@ -81,40 +89,6 @@ struct TrainingSessionExtendedView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
         }
-    }
-    
-    @ViewBuilder
-    func ElapsedTimeView(state: TTSessionState, startTime: Date, restStartTime: Date?, restIntervals: TimeInterval) -> some View {
-        VStack {
-            if state == .resting, let restStartTime = restStartTime {
-                let restEndTime = restStartTime.addingTimeInterval(restIntervals)
-                Text(timerInterval: restStartTime...restEndTime, countsDown: true)
-                    .font(.system(size: 100))
-                    .fontWeight(.bold)
-                    .tracking(4)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .foregroundColor(Color.themeStyle.theme.secondaryAccent)
-                    .contentTransition(.numericText(countsDown: false))
-            }
-            else {
-                Text(startTime, style: .timer)
-                    .font(.system(size: 100))
-                    .fontWeight(.bold)
-                    .tracking(4)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .foregroundColor(Color.themeStyle.theme.accent)
-                    .contentTransition(.numericText(countsDown: false))
-            }
-        }
-    }
-    
-    @ViewBuilder
-    func TotalProgressView(progress: Double) -> some View {
-        ProgressView(value: progress)
-            .progressViewStyle(.linear)
-            .background(Color.white.opacity(0.7))
-            .cornerRadius(2.0)
-            .animation(.easeInOut, value: progress)
     }
     
     @ViewBuilder
@@ -165,34 +139,6 @@ struct TrainingSessionExtendedView: View {
         }
         .padding(.horizontal, 64)
         .frame(maxWidth: .infinity, alignment: .center)
-    }
-    
-    @ViewBuilder
-    func SetsProgressView(indexOfSet: Int, setsProgress: Double) -> some View {
-        Text("\(indexOfSet + 1)")
-            .foregroundStyle(Color.themeStyle.theme.secondaryTextColor)
-            .font(.system(size: 72))
-            .fontWeight(.semibold)
-            .overlay {
-                ZStack {
-                    Circle()
-                        .stroke(
-                            Color.themeStyle.theme.primary.opacity(0.3),
-                            lineWidth: 10
-                        )
-                        .frame(width: 132, height: 132)
-                    
-                    Circle()
-                        .trim(from: 0, to: setsProgress)
-                        .stroke(
-                            Color.themeStyle.theme.accent,
-                            lineWidth: 10
-                        )
-                        .frame(width: 132, height: 132)
-                        .rotationEffect(.degrees(-90))
-                        .animation(.easeInOut, value: setsProgress)
-                }
-            }
     }
 }
 

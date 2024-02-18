@@ -38,7 +38,7 @@ class ContentViewModel: NSObject, ObservableObject {
     
     /// Health Kit
     let healthStore = HKHealthStore()
-    private lazy var logger = CustomLogger()
+    private lazy var logger = TTLogger()
     private var workoutSession: HKWorkoutSession?
 
     /// Extended Run Time

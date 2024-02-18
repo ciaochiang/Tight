@@ -11,7 +11,7 @@ import SwiftData
 
 class MainViewModel: ObservableObject {
     var context: ModelContext
-    @EnvironmentObject private var logger: CustomLogger
+    @EnvironmentObject private var logger: TTLogger
     @Published var selectedDate: Date
     @Published var currentPlan: Plan
     @Published var createWeek: Bool = false
@@ -67,7 +67,7 @@ extension MainViewModel {
             return plans.first
         }
         catch {
-            let logger = CustomLogger()
+            let logger = TTLogger()
             logger.log(error.localizedDescription, level: .error)
             return nil
         }
@@ -91,7 +91,7 @@ extension MainViewModel {
             return try context.fetch(fetchDescriptor)
         }
         catch {
-            let logger = CustomLogger()
+            let logger = TTLogger()
             logger.log(error.localizedDescription, level: .error)
             return []
         }

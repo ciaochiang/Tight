@@ -17,7 +17,7 @@
 		C9C1F33B2B6B74EF00141ECC /* TightSchemaV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = E509EA1B2B3EA53A0025E76C /* TightSchemaV1.swift */; };
 		C9C1F33C2B6B750600141ECC /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7842B3DAF7D00696968 /* Exercise.swift */; };
 		C9C1F33E2B6B76F700141ECC /* TrainingSessionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C1F33D2B6B76F700141ECC /* TrainingSessionContent.swift */; };
-		C9C1F3422B6CB7C900141ECC /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7672B3DADCC00696968 /* Logger.swift */; };
+		C9C1F3422B6CB7C900141ECC /* TTLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7672B3DADCC00696968 /* TTLogger.swift */; };
 		E504A44D2B6BD72F00AD3CEA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E562D7002B3DA34F000775B7 /* Assets.xcassets */; };
 		E504A44F2B6BDAF000AD3CEA /* TraningSessionLiveActivityIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E504A44E2B6BDAF000AD3CEA /* TraningSessionLiveActivityIntents.swift */; };
 		E504A4502B6BDB2A00AD3CEA /* TraningSessionLiveActivityIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E504A44E2B6BDAF000AD3CEA /* TraningSessionLiveActivityIntents.swift */; };
@@ -39,11 +39,14 @@
 		E53935232B5D4E7700A8DD8C /* WatchSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53935222B5D4E7700A8DD8C /* WatchSessionDelegate.swift */; };
 		E54420F82B4AD38F002C63BC /* LocalizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B700C02B40105E0080442D /* LocalizationProvider.swift */; };
 		E54420F92B4AD8EF002C63BC /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E5B700BE2B400B740080442D /* Localizable.xcstrings */; };
+		E54A445D2B84E15F0019F92C /* LinearProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54A445C2B84E15F0019F92C /* LinearProgressView.swift */; };
+		E54A445F2B84E2A50019F92C /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54A445E2B84E2A50019F92C /* TimerView.swift */; };
+		E54A44602B84E7B30019F92C /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54A445E2B84E2A50019F92C /* TimerView.swift */; };
 		E55094442B60114A00C2C1EA /* WeightUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55094432B60114A00C2C1EA /* WeightUnit.swift */; };
 		E55094452B60114A00C2C1EA /* WeightUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55094432B60114A00C2C1EA /* WeightUnit.swift */; };
 		E55094462B60114A00C2C1EA /* WeightUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55094432B60114A00C2C1EA /* WeightUnit.swift */; };
 		E553B9CF2B52BCED00BA0C61 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B08F72B41495000280FC4 /* Constants.swift */; };
-		E553B9D02B52C47400BA0C61 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7672B3DADCC00696968 /* Logger.swift */; };
+		E553B9D02B52C47400BA0C61 /* TTLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7672B3DADCC00696968 /* TTLogger.swift */; };
 		E553B9D22B5395D900BA0C61 /* Date+ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553B9D12B5395D900BA0C61 /* Date+ExtensionTests.swift */; };
 		E553B9D42B53BEF600BA0C61 /* AnalyticsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553B9D32B53BEF600BA0C61 /* AnalyticsHelper.swift */; };
 		E553B9D62B53ED2600BA0C61 /* TrainingSessionDailyReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553B9D52B53ED2600BA0C61 /* TrainingSessionDailyReportView.swift */; };
@@ -65,9 +68,9 @@
 		E57A88992B5D5EBB0040FCF5 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57A88982B5D5EBB0040FCF5 /* ContentViewModel.swift */; };
 		E57FD75D2B3DA3E400696968 /* GrowthBook-IOS in Frameworks */ = {isa = PBXBuildFile; productRef = E57FD75C2B3DA3E400696968 /* GrowthBook-IOS */; };
 		E57FD7632B3DAD3900696968 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E57FD7622B3DAD3900696968 /* FirebaseAnalytics */; };
-		E57FD7682B3DADCC00696968 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7672B3DADCC00696968 /* Logger.swift */; };
+		E57FD7682B3DADCC00696968 /* TTLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7672B3DADCC00696968 /* TTLogger.swift */; };
 		E57FD7702B3DAE0400696968 /* OffsetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD76A2B3DAE0300696968 /* OffsetKey.swift */; };
-		E57FD7712B3DAE0400696968 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD76B2B3DAE0300696968 /* Error.swift */; };
+		E57FD7712B3DAE0400696968 /* TTError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD76B2B3DAE0300696968 /* TTError.swift */; };
 		E57FD7722B3DAE0400696968 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD76C2B3DAE0300696968 /* Mocks.swift */; };
 		E57FD7732B3DAE0400696968 /* MockLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD76D2B3DAE0300696968 /* MockLocations.swift */; };
 		E57FD7752B3DAE0400696968 /* PreviewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD76F2B3DAE0300696968 /* PreviewContainer.swift */; };
@@ -103,6 +106,9 @@
 		E57FD7C62B3DB25200696968 /* UserPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FD7C52B3DB25200696968 /* UserPreference.swift */; };
 		E57FD7CC2B3DC6BE00696968 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E57FD7CB2B3DC6BE00696968 /* LaunchScreen.storyboard */; };
 		E57FD7CE2B3DD47600696968 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E57FD7CD2B3DD47600696968 /* GoogleService-Info.plist */; };
+		E58D9EA42B81AAEE00B3C17B /* InsightManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93E94142B70D88900693DF8 /* InsightManager.swift */; };
+		E58D9EA52B81AAEE00B3C17B /* InsightManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93E94142B70D88900693DF8 /* InsightManager.swift */; };
+		E58D9EA82B821B6200B3C17B /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58D9EA72B821B6200B3C17B /* CircularProgressView.swift */; };
 		E5986BCF2B5EC347003FAFC3 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E5B700BE2B400B740080442D /* Localizable.xcstrings */; };
 		E59B08F82B41495000280FC4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B08F72B41495000280FC4 /* Constants.swift */; };
 		E59B08FD2B4292A900280FC4 /* ExerciseWeightViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B08FC2B4292A900280FC4 /* ExerciseWeightViewComponent.swift */; };
@@ -219,6 +225,8 @@
 		E509EA1F2B3ECB140025E76C /* ExerciseTagPickerViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseTagPickerViewComponent.swift; sourceTree = "<group>"; };
 		E5345B8E2B694BF300852E2F /* TrainingSessionManager+Watch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TrainingSessionManager+Watch.swift"; sourceTree = "<group>"; };
 		E53935222B5D4E7700A8DD8C /* WatchSessionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSessionDelegate.swift; sourceTree = "<group>"; };
+		E54A445C2B84E15F0019F92C /* LinearProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearProgressView.swift; sourceTree = "<group>"; };
+		E54A445E2B84E2A50019F92C /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		E55094432B60114A00C2C1EA /* WeightUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightUnit.swift; sourceTree = "<group>"; };
 		E553B9D12B5395D900BA0C61 /* Date+ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ExtensionTests.swift"; sourceTree = "<group>"; };
 		E553B9D32B53BEF600BA0C61 /* AnalyticsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsHelper.swift; sourceTree = "<group>"; };
@@ -245,9 +253,9 @@
 		E56C07A32B651B3B00A4AFA9 /* TightWatch Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TightWatch Watch App.entitlements"; sourceTree = "<group>"; };
 		E56C07A42B663D9100A4AFA9 /* Tight.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tight.entitlements; sourceTree = "<group>"; };
 		E57A88982B5D5EBB0040FCF5 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
-		E57FD7672B3DADCC00696968 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		E57FD7672B3DADCC00696968 /* TTLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTLogger.swift; sourceTree = "<group>"; };
 		E57FD76A2B3DAE0300696968 /* OffsetKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OffsetKey.swift; sourceTree = "<group>"; };
-		E57FD76B2B3DAE0300696968 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		E57FD76B2B3DAE0300696968 /* TTError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTError.swift; sourceTree = "<group>"; };
 		E57FD76C2B3DAE0300696968 /* Mocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
 		E57FD76D2B3DAE0300696968 /* MockLocations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLocations.swift; sourceTree = "<group>"; };
 		E57FD76F2B3DAE0300696968 /* PreviewContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewContainer.swift; sourceTree = "<group>"; };
@@ -283,6 +291,7 @@
 		E57FD7C52B3DB25200696968 /* UserPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreference.swift; sourceTree = "<group>"; };
 		E57FD7CB2B3DC6BE00696968 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E57FD7CD2B3DD47600696968 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E58D9EA72B821B6200B3C17B /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		E59B08F72B41495000280FC4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E59B08FC2B4292A900280FC4 /* ExerciseWeightViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseWeightViewComponent.swift; sourceTree = "<group>"; };
 		E59B08FE2B4594C000280FC4 /* TrainingSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionManager.swift; sourceTree = "<group>"; };
@@ -490,7 +499,7 @@
 				E5A2F3312B49568A00735FC2 /* Info.plist */,
 				E57FD7CD2B3DD47600696968 /* GoogleService-Info.plist */,
 				E55F13192B6A92240044FA65 /* notificationSound.caf */,
-				E53935212B5D4E6200A8DD8C /* Watch */,
+				E58D9EA12B81A7A100B3C17B /* Components */,
 				E57FD77F2B3DAE5B00696968 /* Scenes */,
 				E57FD7782B3DAE4600696968 /* Models */,
 				E57FD7692B3DADD700696968 /* Managers */,
@@ -539,17 +548,15 @@
 		E57FD7642B3DAD6600696968 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				E57FD76B2B3DAE0300696968 /* Error.swift */,
-				E57FD76D2B3DAE0300696968 /* MockLocations.swift */,
-				E57FD76C2B3DAE0300696968 /* Mocks.swift */,
+				E57FD76B2B3DAE0300696968 /* TTError.swift */,
+				E57FD7672B3DADCC00696968 /* TTLogger.swift */,
+				E58D9EA62B81AB1100B3C17B /* Mocks */,
 				E57FD76A2B3DAE0300696968 /* OffsetKey.swift */,
-				E57FD76F2B3DAE0300696968 /* PreviewContainer.swift */,
-				E57FD7672B3DADCC00696968 /* Logger.swift */,
 				E57FD7972B3DB0ED00696968 /* TabBarItemType.swift */,
+				E57FD76F2B3DAE0300696968 /* PreviewContainer.swift */,
 				E57FD7C52B3DB25200696968 /* UserPreference.swift */,
 				E59B08F72B41495000280FC4 /* Constants.swift */,
 				E553B9D32B53BEF600BA0C61 /* AnalyticsHelper.swift */,
-				E55094432B60114A00C2C1EA /* WeightUnit.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -557,12 +564,12 @@
 		E57FD7692B3DADD700696968 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				E58D9EA32B81AADD00B3C17B /* PersistentStore */,
+				E58D9EA22B81AAC400B3C17B /* Measurement */,
 				C9C1F3412B6CB51000141ECC /* Training */,
 				E5B700C02B40105E0080442D /* LocalizationProvider.swift */,
 				E57FD78F2B3DB04400696968 /* NotificationManager.swift */,
 				E57FD7762B3DAE3B00696968 /* ExperiementsProvider.swift */,
-				C93E94142B70D88900693DF8 /* InsightManager.swift */,
-				C93E94162B70DCFC00693DF8 /* PersistentStoreManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -581,13 +588,13 @@
 		E57FD77F2B3DAE5B00696968 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				E57FD7CA2B3DC6AA00696968 /* Launch */,
+				E57FD7862B3DAFDC00696968 /* Onboarding */,
 				E57FD78B2B3DAFF100696968 /* Main */,
 				C93E94112B70D6A600693DF8 /* Insight */,
-				E57FD7CA2B3DC6AA00696968 /* Launch */,
 				E57FD7B52B3DB1AE00696968 /* ArrangeExericse */,
 				E57FD7A42B3DB17600696968 /* Preference */,
-				E57FD78C2B3DAFFF00696968 /* AppTabBar */,
-				E57FD7862B3DAFDC00696968 /* Onboarding */,
+				E53935212B5D4E6200A8DD8C /* Watch */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -604,20 +611,13 @@
 		E57FD78B2B3DAFF100696968 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				E557F7F92B7E4BEE00F48235 /* TrainingSession */,
+				E57FD78D2B3DB00900696968 /* AppTabBarView.swift */,
 				E57FD7912B3DB0BE00696968 /* MainViewExerciseCardView.swift */,
 				E57FD7922B3DB0BE00696968 /* MainView.swift */,
 				E57FD7932B3DB0BE00696968 /* MainViewModel.swift */,
+				E557F7F92B7E4BEE00F48235 /* TrainingSession */,
 			);
 			path = Main;
-			sourceTree = "<group>";
-		};
-		E57FD78C2B3DAFFF00696968 /* AppTabBar */ = {
-			isa = PBXGroup;
-			children = (
-				E57FD78D2B3DB00900696968 /* AppTabBarView.swift */,
-			);
-			path = AppTabBar;
 			sourceTree = "<group>";
 		};
 		E57FD7992B3DB13200696968 /* Extensions */ = {
@@ -672,6 +672,42 @@
 				E57FD7CB2B3DC6BE00696968 /* LaunchScreen.storyboard */,
 			);
 			path = Launch;
+			sourceTree = "<group>";
+		};
+		E58D9EA12B81A7A100B3C17B /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				E58D9EA72B821B6200B3C17B /* CircularProgressView.swift */,
+				E54A445C2B84E15F0019F92C /* LinearProgressView.swift */,
+				E54A445E2B84E2A50019F92C /* TimerView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		E58D9EA22B81AAC400B3C17B /* Measurement */ = {
+			isa = PBXGroup;
+			children = (
+				E55094432B60114A00C2C1EA /* WeightUnit.swift */,
+				C93E94142B70D88900693DF8 /* InsightManager.swift */,
+			);
+			path = Measurement;
+			sourceTree = "<group>";
+		};
+		E58D9EA32B81AADD00B3C17B /* PersistentStore */ = {
+			isa = PBXGroup;
+			children = (
+				C93E94162B70DCFC00693DF8 /* PersistentStoreManager.swift */,
+			);
+			path = PersistentStore;
+			sourceTree = "<group>";
+		};
+		E58D9EA62B81AB1100B3C17B /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				E57FD76C2B3DAE0300696968 /* Mocks.swift */,
+				E57FD76D2B3DAE0300696968 /* MockLocations.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		E59B08F92B42925200280FC4 /* Components */ = {
@@ -997,7 +1033,8 @@
 				E539351E2B5CF13500A8DD8C /* LocalizationProvider.swift in Sources */,
 				C9C1F33C2B6B750600141ECC /* Exercise.swift in Sources */,
 				C9C1F33B2B6B74EF00141ECC /* TightSchemaV1.swift in Sources */,
-				C9C1F3422B6CB7C900141ECC /* Logger.swift in Sources */,
+				C9C1F3422B6CB7C900141ECC /* TTLogger.swift in Sources */,
+				E58D9EA52B81AAEE00B3C17B /* InsightManager.swift in Sources */,
 				E539351F2B5CF13E00A8DD8C /* Color+Extension.swift in Sources */,
 				E57A88992B5D5EBB0040FCF5 /* ContentViewModel.swift in Sources */,
 				E5BE1B492B69328300FDAD43 /* TrainingSessionAttributes.swift in Sources */,
@@ -1025,6 +1062,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E54A44602B84E7B30019F92C /* TimerView.swift in Sources */,
 				E5A2F3302B4950C300735FC2 /* LiveActivityAttributes.swift in Sources */,
 				E5A2F3332B496ED100735FC2 /* Color+Extension.swift in Sources */,
 				E54420F82B4AD38F002C63BC /* LocalizationProvider.swift in Sources */,
@@ -1034,7 +1072,8 @@
 				E554FB9A2B4837FA007AB30F /* TrainingSessionLiveActivity.swift in Sources */,
 				E55094452B60114A00C2C1EA /* WeightUnit.swift in Sources */,
 				E504A44F2B6BDAF000AD3CEA /* TraningSessionLiveActivityIntents.swift in Sources */,
-				E553B9D02B52C47400BA0C61 /* Logger.swift in Sources */,
+				E553B9D02B52C47400BA0C61 /* TTLogger.swift in Sources */,
+				E58D9EA42B81AAEE00B3C17B /* InsightManager.swift in Sources */,
 				E5C1C6B22B4A59570081B3EF /* TightSchemaV1.swift in Sources */,
 				E5A2F3322B495DEB00735FC2 /* TimeInterval+Extension.swift in Sources */,
 				E553B9CF2B52BCED00BA0C61 /* Constants.swift in Sources */,
@@ -1051,8 +1090,10 @@
 				E553B9D42B53BEF600BA0C61 /* AnalyticsHelper.swift in Sources */,
 				E57FD7A32B3DB13F00696968 /* Color+Extension.swift in Sources */,
 				E512DEA12B6BE66800A6DFC7 /* LiveActivityAttributes.swift in Sources */,
+				E54A445D2B84E15F0019F92C /* LinearProgressView.swift in Sources */,
 				E57FD7AF2B3DB18C00696968 /* PlanManagementView.swift in Sources */,
-				E57FD7682B3DADCC00696968 /* Logger.swift in Sources */,
+				E58D9EA82B821B6200B3C17B /* CircularProgressView.swift in Sources */,
+				E57FD7682B3DADCC00696968 /* TTLogger.swift in Sources */,
 				E53935232B5D4E7700A8DD8C /* WatchSessionDelegate.swift in Sources */,
 				E57FD7942B3DB0BE00696968 /* MainViewExerciseCardView.swift in Sources */,
 				E57FD7962B3DB0BE00696968 /* MainViewModel.swift in Sources */,
@@ -1074,7 +1115,7 @@
 				E57FD78E2B3DB00900696968 /* AppTabBarView.swift in Sources */,
 				E57FD7892B3DAFEB00696968 /* OnboardingViewModel.swift in Sources */,
 				E57FD7772B3DAE3B00696968 /* ExperiementsProvider.swift in Sources */,
-				E57FD7712B3DAE0400696968 /* Error.swift in Sources */,
+				E57FD7712B3DAE0400696968 /* TTError.swift in Sources */,
 				E5E811242B67EB24005DB9A7 /* TraningSessionManager+Notification.swift in Sources */,
 				E5C1C6B82B4A5F3F0081B3EF /* TrainingSessionLiveActivity.swift in Sources */,
 				E553B9D62B53ED2600BA0C61 /* TrainingSessionDailyReportView.swift in Sources */,
@@ -1100,6 +1141,7 @@
 				E57FD7B42B3DB18C00696968 /* EditPlanView.swift in Sources */,
 				E57FD7C12B3DB1E500696968 /* ExerciseSelectorViewComponent.swift in Sources */,
 				E57FD7A02B3DB13F00696968 /* View+Extension.swift in Sources */,
+				E54A445F2B84E2A50019F92C /* TimerView.swift in Sources */,
 				E57FD7B32B3DB18C00696968 /* CreatePlanView.swift in Sources */,
 				E5E811202B67E698005DB9A7 /* TTWCSession.swift in Sources */,
 				E57FD7752B3DAE0400696968 /* PreviewContainer.swift in Sources */,

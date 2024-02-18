@@ -9,17 +9,15 @@ import SwiftUI
 import SwiftData
 
 struct AppTabBarView: View {
-    @Environment(\.modelContext) private var context: ModelContext
-    @EnvironmentObject private var logger: CustomLogger
-    @EnvironmentObject private var experimentsProvider: ExperiementsProvider
     @State private var selection: Int = 0
-    
-    
+    @Environment(\.modelContext) private var context: ModelContext
+    @EnvironmentObject private var logger: TTLogger
+    @EnvironmentObject private var experimentsProvider: ExperiementsProvider
+        
     var body: some View {
         TabView(selection: $selection) {
             /// Create pivot main view
-            let today = Date().today
-            let mainViewModel = MainViewModel(context: context, currentDate: today)
+            let mainViewModel = MainViewModel(context: context, currentDate: Date().today)
             MainView(viewModel: mainViewModel).tabItem {
                 Label(LocalizationProvider.plan.nameKey, systemImage: TabBarItemType.plan.iconName)
             }.tag(0)

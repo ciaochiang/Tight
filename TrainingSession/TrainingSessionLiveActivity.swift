@@ -9,9 +9,7 @@ import ActivityKit
 import WidgetKit
 import SwiftUI
 
-struct TrainingSessionLiveActivity: Widget {
-    @State private var isAnimating: Bool = false
-    
+struct TrainingSessionLiveActivity: Widget {    
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: LiveActivityAttributes.self) { context in
             // Lock screen/banner UI goes here
@@ -29,8 +27,6 @@ struct TrainingSessionLiveActivity: Widget {
                     .padding(.bottom, 4)
             }
             .padding()
-            .activityBackgroundTint(Color.themeStyle.theme.background)
-            .background(Color.themeStyle.theme.background)
         } dynamicIsland: { context in
             DynamicIsland {
                 // Expanded UI goes here.  Compose the expanded UI through
@@ -214,26 +210,6 @@ struct TrainingSessionLiveActivity: Widget {
     }
 }
 
-struct BreathCircleView: View {
-    var isCurrentStage: Bool
-    var isPendingStage: Bool
-    
-    @State var animate: Bool = false
-    @State var scale = 1.0
-
-    
-    var body: some View {
-        ZStack {
-            if isCurrentStage {
-                Circle().fill(Color.themeStyle.theme.accent.opacity(0.25)).shadow(color: .white.opacity(0.7), radius: 5).frame(width: 20, height: 20)
-                Circle().fill(Color.themeStyle.theme.accent.opacity(0.45)).frame(width: 16, height: 16)
-            }
-
-            Circle().fill(isPendingStage ? .gray : Color.themeStyle.theme.accent).frame(width: 12, height: 12)
-        }
-    }
-}
-
 extension LiveActivityAttributes {
     fileprivate static var preview: LiveActivityAttributes {
         LiveActivityAttributes()
@@ -243,7 +219,7 @@ extension LiveActivityAttributes {
 extension LiveActivityAttributes.ContentState {
     fileprivate static var initial: LiveActivityAttributes.ContentState {
         LiveActivityAttributes.ContentState(state: 2,
-                                               startTime: .now,
+                                            startTime: .now,
                                                currentExerciseID: "123",
                                                exerciseName: "Bench Press gjfda afdsafafd",
                                                weight: 50,
