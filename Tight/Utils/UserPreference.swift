@@ -8,18 +8,19 @@
 import Foundation
 
 class UserPreference {
-    private let SELECTED_SPORT_KEY: String = "SELECTED_SPORT"
-    private let FAVORITE_SPORTS_KEY: String = "FAVORIATE_SPORTS"
-    private let FAVORITE_EXERCISES_KEY: String = "FAVORITE_EXERCISES"
+    enum StoreKey: String {
+        case selectedSport = "SELECTED_SPORT"
+        case favoriteExercises = "FAVORITE_EXERCISES"
+    }
     
     func saveFavorite(exercises: [Exercise]) {
         if let encodedData = try? JSONEncoder().encode(exercises) {
-            UserDefaults.standard.setValue(encodedData, forKey: FAVORITE_EXERCISES_KEY)
+            UserDefaults.standard.setValue(encodedData, forKey: StoreKey.favoriteExercises.rawValue)
         }
     }
     
     func retrieveFavoriteExercises() -> [Exercise] {
-        guard let data = UserDefaults.standard.data(forKey: FAVORITE_EXERCISES_KEY),
+        guard let data = UserDefaults.standard.data(forKey: StoreKey.favoriteExercises.rawValue),
               let decodedItems = try? JSONDecoder().decode([Exercise].self, from: data) else {
             return []
         }

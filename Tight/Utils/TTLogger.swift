@@ -1,5 +1,5 @@
 //
-//  CustomLogger.swift
+//  TTLogger.swift
 //  Motic
 //
 //  Created by Ciao Chiang on 2023/9/17.
@@ -8,7 +8,7 @@
 import Foundation
 import os
 
-class CustomLogger: ObservableObject {
+class TTLogger: ObservableObject {
     var logger: Logger
     
     enum SubSystem {

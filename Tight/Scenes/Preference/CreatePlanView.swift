@@ -9,9 +9,10 @@ import SwiftUI
 import SwiftData
 
 struct CreatePlanView: View {
+    @State private var planName: String = ""
     @Environment(\.modelContext) private var context: ModelContext
     @Environment(\.dismiss) private var dismiss
-    @State private var planName: String = ""
+    
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 4) {

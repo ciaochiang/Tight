@@ -18,7 +18,7 @@ import SwiftData
  -
  */
 class TrainingSessionManager: NSObject, ObservableObject {
-    @EnvironmentObject var logger: CustomLogger
+    @EnvironmentObject var logger: TTLogger
     var context: ModelContext?
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     

@@ -42,7 +42,7 @@ struct MainView: View {
                     .offset(y: -32)
             }
             else {
-                ArrangedExercisesView()
+                ExerciseListView()
             }
             
             ControlPanelView()
@@ -227,7 +227,7 @@ struct MainView: View {
     
     /// Schedule Exercises View
     @ViewBuilder
-    func ArrangedExercisesView() -> some View {
+    func ExerciseListView() -> some View {
         List {
             /// Daily Summary Section
             if viewModel.showDailySummary {

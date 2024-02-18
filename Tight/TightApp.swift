@@ -24,7 +24,7 @@ enum TightMigrationPlan: SchemaMigrationPlan {
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-    lazy var logger = CustomLogger()
+    lazy var logger = TTLogger()
     lazy var trainingSessionManager = TrainingSessionManager()
     @AppStorage(Constants.TRAINING_SESSION_CONTENT) private var sessionContent: Data?
     

@@ -23,6 +23,5 @@ struct PreviewContainer {
                 container.mainContext.insert($0)
             }
         }
-
     }
 }

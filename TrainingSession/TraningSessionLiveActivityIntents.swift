@@ -51,7 +51,6 @@ struct SkipRest: LiveActivityIntent {
 
 @available(iOS 16.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 struct StopTrainingSession: LiveActivityIntent {
-//    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     static var title: LocalizedStringResource = "Stop Training Session"
     static var description = IntentDescription("Stop training session and reset session")
     

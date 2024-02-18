@@ -11,8 +11,8 @@ import CoreLocation
 import SwiftData
 
 class Mocks {
-    static var logger: CustomLogger {
-        return CustomLogger(subSystem: .dev)
+    static var logger: TTLogger {
+        return TTLogger(subSystem: .dev)
     }
     
     static var mockArrangedExercise: ArrangedExercise {

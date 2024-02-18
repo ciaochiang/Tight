@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum CustomError: Error, LocalizedError {
+enum TTError: Error, LocalizedError {
     case invalidInput
     case missingRequiredParameter
 }

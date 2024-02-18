@@ -10,22 +10,26 @@ import SwiftUI
 struct TrainingSessionCollapsedView: View {
     @Binding var content: TrainingSessionContent
     @EnvironmentObject private var trainingSessionManager: TrainingSessionManager
-    @EnvironmentObject private var logger: CustomLogger
+    @EnvironmentObject private var logger: TTLogger
     
     var body: some View {
         VStack {
             HStack(spacing: 16) {
                 /// Sets Progress
-                SetsProgressView(currentIndexOfSet: content.indexOfSet + 1,
-                                 setsProgrss: content.setsProgress)
+                CircularProgressView(content: "\(content.indexOfSet + 1)", 
+                                     progress: content.setsProgress, 
+                                     lineWidth: 4)
                     .padding(.leading, 16)
                     .padding(.trailing, 8)
                 
                 VStack(spacing: 4) {
                     if let startTime = content.startTime {
-                        ElapsedTimeView(startTime: startTime,
-                                        restStartTime: content.restStartTime,
-                                        restIntervals: content.restInterval)
+                        TimerView(startTime: startTime,
+                                  restStartTime: content.restStartTime,
+                                  restInterval: content.restInterval, 
+                                  isCountDown: content.state == .resting)
+                        .font(.title2)
+                        .horizontalSpacing(.leading)
                     }
 
                     if let exercise = content.currentExercise {
@@ -47,46 +51,10 @@ struct TrainingSessionCollapsedView: View {
             
             /// Only display stage progress view arranged exercises more than `1`
             if content.exerciseCount > 1 {
-                StagesView(progress: content.totalProgress)
+                LinearProgressView(progress: content.totalProgress)
             }
         }
         .background(Color.themeStyle.theme.background)
-    }
-    
-    @ViewBuilder
-    func SetsProgressView(currentIndexOfSet: Int, setsProgrss: Double) -> some View {
-        Text("\(currentIndexOfSet)")
-            .foregroundStyle(Color.themeStyle.theme.primary.opacity(0.8))
-            .font(.title3)
-            .fontWeight(.semibold)
-            .overlay {
-                ZStack {
-                    Circle()
-                        .stroke(
-                            Color.themeStyle.theme.primary.opacity(0.3),
-                            lineWidth: 2
-                        )
-                        .frame(width: 44, height: 44)
-                    
-                    Circle()
-                        .trim(from: 0, to: setsProgrss)
-                        .stroke(
-                            Color.themeStyle.theme.accent,
-                            lineWidth: 4
-                        )
-                        .frame(width: 44, height: 44)
-                        .rotationEffect(.degrees(-90))
-                        .animation(.easeInOut, value: setsProgrss)
-                }
-            }
-    }
-    
-    @ViewBuilder
-    func StagesView(progress: Double) -> some View {
-        ProgressView(value: progress)
-            .progressViewStyle(.linear)
-            .background(Color.white.opacity(0.7))
-            .animation(.easeInOut, value: progress)
     }
     
     @ViewBuilder
@@ -126,7 +94,7 @@ struct TrainingSessionCollapsedView: View {
                     if let exerciseID = content.currentExercise?.id {
                         trainingSessionManager.completeCurrentSet(exerciseID: exerciseID.uuidString)
                     } else {
-                        logger.log("\(CustomError.missingRequiredParameter)", level: .error)
+                        logger.log("\(TTError.missingRequiredParameter)", level: .error)
                     }
                 }) {
                     Image(systemName: "checkmark")
@@ -160,30 +128,6 @@ struct TrainingSessionCollapsedView: View {
                 .minimumScaleFactor(0.8)
                 .foregroundColor(Color.themeStyle.theme.secondaryTextColor)
                 .contentTransition(.opacity)
-        }
-    }
-    
-    @ViewBuilder
-    func ElapsedTimeView(startTime: Date, restStartTime: Date?, restIntervals: TimeInterval?) -> some View {
-        if let restStartTime = restStartTime, let restIntervals = restIntervals {
-            Text(timerInterval: restStartTime...restStartTime.addingTimeInterval(restIntervals), countsDown: true)
-                .font(.title2)
-                .fontWeight(.bold)
-                .tracking(2)
-                .minimumScaleFactor(0.8)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundColor(Color.themeStyle.theme.secondaryAccent)
-                .contentTransition(.numericText(countsDown: true))
-        }
-        else {
-            Text(startTime, style: .timer)
-                .font(.title2)
-                .fontWeight(.bold)
-                .tracking(2)
-                .minimumScaleFactor(0.8)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundColor(Color.themeStyle.theme.accent)
-                .contentTransition(.numericText())
         }
     }
 }
